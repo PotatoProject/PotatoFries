@@ -1,0 +1,30 @@
+name: potato_fries
+description: A new Flutter project.
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.1.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_svg: ^0.13.0
+  cupertino_icons: ^0.1.2
+  shared_preferences: ^0.5.1+1
+  url_launcher: any
+  simple_animations: any
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
+  assets:
+    - posp.png
+    - POSP.svg
+    - croquette.svg
+  fonts:
+    - family:  Logo
+      fonts:
+        - asset: fonts/Logo.ttf
