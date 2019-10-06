@@ -5,8 +5,10 @@ class SizeableListTile extends StatefulWidget {
   double width;
   Widget icon;
   String title;
+  bool selected;
   Color backgroundColor;
   Color elementsColor;
+  Color selectedColor;
   Function() onTap;
 
   SizeableListTile({
@@ -14,6 +16,8 @@ class SizeableListTile extends StatefulWidget {
     this.width,
     @required this.icon,
     @required this.title,
+    this.selected = false,
+    this.selectedColor,
     this.backgroundColor,
     this.elementsColor,
     @required this.onTap,
@@ -37,7 +41,7 @@ class _SizeableListTileState extends State<SizeableListTile> {
             IconButton(
               icon: widget.icon,
               onPressed: null,
-              disabledColor: widget.elementsColor,
+              disabledColor: widget.selected ? widget.selectedColor : widget.elementsColor,
             ),
             Padding(
               padding: EdgeInsets.only(left: 16),
@@ -46,7 +50,7 @@ class _SizeableListTileState extends State<SizeableListTile> {
                 style: TextStyle(
                   letterSpacing: 0.3,
                   fontWeight: FontWeight.w500,
-                  color: widget.elementsColor,
+                  color: widget.selected ? widget.selectedColor : widget.elementsColor,
                 ),
               ),
             ),

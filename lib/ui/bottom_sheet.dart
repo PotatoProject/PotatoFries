@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:potato_fries/internal/common.dart';
 import 'package:potato_fries/internal/methods.dart';
 import 'package:potato_fries/ui/sizeable_list_tile.dart';
 
 class BottomAppSheet extends StatefulWidget {
   AnimationController controller;
-  CurrentMenuPages currentPage;
+  int currentPage;
   Function(int index) onItemClick;
 
   BottomAppSheet({
@@ -20,8 +21,9 @@ class BottomAppSheet extends StatefulWidget {
 class _BottomAppSheetState extends State<BottomAppSheet> {
   @override
   Widget build(BuildContext context) {
+    double totalHeight = 2.0 + 64 + (50 * FriesPage.pages.length);
     Animatable<double> _halfTween = Tween<double>(begin: 0.0, end: 0.5);
-    Animatable<double> _positionTween = Tween<double>(begin: 64, end: (50 * 7.0) + 4 + 64);
+    Animatable<double> _positionTween = Tween<double>(begin: 64, end: totalHeight);
     Animatable<double> _easeInTween = CurveTween(curve: Curves.easeIn);
 
     Animation<double> _iconTurns = widget.controller.drive(_halfTween.chain(_easeInTween));
@@ -60,15 +62,27 @@ class _BottomAppSheetState extends State<BottomAppSheet> {
                           children: <Widget>[
                             Padding(
                               padding: EdgeInsets.all(8),
-                              child: Icon(Icons.swap_vertical_circle),
+                              child: Icon(FriesPage.pages[widget.currentPage].icon),
                             ),
-                            Text(
-                              "Quick Settings",
-                              style: TextStyle(
-                                fontWeight: FontWeight.w500
-                              ),
+                            Spacer(flex: 3),
+                            IconButton(
+                              icon: Icon(Icons.system_update),
+                              onPressed: () {},
+                              tooltip: "Open Potato Center",
                             ),
                             Spacer(),
+                            IconButton(
+                              icon: Icon(Icons.person),
+                              onPressed: () => launchUrl("https://potatoproject.co/team"),
+                              tooltip: "Discover POSP team",
+                            ),
+                            Spacer(),
+                            IconButton(
+                              icon: Icon(Icons.info),
+                              onPressed: () {},
+                              tooltip: "General info",
+                            ),
+                            Spacer(flex: 3),
                             IconButton(
                               icon: RotationTransition(
                                 turns: _iconTurns,
@@ -104,64 +118,8 @@ class _BottomAppSheetState extends State<BottomAppSheet> {
                               Divider(
                                 height: 2,
                               ),
-                              SizeableListTile(
-                                icon: Icon(Icons.swap_vertical_circle),
-                                title: "Quick Settings",
-                                height: 50,
-                                onTap: () {
-                                  widget.onItemClick(0);
-                                },
-                              ),
-                              SizeableListTile(
-                                icon: Icon(Icons.space_bar),
-                                title: "Status bar",
-                                height: 50,
-                                onTap: () {
-                                  widget.onItemClick(0);
-                                },
-                              ),
-                              SizeableListTile(
-                                icon: Icon(Icons.colorize),
-                                title: "Themes",
-                                height: 50,
-                                onTap: () {
-                                  widget.onItemClick(0);
-                                },
-                              ),
-                              SizeableListTile(
-                                icon: Icon(Icons.touch_app),
-                                title: "Buttons and navigation",
-                                height: 50,
-                                onTap: () {
-                                  widget.onItemClick(0);
-                                },
-                              ),
-                              Divider(
-                                height: 2,
-                              ),
-                              SizeableListTile(
-                                icon: Icon(Icons.system_update),
-                                title: "Open Potato Center",
-                                height: 50,
-                                onTap: () {
-                                  widget.onItemClick(0);
-                                },
-                              ),
-                              SizeableListTile(
-                                icon: Icon(Icons.person),
-                                title: "Discover POSP team",
-                                height: 50,
-                                onTap: () {
-                                  launchUrl("https://potatoproject.co/team");
-                                },
-                              ),
-                              SizeableListTile(
-                                icon: Icon(Icons.info),
-                                title: "General info",
-                                height: 50,
-                                onTap: () {
-                                  widget.onItemClick(0);
-                                },
+                              Column(
+                                children: pageSwitcherItemsBuilder,
                               ),
                             ]
                           ),
@@ -176,6 +134,28 @@ class _BottomAppSheetState extends State<BottomAppSheet> {
         ),
       ),
     );
+  }
+
+  List<Widget> get pageSwitcherItemsBuilder {
+    List<Widget> widgets = [];
+
+    for(int i = 0; i < FriesPage.pages.length; i++) {
+      widgets.add(
+        SizeableListTile(
+          icon: Icon(FriesPage.pages[i].icon),
+          title: FriesPage.pages[i].title,
+          height: 50,
+          onTap: () {
+            widget.onItemClick(i);
+          },
+          elementsColor: Theme.of(context).textTheme.title.color,
+          selected: widget.currentPage == i,
+          selectedColor: Theme.of(context).accentColor,
+        ),
+      );
+    }
+
+    return widgets;
   }
 
   void _onDrag(DragUpdateDetails details) {

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:potato_fries/internal/common.dart';
 import 'package:potato_fries/internal/methods.dart';
 import 'package:potato_fries/ui/bottom_sheet.dart';
 import 'package:potato_fries/ui/croquette-badge.dart';
@@ -15,6 +17,7 @@ class PotatoFriesRoot extends StatelessWidget {
       theme: ThemeData.light().copyWith(accentColor: Colors.blue),
       darkTheme: ThemeData.dark().copyWith(accentColor: Colors.blue),
       home: MyHomePage(),
+      debugShowCheckedModeBanner: false,
     );
   }
 }
@@ -25,7 +28,10 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
   AnimationController controller;
-  CurrentMenuPages currentPage = CurrentMenuPages.QS;
+  int currentPage = 0;
+  double titleBarHeight = 70;
+
+  PageController pageController = PageController();
 
   @override
   void initState() {
@@ -35,38 +41,97 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    bool isDarkTheme = MediaQuery.of(context).platformBrightness == Brightness.dark;
+
+    SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle(
+        statusBarIconBrightness: isDarkTheme ? Brightness.light : Brightness.dark,
+        statusBarColor: Colors.transparent,
+        systemNavigationBarColor: Theme.of(context).scaffoldBackgroundColor,
+        systemNavigationBarIconBrightness: isDarkTheme ? Brightness.light : Brightness.dark
+      )
+    );
+    
     return Scaffold(
       backgroundColor: Theme.of(context).cardColor,
-      body: Stack(
-        children: <Widget>[
-          Container(),
-          AnimatedBuilder(
-            animation: Tween<double>(begin: 0, end: 1).animate(controller),
-            builder: (context, child) {
-              return Visibility(
-                visible: controller.value != 0,
-                child: Opacity(
-                  opacity: controller.value,
-                  child: GestureDetector(
-                    onTapDown: (TapDownDetails details) {
-                      controller.reverse();
-                    },
-                    child: Container(
-                      height: MediaQuery.of(context).size.height,
-                      width: MediaQuery.of(context).size.width,
-                      color: Color(0x66000000),
-                    ),
+      body: Container(
+        height: MediaQuery.of(context).size.height,
+        child: Stack(
+          children: <Widget>[
+            Card(
+              elevation: 0,
+              margin: EdgeInsets.all(0),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
+              child: Container(
+                height: MediaQuery.of(context).padding.top + titleBarHeight,
+                alignment: Alignment.bottomCenter,
+                child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 24),
+                  width: MediaQuery.of(context).size.width,
+                  alignment: Alignment.centerLeft,
+                  height: titleBarHeight,
+                  child: Row(
+                    children: <Widget>[
+                      Text(
+                        FriesPage.pages[currentPage].title,
+                        style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 28,
+                        )
+                      ),
+                    ],
                   ),
                 ),
-              );
-            },
-          ),
-          BottomAppSheet(
-            controller: controller,
-            currentPage: currentPage,
-            onItemClick: (index) {},
-          ),
-        ],
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.only(top: MediaQuery.of(context).padding.top + titleBarHeight),
+              height: MediaQuery.of(context).size.height - (MediaQuery.of(context).padding.top + titleBarHeight) - 64,
+              child: PageView.builder(
+                controller: pageController,
+                physics: NeverScrollableScrollPhysics(),
+                itemBuilder: (context, index) {
+                  return Center(
+                    child: Text(index.toString()),
+                  );
+                },
+                itemCount: FriesPage.pages.length,
+                onPageChanged: (index) {
+                  setState(() => currentPage = index);
+                },
+              ),
+            ),
+            AnimatedBuilder(
+              animation: Tween<double>(begin: 0, end: 1).animate(controller),
+              builder: (context, child) {
+                return Visibility(
+                  visible: controller.value != 0,
+                  child: Opacity(
+                    opacity: controller.value,
+                    child: GestureDetector(
+                      onTapDown: (TapDownDetails details) {
+                        controller.reverse();
+                      },
+                      child: Container(
+                        height: MediaQuery.of(context).size.height,
+                        width: MediaQuery.of(context).size.width,
+                        color: Color(0x66000000),
+                      ),
+                    ),
+                  ),
+                );
+              },
+            ),
+            BottomAppSheet(
+              controller: controller,
+              currentPage: currentPage,
+              onItemClick: (index) {
+                setState(() => currentPage = index);
+                pageController.jumpToPage(index);
+              },
+            ),
+          ],
+        ),
       ),
       /*body: Center(
         child: Column(
