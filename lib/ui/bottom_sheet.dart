@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:potato_fries/internal/common.dart';
 import 'package:potato_fries/internal/methods.dart';
+import 'package:potato_fries/internal/page_data.dart';
 import 'package:potato_fries/ui/sizeable_list_tile.dart';
 
 class BottomAppSheet extends StatelessWidget {
@@ -14,10 +14,10 @@ class BottomAppSheet extends StatelessWidget {
     @required this.onItemClick,
   });
 
-  Animation<double> _iconTurns;
-  Animation<double> _positionChange;
+  static Animation<double> _iconTurns;
+  static Animation<double> _positionChange;
 
-  static double totalHeight = 2.0 + 64 + (50 * FriesPage.pages.length);
+  static double totalHeight = 2.0 + 64 + (50 * pages.length);
   static Animatable<double> _halfTween = Tween<double>(begin: 0.0, end: 0.5);
   static Animatable<double> _positionTween =
       Tween<double>(begin: 64, end: totalHeight);
@@ -40,70 +40,68 @@ class BottomAppSheet extends StatelessWidget {
             color: Theme.of(context).scaffoldBackgroundColor,
             elevation: 6,
             shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(12),
-              topRight: Radius.circular(12),
-            )),
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(12),
+                topRight: Radius.circular(12),
+              ),
+            ),
             margin: EdgeInsets.all(0),
             child: Column(
               children: <Widget>[
                 Container(
-                    height: 64,
-                    child: Stack(
-                      alignment: Alignment.center,
-                      overflow: Overflow.visible,
-                      children: <Widget>[
-                        Container(
-                          height: 64,
-                          padding: EdgeInsets.symmetric(horizontal: 16),
-                          child: Row(
-                            children: <Widget>[
-                              Padding(
-                                padding: EdgeInsets.all(8),
-                                child: Icon(FriesPage.pages[currentPage].icon),
-                              ),
-                              Spacer(flex: 3),
-                              IconButton(
-                                icon: Icon(Icons.system_update),
-                                onPressed: () {},
-                                tooltip: "Open Potato Center",
-                              ),
-                              Spacer(),
-                              IconButton(
-                                icon: Icon(Icons.person),
-                                onPressed: () =>
-                                    launchUrl("https://potatoproject.co/team"),
-                                tooltip: "Discover POSP team",
-                              ),
-                              Spacer(),
-                              IconButton(
-                                icon: Icon(Icons.info),
-                                onPressed: () {},
-                                tooltip: "Build info",
-                              ),
-                              Spacer(flex: 3),
-                              IconButton(
-                                icon: RotationTransition(
-                                  turns: _iconTurns,
-                                  child: Icon(
-                                    Icons.expand_less,
-                                    color: Theme.of(context).accentColor,
-                                  ),
+                  height: 64,
+                  child: Stack(
+                    alignment: Alignment.center,
+                    overflow: Overflow.visible,
+                    children: <Widget>[
+                      Container(
+                        height: 64,
+                        padding: EdgeInsets.symmetric(horizontal: 16),
+                        child: Row(
+                          children: <Widget>[
+                            Padding(
+                              padding: EdgeInsets.all(8),
+                              child: Icon((pages[currentPage] as dynamic).icon),
+                            ),
+                            Spacer(flex: 3),
+                            IconButton(
+                              icon: Icon(Icons.system_update),
+                              onPressed: () {},
+                              tooltip: "Open Potato Center",
+                            ),
+                            Spacer(),
+                            IconButton(
+                              icon: Icon(Icons.person),
+                              onPressed: () =>
+                                  launchUrl("https://potatoproject.co/team"),
+                              tooltip: "Discover POSP team",
+                            ),
+                            Spacer(),
+                            IconButton(
+                              icon: Icon(Icons.info),
+                              onPressed: () {},
+                              tooltip: "Build info",
+                            ),
+                            Spacer(flex: 3),
+                            IconButton(
+                              icon: RotationTransition(
+                                turns: _iconTurns,
+                                child: Icon(
+                                  Icons.expand_less,
+                                  color: Theme.of(context).accentColor,
                                 ),
-                                onPressed: () {
-                                  if (controller.status ==
-                                      AnimationStatus.completed) {
-                                    controller.reverse();
-                                  } else {
-                                    controller.forward();
-                                  }
-                                },
                               ),
-                            ],
-                          ),
+                              onPressed: () =>
+                                  controller.status == AnimationStatus.completed
+                                      ? controller.reverse()
+                                      : controller.forward(),
+                            ),
+                          ],
                         ),
-                      ],
-                    )),
+                      ),
+                    ],
+                  ),
+                ),
                 Visibility(
                   visible: controller.value > 0,
                   child: AnimatedBuilder(
@@ -112,14 +110,12 @@ class BottomAppSheet extends StatelessWidget {
                     builder: (context, child) => Opacity(
                       opacity: controller.value,
                       child: SingleChildScrollView(
-                        child: Column(children: [
-                          Divider(
-                            height: 2,
-                          ),
-                          Column(
-                            children: pageSwitcherItemsBuilder,
-                          ),
-                        ]),
+                        child: Column(
+                          children: <Widget>[
+                            Divider(height: 2),
+                            Column(children: pageSwitcherItemsBuilder),
+                          ],
+                        ),
                       ),
                     ),
                   ),
@@ -135,12 +131,12 @@ class BottomAppSheet extends StatelessWidget {
   List<Widget> get pageSwitcherItemsBuilder {
     List<Widget> widgets = [];
 
-    for (int i = 0; i < FriesPage.pages.length; i++) {
+    for (int i = 0; i < pages.length; i++) {
       widgets.add(
         Builder(
           builder: (context) => SizeableListTile(
-            icon: Icon(FriesPage.pages[i].icon),
-            title: FriesPage.pages[i].title,
+            icon: Icon((pages[i] as dynamic).icon),
+            title: (pages[i] as dynamic).title,
             height: 50,
             onTap: () => onItemClick(i),
             elementsColor: Theme.of(context).textTheme.title.color,
