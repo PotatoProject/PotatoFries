@@ -30,11 +30,13 @@ class _ColorPickerState extends State<ColorPicker> {
                     HSLColor.fromAHSL(1, hue, saturation, lightness)
                         .toColor()
                         .value
-                        .toRadixString(16),
+                        .toRadixString(16)
+                        .substring(2, 8),
                 style: TextStyle(
                   color: lightness > 0.5
                       ? Colors.black.withOpacity(0.70)
                       : Colors.white.withOpacity(0.70),
+                  fontFamily: 'monospace'
                 ),
               ),
             ),
@@ -42,7 +44,9 @@ class _ColorPickerState extends State<ColorPicker> {
           Row(
             children: <Widget>[
               Text('Hue'),
-              Expanded(
+              Spacer(),
+              Container(
+                width: (MediaQuery.of(context).size.width / 10) * 7,
                 child: Slider(
                   activeColor: HSLColor.fromAHSL(1, hue, saturation, lightness)
                       .toColor(),
@@ -54,13 +58,15 @@ class _ColorPickerState extends State<ColorPicker> {
                   max: 360,
                   onChanged: (d) => setState(() => hue = d),
                 ),
-              ),
+              )
             ],
           ),
           Row(
             children: <Widget>[
               Text('Saturation'),
-              Expanded(
+              Spacer(),
+              Container(
+                width: (MediaQuery.of(context).size.width / 10) * 7,
                 child: Slider(
                   activeColor: HSLColor.fromAHSL(1, hue, saturation, lightness)
                       .toColor(),
@@ -80,7 +86,9 @@ class _ColorPickerState extends State<ColorPicker> {
             child: Row(
               children: <Widget>[
                 Text('Lightness'),
-                Expanded(
+                Spacer(),
+                Container(
+                  width: (MediaQuery.of(context).size.width / 10) * 7,
                   child: Slider(
                     activeColor:
                         HSLColor.fromAHSL(1, hue, saturation, lightness)
