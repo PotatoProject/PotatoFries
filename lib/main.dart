@@ -12,7 +12,11 @@ class PotatoFriesRoot extends StatelessWidget {
   Widget build(context) => MaterialApp(
         title: 'Fries',
         theme: ThemeData.light().copyWith(accentColor: Colors.blue),
-        darkTheme: ThemeData.dark().copyWith(accentColor: Colors.blue),
+        darkTheme: ThemeData.dark().copyWith(
+          accentColor: Colors.blue,
+          cardColor: Color(0xFF212121),
+          scaffoldBackgroundColor: Color(0xFF151618)
+        ),
         home: MyHomePage(),
         debugShowCheckedModeBanner: false,
       );
