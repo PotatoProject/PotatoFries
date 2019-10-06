@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:potato_fries/internal/common.dart';
 
-class SettingsSwitch extends StatelessWidget {
+class SettingsSwitch extends StatefulWidget {
   final Widget title;
   final String setting;
   final SettingType type;
@@ -18,6 +19,11 @@ class SettingsSwitch extends StatelessWidget {
   })  : assert(title != null),
         assert(setting != null),
         assert(type != null);
+  
+  @override createState() => _SettingsSwitchState();
+}
+
+class _SettingsSwitchState extends State<SettingsSwitch> {
 
   @override
   Widget build(BuildContext context) {
@@ -28,22 +34,16 @@ class SettingsSwitch extends StatelessWidget {
         activeColor: Theme.of(context).accentColor,
         secondary: Container(
           width: 40,
-          child: icon,
+          child: widget.icon,
         ),
-        title: title,
-        subtitle: subtitle,
+        title: widget.title,
+        subtitle: widget.subtitle,
         value: snapshot.data,
-        onChanged: enabled ? (b) {} : null,
+        onChanged: widget.enabled ? (b) {} : null,
       ),
     );
   }
 
   // TODO: Replace with native call
   Future<bool> _tmp() async => false;
-}
-
-enum SettingType {
-  SECURE,
-  SYSTEM,
-  GLOBAL,
 }

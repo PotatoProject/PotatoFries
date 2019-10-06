@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:potato_fries/internal/common.dart';
 import 'package:potato_fries/pages/fries_page.dart';
+import 'package:potato_fries/widgets/settings_slider.dart';
 import 'package:potato_fries/widgets/settings_switch.dart';
 
 class StatusBar extends StatelessWidget {
@@ -15,6 +17,12 @@ class StatusBar extends StatelessWidget {
           title: Text('Cool setting'),
           type: SettingType.SYSTEM,
           setting: 'cool_setting',
+        ),
+        SettingsSlider(
+          title: Text('Cool slider'),
+          type: SettingType.SECURE,
+          setting: 'cool_setting',
+          initial: 0,
         ),
       ],
     );

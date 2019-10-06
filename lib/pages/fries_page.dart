@@ -26,7 +26,10 @@ class FriesPage extends StatelessWidget {
           child: MediaQuery.removePadding(
             context: context,
             removeTop: true,
-            child: ListView(children: children),
+            child: Container(
+              padding: EdgeInsets.only(bottom: 64),
+              child: ListView(children: children),
+            ),
           ),
         ),
       ],
