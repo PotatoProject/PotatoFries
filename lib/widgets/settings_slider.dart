@@ -32,6 +32,7 @@ class _SettingsSliderState extends State<SettingsSlider> {
   Widget build(BuildContext context) {
     return FutureBuilder(
       future: _tmp(),
+      initialData: 0,
       builder: (context, snapshot) {
         return ListTile(
           leading: Container(
