@@ -23,8 +23,9 @@ class SettingsSlider extends StatefulWidget {
   })  : assert(title != null),
         assert(setting != null),
         assert(type != null);
-  
-  @override createState() => _SettingsSliderState();
+
+  @override
+  createState() => _SettingsSliderState();
 }
 
 class _SettingsSliderState extends State<SettingsSlider> {
@@ -38,9 +39,7 @@ class _SettingsSliderState extends State<SettingsSlider> {
           leading: Container(
             width: 40,
             child: Center(
-              child: Text(
-                snapshot.data.toString().substring(0, 1)
-              ),
+              child: Text(snapshot.data.toString().substring(0, 1)),
             ),
           ),
           title: widget.title,

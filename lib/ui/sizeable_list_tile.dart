@@ -41,7 +41,8 @@ class _SizeableListTileState extends State<SizeableListTile> {
             IconButton(
               icon: widget.icon,
               onPressed: null,
-              disabledColor: widget.selected ? widget.selectedColor : widget.elementsColor,
+              disabledColor:
+                  widget.selected ? widget.selectedColor : widget.elementsColor,
             ),
             Padding(
               padding: EdgeInsets.only(left: 16),
@@ -50,7 +51,9 @@ class _SizeableListTileState extends State<SizeableListTile> {
                 style: TextStyle(
                   letterSpacing: 0.3,
                   fontWeight: FontWeight.w500,
-                  color: widget.selected ? widget.selectedColor : widget.elementsColor,
+                  color: widget.selected
+                      ? widget.selectedColor
+                      : widget.elementsColor,
                 ),
               ),
             ),

@@ -33,11 +33,10 @@ class _ColorPickerState extends State<ColorPicker> {
                         .toRadixString(16)
                         .substring(2, 8),
                 style: TextStyle(
-                  color: lightness > 0.5
-                      ? Colors.black.withOpacity(0.70)
-                      : Colors.white.withOpacity(0.70),
-                  fontFamily: 'monospace'
-                ),
+                    color: lightness > 0.5
+                        ? Colors.black.withOpacity(0.70)
+                        : Colors.white.withOpacity(0.70),
+                    fontFamily: 'monospace'),
               ),
             ),
           ),

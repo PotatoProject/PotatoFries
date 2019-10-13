@@ -5,5 +5,6 @@ class Logo {
 
   static const _kFontFam = 'Logo';
 
-  static const IconData posp_logo = const IconData(0xe800, fontFamily: _kFontFam);
+  static const IconData posp_logo =
+      const IconData(0xe800, fontFamily: _kFontFam);
 }

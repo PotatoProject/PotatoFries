@@ -19,12 +19,12 @@ class SettingsSwitch extends StatefulWidget {
   })  : assert(title != null),
         assert(setting != null),
         assert(type != null);
-  
-  @override createState() => _SettingsSwitchState();
+
+  @override
+  createState() => _SettingsSwitchState();
 }
 
 class _SettingsSwitchState extends State<SettingsSwitch> {
-
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
