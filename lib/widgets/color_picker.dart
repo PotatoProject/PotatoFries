@@ -2,8 +2,15 @@ import 'package:flutter/material.dart';
 
 class ColorPicker extends StatefulWidget {
   final bool lightnessLocked;
+  final Function onApply;
 
-  ColorPicker({this.lightnessLocked = false});
+  final String title;
+
+  ColorPicker({
+    this.lightnessLocked = false,
+    this.onApply,
+    this.title = 'Color picker',
+  });
 
   @override
   _ColorPickerState createState() => _ColorPickerState();
@@ -20,10 +27,48 @@ class _ColorPickerState extends State<ColorPicker> {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.only(bottom: 16.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Text(
+                  widget.title,
+                  style: Theme.of(context).textTheme.title,
+                ),
+                Visibility(
+                  visible: widget.onApply != null,
+                  child: FloatingActionButton(
+                    elevation: 0,
+                    mini: true,
+                    child: Icon(
+                      Icons.check,
+                      color:
+                          HSLColor.fromAHSL(1, hue, saturation, 0.85).toColor(),
+                    ),
+                    onPressed: () {
+                      String dark = HSLColor.fromAHSL(1, hue, saturation, 0.45)
+                          .toColor().value.toRadixString(16).substring(2, 8);
+                      String light = HSLColor.fromAHSL(1, hue, saturation, 0.55)
+                          .toColor().value.toRadixString(16).substring(2, 8);
+                      widget.onApply(dark, light);
+                      Navigator.of(context).pop();
+                    },
+                    backgroundColor:
+                        HSLColor.fromAHSL(1, hue, saturation, 0.5).toColor(),
+                  ),
+                ),
+              ],
+            ),
+          ),
           Container(
-            height: 80,
-            color: HSLColor.fromAHSL(1, hue, saturation, lightness).toColor(),
+            height: MediaQuery.of(context).size.height / 12,
+            decoration: BoxDecoration(
+              color: HSLColor.fromAHSL(1, hue, saturation, lightness).toColor(),
+              borderRadius: BorderRadius.circular(16),
+            ),
             child: Center(
               child: Text(
                 '#' +
@@ -33,10 +78,11 @@ class _ColorPickerState extends State<ColorPicker> {
                         .toRadixString(16)
                         .substring(2, 8),
                 style: TextStyle(
-                    color: lightness > 0.5
-                        ? Colors.black.withOpacity(0.70)
-                        : Colors.white.withOpacity(0.70),
-                    fontFamily: 'monospace'),
+                  color: lightness > 0.5
+                      ? Colors.black.withOpacity(0.70)
+                      : Colors.white.withOpacity(0.70),
+                  fontFamily: 'monospace',
+                ),
               ),
             ),
           ),

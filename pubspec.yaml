@@ -13,6 +13,9 @@ dependencies:
   shared_preferences: ^0.5.1+1
   url_launcher: any
   simple_animations: any
+  android_flutter_settings:
+    git:
+      url: https://github.com/AgentFabulous/android_flutter_settings
 
 dev_dependencies:
   flutter_test:

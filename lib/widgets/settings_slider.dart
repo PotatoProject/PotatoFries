@@ -33,7 +33,7 @@ class _SettingsSliderState extends State<SettingsSlider> {
   Widget build(BuildContext context) {
     return FutureBuilder(
       future: _tmp(),
-      initialData: 0,
+      initialData: 0.0,
       builder: (context, snapshot) {
         return ListTile(
           leading: Container(
@@ -59,5 +59,5 @@ class _SettingsSliderState extends State<SettingsSlider> {
   }
 
   // TODO: Replace with native call
-  Future<double> _tmp() async => 0;
+  Future<double> _tmp() async => 0.0;
 }

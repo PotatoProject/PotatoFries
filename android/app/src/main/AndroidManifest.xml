@@ -1,4 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    coreApp="true"
     package="com.example.potato_fries">
 
     <!-- io.flutter.app.FlutterApplication is an android.app.Application that
