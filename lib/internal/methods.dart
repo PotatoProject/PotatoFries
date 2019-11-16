@@ -12,10 +12,14 @@ void launchUrl(String url) async {
 void showColorPicker(
   BuildContext context, {
   bool lightnessLocked = false,
-  Function onApply,
+  Function onApply, Function onChange,
 }) {
-  showModalBottomSheet(context: context, builder: (context) => ColorPicker(
-    lightnessLocked: lightnessLocked,
-    onApply: onApply,
-  ));
+  showModalBottomSheet(
+    context: context,
+    builder: (context) => ColorPicker(
+      lightnessLocked: lightnessLocked,
+      onApply: onApply,
+      onChange: onChange,
+    ),
+  );
 }

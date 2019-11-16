@@ -1,11 +1,14 @@
 import 'package:android_flutter_settings/android_flutter_settings.dart';
 import 'package:flutter/material.dart';
+import 'package:potato_fries/bloc/theme_bloc.dart';
 import 'package:potato_fries/internal/methods.dart';
 import 'package:potato_fries/pages/fries_page.dart';
 
 class Themes extends StatelessWidget {
   final title = 'Themes';
   final icon = Icons.colorize;
+  final ThemeBloc bloc;
+  Themes({this.bloc});
 
   @override
   Widget build(BuildContext context) {
@@ -17,12 +20,24 @@ class Themes extends StatelessWidget {
           title: Text('Accent color'),
           subtitle: Text('Pick your favourite color!'),
           leading: Icon(Icons.color_lens),
-          onTap: () =>
-              showColorPicker(context, lightnessLocked: true, onApply: (String dark, String light) {
-                AndroidFlutterSettings.setProp('persist.sys.theme.accent_dark', dark);
-                AndroidFlutterSettings.setProp('persist.sys.theme.accent_light', light);
-                AndroidFlutterSettings.reloadAssets('android');
-              }),
+          onTap: () => showColorPicker(
+            context,
+            lightnessLocked: true,
+            onChange: (Color color) {
+              bloc.changeAccent(color);
+    },
+            onApply: (String dark, String light) {
+              AndroidFlutterSettings.setProp(
+                'persist.sys.theme.accent_dark',
+                dark,
+              );
+              AndroidFlutterSettings.setProp(
+                'persist.sys.theme.accent_light',
+                light,
+              );
+//              AndroidFlutterSettings.reloadAssets('android');
+            },
+          ),
         ),
       ],
     );

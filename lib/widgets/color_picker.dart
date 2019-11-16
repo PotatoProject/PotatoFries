@@ -3,13 +3,14 @@ import 'package:flutter/material.dart';
 class ColorPicker extends StatefulWidget {
   final bool lightnessLocked;
   final Function onApply;
-
+  final Function onChange;
   final String title;
 
   ColorPicker({
     this.lightnessLocked = false,
     this.onApply,
     this.title = 'Color picker',
+    this.onChange,
   });
 
   @override
@@ -21,6 +22,11 @@ class _ColorPickerState extends State<ColorPicker> {
   double saturation = 0.5;
   double lightness = 0.5;
 
+  @override
+  void setState(fn) {
+    widget.onChange(HSLColor.fromAHSL(1, hue, saturation, lightness).toColor());
+    super.setState(fn);
+  }
   @override
   Widget build(BuildContext context) {
     lightness = widget.lightnessLocked ? 0.5 : lightness;
@@ -50,9 +56,15 @@ class _ColorPickerState extends State<ColorPicker> {
                     ),
                     onPressed: () {
                       String dark = HSLColor.fromAHSL(1, hue, saturation, 0.45)
-                          .toColor().value.toRadixString(16).substring(2, 8);
+                          .toColor()
+                          .value
+                          .toRadixString(16)
+                          .substring(2, 8);
                       String light = HSLColor.fromAHSL(1, hue, saturation, 0.55)
-                          .toColor().value.toRadixString(16).substring(2, 8);
+                          .toColor()
+                          .value
+                          .toRadixString(16)
+                          .substring(2, 8);
                       widget.onApply(dark, light);
                       Navigator.of(context).pop();
                     },
