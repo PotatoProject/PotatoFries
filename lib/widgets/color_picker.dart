@@ -55,12 +55,12 @@ class _ColorPickerState extends State<ColorPicker> {
                           HSLColor.fromAHSL(1, hue, saturation, 0.85).toColor(),
                     ),
                     onPressed: () {
-                      String dark = HSLColor.fromAHSL(1, hue, saturation, 0.45)
+                      String dark = HSLColor.fromAHSL(1, hue, saturation, 0.4)
                           .toColor()
                           .value
                           .toRadixString(16)
                           .substring(2, 8);
-                      String light = HSLColor.fromAHSL(1, hue, saturation, 0.55)
+                      String light = HSLColor.fromAHSL(1, hue, saturation, 0.6)
                           .toColor()
                           .value
                           .toRadixString(16)
@@ -177,7 +177,7 @@ class _ColorPickerState extends State<ColorPicker> {
                           style: TextStyle(color: Colors.white),
                         ),
                         backgroundColor:
-                            HSLColor.fromAHSL(1, hue, saturation, 0.45)
+                            HSLColor.fromAHSL(1, hue, saturation, 0.4)
                                 .toColor(),
                       ),
                       Chip(
@@ -186,7 +186,7 @@ class _ColorPickerState extends State<ColorPicker> {
                           style: TextStyle(color: Colors.black),
                         ),
                         backgroundColor:
-                            HSLColor.fromAHSL(1, hue, saturation, 0.55)
+                            HSLColor.fromAHSL(1, hue, saturation, 0.6)
                                 .toColor(),
                       ),
                     ],

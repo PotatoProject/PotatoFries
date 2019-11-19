@@ -8,6 +8,7 @@ class Themes extends StatelessWidget {
   final title = 'Themes';
   final icon = Icons.colorize;
   final ThemeBloc bloc;
+
   Themes({this.bloc});
 
   @override
@@ -23,9 +24,7 @@ class Themes extends StatelessWidget {
           onTap: () => showColorPicker(
             context,
             lightnessLocked: true,
-            onChange: (Color color) {
-              bloc.changeAccent(color);
-    },
+            onChange: (Color color) => bloc.changeAccent(color),
             onApply: (String dark, String light) {
               AndroidFlutterSettings.setProp(
                 'persist.sys.theme.accent_dark',
