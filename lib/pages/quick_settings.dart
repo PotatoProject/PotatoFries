@@ -15,11 +15,7 @@ class QuickSettings extends StatelessWidget {
     return FriesPage(
       title: title,
       children: <Widget>[
-        SettingsSwitch(
-          title: Text('Cool setting'),
-          type: SettingType.SYSTEM,
-          setting: 'cool_setting',
-        ),
+
       ],
     );
   }
