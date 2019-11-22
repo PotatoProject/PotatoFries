@@ -28,23 +28,24 @@ class _ClockFacePickerState extends State<ClockFacePicker> {
       (dropDownValue == 'Analog') ? Icon(Icons.timer) :
       (dropDownValue == 'Type') ? _typeClock():Container()),
       title: Container(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: Row(
           children: <Widget>[
-            DropdownButton<String>(
-              value: dropDownValue,
-              items: <String>['Default', 'Bubble', 'Analog', 'Type']
-                  .map((String value) {
-                return DropdownMenuItem<String>(
-                  value: value,
-                  child: Text(value),
-                );
-              }).toList(),
-              onChanged: (String newValue) {
-                setState(() {
-                  dropDownValue = newValue;
-                });
-              },
+            Expanded(
+              child: DropdownButton<String>(
+                value: dropDownValue,
+                items: <String>['Default', 'Bubble', 'Analog', 'Type']
+                    .map((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+                  );
+                }).toList(),
+                onChanged: (String newValue) {
+                  setState(() {
+                    dropDownValue = newValue;
+                  });
+                },
+              ),
             ),
           ],
         ),
