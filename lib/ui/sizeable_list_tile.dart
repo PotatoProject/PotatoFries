@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class SizeableListTile extends StatefulWidget {
+class SizeableListTile extends StatelessWidget {
   double height;
   double width;
   Widget icon;
@@ -24,32 +24,26 @@ class SizeableListTile extends StatefulWidget {
     this.elementsColor,
     @required this.onTap,
   });
-
-  @override
-  createState() => _SizeableListTileState();
-}
-
-class _SizeableListTileState extends State<SizeableListTile> {
+  
   @override
   Widget build(BuildContext context) {
-    print(widget.subtitle != null);
     return InkWell(
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 16),
-        height: widget.height != null ?
-            widget.height :
-            widget.subtitle != null ?
+        height: height != null ?
+            height :
+            subtitle != null ?
                 60 :
                 null,
-        width: widget.width ?? null,
-        color: widget.backgroundColor ?? null,
+        width: width ?? null,
+        color: backgroundColor ?? null,
         child: Row(
           children: <Widget>[
             IconButton(
-              icon: widget.icon,
+              icon: icon,
               onPressed: null,
               disabledColor:
-                  widget.selected ? widget.selectedColor : widget.elementsColor,
+                  selected ? selectedColor : elementsColor,
             ),
             Padding(
               padding: EdgeInsets.only(left: 16),
@@ -58,24 +52,24 @@ class _SizeableListTileState extends State<SizeableListTile> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    widget.title,
+                    title,
                     style: TextStyle(
                       letterSpacing: 0.3,
                       fontWeight: FontWeight.w500,
                       fontSize: 18,
-                      color: widget.selected
-                          ? widget.selectedColor
-                          : widget.elementsColor,
+                      color: selected
+                          ? selectedColor
+                          : elementsColor,
                     ),
                   ),
                   Visibility(
-                    visible: widget.subtitle != null,
+                    visible: subtitle != null,
                     child: Text(
-                      widget.subtitle ?? "",
+                      subtitle ?? "",
                       style: TextStyle(
-                        color: widget.selected
-                            ? widget.selectedColor.withAlpha(160)
-                            : widget.elementsColor.withAlpha(160),
+                        color: selected
+                            ? selectedColor.withAlpha(160)
+                            : elementsColor.withAlpha(160),
                       ),
                     ),
                   ),
@@ -85,7 +79,7 @@ class _SizeableListTileState extends State<SizeableListTile> {
           ],
         ),
       ),
-      onTap: widget.onTap,
+      onTap: onTap,
     );
   }
 }
