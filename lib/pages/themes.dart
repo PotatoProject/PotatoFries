@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:potato_fries/bloc/theme_bloc.dart';
 import 'package:potato_fries/internal/methods.dart';
 import 'package:potato_fries/pages/fries_page.dart';
+import 'package:potato_fries/ui/sizeable_list_tile.dart';
 
 class Themes extends StatelessWidget {
   final title = 'Themes';
@@ -17,10 +18,13 @@ class Themes extends StatelessWidget {
       title: title,
       header: _header(context),
       children: <Widget>[
-        ListTile(
-          title: Text('Accent color'),
-          subtitle: Text('Pick your favourite color!'),
-          leading: Icon(Icons.color_lens),
+        SizeableListTile(
+          title: 'Accent color',
+          subtitle: 'Pick your favourite color!',
+          icon: Icon(Icons.color_lens),
+          elementsColor: Theme.of(context).brightness == Brightness.light ?
+            Colors.black :
+            Colors.white,
           onTap: () => showColorPicker(
             context,
             lightnessLocked: true,
@@ -43,22 +47,24 @@ class Themes extends StatelessWidget {
   }
 
   Widget _header(context) => Padding(
-        padding: EdgeInsets.symmetric(horizontal: 16),
+        padding: EdgeInsets.symmetric(horizontal: 8),
         child: SizedBox(
           height: MediaQuery.of(context).size.height / 3.4,
-          width: MediaQuery.of(context).size.width - 32,
+          width: MediaQuery.of(context).size.width - 24,
           child: Card(
             color: Theme.of(context).brightness == Brightness.dark
                 ? Colors.black
                 : Colors.white,
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-            child: Column(
+            child: ListView(
+              physics: BouncingScrollPhysics(),
+              padding: EdgeInsets.only(top: 6),
               children: <Widget>[
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: SizedBox(
-                    height: MediaQuery.of(context).size.height / 20,
+                    height: MediaQuery.of(context).size.height / 16,
                     child: Card(
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(24),
@@ -68,7 +74,7 @@ class Themes extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
                           Padding(
-                            padding: const EdgeInsets.only(left: 16.0),
+                            padding: const EdgeInsets.only(left: 8.0),
                             child: Icon(
                               Icons.search,
                               color: Theme.of(context).accentColor,
@@ -80,7 +86,7 @@ class Themes extends StatelessWidget {
                           ),
                           Padding(
                             padding: const EdgeInsets.only(
-                                top: 4.0, bottom: 4.0, right: 4.0),
+                                top: 4.0, bottom: 4.0, right: 0.0),
                             child: CircleAvatar(
                               child: Icon(
                                 Icons.person,

@@ -5,6 +5,7 @@ class SizeableListTile extends StatefulWidget {
   double width;
   Widget icon;
   String title;
+  String subtitle;
   bool selected;
   Color backgroundColor;
   Color elementsColor;
@@ -16,6 +17,7 @@ class SizeableListTile extends StatefulWidget {
     this.width,
     @required this.icon,
     @required this.title,
+    this.subtitle,
     this.selected = false,
     this.selectedColor,
     this.backgroundColor,
@@ -30,10 +32,15 @@ class SizeableListTile extends StatefulWidget {
 class _SizeableListTileState extends State<SizeableListTile> {
   @override
   Widget build(BuildContext context) {
+    print(widget.subtitle != null);
     return InkWell(
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 16),
-        height: widget.height ?? null,
+        height: widget.height != null ?
+            widget.height :
+            widget.subtitle != null ?
+                60 :
+                null,
         width: widget.width ?? null,
         color: widget.backgroundColor ?? null,
         child: Row(
@@ -46,15 +53,33 @@ class _SizeableListTileState extends State<SizeableListTile> {
             ),
             Padding(
               padding: EdgeInsets.only(left: 16),
-              child: Text(
-                widget.title,
-                style: TextStyle(
-                  letterSpacing: 0.3,
-                  fontWeight: FontWeight.w500,
-                  color: widget.selected
-                      ? widget.selectedColor
-                      : widget.elementsColor,
-                ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    widget.title,
+                    style: TextStyle(
+                      letterSpacing: 0.3,
+                      fontWeight: FontWeight.w500,
+                      fontSize: 18,
+                      color: widget.selected
+                          ? widget.selectedColor
+                          : widget.elementsColor,
+                    ),
+                  ),
+                  Visibility(
+                    visible: widget.subtitle != null,
+                    child: Text(
+                      widget.subtitle ?? "",
+                      style: TextStyle(
+                        color: widget.selected
+                            ? widget.selectedColor.withAlpha(160)
+                            : widget.elementsColor.withAlpha(160),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
           ],
