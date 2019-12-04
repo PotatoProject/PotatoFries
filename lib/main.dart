@@ -37,21 +37,11 @@ class MyHomePage extends StatefulWidget {
   createState() => _MyHomePageState(bloc: bloc);
 }
 
-class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
-  AnimationController controller;
+class _MyHomePageState extends State<MyHomePage> {
   int currentPage = 0;
   final ThemeBloc bloc;
 
   _MyHomePageState({this.bloc});
-
-  @override
-  void initState() {
-    super.initState();
-    controller = AnimationController(
-      vsync: this,
-      duration: Duration(milliseconds: 300),
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -62,38 +52,33 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
     return Scaffold(
       backgroundColor: Theme.of(context).cardColor,
       appBar: null,
-      body: Stack(
-        children: <Widget>[
-          pages[currentPage],
-          Positioned.fill(child: _sheetBackdrop),
-          BottomAppSheet(
-            controller: controller,
-            currentPage: currentPage,
-            onItemClick: (index) {
-              setState(() => currentPage = index);
-              controller.reverse();
-            },
-          ),
-        ],
+      body: pages[currentPage],
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: currentPage,
+        items: navbarItemBuilder,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        onTap: (index) {
+          setState(() => currentPage = index);
+        },
+        showSelectedLabels: true,
+        selectedItemColor: Theme.of(context).accentColor,
       ),
     );
   }
 
-  Widget get _sheetBackdrop => AnimatedBuilder(
-        animation: Tween<double>(begin: 0, end: 1).animate(controller),
-        builder: (context, child) => Visibility(
-          visible: controller.value != 0,
-          child: Opacity(
-            opacity: controller.value,
-            child: GestureDetector(
-              onTapDown: (TapDownDetails details) => controller.reverse(),
-              child: Container(
-                height: MediaQuery.of(context).size.height,
-                width: MediaQuery.of(context).size.width,
-                color: Color(0x66000000),
-              ),
-            ),
-          ),
-        ),
+  List<BottomNavigationBarItem> get navbarItemBuilder {
+    List<BottomNavigationBarItem> items = [];
+
+    for(int i = 0; i < pages.length; i++) {
+      items.add(
+        BottomNavigationBarItem(
+          icon: Icon((pages[i] as dynamic).icon),
+          title: Text((pages[i] as dynamic).title),
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        )
       );
+    }
+
+    return items;
+  }
 }

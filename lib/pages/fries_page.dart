@@ -32,7 +32,6 @@ class FriesPage extends StatelessWidget {
             context: context,
             removeTop: true,
             child: Container(
-              padding: EdgeInsets.only(bottom: 64),
               child: ListView(children: children),
             ),
           ),
