@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:potato_fries/internal/methods.dart';
+import 'package:potato_fries/routes/search_route.dart';
 import 'package:potato_fries/ui/croquette_badge.dart';
 
 class FriesPage extends StatelessWidget {
@@ -61,7 +62,8 @@ class FriesPage extends StatelessWidget {
           actions: <Widget>[
             IconButton(
               icon: Icon(Icons.search),
-              onPressed: () {},
+              onPressed: () => Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => SearchRoute())),
             ),
             PopupMenuButton(
               elevation: 3,

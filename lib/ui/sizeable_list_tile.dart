@@ -6,6 +6,7 @@ class SizeableListTile extends StatelessWidget {
   Widget icon;
   String title;
   String subtitle;
+  String footer;
   bool selected;
   Color backgroundColor;
   Color elementsColor;
@@ -18,35 +19,41 @@ class SizeableListTile extends StatelessWidget {
     @required this.icon,
     @required this.title,
     this.subtitle,
+    this.footer,
     this.selected = false,
     this.selectedColor,
     this.backgroundColor,
     this.elementsColor,
-    @required this.onTap,
+    this.onTap,
   });
   
   @override
   Widget build(BuildContext context) {
+    elementsColor = elementsColor ?? Theme.of(context).brightness == Brightness.light ?
+        Colors.black :
+        Colors.white;
+    
     return InkWell(
       child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 16),
-        height: height != null ?
-            height :
-            subtitle != null ?
-                60 :
-                null,
+        padding: EdgeInsets.symmetric(horizontal: icon == null ? 8 : 16),
+        height: height,
         width: width ?? null,
         color: backgroundColor ?? null,
         child: Row(
           children: <Widget>[
-            IconButton(
-              icon: icon,
-              onPressed: null,
-              disabledColor:
-                  selected ? selectedColor : elementsColor,
+            Container(
+              margin: icon == null ?
+                  null :
+                  EdgeInsets.fromLTRB(8, 8, 16, 8),
+              child: IconTheme(
+                child: icon ?? Container(),
+                data: IconThemeData(
+                  color: selected ? selectedColor : elementsColor
+                ),
+              )
             ),
             Padding(
-              padding: EdgeInsets.only(left: 16),
+              padding: EdgeInsets.fromLTRB(8, 12, 0, 12),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -55,8 +62,7 @@ class SizeableListTile extends StatelessWidget {
                     title,
                     style: TextStyle(
                       letterSpacing: 0.3,
-                      fontWeight: FontWeight.w500,
-                      fontSize: 18,
+                      fontSize: 16,
                       color: selected
                           ? selectedColor
                           : elementsColor,
@@ -70,7 +76,28 @@ class SizeableListTile extends StatelessWidget {
                         color: selected
                             ? selectedColor.withAlpha(160)
                             : elementsColor.withAlpha(160),
+                        fontSize: 13
                       ),
+                    ),
+                  ),
+                  Visibility(
+                    visible: footer != null,
+                    child: Column(
+                      children: <Widget>[
+                        Divider(
+                          height: 10,
+                          color: Colors.transparent,
+                        ),
+                        Text(
+                          footer ?? "",
+                          style: TextStyle(
+                            color: selected
+                                ? selectedColor.withAlpha(160)
+                                : elementsColor.withAlpha(160),
+                            fontSize: 13
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ],

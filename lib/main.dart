@@ -44,11 +44,16 @@ class _MyHomePageState extends State<MyHomePage> {
   _MyHomePageState({this.bloc});
 
   @override
+  void initState() {
+    super.initState();
+    setPages(bloc);
+  }
+
+  @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       systemNavigationBarColor: Theme.of(context).scaffoldBackgroundColor,
     ));
-    setPages(bloc);
     return Scaffold(
       backgroundColor: Theme.of(context).cardColor,
       appBar: null,

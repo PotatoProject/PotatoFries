@@ -16,7 +16,7 @@ class ButtonsAndNavigation extends StatelessWidget {
       title: title,
       children: <Widget>[
         SettingsSwitch(
-          title: Text('Cool setting'),
+          title: 'Cool setting',
           type: SettingType.SYSTEM,
           setting: 'cool_setting',
         ),

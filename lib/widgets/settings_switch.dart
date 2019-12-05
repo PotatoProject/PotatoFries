@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:potato_fries/internal/common.dart';
+import 'package:potato_fries/ui/sizeable_list_tile.dart';
 
 class SettingsSwitch extends StatefulWidget {
-  final Widget title;
+  final String title;
   final String setting;
   final SettingType type;
-  final Widget subtitle;
+  final String subtitle;
+  final String footer;
   final Widget icon;
   final bool enabled;
 
@@ -14,6 +16,7 @@ class SettingsSwitch extends StatefulWidget {
     @required this.setting,
     @required this.type,
     this.subtitle,
+    this.footer,
     this.icon,
     this.enabled = true,
   })  : assert(title != null),
@@ -36,8 +39,12 @@ class _SettingsSwitchState extends State<SettingsSwitch> {
           width: 40,
           child: widget.icon,
         ),
-        title: widget.title,
-        subtitle: widget.subtitle,
+        title: SizeableListTile(
+          icon: null,
+          title: widget.title,
+          subtitle: widget.subtitle ?? null,
+          footer: widget.footer,
+        ),
         value: snapshot.data,
         onChanged: widget.enabled ? (b) {} : null,
       ),

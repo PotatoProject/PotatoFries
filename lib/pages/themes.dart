@@ -22,9 +22,6 @@ class Themes extends StatelessWidget {
           title: 'Accent color',
           subtitle: 'Pick your favourite color!',
           icon: Icon(Icons.color_lens),
-          elementsColor: Theme.of(context).brightness == Brightness.light ?
-            Colors.black :
-            Colors.white,
           onTap: () => showColorPicker(
             context,
             lightnessLocked: true,

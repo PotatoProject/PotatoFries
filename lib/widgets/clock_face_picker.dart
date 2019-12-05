@@ -27,7 +27,8 @@ class _ClockFacePickerState extends State<ClockFacePicker> {
       ((dropDownValue == 'Bubble') ? Icon(Icons.bubble_chart) :
       (dropDownValue == 'Analog') ? Icon(Icons.timer) :
       (dropDownValue == 'Type') ? _typeClock():Container()),
-      title: Container(
+      title: Text("Clock face"),
+      subtitle: Container(
         child: Row(
           children: <Widget>[
             Expanded(
