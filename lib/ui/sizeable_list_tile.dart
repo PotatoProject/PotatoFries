@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class SizeableListTile extends StatelessWidget {
+  Key key;
   double height;
   double width;
   Widget icon;
@@ -14,6 +15,7 @@ class SizeableListTile extends StatelessWidget {
   Function() onTap;
 
   SizeableListTile({
+    this.key,
     this.height,
     this.width,
     @required this.icon,
@@ -25,13 +27,15 @@ class SizeableListTile extends StatelessWidget {
     this.backgroundColor,
     this.elementsColor,
     this.onTap,
-  });
+  }) : super(key: key);
   
   @override
   Widget build(BuildContext context) {
-    elementsColor = elementsColor ?? Theme.of(context).brightness == Brightness.light ?
-        Colors.black :
-        Colors.white;
+    if(elementsColor == null) {
+      elementsColor = Theme.of(context).brightness == Brightness.light ?
+          Colors.black :
+          Colors.white;
+    }
     
     return InkWell(
       child: Container(

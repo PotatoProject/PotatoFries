@@ -7,11 +7,13 @@ class FriesPage extends StatelessWidget {
   final String title;
   final Widget header;
   final List<Widget> children;
+  final bool showActions;
 
   FriesPage({
     @required this.children,
     @required this.title,
     this.header,
+    this.showActions = true,
   })  : assert(children != null),
         assert(title != null);
 
@@ -52,14 +54,8 @@ class FriesPage extends StatelessWidget {
         AppBar(
           elevation: 0,
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-          title: Text(
-            title,
-            style: TextStyle(
-              //fontWeight: FontWeight.w600,
-              //color: Theme.of(context).textTheme.body1.color,
-            ),
-          ),
-          actions: <Widget>[
+          title: Text(title),
+          actions: showActions ? <Widget>[
             IconButton(
               icon: Icon(Icons.search),
               onPressed: () => Navigator.push(context,
@@ -108,7 +104,7 @@ class FriesPage extends StatelessWidget {
                 }
               },
             ),
-          ],
+          ] : null,
         ),
         Container(child: header),
         Expanded(

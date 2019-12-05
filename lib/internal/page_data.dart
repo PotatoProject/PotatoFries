@@ -9,9 +9,11 @@ import 'package:potato_fries/pages/themes.dart';
 import 'package:potato_fries/pages/lock_screen.dart';
 
 List<Widget> pages = [];
+ThemeBloc bloc;
 
-void setPages(ThemeBloc bloc) {
-  if (pages.length == 0)
+void setPages(ThemeBloc passedBloc) {
+  if (pages.length == 0) {
+    bloc = passedBloc;
     pages = [
       QuickSettings(bloc: bloc),
       ButtonsAndNavigation(bloc: bloc),
@@ -19,4 +21,5 @@ void setPages(ThemeBloc bloc) {
       StatusBar(bloc: bloc),
       LockScreen()
     ];
+  }
 }

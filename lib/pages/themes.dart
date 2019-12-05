@@ -9,38 +9,68 @@ class Themes extends StatelessWidget {
   final title = 'Themes';
   final icon = Icons.colorize;
   final ThemeBloc bloc;
+  final int keyIndex;
 
-  Themes({this.bloc});
+  Themes({
+    this.bloc,
+    this.keyIndex,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return FriesPage(
-      title: title,
-      header: _header(context),
-      children: <Widget>[
-        SizeableListTile(
-          title: 'Accent color',
-          subtitle: 'Pick your favourite color!',
-          icon: Icon(Icons.color_lens),
-          onTap: () => showColorPicker(
-            context,
-            lightnessLocked: true,
-            onChange: (Color color) => bloc.changeAccent(color),
-            onApply: (String dark, String light) {
-              AndroidFlutterSettings.setProp(
-                'persist.sys.theme.accent_dark',
-                dark,
-              );
-              AndroidFlutterSettings.setProp(
-                'persist.sys.theme.accent_light',
-                light,
-              );
-//              AndroidFlutterSettings.reloadAssets('android');
-            },
-          ),
+    List<GlobalKey> keys = List.generate(1, (_) =>  GlobalKey());
+
+    List<Widget> children = [
+      SizeableListTile(
+        key: keys[0],
+        title: 'Accent color',
+        subtitle: 'Pick your favourite color!',
+        icon: Icon(Icons.color_lens),
+        onTap: () => showColorPicker(
+          context,
+          lightnessLocked: true,
+          onChange: (Color color) => bloc.changeAccent(color),
+          onApply: (String dark, String light) {
+            AndroidFlutterSettings.setProp(
+              'persist.sys.theme.accent_dark',
+              dark,
+            );
+            AndroidFlutterSettings.setProp(
+              'persist.sys.theme.accent_light',
+              light,
+            );
+          },
         ),
-      ],
+      ),
+    ];
+
+
+    Future.delayed(
+      Duration.zero,
+      () async {
+        if (keyIndex != null) {
+          Scrollable.ensureVisible(keys[keyIndex].currentContext);
+        }
+      },
     );
+
+    if(keyIndex != null) {
+      return Scaffold(
+        backgroundColor: Theme.of(context).cardColor,
+        body: FriesPage(
+          title: title,
+          header: _header(context),
+          children: children,
+          showActions: keyIndex == null,
+        ),
+      );
+    } else {
+      return FriesPage(
+        title: title,
+        header: _header(context),
+        children: children
+      );
+    }
   }
 
   Widget _header(context) => Padding(
