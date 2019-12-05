@@ -50,7 +50,7 @@ import 'package:potato_fries/internal/common.dart';
 /// 
 
 List<SearchProvider> searchItems = [
-  SearchProvider(
+  /*SearchProvider(
     title: "Accent color",
     description: "Pick your favourite color!",
     icon: Icon(Icons.color_lens),
@@ -64,7 +64,7 @@ List<SearchProvider> searchItems = [
     inputType: SettingInputType.SWITCH,
     itemPosition: 0,
     categoryIndex: 1
-  ),
+  ),*/
 ];
 
 class SearchProvider {

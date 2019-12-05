@@ -1,9 +1,7 @@
-import 'package:android_flutter_settings/android_flutter_settings.dart';
 import 'package:flutter/material.dart';
 import 'package:potato_fries/bloc/theme_bloc.dart';
-import 'package:potato_fries/internal/methods.dart';
+import 'package:potato_fries/pagelayout/themes_page_layout.dart';
 import 'package:potato_fries/pages/fries_page.dart';
-import 'package:potato_fries/ui/sizeable_list_tile.dart';
 
 class Themes extends StatelessWidget {
   final title = 'Themes';
@@ -18,32 +16,9 @@ class Themes extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<GlobalKey> keys = List.generate(1, (_) =>  GlobalKey());
-
-    List<Widget> children = [
-      SizeableListTile(
-        key: keys[0],
-        title: 'Accent color',
-        subtitle: 'Pick your favourite color!',
-        icon: Icon(Icons.color_lens),
-        onTap: () => showColorPicker(
-          context,
-          lightnessLocked: true,
-          onChange: (Color color) => bloc.changeAccent(color),
-          onApply: (String dark, String light) {
-            AndroidFlutterSettings.setProp(
-              'persist.sys.theme.accent_dark',
-              dark,
-            );
-            AndroidFlutterSettings.setProp(
-              'persist.sys.theme.accent_light',
-              light,
-            );
-          },
-        ),
-      ),
-    ];
-
+    Map<String, dynamic> builtLayout = ThemesPageLayout().build(context, keyIndex);
+    List<GlobalKey> keys = builtLayout["keys"];
+    List<Widget> children = builtLayout["body"];
 
     Future.delayed(
       Duration.zero,
