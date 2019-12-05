@@ -22,7 +22,6 @@ if (flutterVersionName == null) {
 }
 
 apply plugin: 'com.android.application'
-apply plugin: 'android-soexcluder'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
 android {
@@ -34,7 +33,7 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId "com.example.potato_fries"
+        applicationId "com.potatoproject.fries"
         minSdkVersion 16
         targetSdkVersion 28
         versionCode flutterVersionCode.toInteger()
@@ -50,26 +49,6 @@ android {
         }
         debug {
             signingConfig signingConfigs.debug
-        }
-    }
-    flavorDimensions "mode"
-    productFlavors {
-        lite {
-            dimension "mode"
-        }
-        full {
-            dimension "mode"
-        }
-    }
-
-    soexcluder {
-        lite {
-            exclude 'lib/arm64-v8a/*.so'
-            exclude 'lib/armeabi-v7a/*.so'
-        }
-        full {
-            include 'lib/arm64-v8a/*.so'
-            include 'lib/armeabi-v7a/*.so'
         }
     }
 }

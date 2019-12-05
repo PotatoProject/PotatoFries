@@ -1,4 +1,4 @@
-package com.example.potato_fries;
+package com.potatoproject.fries;
 
 import android.os.Bundle;
 import io.flutter.app.FlutterActivity;
