@@ -8,6 +8,7 @@ class SizeableListTile extends StatelessWidget {
   String title;
   String subtitle;
   String footer;
+  String headerAncestor;
   bool selected;
   Color backgroundColor;
   Color elementsColor;
@@ -22,12 +23,17 @@ class SizeableListTile extends StatelessWidget {
     @required this.title,
     this.subtitle,
     this.footer,
+    this.headerAncestor,
     this.selected = false,
     this.selectedColor,
     this.backgroundColor,
     this.elementsColor,
     this.onTap,
-  }) : super(key: key);
+  }) : assert(
+         footer == null && headerAncestor != null ||
+         footer != null && headerAncestor == null
+       ),
+       super(key: key);
   
   @override
   Widget build(BuildContext context) {

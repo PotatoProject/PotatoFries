@@ -41,7 +41,10 @@ class SearchProviderItem extends StatelessWidget {
         onTap: () => Navigator.push(context, MaterialPageRoute(
           builder: (context) => executePush()
         )),
-        footer: parseCategory(provider),
+        footer: parseCategory(provider) +
+            (provider.headerAncestor != null ?
+                " > " + provider.headerAncestor :
+                ""),
       );
     }
   }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:potato_fries/internal/search_provider.dart';
+import 'package:potato_fries/ui/section_header.dart';
 import 'package:potato_fries/ui/sizeable_list_tile.dart';
 import 'package:potato_fries/widgets/settings_switch.dart';
 
@@ -20,7 +21,8 @@ abstract class PageLayout {
               description: tile.subtitle,
               icon: tile.icon,
               itemPosition: i,
-              categoryIndex: 2
+              categoryIndex: 2,
+              headerAncestor: tile.headerAncestor,
             ));
 
             break;
@@ -34,6 +36,16 @@ abstract class PageLayout {
               inputType: SettingInputType.SWITCH,
               description: tile.subtitle,
               icon: tile.icon,
+              itemPosition: i,
+              categoryIndex: 2
+            ));
+
+            break;
+          case "SectionHeader":
+            SectionHeader tile = (body[i] as SectionHeader);
+
+            searchItems.add(SearchProvider(
+              title: tile.title,
               itemPosition: i,
               categoryIndex: 2
             ));

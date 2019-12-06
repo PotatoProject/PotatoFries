@@ -10,6 +10,7 @@ class SettingsSwitch extends StatefulWidget {
   final String footer;
   final Widget icon;
   final bool enabled;
+  final String headerAncestor;
 
   SettingsSwitch({
     @required this.title,
@@ -19,7 +20,12 @@ class SettingsSwitch extends StatefulWidget {
     this.footer,
     this.icon,
     this.enabled = true,
-  })  : assert(title != null),
+    this.headerAncestor,
+  })  : assert(
+          footer == null && headerAncestor != null ||
+          footer != null && headerAncestor == null
+        ),
+        assert(title != null),
         assert(setting != null),
         assert(type != null);
 
@@ -44,6 +50,7 @@ class _SettingsSwitchState extends State<SettingsSwitch> {
           title: widget.title,
           subtitle: widget.subtitle ?? null,
           footer: widget.footer,
+          headerAncestor: widget.headerAncestor,
         ),
         value: snapshot.data,
         onChanged: widget.enabled ? (b) {} : null,

@@ -19,6 +19,7 @@ class ButtonsAndNavigation extends StatelessWidget {
           title: 'Cool setting',
           type: SettingType.SYSTEM,
           setting: 'cool_setting',
+          headerAncestor: "Despacito",
         ),
       ],
     );
