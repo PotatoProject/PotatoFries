@@ -8,6 +8,9 @@ import 'package:potato_fries/ui/sizeable_list_tile.dart';
 
 class ThemesPageLayout extends PageLayout {
   @override
+  int get categoryIndex => 2;
+
+  @override
   List<Widget> body(BuildContext context) => [
     SectionHeader(
       title: "Colors",

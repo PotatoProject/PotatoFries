@@ -7,6 +7,14 @@ import 'package:potato_fries/widgets/settings_switch.dart';
 abstract class PageLayout {
   List<Widget> body(BuildContext context);
 
+  /// This value represents what category is the pagelayout
+  /// 0 = qs panel
+  /// 1 = navigation
+  /// 2 = themes
+  /// 3 = status bar
+  /// 4 = lockscreen
+  int categoryIndex = 0;
+
   void compileProviders(BuildContext context) {
     List<Widget> body = this.body(context);
 
@@ -21,7 +29,7 @@ abstract class PageLayout {
               description: tile.subtitle,
               icon: tile.icon,
               itemPosition: i,
-              categoryIndex: 2,
+              categoryIndex: categoryIndex,
               headerAncestor: tile.headerAncestor,
             ));
 
@@ -37,7 +45,7 @@ abstract class PageLayout {
               description: tile.subtitle,
               icon: tile.icon,
               itemPosition: i,
-              categoryIndex: 2
+              categoryIndex: categoryIndex
             ));
 
             break;
@@ -47,7 +55,7 @@ abstract class PageLayout {
             searchItems.add(SearchProvider(
               title: tile.title,
               itemPosition: i,
-              categoryIndex: 2
+              categoryIndex: categoryIndex
             ));
 
             break;
