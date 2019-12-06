@@ -45,7 +45,8 @@ abstract class PageLayout {
               description: tile.subtitle,
               icon: tile.icon,
               itemPosition: i,
-              categoryIndex: categoryIndex
+              categoryIndex: categoryIndex,
+              headerAncestor: tile.headerAncestor,
             ));
 
             break;

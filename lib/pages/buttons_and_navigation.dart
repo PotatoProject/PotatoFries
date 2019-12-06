@@ -1,27 +1,48 @@
 import 'package:flutter/material.dart';
 import 'package:potato_fries/bloc/theme_bloc.dart';
-import 'package:potato_fries/internal/common.dart';
+import 'package:potato_fries/pagelayout/navigation_page_layout.dart';
 import 'package:potato_fries/pages/fries_page.dart';
-import 'package:potato_fries/widgets/settings_switch.dart';
 
 class ButtonsAndNavigation extends StatelessWidget {
   final title = 'Navigation';
   final icon = Icons.touch_app;
   final ThemeBloc bloc;
-  ButtonsAndNavigation({this.bloc});
+  final int keyIndex;
+
+  ButtonsAndNavigation({
+    this.bloc,
+    this.keyIndex,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return FriesPage(
-      title: title,
-      children: <Widget>[
-        SettingsSwitch(
-          title: 'Cool setting',
-          type: SettingType.SYSTEM,
-          setting: 'cool_setting',
-          headerAncestor: "Despacito",
-        ),
-      ],
+    Map<String, dynamic> builtLayout = NavigationPageLayout().build(context, keyIndex);
+    List<GlobalKey> keys = builtLayout["keys"];
+    List<Widget> children = builtLayout["body"];
+
+    Future.delayed(
+      Duration.zero,
+      () async {
+        if (keyIndex != null) {
+          Scrollable.ensureVisible(keys[keyIndex].currentContext);
+        }
+      },
     );
+
+    if(keyIndex != null) {
+      return Scaffold(
+        backgroundColor: Theme.of(context).cardColor,
+        body: FriesPage(
+          title: title,
+          children: children,
+          showActions: keyIndex == null,
+        ),
+      );
+    } else {
+      return FriesPage(
+        title: title,
+        children: children
+      );
+    }
   }
 }

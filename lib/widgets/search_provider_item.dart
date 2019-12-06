@@ -26,7 +26,10 @@ class SearchProviderItem extends StatelessWidget {
         subtitle: provider.description != null ?
             provider.description :
             null,
-        footer: parseCategory(provider),
+        footer: parseCategory(provider) +
+            (provider.headerAncestor != null ?
+                " > " + provider.headerAncestor :
+                ""),
       );
     } else {
       return SizeableListTile(
