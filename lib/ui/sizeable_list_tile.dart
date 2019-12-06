@@ -5,6 +5,7 @@ class SizeableListTile extends StatelessWidget {
   double height;
   double width;
   Widget icon;
+  Widget trailing;
   String title;
   String subtitle;
   String footer;
@@ -19,7 +20,8 @@ class SizeableListTile extends StatelessWidget {
     this.key,
     this.height,
     this.width,
-    @required this.icon,
+    this.icon,
+    this.trailing,
     @required this.title,
     this.subtitle,
     this.footer,
@@ -45,24 +47,25 @@ class SizeableListTile extends StatelessWidget {
     
     return InkWell(
       child: Container(
-        padding: EdgeInsets.symmetric(horizontal: icon == null ? 8 : 16),
+        padding: EdgeInsets.symmetric(horizontal: 16),
         height: height,
         width: width ?? null,
         color: backgroundColor ?? null,
         child: Row(
           children: <Widget>[
             Container(
-              margin: icon == null ?
-                  null :
-                  EdgeInsets.fromLTRB(8, 8, 16, 8),
+              margin: EdgeInsets.fromLTRB(8, 8, 16, 8),
               child: IconTheme(
-                child: icon ?? Container(),
+                child: icon ?? Container(
+                  width: 24,
+                ),
                 data: IconThemeData(
                   color: selected ? selectedColor : elementsColor
                 ),
               )
             ),
-            Padding(
+            Expanded(
+              child: Padding(
               padding: EdgeInsets.fromLTRB(8, 12, 0, 12),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -93,6 +96,7 @@ class SizeableListTile extends StatelessWidget {
                   Visibility(
                     visible: footer != null,
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Divider(
                           height: 10,
@@ -112,6 +116,13 @@ class SizeableListTile extends StatelessWidget {
                   ),
                 ],
               ),
+            ),
+            ),
+            Container(
+              margin: trailing == null ?
+                  null :
+                  EdgeInsets.fromLTRB(16, 8, 8, 8),
+              child: trailing ?? Container()
             ),
           ],
         ),

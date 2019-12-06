@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:potato_fries/internal/search_provider.dart';
 import 'package:potato_fries/ui/section_header.dart';
 import 'package:potato_fries/ui/sizeable_list_tile.dart';
-import 'package:potato_fries/widgets/settings_switch.dart';
+import 'package:potato_fries/widgets/settings_switch_tile.dart';
 
 abstract class PageLayout {
   List<Widget> body(BuildContext context);
@@ -34,8 +34,8 @@ abstract class PageLayout {
             ));
 
             break;
-          case "SettingsSwitch":
-            SettingsSwitch tile = (body[i] as SettingsSwitch);
+          case "SettingsSwitchTile":
+            SettingsSwitchTile tile = (body[i] as SettingsSwitchTile);
 
             searchItems.add(SearchProvider(
               title: tile.title,
