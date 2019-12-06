@@ -51,7 +51,7 @@ class Themes extends StatelessWidget {
   Widget _header(context) => Padding(
         padding: EdgeInsets.symmetric(horizontal: 8),
         child: SizedBox(
-          height: MediaQuery.of(context).size.height / 3.4,
+          height: MediaQuery.of(context).size.height / 3.2,
           width: MediaQuery.of(context).size.width - 24,
           child: Card(
             color: Theme.of(context).brightness == Brightness.dark
@@ -69,14 +69,14 @@ class Themes extends StatelessWidget {
                     height: MediaQuery.of(context).size.height / 16,
                     child: Card(
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(24),
+                        borderRadius: BorderRadius.circular(MediaQuery.of(context).size.height / 32),
                       ),
                       color: Theme.of(context).cardColor,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
                           Padding(
-                            padding: const EdgeInsets.only(left: 8.0),
+                            padding: const EdgeInsets.only(left: 16.0),
                             child: Icon(
                               Icons.search,
                               color: Theme.of(context).accentColor,
@@ -88,7 +88,7 @@ class Themes extends StatelessWidget {
                           ),
                           Padding(
                             padding: const EdgeInsets.only(
-                                top: 4.0, bottom: 4.0, right: 0.0),
+                                top: 4.0, bottom: 4.0, right: 4.0),
                             child: CircleAvatar(
                               child: Icon(
                                 Icons.person,
