@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:potato_fries/bloc/theme_bloc.dart';
 import 'package:potato_fries/internal/page_data.dart';
-import 'package:potato_fries/ui/bottom_sheet.dart';
 
 BorderRadius _kBorderRadius = BorderRadius.circular(12);
 

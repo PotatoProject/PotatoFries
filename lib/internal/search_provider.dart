@@ -49,23 +49,7 @@ import 'package:flutter/material.dart';
 /// so this method seems better for now. Improvements are always welcome.
 /// 
 
-List<SearchProvider> searchItems = [
-  /*SearchProvider(
-    title: "Accent color",
-    description: "Pick your favourite color!",
-    icon: Icon(Icons.color_lens),
-    itemPosition: 0,
-    categoryIndex: 2
-  ),
-  SearchProvider(
-    title: "Cool setting",
-    setting: "cool_setting",
-    type: SettingType.SYSTEM,
-    inputType: SettingInputType.SWITCH,
-    itemPosition: 0,
-    categoryIndex: 1
-  ),*/
-];
+List<SearchProvider> searchItems = [];
 
 class SearchProvider {
   String title;
@@ -76,6 +60,7 @@ class SearchProvider {
   Widget icon;
   int itemPosition;
   int categoryIndex;
+  String headerAncestor;
 
   SearchProvider({
     @required String title,
@@ -86,6 +71,7 @@ class SearchProvider {
     Widget icon,
     @required int itemPosition,
     @required int categoryIndex,
+    String headerAncestor,
   }) {
     this.title = title;
     this.setting = setting;
@@ -95,6 +81,7 @@ class SearchProvider {
     this.icon = icon;
     this.itemPosition = itemPosition;
     this.categoryIndex = categoryIndex;
+    this.headerAncestor = headerAncestor;
   }
 }
 

@@ -4,12 +4,8 @@ import 'package:potato_fries/provider/base.dart';
 import 'package:potato_fries/ui/sizeable_list_tile.dart';
 
 class SettingsSwitch extends StatefulWidget {
-  final String title;
   final String setting;
   final SettingType type;
-  final String subtitle;
-  final String footer;
-  final Widget icon;
   final bool enabled;
 
   final BaseDataProvider provider;
@@ -23,9 +19,8 @@ class SettingsSwitch extends StatefulWidget {
     this.icon,
     this.provider,
     this.enabled = true,
-  })  : assert(title != null),
-        assert(setting != null),
-        assert(type != null);
+  }) : assert(setting != null),
+       assert(type != null);
 
   @override
   createState() => _SettingsSwitchState();
@@ -53,18 +48,8 @@ class _SettingsSwitchState extends State<SettingsSwitch> {
 
   @override
   Widget build(BuildContext context) {
-    return SwitchListTile(
+    return Switch(
       activeColor: Theme.of(context).accentColor,
-      secondary: Container(
-        width: 40,
-        child: widget.icon,
-      ),
-      title: SizeableListTile(
-        icon: null,
-        title: widget.title,
-        subtitle: widget.subtitle,
-        footer: widget.footer,
-      ),
       value: value,
       onChanged: widget.enabled
           ? (b) async {

@@ -1,10 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:potato_fries/internal/search_provider.dart';
+import 'package:potato_fries/ui/section_header.dart';
 import 'package:potato_fries/ui/sizeable_list_tile.dart';
-import 'package:potato_fries/widgets/settings_switch.dart';
+import 'package:potato_fries/widgets/settings_switch_tile.dart';
 
 abstract class PageLayout {
   List<Widget> body(BuildContext context);
+
+  /// This value represents what category is the pagelayout
+  /// 0 = qs panel
+  /// 1 = navigation
+  /// 2 = themes
+  /// 3 = status bar
+  /// 4 = lockscreen
+  int categoryIndex = 0;
 
   void compileProviders(BuildContext context) {
     List<Widget> body = this.body(context);
@@ -22,11 +31,12 @@ abstract class PageLayout {
                 description: tile.subtitle,
                 icon: tile.icon,
                 itemPosition: i,
-                categoryIndex: 2));
+                categoryIndex: categoryIndex,
+              headerAncestor: tile.headerAncestor,));
 
             break;
-          case "SettingsSwitch":
-            SettingsSwitch tile = (body[i] as SettingsSwitch);
+          case "SettingsSwitchTile":
+            SettingsSwitchTile tile = (body[i] as SettingsSwitchTile);
             searchItems.add(SearchProvider(
                 title: tile.title,
                 setting: tile.setting,
@@ -35,7 +45,18 @@ abstract class PageLayout {
                 description: tile.subtitle,
                 icon: tile.icon,
                 itemPosition: i,
-                categoryIndex: 2));
+                categoryIndex: categoryIndex,
+              headerAncestor: tile.headerAncestor,
+            ));
+
+            break;
+          case "SectionHeader":
+            SectionHeader tile = (body[i] as SectionHeader);
+
+            searchItems.add(SearchProvider(
+              title: tile.title,
+              itemPosition: i,
+              categoryIndex: categoryIndex));
 
             break;
           default:

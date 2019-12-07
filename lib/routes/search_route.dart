@@ -39,9 +39,36 @@ class _SearchRouteState extends State<SearchRoute> {
           ),
         ),
       ),
-      body: ListView(
-        children: widgets,
-      ),
+      body: widgets.isEmpty ?
+          Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Icon(
+                  Icons.search,
+                  color: Theme.of(context).textTheme.subtitle.color.withAlpha(120),
+                  size: 72,
+                ),
+                Divider(
+                  color: Colors.transparent,
+                  height: 14,
+                ),
+                Text(
+                  searchTerms == "" ?
+                      "Input something to start searching" :
+                      "Nothing found",
+                  style: TextStyle(
+                    fontSize: 17,
+                    fontWeight: FontWeight.w500,
+                    color: Theme.of(context).textTheme.subtitle.color.withAlpha(120),
+                  ),
+                ),
+              ],
+            ),
+          ) :
+          ListView(
+            children: widgets,
+          ),
     );
   }
 
@@ -68,6 +95,6 @@ class _SearchRouteState extends State<SearchRoute> {
       }
 
       return widgetList;
-    } else return [Container()];
+    } else return [];
   }
 }
