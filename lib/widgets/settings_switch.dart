@@ -1,5 +1,6 @@
+import 'package:android_flutter_settings/android_flutter_settings.dart';
 import 'package:flutter/material.dart';
-import 'package:potato_fries/internal/common.dart';
+import 'package:potato_fries/provider/base.dart';
 import 'package:potato_fries/ui/sizeable_list_tile.dart';
 
 class SettingsSwitch extends StatefulWidget {
@@ -11,6 +12,8 @@ class SettingsSwitch extends StatefulWidget {
   final Widget icon;
   final bool enabled;
 
+  final BaseDataProvider provider;
+
   SettingsSwitch({
     @required this.title,
     @required this.setting,
@@ -18,6 +21,7 @@ class SettingsSwitch extends StatefulWidget {
     this.subtitle,
     this.footer,
     this.icon,
+    this.provider,
     this.enabled = true,
   })  : assert(title != null),
         assert(setting != null),
@@ -28,29 +32,46 @@ class SettingsSwitch extends StatefulWidget {
 }
 
 class _SettingsSwitchState extends State<SettingsSwitch> {
+  bool value = false;
+
   @override
-  Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: _tmp(),
-      initialData: false,
-      builder: (context, snapshot) => SwitchListTile(
-        activeColor: Theme.of(context).accentColor,
-        secondary: Container(
-          width: 40,
-          child: widget.icon,
-        ),
-        title: SizeableListTile(
-          icon: null,
-          title: widget.title,
-          subtitle: widget.subtitle ?? null,
-          footer: widget.footer,
-        ),
-        value: snapshot.data,
-        onChanged: widget.enabled ? (b) {} : null,
-      ),
-    );
+  void initState() {
+    updateValue();
+    super.initState();
   }
 
-  // TODO: Replace with native call
-  Future<bool> _tmp() async => false;
+  void updateValue() async {
+    await AndroidFlutterSettings.getBool(widget.setting, widget.type).then(
+      (b) => setState(() => value = b),
+    );
+    if (widget.provider != null) {
+      widget.provider.data['${widget.type.toString()}/${widget.setting}'] =
+          value;
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SwitchListTile(
+      activeColor: Theme.of(context).accentColor,
+      secondary: Container(
+        width: 40,
+        child: widget.icon,
+      ),
+      title: SizeableListTile(
+        icon: null,
+        title: widget.title,
+        subtitle: widget.subtitle,
+        footer: widget.footer,
+      ),
+      value: value,
+      onChanged: widget.enabled
+          ? (b) async {
+              await AndroidFlutterSettings.putBool(
+                  widget.setting, b, widget.type);
+              updateValue();
+            }
+          : null,
+    );
+  }
 }

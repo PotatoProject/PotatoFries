@@ -51,7 +51,7 @@ class Themes extends StatelessWidget {
   Widget _header(context) => Padding(
         padding: EdgeInsets.symmetric(horizontal: 8),
         child: SizedBox(
-          height: MediaQuery.of(context).size.height / 3.2,
+          height: MediaQuery.of(context).size.height / 4.2,
           width: MediaQuery.of(context).size.width - 24,
           child: Card(
             color: Theme.of(context).brightness == Brightness.dark
