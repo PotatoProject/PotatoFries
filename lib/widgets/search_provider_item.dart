@@ -37,7 +37,7 @@ class SearchProviderItem extends StatelessWidget {
         icon: provider.icon,
         title: provider.title,
         subtitle: provider.description != null ?
-            provider.description :
+            Text(provider.description) :
             null,
         onTap: () => Navigator.push(context, MaterialPageRoute(
           builder: (context) => executePush()

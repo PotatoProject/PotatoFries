@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:potato_fries/bloc/theme_bloc.dart';
 import 'package:potato_fries/pages/fries_page.dart';
 import 'package:potato_fries/provider/qs.dart';
-import 'package:potato_fries/widgets/settings_slider.dart';
-import 'package:potato_fries/widgets/settings_switch.dart';
+import 'package:potato_fries/ui/section_header.dart';
+import 'package:potato_fries/widgets/settings_slider_tile.dart';
+import 'package:potato_fries/widgets/settings_switch_tile.dart';
 import 'package:provider/provider.dart';
 
 class QuickSettings extends StatelessWidget {
@@ -24,30 +25,35 @@ class QuickSettings extends StatelessWidget {
           title: title,
           header: _header(context),
           children: <Widget>[
-            SettingsSwitch(
+            SectionHeader(
+              title: "Colors",
+            ),
+            SettingsSwitchTile(
               icon: Icon(Icons.settings_backup_restore),
               setting: 'qs_panel_bg_use_fw',
               type: SettingType.SYSTEM,
               provider: Provider.of<QSDataProvider>(context),
               title: 'Use framework values for QS',
               subtitle: 'Disable QS colors and use framework values',
+              headerAncestor: "Colors",
             ),
-            SettingsSwitch(
+            SettingsSwitchTile(
               icon: Icon(Icons.colorize),
               setting: 'qs_panel_bg_use_wall',
               type: SettingType.SYSTEM,
               provider: Provider.of<QSDataProvider>(context),
               title: 'Use wallpaper colors',
               subtitle: 'Dynamically choose colors from the wallpaper',
+              headerAncestor: "Colors",
             ),
-            SettingsSlider(
+            SettingsSliderTile(
               setting: 'qs_panel_bg_alpha',
               type: SettingType.SYSTEM,
               min: 100,
               max: 255,
               title: 'QS Panel Opacity',
               provider: Provider.of<QSDataProvider>(context),
-              subtitle: 'Set Alpha for QS background',
+              headerAncestor: "Colors",
             ),
           ],
         ),

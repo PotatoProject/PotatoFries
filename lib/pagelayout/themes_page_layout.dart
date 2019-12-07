@@ -1,12 +1,10 @@
 import 'package:android_flutter_settings/android_flutter_settings.dart';
 import 'package:flutter/material.dart';
-import 'package:potato_fries/internal/common.dart' as common;
 import 'package:potato_fries/internal/methods.dart';
 import 'package:potato_fries/internal/page_data.dart';
 import 'package:potato_fries/pagelayout/page_layout.dart';
 import 'package:potato_fries/ui/section_header.dart';
 import 'package:potato_fries/ui/sizeable_list_tile.dart';
-import 'package:potato_fries/widgets/settings_switch_tile.dart';
 
 class ThemesPageLayout extends PageLayout {
   @override
@@ -19,7 +17,7 @@ class ThemesPageLayout extends PageLayout {
     ),
     SizeableListTile(
       title: 'Accent color',
-      subtitle: 'Pick your favourite color!',
+      subtitle: Text('Pick your favourite color!'),
       icon: Icon(Icons.color_lens),
       headerAncestor: "Colors",
       onTap: () => showColorPicker(

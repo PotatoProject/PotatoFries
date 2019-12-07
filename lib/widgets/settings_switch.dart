@@ -11,12 +11,8 @@ class SettingsSwitch extends StatefulWidget {
   final BaseDataProvider provider;
 
   SettingsSwitch({
-    @required this.title,
     @required this.setting,
     @required this.type,
-    this.subtitle,
-    this.footer,
-    this.icon,
     this.provider,
     this.enabled = true,
   }) : assert(setting != null),

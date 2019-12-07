@@ -7,7 +7,7 @@ class SizeableListTile extends StatelessWidget {
   Widget icon;
   Widget trailing;
   String title;
-  String subtitle;
+  Widget subtitle;
   String footer;
   String headerAncestor;
   bool selected;
@@ -83,8 +83,8 @@ class SizeableListTile extends StatelessWidget {
                   ),
                   Visibility(
                     visible: subtitle != null,
-                    child: Text(
-                      subtitle ?? "",
+                    child: DefaultTextStyle(
+                      child: subtitle,
                       style: TextStyle(
                         color: selected
                             ? selectedColor.withAlpha(160)

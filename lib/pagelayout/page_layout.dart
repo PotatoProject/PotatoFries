@@ -28,7 +28,7 @@ abstract class PageLayout {
             SizeableListTile tile = (body[i] as SizeableListTile);
             searchItems.add(SearchProvider(
                 title: tile.title,
-                description: tile.subtitle,
+                description: (tile.subtitle as Text).data,
                 icon: tile.icon,
                 itemPosition: i,
                 categoryIndex: categoryIndex,
