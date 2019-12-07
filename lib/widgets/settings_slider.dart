@@ -49,6 +49,7 @@ class _SettingsSliderState extends State<SettingsSlider> {
     if (widget.provider != null) {
       widget.provider.data['${widget.type.toString()}/${widget.setting}'] =
           value;
+      widget.provider.data = widget.provider.data;
     }
   }
 

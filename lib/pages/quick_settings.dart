@@ -11,13 +11,14 @@ class QuickSettings extends StatelessWidget {
   final title = 'Quick Settings';
   final icon = Icons.swap_vertical_circle;
   final ThemeBloc bloc;
+  final QSDataProvider provider = QSDataProvider();
 
   QuickSettings({this.bloc});
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider.value(
-      value: QSDataProvider(),
+      value: provider,
       child: Builder(
         builder: (context) => FriesPage(
           title: title,
@@ -98,7 +99,7 @@ class QuickSettings extends StatelessWidget {
                       stops: [0.10, 0.95],
                     ),
                   ),
-                  height: MediaQuery.of(context).size.height / 6,
+                  height: MediaQuery.of(context).size.height / 3.5,
                 ),
                 ListView(
                   physics: BouncingScrollPhysics(),
@@ -112,7 +113,15 @@ class QuickSettings extends StatelessWidget {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
-                          Text('12:00'),
+                          Builder(
+                            builder: (context) {
+                              var now = DateTime.now();
+                              int hour = now.hour;
+                              hour = hour > 12 ? hour - 12 : hour;
+                              int minute = now.minute;
+                              return Text('$hour:$minute');
+                            },
+                          ),
                           Container(),
                         ],
                       ),
@@ -123,23 +132,35 @@ class QuickSettings extends StatelessWidget {
                         height: MediaQuery.of(context).size.height / 8,
                         child: Builder(
                           builder: (context) {
-                            Color QSColor = Colors.red;
-                            String fwValsKey =
-                                '${SettingType.SYSTEM}/qs_panel_bg_use_fw';
-                            print(Provider.of<QSDataProvider>(context).data);
-                            if (Provider.of<QSDataProvider>(context)
-                                    .data[fwValsKey] ??
-                                false) {
-                              QSColor = Theme.of(context).brightness ==
-                                      Brightness.dark
-                                  ? Colors.black
-                                  : Colors.white;
+
+                            Color bgColor = Theme.of(context).brightness ==
+                                Brightness.dark
+                                ? Colors.black
+                                : Colors.white;
+                            double opacity = 1.0;
+                            var provider = Provider.of<QSDataProvider>(context);
+                            String fwValsKey = '${SettingType.SYSTEM}/qs_panel_bg_use_fw';
+                            String wallKey = '${SettingType.SYSTEM}/qs_panel_bg_use_wall';
+                            String colorKey = '${SettingType.SYSTEM}/qs_panel_bg_color';
+                            String alphaKey =
+                                '${SettingType.SYSTEM}/qs_panel_bg_alpha';
+                            if (!(provider.data[fwValsKey] ?? true)) {
+                              opacity = (provider.data[alphaKey] ?? 0 )/ 255;
+                              if (provider.data[wallKey] ?? false) {
+                                bgColor = Color(-12044500);
+                              } else {
+                                int colorData = provider.extraData[colorKey];
+                                if (colorData != null) {
+                                  bgColor = Color(colorData);
+                                }
+                              }
                             }
+
                             return Card(
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(18),
                               ),
-                              color: QSColor,
+                              color: bgColor.withOpacity(opacity),
                               child: Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceEvenly,
@@ -196,13 +217,28 @@ class __QSTileState extends State<_QSTile> {
 
   @override
   Widget build(BuildContext context) {
+    Color iconColor = Theme.of(context).accentColor;
+    var provider = Provider.of<QSDataProvider>(context);
+    String fwValsKey = '${SettingType.SYSTEM}/qs_panel_bg_use_fw';
+    String wallKey = '${SettingType.SYSTEM}/qs_panel_bg_use_wall';
+    String colorKey = '${SettingType.SYSTEM}/qs_panel_bg_color';
+    if (!(provider.data[fwValsKey] ?? true)) {
+      if (provider.data[wallKey] ?? false) {
+        iconColor = Color(-12044500);
+      } else {
+        int colorData = provider.extraData[colorKey];
+        if (colorData != null) {
+          iconColor = Color(colorData);
+        }
+      }
+    }
     return GestureDetector(
       onTap: () => setState(() => enabled = !enabled),
       child: CircleAvatar(
         backgroundColor: enabled ? Colors.white : Colors.white30,
         child: Icon(
           widget.icon,
-          color: enabled ? Theme.of(context).accentColor : Colors.white,
+          color: enabled ? iconColor : Colors.white,
         ),
       ),
     );
