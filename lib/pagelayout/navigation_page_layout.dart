@@ -1,5 +1,5 @@
+import 'package:android_flutter_settings/android_flutter_settings.dart';
 import 'package:flutter/material.dart';
-import 'package:potato_fries/internal/common.dart';
 import 'package:potato_fries/pagelayout/page_layout.dart';
 import 'package:potato_fries/ui/section_header.dart';
 import 'package:potato_fries/widgets/settings_switch_tile.dart';
@@ -11,13 +11,13 @@ class NavigationPageLayout extends PageLayout {
   @override
   List<Widget> body(BuildContext context) => [
     SectionHeader(
-      title: "Cool category",
+      title: "Yeet",
     ),
     SettingsSwitchTile(
-      title: 'Cool setting',
-      type: SettingType.SYSTEM,
-      setting: 'cool_setting',
-      headerAncestor: "Cool category",
+      title: 'Airplane mode enabled',
+      type: SettingType.GLOBAL,
+      setting: 'airplane_mode_on',
+      headerAncestor: "Yeet",
     ),
   ];
 }

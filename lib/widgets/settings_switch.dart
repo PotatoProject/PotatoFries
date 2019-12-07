@@ -1,5 +1,5 @@
+import 'package:android_flutter_settings/android_flutter_settings.dart';
 import 'package:flutter/material.dart';
-import 'package:potato_fries/internal/common.dart';
 
 class SettingsSwitch extends StatefulWidget {
   final String setting;
@@ -18,19 +18,26 @@ class SettingsSwitch extends StatefulWidget {
 }
 
 class _SettingsSwitchState extends State<SettingsSwitch> {
+  bool currentState = false;
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: _tmp(),
+      future: getSettingValue(),
       initialData: false,
       builder: (context, snapshot) => Switch(
         activeColor: Theme.of(context).accentColor,
         value: snapshot.data,
-        onChanged: widget.enabled ? (b) {} : null,
+        onChanged: widget.enabled ? (value) async {
+          bool newValue = await AndroidFlutterSettings.putBool(widget.setting, value, widget.type);
+          setState(() => currentState = newValue);
+        } : null,
       ),
     );
   }
 
-  // TODO: Replace with native call
-  Future<bool> _tmp() async => false;
+  Future<bool> getSettingValue() async {
+    currentState = await AndroidFlutterSettings.getBool(widget.setting, widget.type);
+    return currentState;
+  }
 }
