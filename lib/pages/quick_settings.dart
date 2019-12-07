@@ -1,64 +1,64 @@
 import 'package:android_flutter_settings/android_flutter_settings.dart';
 import 'package:flutter/material.dart';
 import 'package:potato_fries/bloc/theme_bloc.dart';
+import 'package:potato_fries/pagelayout/quick_settings_page_layout.dart';
 import 'package:potato_fries/pages/fries_page.dart';
 import 'package:potato_fries/provider/qs.dart';
-import 'package:potato_fries/ui/section_header.dart';
-import 'package:potato_fries/widgets/settings_slider_tile.dart';
-import 'package:potato_fries/widgets/settings_switch_tile.dart';
 import 'package:provider/provider.dart';
 
 class QuickSettings extends StatelessWidget {
   final title = 'Quick Settings';
   final icon = Icons.swap_vertical_circle;
   final ThemeBloc bloc;
+  final int keyIndex;
   final QSDataProvider provider = QSDataProvider();
 
-  QuickSettings({this.bloc});
+  QuickSettings({
+    this.bloc,
+    this.keyIndex,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider.value(
-      value: provider,
-      child: Builder(
-        builder: (context) => FriesPage(
-          title: title,
-          header: _header(context),
-          children: <Widget>[
-            SectionHeader(
-              title: "Colors",
-            ),
-            SettingsSwitchTile(
-              icon: Icon(Icons.settings_backup_restore),
-              setting: 'qs_panel_bg_use_fw',
-              type: SettingType.SYSTEM,
-              provider: Provider.of<QSDataProvider>(context),
-              title: 'Use framework values for QS',
-              subtitle: 'Disable QS colors and use framework values',
-              headerAncestor: "Colors",
-            ),
-            SettingsSwitchTile(
-              icon: Icon(Icons.colorize),
-              setting: 'qs_panel_bg_use_wall',
-              type: SettingType.SYSTEM,
-              provider: Provider.of<QSDataProvider>(context),
-              title: 'Use wallpaper colors',
-              subtitle: 'Dynamically choose colors from the wallpaper',
-              headerAncestor: "Colors",
-            ),
-            SettingsSliderTile(
-              setting: 'qs_panel_bg_alpha',
-              type: SettingType.SYSTEM,
-              min: 100,
-              max: 255,
-              title: 'QS Panel Opacity',
-              provider: Provider.of<QSDataProvider>(context),
-              headerAncestor: "Colors",
-            ),
-          ],
-        ),
-      ),
+    Map<String, dynamic> builtLayout = QuickSettingsPageLayout().build(context, keyIndex, provider: provider);
+    List<GlobalKey> keys = builtLayout["keys"];
+    List<Widget> children = builtLayout["body"];
+
+    Future.delayed(
+      Duration.zero,
+      () async {
+        if (keyIndex != null) {
+          Scrollable.ensureVisible(keys[keyIndex].currentContext);
+        }
+      },
     );
+
+    if(keyIndex != null) {
+      return Scaffold(
+        backgroundColor: Theme.of(context).cardColor,
+        body: ChangeNotifierProvider.value(
+          value: provider,
+          child: Builder(
+            builder: (context) => FriesPage(
+              title: title,
+              header: _header(context),
+              children: children
+            ),
+          ),
+        ),
+      );
+    } else {
+      return ChangeNotifierProvider.value(
+        value: provider,
+        child: Builder(
+          builder: (context) => FriesPage(
+            title: title,
+            header: _header(context),
+            children: children
+          ),
+        ),
+      );
+    }
   }
 
   Widget _header(context) => Padding(

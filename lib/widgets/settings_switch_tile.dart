@@ -40,7 +40,7 @@ class SettingsSwitchTile extends StatelessWidget {
     return SizeableListTile(
       title: title,
       icon: icon,
-      subtitle: Text(subtitle),
+      subtitle: subtitle == null ? null : Text(subtitle),
       footer: footer,
       headerAncestor: headerAncestor,
       trailing: SettingsSwitch(

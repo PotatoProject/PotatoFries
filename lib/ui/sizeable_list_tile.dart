@@ -84,7 +84,7 @@ class SizeableListTile extends StatelessWidget {
                   Visibility(
                     visible: subtitle != null,
                     child: DefaultTextStyle(
-                      child: subtitle,
+                      child: subtitle ?? Container(),
                       style: TextStyle(
                         color: selected
                             ? selectedColor.withAlpha(160)

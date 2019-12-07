@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:potato_fries/internal/search_provider.dart';
+import 'package:potato_fries/provider/base.dart';
 import 'package:potato_fries/ui/section_header.dart';
 import 'package:potato_fries/ui/sizeable_list_tile.dart';
+import 'package:potato_fries/widgets/settings_slider_tile.dart';
 import 'package:potato_fries/widgets/settings_switch_tile.dart';
 
 abstract class PageLayout {
-  List<Widget> body(BuildContext context);
+  List<Widget> body(BuildContext context, {BaseDataProvider provider});
 
   /// This value represents what category is the pagelayout
   /// 0 = qs panel
@@ -32,7 +34,7 @@ abstract class PageLayout {
                 icon: tile.icon,
                 itemPosition: i,
                 categoryIndex: categoryIndex,
-              headerAncestor: tile.headerAncestor,));
+                headerAncestor: tile.headerAncestor,));
 
             break;
           case "SettingsSwitchTile":
@@ -46,8 +48,20 @@ abstract class PageLayout {
                 icon: tile.icon,
                 itemPosition: i,
                 categoryIndex: categoryIndex,
-              headerAncestor: tile.headerAncestor,
-            ));
+                headerAncestor: tile.headerAncestor));
+
+            break;
+          case "SettingsSliderTile":
+            SettingsSliderTile tile = (body[i] as SettingsSliderTile);
+            searchItems.add(SearchProvider(
+                title: tile.title,
+                setting: tile.setting,
+                type: tile.type,
+                inputType: SettingInputType.SLIDER,
+                icon: tile.icon,
+                itemPosition: i,
+                categoryIndex: categoryIndex,
+                headerAncestor: tile.headerAncestor));
 
             break;
           case "SectionHeader":
@@ -67,8 +81,8 @@ abstract class PageLayout {
     }
   }
 
-  Map<String, dynamic> build(BuildContext context, int selectedIndex) {
-    List<Widget> body = this.body(context);
+  Map<String, dynamic> build(BuildContext context, int selectedIndex, {BaseDataProvider provider}) {
+    List<Widget> body = this.body(context, provider: provider);
 
     if (body == null) {
       throw Exception(

@@ -3,6 +3,7 @@ import 'dart:core';
 import 'package:flutter/widgets.dart';
 import 'package:potato_fries/bloc/theme_bloc.dart';
 import 'package:potato_fries/pagelayout/navigation_page_layout.dart';
+import 'package:potato_fries/pagelayout/quick_settings_page_layout.dart';
 import 'package:potato_fries/pagelayout/themes_page_layout.dart';
 import 'package:potato_fries/pages/buttons_and_navigation.dart';
 import 'package:potato_fries/pages/quick_settings.dart';
@@ -24,6 +25,7 @@ void setPages(BuildContext context, ThemeBloc passedBloc) {
       LockScreen()
     ];
     
+    QuickSettingsPageLayout().compileProviders(context);
     NavigationPageLayout().compileProviders(context);
     ThemesPageLayout().compileProviders(context);
   }
