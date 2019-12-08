@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:potato_fries/internal/methods.dart';
 import 'package:potato_fries/internal/page_data.dart';
-import 'package:potato_fries/ui/sizeable_list_tile.dart';
 import 'package:potato_fries/ui/croquette_badge.dart';
-import 'package:potato_fries/ui/svg_icon.dart';
+import 'package:potato_fries/ui/sizeable_list_tile.dart';
 
 class BottomAppSheet extends StatefulWidget {
   final AnimationController controller;
@@ -62,8 +61,10 @@ class _BottomAppSheetState extends State<BottomAppSheet> {
 
   @override
   Widget build(BuildContext context) {
-    BottomAppSheet._iconTurns ??= widget.controller.drive(BottomAppSheet._halfTween.chain(BottomAppSheet._easeInTween));
-    BottomAppSheet._positionChange ??= widget.controller.drive(BottomAppSheet._positionTween.chain(BottomAppSheet._easeInTween));
+    BottomAppSheet._iconTurns ??= widget.controller
+        .drive(BottomAppSheet._halfTween.chain(BottomAppSheet._easeInTween));
+    BottomAppSheet._positionChange ??= widget.controller.drive(
+        BottomAppSheet._positionTween.chain(BottomAppSheet._easeInTween));
     return AnimatedBuilder(
       animation: BottomAppSheet._positionChange,
       builder: (context, child) => Positioned(
@@ -98,7 +99,8 @@ class _BottomAppSheetState extends State<BottomAppSheet> {
                           children: <Widget>[
                             Padding(
                               padding: EdgeInsets.all(8),
-                              child: Icon((pages[widget.currentPage] as dynamic).icon),
+                              child: Icon(
+                                  (pages[widget.currentPage] as dynamic).icon),
                             ),
                             Spacer(flex: 3),
                             IconButton(
@@ -128,10 +130,10 @@ class _BottomAppSheetState extends State<BottomAppSheet> {
                                   color: Theme.of(context).accentColor,
                                 ),
                               ),
-                              onPressed: () =>
-                                  widget.controller.status == AnimationStatus.completed
-                                      ? widget.controller.reverse()
-                                      : widget.controller.forward(),
+                              onPressed: () => widget.controller.status ==
+                                      AnimationStatus.completed
+                                  ? widget.controller.reverse()
+                                  : widget.controller.forward(),
                             ),
                           ],
                         ),
@@ -142,8 +144,8 @@ class _BottomAppSheetState extends State<BottomAppSheet> {
                 Visibility(
                   visible: widget.controller.value > 0,
                   child: AnimatedBuilder(
-                    animation:
-                        Tween<double>(begin: 0, end: 1).animate(widget.controller),
+                    animation: Tween<double>(begin: 0, end: 1)
+                        .animate(widget.controller),
                     builder: (context, child) => Opacity(
                       opacity: widget.controller.value,
                       child: SingleChildScrollView(
@@ -187,8 +189,8 @@ class _BottomAppSheetState extends State<BottomAppSheet> {
     return widgets;
   }
 
-  void _onDrag(DragUpdateDetails details) =>
-      widget.controller.value -= details.primaryDelta / ((50 * 7.0) + 4 + 64 - 64);
+  void _onDrag(DragUpdateDetails details) => widget.controller.value -=
+      details.primaryDelta / ((50 * 7.0) + 4 + 64 - 64);
 
   void _onDragEnd(DragEndDetails details) {
     double minFlingVelocity = 365.0;

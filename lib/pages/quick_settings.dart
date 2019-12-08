@@ -20,7 +20,8 @@ class QuickSettings extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Map<String, dynamic> builtLayout = QuickSettingsPageLayout().build(context, keyIndex, provider: provider);
+    Map<String, dynamic> builtLayout =
+        QuickSettingsPageLayout().build(context, keyIndex, provider: provider);
     List<GlobalKey> keys = builtLayout["keys"];
     List<Widget> children = builtLayout["body"];
 
@@ -33,17 +34,14 @@ class QuickSettings extends StatelessWidget {
       },
     );
 
-    if(keyIndex != null) {
+    if (keyIndex != null) {
       return Scaffold(
         backgroundColor: Theme.of(context).cardColor,
         body: ChangeNotifierProvider.value(
           value: provider,
           child: Builder(
             builder: (context) => FriesPage(
-              title: title,
-              header: _header(context),
-              children: children
-            ),
+                title: title, header: _header(context), children: children),
           ),
         ),
       );
@@ -52,10 +50,7 @@ class QuickSettings extends StatelessWidget {
         value: provider,
         child: Builder(
           builder: (context) => FriesPage(
-            title: title,
-            header: _header(context),
-            children: children
-          ),
+              title: title, header: _header(context), children: children),
         ),
       );
     }
@@ -138,20 +133,22 @@ class QuickSettings extends StatelessWidget {
                         height: MediaQuery.of(context).size.height / 8,
                         child: Builder(
                           builder: (context) {
-
-                            Color bgColor = Theme.of(context).brightness ==
-                                Brightness.dark
-                                ? Colors.black
-                                : Colors.white;
+                            Color bgColor =
+                                Theme.of(context).brightness == Brightness.dark
+                                    ? Colors.black
+                                    : Colors.white;
                             double opacity = 1.0;
                             var provider = Provider.of<QSDataProvider>(context);
-                            String fwValsKey = '${SettingType.SYSTEM}/qs_panel_bg_use_fw';
-                            String wallKey = '${SettingType.SYSTEM}/qs_panel_bg_use_wall';
-                            String colorKey = '${SettingType.SYSTEM}/qs_panel_bg_color';
+                            String fwValsKey =
+                                '${SettingType.SYSTEM}/qs_panel_bg_use_fw';
+                            String wallKey =
+                                '${SettingType.SYSTEM}/qs_panel_bg_use_wall';
+                            String colorKey =
+                                '${SettingType.SYSTEM}/qs_panel_bg_color';
                             String alphaKey =
                                 '${SettingType.SYSTEM}/qs_panel_bg_alpha';
                             if (!(provider.data[fwValsKey] ?? true)) {
-                              opacity = (provider.data[alphaKey] ?? 0 )/ 255;
+                              opacity = (provider.data[alphaKey] ?? 0) / 255;
                               if (provider.data[wallKey] ?? false) {
                                 bgColor = Color(-12044500);
                               } else {

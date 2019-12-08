@@ -14,7 +14,7 @@ import 'package:flutter/material.dart';
 ///
 /// Note: (s) before an item in the list means that the user can search for that
 ///       (o) before an item in the list means that the parameter is optional
-/// 
+///
 /// A provider is made of 6 things basically:
 /// - (s) The title of the provider (usually you wanna put in the listtile title)
 /// - (s) (o) The provider description, like title it's usually the subtitle of the listtile, but it can be anything
@@ -42,12 +42,12 @@ import 'package:flutter/material.dart';
 ///
 ///
 /// Why can't we generate those?
-/// 
+///
 /// At first glance i thought of adding the generator code on the ui elements,
 /// but later figured out that those don't get layed out when you first run the app,
 /// so the user would have to actually open every page for the providers to be added,
 /// so this method seems better for now. Improvements are always welcome.
-/// 
+///
 
 List<SearchProvider> searchItems = [];
 
@@ -85,7 +85,4 @@ class SearchProvider {
   }
 }
 
-enum SettingInputType {
-  SLIDER,
-  SWITCH
-}
+enum SettingInputType { SLIDER, SWITCH }

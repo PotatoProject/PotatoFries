@@ -27,6 +27,7 @@ class _ColorPickerState extends State<ColorPicker> {
     widget.onChange(HSLColor.fromAHSL(1, hue, saturation, lightness).toColor());
     super.setState(fn);
   }
+
   @override
   Widget build(BuildContext context) {
     lightness = widget.lightnessLocked ? 0.5 : lightness;

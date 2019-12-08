@@ -13,32 +13,32 @@ class ThemesPageLayout extends PageLayout {
 
   @override
   List<Widget> body(BuildContext context, {BaseDataProvider provider}) => [
-    SectionHeader(
-      title: "Colors",
-    ),
-    SizeableListTile(
-      title: 'Accent color',
-      subtitle: Text('Pick your favourite color!'),
-      icon: Icon(Icons.color_lens),
-      headerAncestor: "Colors",
-      onTap: () => showColorPicker(
-        context,
-        lightnessLocked: true,
-        onChange: (Color color) => bloc.changeAccent(color),
-        onApply: (String dark, String light) {
-          AndroidFlutterSettings.setProp(
-            'persist.sys.theme.accent_dark',
-            dark,
-          );
-          AndroidFlutterSettings.setProp(
-            'persist.sys.theme.accent_light',
-            light,
-          );
-        },
-      ),
-    ),
-    SectionHeader(
-      title: "QS panel",
-    ),
-  ];
+        SectionHeader(
+          title: "Colors",
+        ),
+        SizeableListTile(
+          title: 'Accent color',
+          subtitle: Text('Pick your favourite color!'),
+          icon: Icon(Icons.color_lens),
+          headerAncestor: "Colors",
+          onTap: () => showColorPicker(
+            context,
+            lightnessLocked: true,
+            onChange: (Color color) => bloc.changeAccent(color),
+            onApply: (String dark, String light) {
+              AndroidFlutterSettings.setProp(
+                'persist.sys.theme.accent_dark',
+                dark,
+              );
+              AndroidFlutterSettings.setProp(
+                'persist.sys.theme.accent_light',
+                light,
+              );
+            },
+          ),
+        ),
+        SectionHeader(
+          title: "QS panel",
+        ),
+      ];
 }

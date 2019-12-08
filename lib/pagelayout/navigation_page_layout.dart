@@ -11,14 +11,14 @@ class NavigationPageLayout extends PageLayout {
 
   @override
   List<Widget> body(BuildContext context, {BaseDataProvider provider}) => [
-    SectionHeader(
-      title: "Yeet",
-    ),
-    SettingsSwitchTile(
-      title: 'Airplane mode enabled',
-      type: SettingType.GLOBAL,
-      setting: 'airplane_mode_on',
-      headerAncestor: "Yeet",
-    ),
-  ];
+        SectionHeader(
+          title: "Yeet",
+        ),
+        SettingsSwitchTile(
+          title: 'Airplane mode enabled',
+          type: SettingType.GLOBAL,
+          setting: 'airplane_mode_on',
+          headerAncestor: "Yeet",
+        ),
+      ];
 }

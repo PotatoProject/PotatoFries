@@ -1,7 +1,6 @@
 import 'package:android_flutter_settings/android_flutter_settings.dart';
 import 'package:flutter/material.dart';
 import 'package:potato_fries/provider/base.dart';
-import 'package:potato_fries/ui/sizeable_list_tile.dart';
 
 class SettingsSwitch extends StatefulWidget {
   final String setting;
@@ -15,8 +14,8 @@ class SettingsSwitch extends StatefulWidget {
     @required this.type,
     this.provider,
     this.enabled = true,
-  }) : assert(setting != null),
-       assert(type != null);
+  })  : assert(setting != null),
+        assert(type != null);
 
   @override
   createState() => _SettingsSwitchState();

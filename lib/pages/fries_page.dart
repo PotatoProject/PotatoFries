@@ -55,56 +55,58 @@ class FriesPage extends StatelessWidget {
           elevation: 0,
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           title: Text(title),
-          actions: showActions ? <Widget>[
-            IconButton(
-              icon: Icon(Icons.search),
-              onPressed: () => Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => SearchRoute())),
-            ),
-            PopupMenuButton(
-              elevation: 3,
-              itemBuilder: (context) {
-                return [
-                  PopupMenuItem(
-                    value: 0,
-                    child: ListTile(
-                      leading: Icon(Icons.system_update),
-                      title: Text("PotatoCenter"),
-                      contentPadding: EdgeInsets.all(0),
-                    ),
+          actions: showActions
+              ? <Widget>[
+                  IconButton(
+                    icon: Icon(Icons.search),
+                    onPressed: () => Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => SearchRoute())),
                   ),
-                  PopupMenuItem(
-                    value: 1,
-                    child: ListTile(
-                      leading: Icon(Icons.person),
-                      title: Text("Discover POSP team"),
-                      contentPadding: EdgeInsets.all(0),
-                    ),
+                  PopupMenuButton(
+                    elevation: 3,
+                    itemBuilder: (context) {
+                      return [
+                        PopupMenuItem(
+                          value: 0,
+                          child: ListTile(
+                            leading: Icon(Icons.system_update),
+                            title: Text("PotatoCenter"),
+                            contentPadding: EdgeInsets.all(0),
+                          ),
+                        ),
+                        PopupMenuItem(
+                          value: 1,
+                          child: ListTile(
+                            leading: Icon(Icons.person),
+                            title: Text("Discover POSP team"),
+                            contentPadding: EdgeInsets.all(0),
+                          ),
+                        ),
+                        PopupMenuItem(
+                          value: 2,
+                          child: ListTile(
+                            leading: Icon(Icons.info),
+                            title: Text("Build info"),
+                            contentPadding: EdgeInsets.all(0),
+                          ),
+                        ),
+                      ];
+                    },
+                    onSelected: (value) {
+                      switch (value) {
+                        case 0:
+                          break;
+                        case 1:
+                          launchUrl("https://potatoproject.co/team");
+                          break;
+                        case 2:
+                          _showDialog();
+                          break;
+                      }
+                    },
                   ),
-                  PopupMenuItem(
-                    value: 2,
-                    child: ListTile(
-                      leading: Icon(Icons.info),
-                      title: Text("Build info"),
-                      contentPadding: EdgeInsets.all(0),
-                    ),
-                  ),
-                ];
-              },
-              onSelected: (value) {
-                switch(value) {
-                  case 0:
-                    break;
-                  case 1:
-                    launchUrl("https://potatoproject.co/team");
-                    break;
-                  case 2:
-                    _showDialog();
-                    break;
-                }
-              },
-            ),
-          ] : null,
+                ]
+              : null,
         ),
         Container(child: header),
         Expanded(

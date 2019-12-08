@@ -6,10 +6,10 @@ import 'package:potato_fries/pagelayout/navigation_page_layout.dart';
 import 'package:potato_fries/pagelayout/quick_settings_page_layout.dart';
 import 'package:potato_fries/pagelayout/themes_page_layout.dart';
 import 'package:potato_fries/pages/buttons_and_navigation.dart';
+import 'package:potato_fries/pages/lock_screen.dart';
 import 'package:potato_fries/pages/quick_settings.dart';
 import 'package:potato_fries/pages/status_bar.dart';
 import 'package:potato_fries/pages/themes.dart';
-import 'package:potato_fries/pages/lock_screen.dart';
 
 List<Widget> pages = [];
 ThemeBloc bloc;
@@ -24,7 +24,7 @@ void setPages(BuildContext context, ThemeBloc passedBloc) {
       StatusBar(bloc: bloc),
       LockScreen()
     ];
-    
+
     QuickSettingsPageLayout().compileProviders(context);
     NavigationPageLayout().compileProviders(context);
     ThemesPageLayout().compileProviders(context);

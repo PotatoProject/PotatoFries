@@ -9,7 +9,7 @@ class ButtonsAndNavigation extends StatelessWidget {
   final icon = Icons.touch_app;
   final ThemeBloc bloc;
 
-final int keyIndex;
+  final int keyIndex;
 
   ButtonsAndNavigation({
     this.bloc,
@@ -18,20 +18,21 @@ final int keyIndex;
 
   @override
   Widget build(BuildContext context) {
-    Map<String, dynamic> builtLayout = NavigationPageLayout().build(context, keyIndex);
+    Map<String, dynamic> builtLayout =
+        NavigationPageLayout().build(context, keyIndex);
     List<GlobalKey> keys = builtLayout["keys"];
     List<Widget> children = builtLayout["body"];
 
     Future.delayed(
       Duration.zero,
-          () async {
+      () async {
         if (keyIndex != null) {
           Scrollable.ensureVisible(keys[keyIndex].currentContext);
         }
       },
     );
 
-    if(keyIndex != null) {
+    if (keyIndex != null) {
       return Scaffold(
         backgroundColor: Theme.of(context).cardColor,
         body: FriesPage(
@@ -41,10 +42,7 @@ final int keyIndex;
         ),
       );
     } else {
-      return FriesPage(
-          title: title,
-          children: children
-      );
+      return FriesPage(title: title, children: children);
     }
   }
 }

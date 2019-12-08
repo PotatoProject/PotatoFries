@@ -27,14 +27,12 @@ class SettingsSwitchTile extends StatelessWidget {
     this.onTap,
     this.provider,
     this.headerAncestor,
-  })  : assert(
-          footer == null && headerAncestor != null ||
-          footer != null && headerAncestor == null
-        ),
+  })  : assert(footer == null && headerAncestor != null ||
+            footer != null && headerAncestor == null),
         assert(title != null),
         assert(setting != null),
         assert(type != null);
-  
+
   @override
   Widget build(BuildContext context) {
     return SizeableListTile(

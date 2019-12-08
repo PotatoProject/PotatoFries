@@ -13,7 +13,7 @@ class SectionHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if(color == null) {
+    if (color == null) {
       color = Theme.of(context).accentColor;
     }
 
@@ -28,10 +28,7 @@ class SectionHeader extends StatelessWidget {
           padding: EdgeInsets.symmetric(vertical: 6, horizontal: 16),
           child: Text(
             title.toUpperCase(),
-            style: TextStyle(
-              color: color,
-              fontWeight: FontWeight.bold
-            ),
+            style: TextStyle(color: color, fontWeight: FontWeight.bold),
           ),
         ),
       ],

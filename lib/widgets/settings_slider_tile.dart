@@ -29,10 +29,8 @@ class SettingsSliderTile extends StatefulWidget {
     this.provider,
     this.defval,
     this.headerAncestor,
-  })  : assert(
-          footer == null && headerAncestor != null ||
-          footer != null && headerAncestor == null
-        ),
+  })  : assert(footer == null && headerAncestor != null ||
+            footer != null && headerAncestor == null),
         assert(title != null),
         assert(setting != null),
         assert(type != null);
@@ -65,7 +63,7 @@ class _SettingsSliderTileState extends State<SettingsSliderTile> {
         provider: widget.provider,
         min: widget.min,
         max: widget.max,
-        onChanged: (v) => setState(()=>value = v),
+        onChanged: (v) => setState(() => value = v),
       ),
       footer: widget.footer,
       headerAncestor: widget.headerAncestor,

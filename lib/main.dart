@@ -9,27 +9,28 @@ void main() => runApp(PotatoFriesRoot());
 
 class PotatoFriesRoot extends StatelessWidget {
   final bloc = ThemeBloc();
+
   @override
   Widget build(context) => StreamBuilder<Color>(
-    initialData: Colors.blue,
-    stream: bloc.currentAccent,
-    builder: (context, snapshot) {
-      return MaterialApp(
-            title: 'Fries',
-            theme: ThemeData.light().copyWith(accentColor: snapshot.data),
-            darkTheme: ThemeData.dark().copyWith(
-                accentColor: snapshot.data,
-                cardColor: Color(0xFF212121),
-                scaffoldBackgroundColor: Color(0xFF151618)),
-            home: MyHomePage(bloc: bloc),
-            debugShowCheckedModeBanner: false,
-          );
-    }
-  );
+      initialData: Colors.blue,
+      stream: bloc.currentAccent,
+      builder: (context, snapshot) {
+        return MaterialApp(
+          title: 'Fries',
+          theme: ThemeData.light().copyWith(accentColor: snapshot.data),
+          darkTheme: ThemeData.dark().copyWith(
+              accentColor: snapshot.data,
+              cardColor: Color(0xFF212121),
+              scaffoldBackgroundColor: Color(0xFF151618)),
+          home: MyHomePage(bloc: bloc),
+          debugShowCheckedModeBanner: false,
+        );
+      });
 }
 
 class MyHomePage extends StatefulWidget {
   final ThemeBloc bloc;
+
   MyHomePage({this.bloc});
 
   @override
@@ -73,14 +74,12 @@ class _MyHomePageState extends State<MyHomePage> {
   List<BottomNavigationBarItem> get navbarItemBuilder {
     List<BottomNavigationBarItem> items = [];
 
-    for(int i = 0; i < pages.length; i++) {
-      items.add(
-        BottomNavigationBarItem(
-          icon: Icon((pages[i] as dynamic).icon),
-          title: Text((pages[i] as dynamic).title),
-          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        )
-      );
+    for (int i = 0; i < pages.length; i++) {
+      items.add(BottomNavigationBarItem(
+        icon: Icon((pages[i] as dynamic).icon),
+        title: Text((pages[i] as dynamic).title),
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      ));
     }
 
     return items;

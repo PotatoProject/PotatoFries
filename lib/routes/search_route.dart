@@ -34,41 +34,47 @@ class _SearchRouteState extends State<SearchRoute> {
             border: InputBorder.none,
             hintText: "Search...",
           ),
-          style: TextStyle(
-            fontSize: 20
-          ),
+          style: TextStyle(fontSize: 20),
         ),
       ),
-      body: widgets.isEmpty ?
-          Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Icon(
-                  Icons.search,
-                  color: Theme.of(context).textTheme.subtitle.color.withAlpha(120),
-                  size: 72,
-                ),
-                Divider(
-                  color: Colors.transparent,
-                  height: 14,
-                ),
-                Text(
-                  searchTerms == "" ?
-                      "Input something to start searching" :
-                      "Nothing found",
-                  style: TextStyle(
-                    fontSize: 17,
-                    fontWeight: FontWeight.w500,
-                    color: Theme.of(context).textTheme.subtitle.color.withAlpha(120),
+      body: widgets.isEmpty
+          ? Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Icon(
+                    Icons.search,
+                    color: Theme.of(context)
+                        .textTheme
+                        .subtitle
+                        .color
+                        .withAlpha(120),
+                    size: 72,
                   ),
-                ),
-              ],
+                  Divider(
+                    color: Colors.transparent,
+                    height: 14,
+                  ),
+                  Text(
+                    searchTerms == ""
+                        ? "Input something to start searching"
+                        : "Nothing found",
+                    style: TextStyle(
+                      fontSize: 17,
+                      fontWeight: FontWeight.w500,
+                      color: Theme.of(context)
+                          .textTheme
+                          .subtitle
+                          .color
+                          .withAlpha(120),
+                    ),
+                  ),
+                ],
+              ),
+            )
+          : ListView(
+              children: widgets,
             ),
-          ) :
-          ListView(
-            children: widgets,
-          ),
     );
   }
 
@@ -76,10 +82,11 @@ class _SearchRouteState extends State<SearchRoute> {
     List<SearchProvider> providerList = [];
     List<Widget> widgetList = [];
 
-    if(searchTerms != "") {
+    if (searchTerms != "") {
       for (int i = 0; i < searchItems.length; i++) {
         List<String> title = searchItems[i].title.toLowerCase().split(" ");
-        List<String> description = searchItems[i].description?.toLowerCase()?.split(" ") ?? [];
+        List<String> description =
+            searchItems[i].description?.toLowerCase()?.split(" ") ?? [];
         String query = searchTerms.toLowerCase();
 
         bool addToList = title.any((item) => item.startsWith(query)) ||
@@ -95,6 +102,7 @@ class _SearchRouteState extends State<SearchRoute> {
       }
 
       return widgetList;
-    } else return [];
+    } else
+      return [];
   }
 }

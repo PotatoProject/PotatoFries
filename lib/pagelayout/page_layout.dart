@@ -29,12 +29,13 @@ abstract class PageLayout {
           case "SizeableListTile":
             SizeableListTile tile = (body[i] as SizeableListTile);
             searchItems.add(SearchProvider(
-                title: tile.title,
-                description: (tile.subtitle as Text).data,
-                icon: tile.icon,
-                itemPosition: i,
-                categoryIndex: categoryIndex,
-                headerAncestor: tile.headerAncestor,));
+              title: tile.title,
+              description: (tile.subtitle as Text).data,
+              icon: tile.icon,
+              itemPosition: i,
+              categoryIndex: categoryIndex,
+              headerAncestor: tile.headerAncestor,
+            ));
 
             break;
           case "SettingsSwitchTile":
@@ -67,9 +68,9 @@ abstract class PageLayout {
             SectionHeader tile = (body[i] as SectionHeader);
 
             searchItems.add(SearchProvider(
-              title: tile.title,
-              itemPosition: i,
-              categoryIndex: categoryIndex));
+                title: tile.title,
+                itemPosition: i,
+                categoryIndex: categoryIndex));
 
             break;
           default:
@@ -80,7 +81,8 @@ abstract class PageLayout {
     }
   }
 
-  Map<String, dynamic> build(BuildContext context, int selectedIndex, {BaseDataProvider provider}) {
+  Map<String, dynamic> build(BuildContext context, int selectedIndex,
+      {BaseDataProvider provider}) {
     List<Widget> body = this.body(context, provider: provider);
 
     if (body == null) {

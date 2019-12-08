@@ -16,7 +16,8 @@ class Themes extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Map<String, dynamic> builtLayout = ThemesPageLayout().build(context, keyIndex);
+    Map<String, dynamic> builtLayout =
+        ThemesPageLayout().build(context, keyIndex);
     List<GlobalKey> keys = builtLayout["keys"];
     List<Widget> children = builtLayout["body"];
 
@@ -29,7 +30,7 @@ class Themes extends StatelessWidget {
       },
     );
 
-    if(keyIndex != null) {
+    if (keyIndex != null) {
       return Scaffold(
         backgroundColor: Theme.of(context).cardColor,
         body: FriesPage(
@@ -41,10 +42,7 @@ class Themes extends StatelessWidget {
       );
     } else {
       return FriesPage(
-        title: title,
-        header: _header(context),
-        children: children
-      );
+          title: title, header: _header(context), children: children);
     }
   }
 
@@ -69,7 +67,8 @@ class Themes extends StatelessWidget {
                     height: MediaQuery.of(context).size.height / 16,
                     child: Card(
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(MediaQuery.of(context).size.height / 32),
+                        borderRadius: BorderRadius.circular(
+                            MediaQuery.of(context).size.height / 32),
                       ),
                       color: Theme.of(context).cardColor,
                       child: Row(

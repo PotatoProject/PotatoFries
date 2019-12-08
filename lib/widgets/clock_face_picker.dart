@@ -23,10 +23,13 @@ class _ClockFacePickerState extends State<ClockFacePicker> {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      leading: (dropDownValue == 'Default') ? _defaultClock() :
-      ((dropDownValue == 'Bubble') ? Icon(Icons.bubble_chart) :
-      (dropDownValue == 'Analog') ? Icon(Icons.timer) :
-      (dropDownValue == 'Type') ? _typeClock():Container()),
+      leading: (dropDownValue == 'Default')
+          ? _defaultClock()
+          : ((dropDownValue == 'Bubble')
+              ? Icon(Icons.bubble_chart)
+              : (dropDownValue == 'Analog')
+                  ? Icon(Icons.timer)
+                  : (dropDownValue == 'Type') ? _typeClock() : Container()),
       title: Text("Clock face"),
       subtitle: Container(
         child: Row(

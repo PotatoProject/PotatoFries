@@ -12,7 +12,8 @@ void launchUrl(String url) async {
 void showColorPicker(
   BuildContext context, {
   bool lightnessLocked = false,
-  Function onApply, Function onChange,
+  Function onApply,
+  Function onChange,
 }) {
   showModalBottomSheet(
     context: context,
