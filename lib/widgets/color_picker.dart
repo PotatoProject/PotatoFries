@@ -10,6 +10,10 @@ class ColorPicker extends StatefulWidget {
   final double lightnessDeltaCenter;
   final double lightnessDeltaEnd;
 
+  final Color defaultDark;
+  final Color defaultLight;
+  final Color defaultColor;
+
   ColorPicker({
     this.lightnessLocked = false,
     this.onApply,
@@ -19,6 +23,9 @@ class ColorPicker extends StatefulWidget {
     this.lightnessMax = 1,
     this.lightnessDeltaCenter = 0,
     this.lightnessDeltaEnd = 0,
+    this.defaultDark,
+    this.defaultLight,
+    this.defaultColor,
   })  : assert(lightnessDeltaCenter + lightnessDeltaEnd <= 1),
         assert(!lightnessLocked &&
             (lightnessDeltaCenter != 0 || lightnessDeltaEnd != 0));
@@ -31,6 +38,30 @@ class _ColorPickerState extends State<ColorPicker> {
   double hue = 0;
   double saturation = 0.5;
   double lightness = 0.5;
+
+  @override
+  void initState() {
+    Future.delayed(
+      Duration.zero,
+      () => setState(
+        () {
+          if (widget.defaultColor != null) {
+            var c = HSLColor.fromColor(widget.defaultColor);
+            hue = c.hue;
+            saturation = c.saturation;
+            lightness = c.lightness;
+          } else {
+            var d = HSLColor.fromColor(widget.defaultDark ?? Colors.white);
+            var l = HSLColor.fromColor(widget.defaultLight ?? Colors.black);
+            hue = d.hue;
+            saturation = d.saturation;
+            lightness = (d.lightness + l.lightness) / 2;
+          }
+        },
+      ),
+    );
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,10 +78,12 @@ class _ColorPickerState extends State<ColorPicker> {
       lightnessDark = (0.5 + widget.lightnessDeltaCenter / 2) + absolute;
       lightnessLight = (0.5 - widget.lightnessDeltaCenter / 2) - absolute;
     }
-    widget.onChange(
-      HSLColor.fromAHSL(1, hue, saturation, lightnessDark).toColor(),
-      HSLColor.fromAHSL(1, hue, saturation, lightnessLight).toColor(),
-    );
+    if (widget.onChange != null)
+      widget.onChange(
+        HSLColor.fromAHSL(1, hue, saturation, lightnessDark).toColor(),
+        HSLColor.fromAHSL(1, hue, saturation, lightnessLight).toColor(),
+        ctx: context,
+      );
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(

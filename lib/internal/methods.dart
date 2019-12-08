@@ -16,6 +16,9 @@ void showColorPicker(
   double lightnessDeltaEnd = 0,
   Function onApply,
   Function onChange,
+  Color defaultDark,
+  Color defaultLight,
+  Color defaultColor,
 }) {
   showModalBottomSheet(
     context: context,
@@ -25,6 +28,9 @@ void showColorPicker(
       lightnessDeltaEnd: lightnessDeltaEnd,
       onApply: onApply,
       onChange: onChange,
+      defaultDark:defaultDark,
+      defaultLight:defaultLight,
+      defaultColor:defaultColor,
     ),
   );
 }
