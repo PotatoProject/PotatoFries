@@ -5,6 +5,7 @@ import 'package:potato_fries/pagelayout/quick_settings_page_layout.dart';
 import 'package:potato_fries/pages/fries_page.dart';
 import 'package:potato_fries/provider/qs.dart';
 import 'package:provider/provider.dart';
+import 'package:simple_animations/simple_animations.dart';
 
 class QuickSettings extends StatelessWidget {
   final title = 'Quick Settings';
@@ -209,39 +210,73 @@ class _QSTile extends StatefulWidget {
   __QSTileState createState() => __QSTileState();
 }
 
-class __QSTileState extends State<_QSTile> {
+class __QSTileState extends State<_QSTile> with SingleTickerProviderStateMixin {
+  AnimationController controller;
   bool enabled;
 
   @override
   void initState() {
     enabled = widget.enabled;
+    controller = AnimationController(
+      vsync: this, duration: Duration(milliseconds: 500),
+      value: enabled ? 1 : 0
+    );
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    Color iconColor = Theme.of(context).accentColor;
+    Color tileColor = Theme.of(context).accentColor;
     var provider = Provider.of<QSDataProvider>(context);
     String fwValsKey = '${SettingType.SYSTEM}/qs_panel_bg_use_fw';
     String wallKey = '${SettingType.SYSTEM}/qs_panel_bg_use_wall';
     String colorKey = '${SettingType.SYSTEM}/qs_panel_bg_color';
     if (!(provider.data[fwValsKey] ?? true)) {
       if (provider.data[wallKey] ?? false) {
-        iconColor = Color(-12044500);
+        tileColor = Color(-12044500);
       } else {
         int colorData = provider.extraData[colorKey];
         if (colorData != null) {
-          iconColor = Color(colorData);
+          tileColor = Color(colorData);
         }
       }
     }
-    return GestureDetector(
-      onTap: () => setState(() => enabled = !enabled),
-      child: CircleAvatar(
-        backgroundColor: enabled ? Colors.white : Colors.white30,
-        child: Icon(
-          widget.icon,
-          color: enabled ? iconColor : Colors.white,
+
+    Color iconColor = Theme.of(context).brightness ==
+        Brightness.dark
+        ? Colors.black
+        : Colors.white;
+
+    Color disabledIconColor = Theme.of(context).brightness ==
+        Brightness.dark
+        ? Colors.white70
+        : Colors.black87;
+    
+    Animation<Color> bgAnim = ColorTween(begin: disabledIconColor.withAlpha(30), end: tileColor).animate(controller);
+    Animation<Color> fgAnim = ColorTween(begin: disabledIconColor, end: iconColor).animate(controller);
+    
+    return InkWell(
+      onTap: () => setState(() {
+        enabled = !enabled;
+        enabled ? controller.forward(from: controller.value) : controller.reverse(from: controller.value);
+      }),
+      borderRadius: BorderRadius.circular(80),
+      child: Padding(
+        padding: EdgeInsets.all(8),
+        child: AnimatedBuilder(
+          animation: bgAnim,
+          child: CircleAvatar(
+            backgroundColor: bgAnim.value,
+            child: AnimatedBuilder(
+              animation: fgAnim,
+              child: Icon(
+                widget.icon,
+                color: fgAnim.value,
+              ),
+              builder: (context, child) => child,
+            ),
+          ),
+          builder: (context, child) => child,
         ),
       ),
     );
