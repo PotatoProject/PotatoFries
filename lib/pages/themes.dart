@@ -91,10 +91,8 @@ class Themes extends StatelessWidget {
                             child: CircleAvatar(
                               child: Icon(
                                 Icons.person,
-                                color: HSLColor.fromColor(
-                                                Theme.of(context).accentColor)
-                                            .lightness >
-                                        0.6
+                                color: Theme.of(context).brightness ==
+                                        Brightness.dark
                                     ? Colors.black
                                     : Colors.white,
                               ),

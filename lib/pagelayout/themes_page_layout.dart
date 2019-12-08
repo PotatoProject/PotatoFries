@@ -27,7 +27,7 @@ class ThemesPageLayout extends PageLayout {
               else
                 bloc.changeAccent(light);
             },
-            lightnessDeltaCenter: 0.01,
+            lightnessDeltaCenter: 0.15,
             lightnessDeltaEnd: 0.6,
             onApply: (String dark, String light) {
               AndroidFlutterSettings.setProp(
