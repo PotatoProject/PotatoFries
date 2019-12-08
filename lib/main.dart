@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:potato_fries/bloc/theme_bloc.dart';
 import 'package:potato_fries/internal/page_data.dart';
+import 'package:potato_fries/ui/scroll_behavior.dart';
 
 void main() => runApp(PotatoFriesRoot());
 
@@ -15,6 +16,10 @@ class PotatoFriesRoot extends StatelessWidget {
         stream: bloc.currentAccent,
         builder: (context, snapshot) {
           return MaterialApp(
+            builder: (context, child) => ScrollConfiguration(
+              behavior: NoGlowScrollBehavior(),
+              child: child,
+            ),
             title: 'Fries',
             theme: ThemeData.light().copyWith(accentColor: snapshot.data),
             darkTheme: ThemeData.dark().copyWith(
