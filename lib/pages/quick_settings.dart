@@ -5,7 +5,6 @@ import 'package:potato_fries/pagelayout/quick_settings_page_layout.dart';
 import 'package:potato_fries/pages/fries_page.dart';
 import 'package:potato_fries/provider/qs.dart';
 import 'package:provider/provider.dart';
-import 'package:simple_animations/simple_animations.dart';
 
 class QuickSettings extends StatelessWidget {
   final title = 'Quick Settings';
@@ -218,9 +217,9 @@ class __QSTileState extends State<_QSTile> with SingleTickerProviderStateMixin {
   void initState() {
     enabled = widget.enabled;
     controller = AnimationController(
-      vsync: this, duration: Duration(milliseconds: 500),
-      value: enabled ? 1 : 0
-    );
+        vsync: this,
+        duration: Duration(milliseconds: 500),
+        value: enabled ? 1 : 0);
     super.initState();
   }
 
@@ -242,23 +241,27 @@ class __QSTileState extends State<_QSTile> with SingleTickerProviderStateMixin {
       }
     }
 
-    Color iconColor = Theme.of(context).brightness ==
-        Brightness.dark
+    Color iconColor = Theme.of(context).brightness == Brightness.dark
         ? Colors.black
         : Colors.white;
 
-    Color disabledIconColor = Theme.of(context).brightness ==
-        Brightness.dark
+    Color disabledIconColor = Theme.of(context).brightness == Brightness.dark
         ? Colors.white70
         : Colors.black87;
-    
-    Animation<Color> bgAnim = ColorTween(begin: disabledIconColor.withAlpha(30), end: tileColor).animate(controller);
-    Animation<Color> fgAnim = ColorTween(begin: disabledIconColor, end: iconColor).animate(controller);
-    
+
+    Animation<Color> bgAnim =
+        ColorTween(begin: disabledIconColor.withAlpha(30), end: tileColor)
+            .animate(controller);
+    Animation<Color> fgAnim =
+        ColorTween(begin: disabledIconColor, end: iconColor)
+            .animate(controller);
+
     return InkWell(
       onTap: () => setState(() {
         enabled = !enabled;
-        enabled ? controller.forward(from: controller.value) : controller.reverse(from: controller.value);
+        enabled
+            ? controller.forward(from: controller.value)
+            : controller.reverse(from: controller.value);
       }),
       borderRadius: BorderRadius.circular(80),
       child: Padding(

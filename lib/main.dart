@@ -11,16 +11,15 @@ Color light;
 
 void main() async {
   dark = Color(int.parse(
-      "ff" + await AndroidFlutterSettings.getProp(
-          "persist.sys.theme.accent_dark"), 
-      radix: 16)
-  );
+      "ff" +
+          await AndroidFlutterSettings.getProp("persist.sys.theme.accent_dark"),
+      radix: 16));
 
   light = Color(int.parse(
-      "ff" + await AndroidFlutterSettings.getProp(
-          "persist.sys.theme.accent_light"), 
-      radix: 16)
-  );
+      "ff" +
+          await AndroidFlutterSettings.getProp(
+              "persist.sys.theme.accent_light"),
+      radix: 16));
 
   runApp(PotatoFriesRoot());
 }
@@ -69,11 +68,11 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    if(Theme.of(context).brightness == Brightness.dark)
-        bloc.changeAccent(dark);
-      else
-        bloc.changeAccent(light);
-    
+    if (Theme.of(context).brightness == Brightness.dark)
+      bloc.changeAccent(dark);
+    else
+      bloc.changeAccent(light);
+
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       systemNavigationBarColor: Theme.of(context).scaffoldBackgroundColor,
     ));

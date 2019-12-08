@@ -12,6 +12,8 @@ void launchUrl(String url) async {
 void showColorPicker(
   BuildContext context, {
   bool lightnessLocked = false,
+  double lightnessDeltaCenter = 0,
+  double lightnessDeltaEnd = 0,
   Function onApply,
   Function onChange,
 }) {
@@ -19,6 +21,8 @@ void showColorPicker(
     context: context,
     builder: (context) => ColorPicker(
       lightnessLocked: lightnessLocked,
+      lightnessDeltaCenter: lightnessDeltaCenter,
+      lightnessDeltaEnd: lightnessDeltaEnd,
       onApply: onApply,
       onChange: onChange,
     ),
