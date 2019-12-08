@@ -58,7 +58,6 @@ abstract class PageLayout {
                 setting: tile.setting,
                 type: tile.type,
                 inputType: SettingInputType.SLIDER,
-                icon: tile.icon,
                 itemPosition: i,
                 categoryIndex: categoryIndex,
                 headerAncestor: tile.headerAncestor));
