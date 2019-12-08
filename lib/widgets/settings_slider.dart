@@ -62,6 +62,7 @@ class _SettingsSliderState extends State<SettingsSlider> {
         max: widget.max,
         value: value,
         activeColor: Theme.of(context).accentColor,
+        inactiveColor: Theme.of(context).accentColor.withAlpha(120),
         onChanged: widget.enabled
             ? (v) async {
                 await AndroidFlutterSettings.putInt(
