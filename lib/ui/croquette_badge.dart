@@ -8,10 +8,20 @@ class CroquetteBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final tween = MultiTrackTween([
-      Track('color1').add(Duration(seconds: 5),
-          ColorTween(begin: Color(0xFF9544E7), end: Color(0xFF2EE8BB))),
-      Track('color2').add(Duration(seconds: 5),
-          ColorTween(begin: Color(0xFF2EE8BB), end: Color(0xFF9544E7)))
+      Track('color1').add(
+        Duration(seconds: 5),
+        ColorTween(
+          begin: Color(0xFF9544E7),
+          end: Color(0xFF2EE8BB),
+        ),
+      ),
+      Track('color2').add(
+        Duration(seconds: 5),
+        ColorTween(
+          begin: Color(0xFF2EE8BB),
+          end: Color(0xFF9544E7),
+        ),
+      ),
     ]);
     return ControlledAnimation(
       playback: Playback.MIRROR,
@@ -20,7 +30,11 @@ class CroquetteBadge extends StatelessWidget {
       builder: (context, animation) {
         return Container(
           child: Padding(
-            padding: const EdgeInsets.only(left: 16.0, right: 16.0, top: 8.0),
+            padding: const EdgeInsets.only(
+              left: 16.0,
+              right: 16.0,
+              top: 8.0,
+            ),
             child: svgIcon(
               'assets/croquette.svg',
               width: 256,
@@ -29,7 +43,10 @@ class CroquetteBadge extends StatelessWidget {
           ),
           decoration: BoxDecoration(
             gradient: LinearGradient(
-              colors: [animation['color1'], animation['color2']],
+              colors: [
+                animation['color1'],
+                animation['color2'],
+              ],
               begin: FractionalOffset.topLeft,
               end: FractionalOffset.bottomRight,
               tileMode: TileMode.clamp,

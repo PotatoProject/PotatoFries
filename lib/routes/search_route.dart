@@ -72,9 +72,7 @@ class _SearchRouteState extends State<SearchRoute> {
                 ],
               ),
             )
-          : ListView(
-              children: widgets,
-            ),
+          : ListView(children: widgets),
     );
   }
 

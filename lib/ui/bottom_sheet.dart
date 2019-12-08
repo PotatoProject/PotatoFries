@@ -47,8 +47,8 @@ class _BottomAppSheetState extends State<BottomAppSheet> {
           ),
           actions: <Widget>[
             // usually buttons at the bottom of the dialog
-            new FlatButton(
-              child: new Text("CLOSE"),
+            FlatButton(
+              child: Text("CLOSE"),
               onPressed: () {
                 Navigator.of(context).pop();
               },

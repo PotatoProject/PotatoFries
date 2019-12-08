@@ -38,7 +38,7 @@ class _OverlayListState extends State<OverlayList> {
                   return OverlayListDialog(
                     title: widget.title,
                   );
-                });
+                },);
 
             if (result != null) setState(() => text = result);
           },

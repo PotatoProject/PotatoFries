@@ -13,9 +13,7 @@ class ThemesPageLayout extends PageLayout {
 
   @override
   List<Widget> body(BuildContext context, {BaseDataProvider provider}) => [
-        SectionHeader(
-          title: "Colors",
-        ),
+        SectionHeader(title: "Colors"),
         SizeableListTile(
           title: 'Accent color',
           subtitle: Text('Pick your favourite color!'),
@@ -23,7 +21,12 @@ class ThemesPageLayout extends PageLayout {
           headerAncestor: "Colors",
           onTap: () => showColorPicker(
             context,
-            onChange: (color) {},
+            onChange: (dark, light) {
+              if (Theme.of(context).brightness == Brightness.dark)
+                bloc.changeAccent(dark);
+              else
+                bloc.changeAccent(light);
+            },
             lightnessDeltaCenter: 0.01,
             lightnessDeltaEnd: 0.6,
             onApply: (String dark, String light) {
@@ -38,16 +41,8 @@ class ThemesPageLayout extends PageLayout {
 
               //AndroidFlutterSettings.reloadAssets('com.android.settings');
               //AndroidFlutterSettings.reloadAssets('com.android.systemui');
-
-              if (Theme.of(context).brightness == Brightness.dark)
-                bloc.changeAccent(Color(int.parse("ff" + dark, radix: 16)));
-              else
-                bloc.changeAccent(Color(int.parse("ff" + light, radix: 16)));
             },
           ),
-        ),
-        SectionHeader(
-          title: "QS panel",
         ),
       ];
 }

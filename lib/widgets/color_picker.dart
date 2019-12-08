@@ -33,12 +33,6 @@ class _ColorPickerState extends State<ColorPicker> {
   double lightness = 0.5;
 
   @override
-  void setState(fn) {
-    widget.onChange(HSLColor.fromAHSL(1, hue, saturation, lightness).toColor());
-    super.setState(fn);
-  }
-
-  @override
   Widget build(BuildContext context) {
     lightness = widget.lightnessLocked ? 0.5 : lightness;
     double lightnessLight = lightness;
@@ -53,6 +47,10 @@ class _ColorPickerState extends State<ColorPicker> {
       lightnessDark = (0.5 + widget.lightnessDeltaCenter / 2) + absolute;
       lightnessLight = (0.5 - widget.lightnessDeltaCenter / 2) - absolute;
     }
+    widget.onChange(
+      HSLColor.fromAHSL(1, hue, saturation, lightnessDark).toColor(),
+      HSLColor.fromAHSL(1, hue, saturation, lightnessLight).toColor(),
+    );
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(

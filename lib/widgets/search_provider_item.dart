@@ -25,7 +25,11 @@ class SearchProviderItem extends StatelessWidget {
         title: provider.title,
         subtitle: provider.description != null ? provider.description : null,
         onTap: () => Navigator.push(
-            context, MaterialPageRoute(builder: (context) => executePush())),
+          context,
+          MaterialPageRoute(
+            builder: (context) => executePush(),
+          ),
+        ),
         footer: parseCategory(provider) +
             (provider.headerAncestor != null
                 ? " > " + provider.headerAncestor
@@ -38,7 +42,11 @@ class SearchProviderItem extends StatelessWidget {
         subtitle:
             provider.description != null ? Text(provider.description) : null,
         onTap: () => Navigator.push(
-            context, MaterialPageRoute(builder: (context) => executePush())),
+          context,
+          MaterialPageRoute(
+            builder: (context) => executePush(),
+          ),
+        ),
         footer: parseCategory(provider) +
             (provider.headerAncestor != null
                 ? " > " + provider.headerAncestor
@@ -47,9 +55,8 @@ class SearchProviderItem extends StatelessWidget {
     }
   }
 
-  String parseCategory(SearchProvider provider) {
-    return (pages[provider.categoryIndex] as dynamic).title;
-  }
+  String parseCategory(SearchProvider provider) =>
+      (pages[provider.categoryIndex] as dynamic).title;
 
   Widget executePush() {
     switch (provider.categoryIndex) {
@@ -60,6 +67,8 @@ class SearchProviderItem extends StatelessWidget {
             bloc: bloc, keyIndex: provider.itemPosition);
       case 2:
         return Themes(bloc: bloc, keyIndex: provider.itemPosition);
+      default:
+        return Container();
     }
   }
 }

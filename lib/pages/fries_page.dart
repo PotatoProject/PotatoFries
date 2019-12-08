@@ -37,8 +37,8 @@ class FriesPage extends StatelessWidget {
             ),
             actions: <Widget>[
               // usually buttons at the bottom of the dialog
-              new FlatButton(
-                child: new Text("CLOSE"),
+              FlatButton(
+                child: Text("CLOSE"),
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
@@ -59,8 +59,12 @@ class FriesPage extends StatelessWidget {
               ? <Widget>[
                   IconButton(
                     icon: Icon(Icons.search),
-                    onPressed: () => Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => SearchRoute())),
+                    onPressed: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => SearchRoute(),
+                      ),
+                    ),
                   ),
                   PopupMenuButton(
                     elevation: 3,

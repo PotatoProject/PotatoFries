@@ -26,9 +26,8 @@ class ButtonsAndNavigation extends StatelessWidget {
     Future.delayed(
       Duration.zero,
       () async {
-        if (keyIndex != null) {
+        if (keyIndex != null)
           Scrollable.ensureVisible(keys[keyIndex].currentContext);
-        }
       },
     );
 

@@ -28,19 +28,21 @@ abstract class PageLayout {
         switch (body[i].runtimeType.toString()) {
           case "SizeableListTile":
             SizeableListTile tile = (body[i] as SizeableListTile);
-            searchItems.add(SearchProvider(
-              title: tile.title,
-              description: (tile.subtitle as Text).data,
-              icon: tile.icon,
-              itemPosition: i,
-              categoryIndex: categoryIndex,
-              headerAncestor: tile.headerAncestor,
-            ));
-
+            searchItems.add(
+              SearchProvider(
+                title: tile.title,
+                description: (tile.subtitle as Text).data,
+                icon: tile.icon,
+                itemPosition: i,
+                categoryIndex: categoryIndex,
+                headerAncestor: tile.headerAncestor,
+              ),
+            );
             break;
           case "SettingsSwitchTile":
             SettingsSwitchTile tile = (body[i] as SettingsSwitchTile);
-            searchItems.add(SearchProvider(
+            searchItems.add(
+              SearchProvider(
                 title: tile.title,
                 setting: tile.setting,
                 type: tile.type,
@@ -49,29 +51,33 @@ abstract class PageLayout {
                 icon: tile.icon,
                 itemPosition: i,
                 categoryIndex: categoryIndex,
-                headerAncestor: tile.headerAncestor));
-
+                headerAncestor: tile.headerAncestor,
+              ),
+            );
             break;
           case "SettingsSliderTile":
             SettingsSliderTile tile = (body[i] as SettingsSliderTile);
-            searchItems.add(SearchProvider(
+            searchItems.add(
+              SearchProvider(
                 title: tile.title,
                 setting: tile.setting,
                 type: tile.type,
                 inputType: SettingInputType.SLIDER,
                 itemPosition: i,
                 categoryIndex: categoryIndex,
-                headerAncestor: tile.headerAncestor));
-
+                headerAncestor: tile.headerAncestor,
+              ),
+            );
             break;
           case "SectionHeader":
             SectionHeader tile = (body[i] as SectionHeader);
-
-            searchItems.add(SearchProvider(
+            searchItems.add(
+              SearchProvider(
                 title: tile.title,
                 itemPosition: i,
-                categoryIndex: categoryIndex));
-
+                categoryIndex: categoryIndex,
+              ),
+            );
             break;
           default:
             //not supported
@@ -81,27 +87,37 @@ abstract class PageLayout {
     }
   }
 
-  Map<String, dynamic> build(BuildContext context, int selectedIndex,
-      {BaseDataProvider provider}) {
+  Map<String, dynamic> build(
+    BuildContext context,
+    int selectedIndex, {
+    BaseDataProvider provider,
+  }) {
     List<Widget> body = this.body(context, provider: provider);
 
     if (body == null) {
       throw Exception(
-          "PageLayout can't have a null body, please define one if you plan on using it anywhere.");
+        "PageLayout can't have a null body, please define one if you plan on using it anywhere.",
+      );
     }
 
     List<GlobalKey> keys = List.generate(body.length, (_) => GlobalKey());
 
-    List<Widget> widgets = List.generate(body.length, (index) {
-      return Container(
-        key: keys[index],
-        color: index == selectedIndex
-            ? Theme.of(context).accentColor.withAlpha(120)
-            : null,
-        child: body[index],
-      );
-    });
+    List<Widget> widgets = List.generate(
+      body.length,
+      (index) {
+        return Container(
+          key: keys[index],
+          color: index == selectedIndex
+              ? Theme.of(context).accentColor.withAlpha(120)
+              : null,
+          child: body[index],
+        );
+      },
+    );
 
-    return {'keys': keys, 'body': widgets};
+    return {
+      'keys': keys,
+      'body': widgets,
+    };
   }
 }

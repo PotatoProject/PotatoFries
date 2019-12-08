@@ -49,7 +49,10 @@ class _SettingsSwitchState extends State<SettingsSwitch> {
       onChanged: widget.enabled
           ? (b) async {
               await AndroidFlutterSettings.putBool(
-                  widget.setting, b, widget.type);
+                widget.setting,
+                b,
+                widget.type,
+              );
               updateValue();
             }
           : null,

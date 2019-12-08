@@ -16,19 +16,7 @@ class StatusBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return FriesPage(
       title: title,
-      children: <Widget>[
-//        SettingsSwitch(
-//          title: Text('Cool setting'),
-//          type: SettingType.SYSTEM,
-//          setting: 'cool_setting',
-//        ),
-//        SettingsSlider(
-//          title: Text('Cool slider'),
-//          type: SettingType.SECURE,
-//          setting: 'cool_setting',
-//          initial: 0,
-//        ),
-      ],
+      children: <Widget>[],
     );
   }
 }

@@ -52,15 +52,14 @@ class SizeableListTile extends StatelessWidget {
         child: Row(
           children: <Widget>[
             Container(
-                margin: EdgeInsets.fromLTRB(8, 8, 16, 8),
-                child: IconTheme(
-                  child: icon ??
-                      Container(
-                        width: 24,
-                      ),
-                  data: IconThemeData(
-                      color: selected ? selectedColor : elementsColor),
-                )),
+              margin: EdgeInsets.fromLTRB(8, 8, 16, 8),
+              child: IconTheme(
+                child: icon ?? Container(width: 24),
+                data: IconThemeData(
+                  color: selected ? selectedColor : elementsColor,
+                ),
+              ),
+            ),
             Expanded(
               child: Padding(
                 padding: EdgeInsets.fromLTRB(8, 12, 0, 12),
@@ -81,10 +80,11 @@ class SizeableListTile extends StatelessWidget {
                       child: DefaultTextStyle(
                         child: subtitle ?? Container(),
                         style: TextStyle(
-                            color: selected
-                                ? selectedColor.withAlpha(160)
-                                : elementsColor.withAlpha(160),
-                            fontSize: 13),
+                          color: selected
+                              ? selectedColor.withAlpha(160)
+                              : elementsColor.withAlpha(160),
+                          fontSize: 13,
+                        ),
                       ),
                     ),
                     Visibility(
@@ -99,10 +99,11 @@ class SizeableListTile extends StatelessWidget {
                           Text(
                             footer ?? "",
                             style: TextStyle(
-                                color: selected
-                                    ? selectedColor.withAlpha(160)
-                                    : elementsColor.withAlpha(160),
-                                fontSize: 13),
+                              color: selected
+                                  ? selectedColor.withAlpha(160)
+                                  : elementsColor.withAlpha(160),
+                              fontSize: 13,
+                            ),
                           ),
                         ],
                       ),
@@ -112,9 +113,16 @@ class SizeableListTile extends StatelessWidget {
               ),
             ),
             Container(
-                margin:
-                    trailing == null ? null : EdgeInsets.fromLTRB(16, 8, 8, 8),
-                child: trailing ?? Container()),
+              margin: trailing == null
+                  ? null
+                  : EdgeInsets.fromLTRB(
+                      16,
+                      8,
+                      8,
+                      8,
+                    ),
+              child: trailing ?? Container(),
+            ),
           ],
         ),
       ),

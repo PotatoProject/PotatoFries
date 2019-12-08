@@ -28,9 +28,8 @@ class QuickSettings extends StatelessWidget {
     Future.delayed(
       Duration.zero,
       () async {
-        if (keyIndex != null) {
+        if (keyIndex != null)
           Scrollable.ensureVisible(keys[keyIndex].currentContext);
-        }
       },
     );
 
@@ -41,7 +40,10 @@ class QuickSettings extends StatelessWidget {
           value: provider,
           child: Builder(
             builder: (context) => FriesPage(
-                title: title, header: _header(context), children: children),
+              title: title,
+              header: _header(context),
+              children: children,
+            ),
           ),
         ),
       );
@@ -50,7 +52,10 @@ class QuickSettings extends StatelessWidget {
         value: provider,
         child: Builder(
           builder: (context) => FriesPage(
-              title: title, header: _header(context), children: children),
+            title: title,
+            header: _header(context),
+            children: children,
+          ),
         ),
       );
     }
@@ -187,7 +192,10 @@ class QuickSettings extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Center(
-                        child: Text('No notifications'.toUpperCase()),
+                        child: Text(
+                          'No notifications'.toUpperCase(),
+                          style: TextStyle(color: Colors.white),
+                        ),
                       ),
                     ),
                   ],
@@ -203,7 +211,10 @@ class _QSTile extends StatefulWidget {
   final IconData icon;
   final bool enabled;
 
-  _QSTile({this.icon, this.enabled = false});
+  _QSTile({
+    this.icon,
+    this.enabled = false,
+  });
 
   @override
   __QSTileState createState() => __QSTileState();
@@ -229,7 +240,7 @@ class __QSTileState extends State<_QSTile> {
     Color disabledIconColor = Theme.of(context).brightness == Brightness.dark
         ? Colors.white70
         : Colors.black87;
-    
+
     var provider = Provider.of<QSDataProvider>(context);
     String fwValsKey = '${SettingType.SYSTEM}/qs_panel_bg_use_fw';
     String wallKey = '${SettingType.SYSTEM}/qs_panel_bg_use_wall';
@@ -249,14 +260,13 @@ class __QSTileState extends State<_QSTile> {
     }
 
     return InkWell(
-      onTap: () => setState(() {
-        enabled = !enabled;
-      }),
+      onTap: () => setState(() => enabled = !enabled),
       borderRadius: BorderRadius.circular(80),
       child: Padding(
         padding: EdgeInsets.all(8),
         child: CircleAvatar(
-          backgroundColor: enabled ? tileColor : disabledIconColor.withAlpha(30),
+          backgroundColor:
+              enabled ? tileColor : disabledIconColor.withAlpha(30),
           child: Icon(
             widget.icon,
             color: enabled ? iconColor : disabledIconColor,

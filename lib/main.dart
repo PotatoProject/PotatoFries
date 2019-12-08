@@ -4,45 +4,29 @@ import 'package:flutter/services.dart';
 import 'package:potato_fries/bloc/theme_bloc.dart';
 import 'package:potato_fries/internal/page_data.dart';
 
-BorderRadius _kBorderRadius = BorderRadius.circular(12);
-
-Color dark;
-Color light;
-
-void main() async {
-  dark = Color(int.parse(
-      "ff" +
-          await AndroidFlutterSettings.getProp("persist.sys.theme.accent_dark"),
-      radix: 16));
-
-  light = Color(int.parse(
-      "ff" +
-          await AndroidFlutterSettings.getProp(
-              "persist.sys.theme.accent_light"),
-      radix: 16));
-
-  runApp(PotatoFriesRoot());
-}
+void main() => runApp(PotatoFriesRoot());
 
 class PotatoFriesRoot extends StatelessWidget {
   final bloc = ThemeBloc();
 
   @override
   Widget build(context) => StreamBuilder<Color>(
-      initialData: Colors.blue,
-      stream: bloc.currentAccent,
-      builder: (context, snapshot) {
-        return MaterialApp(
-          title: 'Fries',
-          theme: ThemeData.light().copyWith(accentColor: snapshot.data),
-          darkTheme: ThemeData.dark().copyWith(
+        initialData: Colors.blue,
+        stream: bloc.currentAccent,
+        builder: (context, snapshot) {
+          return MaterialApp(
+            title: 'Fries',
+            theme: ThemeData.light().copyWith(accentColor: snapshot.data),
+            darkTheme: ThemeData.dark().copyWith(
               accentColor: snapshot.data,
               cardColor: Color(0xFF212121),
-              scaffoldBackgroundColor: Color(0xFF151618)),
-          home: MyHomePage(bloc: bloc),
-          debugShowCheckedModeBanner: false,
-        );
-      });
+              scaffoldBackgroundColor: Color(0xFF151618),
+            ),
+            home: MyHomePage(bloc: bloc),
+            debugShowCheckedModeBanner: false,
+          );
+        },
+      );
 }
 
 class MyHomePage extends StatefulWidget {
@@ -64,18 +48,39 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     super.initState();
     setPages(context, bloc);
+    setColors();
+  }
+
+  void setColors() async {
+    Color dark = Color(
+      int.parse(
+        "ff" +
+            await AndroidFlutterSettings.getProp(
+                "persist.sys.theme.accent_dark"),
+        radix: 16,
+      ),
+    );
+    Color light = Color(
+      int.parse(
+        "ff" +
+            await AndroidFlutterSettings.getProp(
+                "persist.sys.theme.accent_light"),
+        radix: 16,
+      ),
+    );
+
+    bloc.changeAccent(
+      Theme.of(context).brightness == Brightness.dark ? dark : light,
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    if (Theme.of(context).brightness == Brightness.dark)
-      bloc.changeAccent(dark);
-    else
-      bloc.changeAccent(light);
-
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-      systemNavigationBarColor: Theme.of(context).scaffoldBackgroundColor,
-    ));
+    SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle(
+        systemNavigationBarColor: Theme.of(context).scaffoldBackgroundColor,
+      ),
+    );
     return Scaffold(
       backgroundColor: Theme.of(context).cardColor,
       appBar: null,
@@ -84,9 +89,7 @@ class _MyHomePageState extends State<MyHomePage> {
         currentIndex: currentPage,
         items: navbarItemBuilder,
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        onTap: (index) {
-          setState(() => currentPage = index);
-        },
+        onTap: (index) => setState(() => currentPage = index),
         showSelectedLabels: true,
         selectedItemColor: Theme.of(context).accentColor,
       ),
@@ -95,15 +98,15 @@ class _MyHomePageState extends State<MyHomePage> {
 
   List<BottomNavigationBarItem> get navbarItemBuilder {
     List<BottomNavigationBarItem> items = [];
-
     for (int i = 0; i < pages.length; i++) {
-      items.add(BottomNavigationBarItem(
-        icon: Icon((pages[i] as dynamic).icon),
-        title: Text((pages[i] as dynamic).title),
-        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-      ));
+      items.add(
+        BottomNavigationBarItem(
+          icon: Icon((pages[i] as dynamic).icon),
+          title: Text((pages[i] as dynamic).title),
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        ),
+      );
     }
-
     return items;
   }
 }

@@ -8,7 +8,6 @@ class LockScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return FriesPage(
       title: title,
       children: <Widget>[
