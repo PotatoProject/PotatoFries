@@ -37,8 +37,8 @@ class _SettingsSwitchState extends State<SettingsSwitch> {
     if (widget.provider != null) {
       widget.provider.data['${widget.type.toString()}/${widget.setting}'] =
           value;
+      widget.provider.data = widget.provider.data;
     }
-    widget.provider.data = widget.provider.data;
   }
 
   @override
