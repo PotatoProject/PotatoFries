@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:potato_fries/internal/search_provider.dart';
 import 'package:potato_fries/provider/base.dart';
-import 'package:potato_fries/ui/section_header.dart';
+import 'package:potato_fries/ui/color_picker_tile.dart';
+import 'package:potato_fries/ui/section.dart';
 import 'package:potato_fries/ui/sizeable_list_tile.dart';
 import 'package:potato_fries/widgets/settings_slider_tile.dart';
 import 'package:potato_fries/widgets/settings_switch_tile.dart';
@@ -25,64 +26,73 @@ abstract class PageLayout {
               .where((item) => item.title == (body[i] as dynamic).title)
               .length ==
           0) {
-        switch (body[i].runtimeType.toString()) {
-          case "SizeableListTile":
-            SizeableListTile tile = (body[i] as SizeableListTile);
-            searchItems.add(
-              SearchProvider(
-                title: tile.title,
-                description: (tile.subtitle as Text).data,
-                icon: tile.icon,
-                itemPosition: i,
-                categoryIndex: categoryIndex,
-                headerAncestor: tile.headerAncestor,
-              ),
-            );
-            break;
-          case "SettingsSwitchTile":
-            SettingsSwitchTile tile = (body[i] as SettingsSwitchTile);
-            searchItems.add(
-              SearchProvider(
-                title: tile.title,
-                setting: tile.setting,
-                type: tile.type,
-                inputType: SettingInputType.SWITCH,
-                description: tile.subtitle,
-                icon: tile.icon,
-                itemPosition: i,
-                categoryIndex: categoryIndex,
-                headerAncestor: tile.headerAncestor,
-              ),
-            );
-            break;
-          case "SettingsSliderTile":
-            SettingsSliderTile tile = (body[i] as SettingsSliderTile);
-            searchItems.add(
-              SearchProvider(
-                title: tile.title,
-                setting: tile.setting,
-                type: tile.type,
-                inputType: SettingInputType.SLIDER,
-                itemPosition: i,
-                categoryIndex: categoryIndex,
-                headerAncestor: tile.headerAncestor,
-              ),
-            );
-            break;
-          case "SectionHeader":
-            SectionHeader tile = (body[i] as SectionHeader);
-            searchItems.add(
-              SearchProvider(
-                title: tile.title,
-                itemPosition: i,
-                categoryIndex: categoryIndex,
-              ),
-            );
-            break;
-          default:
-            //not supported
-            break;
-        }
+        if(body[i].runtimeType.toString() == "Section") {
+          Section section = body[i] as Section;
+          List<Widget> sectionChildren = section.children;
+
+          for(int j = 0; j < sectionChildren.length; j++) {
+            switch (sectionChildren[j].runtimeType.toString()) {
+              case "SizeableListTile":
+                SizeableListTile tile = (sectionChildren[j] as SizeableListTile);
+                searchItems.add(
+                  SearchProvider(
+                    title: tile.title,
+                    description: (tile.subtitle as Text).data,
+                    icon: tile.icon,
+                    itemPosition: j,
+                    categoryIndex: categoryIndex,
+                    headerAncestor: section.title,
+                  ),
+                );
+                break;
+              case "SettingsSwitchTile":
+                SettingsSwitchTile tile = (sectionChildren[j] as SettingsSwitchTile);
+                searchItems.add(
+                  SearchProvider(
+                    title: tile.title,
+                    setting: tile.setting,
+                    type: tile.type,
+                    inputType: SettingInputType.SWITCH,
+                    description: tile.subtitle,
+                    icon: tile.icon,
+                    itemPosition: j,
+                    categoryIndex: categoryIndex,
+                    headerAncestor: section.title,
+                  ),
+                );
+                break;
+              case "SettingsSliderTile":
+                SettingsSliderTile tile = (sectionChildren[j] as SettingsSliderTile);
+                searchItems.add(
+                  SearchProvider(
+                    title: tile.title,
+                    setting: tile.setting,
+                    type: tile.type,
+                    inputType: SettingInputType.SLIDER,
+                    itemPosition: j,
+                    categoryIndex: categoryIndex,
+                    headerAncestor: section.title,
+                  ),
+                );
+                break;
+              case "ColorPickerTile":
+                ColorPickerTile tile = (sectionChildren[j] as ColorPickerTile);
+                searchItems.add(
+                  SearchProvider(
+                    title: tile.title,
+                    description: tile.subtitle,
+                    icon: Icon(Icons.color_lens),
+                    itemPosition: j,
+                    categoryIndex: categoryIndex,
+                  ),
+                );
+                break;
+              default:
+                //not supported
+                break;
+            }
+          }
+        } else throw Exception("Every element on the root of a PageLayout must be a Section");
       }
     }
   }

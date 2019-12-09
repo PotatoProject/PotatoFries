@@ -15,7 +15,6 @@ class SettingsSliderTile extends StatefulWidget {
   final double defval;
   final Function() onTap;
   final BaseDataProvider provider;
-  final String headerAncestor;
 
   SettingsSliderTile({
     @required this.title,
@@ -28,10 +27,7 @@ class SettingsSliderTile extends StatefulWidget {
     this.max = 0,
     this.provider,
     this.defval,
-    this.headerAncestor,
-  })  : assert(footer == null && headerAncestor != null ||
-            footer != null && headerAncestor == null),
-        assert(title != null),
+  })  : assert(title != null),
         assert(setting != null),
         assert(type != null);
 
@@ -66,7 +62,6 @@ class _SettingsSliderTileState extends State<SettingsSliderTile> {
         onChanged: (v) => setState(() => value = v),
       ),
       footer: widget.footer,
-      headerAncestor: widget.headerAncestor,
       onTap: widget.onTap,
     );
   }

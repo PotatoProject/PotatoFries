@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 class SizeableListTile extends StatelessWidget {
-  Key key;
   double height;
   double width;
   Widget icon;
@@ -9,7 +8,6 @@ class SizeableListTile extends StatelessWidget {
   String title;
   Widget subtitle;
   String footer;
-  String headerAncestor;
   bool selected;
   Color backgroundColor;
   Color elementsColor;
@@ -17,7 +15,6 @@ class SizeableListTile extends StatelessWidget {
   Function() onTap;
 
   SizeableListTile({
-    this.key,
     this.height,
     this.width,
     this.icon,
@@ -25,15 +22,12 @@ class SizeableListTile extends StatelessWidget {
     @required this.title,
     this.subtitle,
     this.footer,
-    this.headerAncestor,
     this.selected = false,
     this.selectedColor,
     this.backgroundColor,
     this.elementsColor,
     this.onTap,
-  })  : assert(footer == null && headerAncestor != null ||
-            footer != null && headerAncestor == null),
-        super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

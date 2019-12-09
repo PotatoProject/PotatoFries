@@ -14,7 +14,6 @@ class SettingsSwitchTile extends StatelessWidget {
   final bool enabled;
   final Function() onTap;
   final BaseDataProvider provider;
-  final String headerAncestor;
 
   SettingsSwitchTile({
     @required this.title,
@@ -26,10 +25,7 @@ class SettingsSwitchTile extends StatelessWidget {
     this.enabled = true,
     this.onTap,
     this.provider,
-    this.headerAncestor,
-  })  : assert(footer == null && headerAncestor != null ||
-            footer != null && headerAncestor == null),
-        assert(title != null),
+  })  : assert(title != null),
         assert(setting != null),
         assert(type != null);
 
@@ -40,7 +36,6 @@ class SettingsSwitchTile extends StatelessWidget {
       icon: icon,
       subtitle: subtitle == null ? null : Text(subtitle),
       footer: footer,
-      headerAncestor: headerAncestor,
       trailing: SettingsSwitch(
         type: type,
         setting: setting,

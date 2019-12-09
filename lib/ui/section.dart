@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 
-class SectionHeader extends StatelessWidget {
-  String title;
+class Section extends StatelessWidget {
+  final String title;
   Color color;
-  bool showDivider;
+  final bool showDivider;
+  final List<Widget> children;
 
-  SectionHeader({
+  Section({
     @required this.title,
     this.color,
     this.showDivider = true,
+    @required this.children,
   });
 
   @override
@@ -27,15 +29,19 @@ class SectionHeader extends StatelessWidget {
         Padding(
           padding: EdgeInsets.symmetric(
             vertical: 6,
-            horizontal: 16,
+            horizontal: 16
           ),
           child: Text(
             title.toUpperCase(),
             style: TextStyle(
               color: color,
-              fontWeight: FontWeight.bold,
+              fontWeight: FontWeight.bold
             ),
           ),
+        ),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: children ?? [Container()],
         ),
       ],
     );

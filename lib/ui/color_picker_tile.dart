@@ -68,7 +68,6 @@ class _ColorPickerTileState extends State<ColorPickerTile> {
           )
         ],
       ),
-      headerAncestor: "Colors",
       onTap: () =>
           showColorPicker(
             context,
