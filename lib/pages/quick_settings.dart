@@ -121,11 +121,8 @@ class QuickSettings extends StatelessWidget {
                         children: <Widget>[
                           Builder(
                             builder: (context) {
-                              var now = DateTime.now();
-                              int hour = now.hour;
-                              hour = hour > 12 ? hour - 12 : hour;
-                              int minute = now.minute;
-                              return Text('$hour:$minute');
+                              TimeOfDay time = TimeOfDay.now();
+                              return Text(time.format(context), style: TextStyle(color: Colors.white));
                             },
                           ),
                           Container(),
@@ -249,6 +246,7 @@ class __QSTileState extends State<_QSTile> {
       if (provider.data[wallKey] ?? false) {
         iconColor = Color(-12044500);
         tileColor = Colors.white;
+        disabledIconColor = Colors.white;
       } else {
         int colorData = provider.extraData[colorKey];
         if (colorData != null) {

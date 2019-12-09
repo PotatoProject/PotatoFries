@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:potato_fries/bloc/theme_bloc.dart';
 import 'package:potato_fries/internal/page_data.dart';
 import 'package:potato_fries/ui/scroll_behavior.dart';
+import 'package:potato_fries/widgets/custom_bottom_bar.dart';
 
 import 'internal/methods.dart';
 
@@ -23,7 +24,14 @@ class PotatoFriesRoot extends StatelessWidget {
               child: child,
             ),
             title: 'Fries',
-            theme: ThemeData.light().copyWith(accentColor: snapshot.data),
+            theme: ThemeData.light().copyWith(
+              accentColor: snapshot.data,
+              appBarTheme: AppBarTheme(
+                textTheme: Theme.of(context).textTheme,
+                actionsIconTheme: Theme.of(context).iconTheme,
+                iconTheme: Theme.of(context).iconTheme
+              ),
+            ),
             darkTheme: ThemeData.dark().copyWith(
               accentColor: snapshot.data,
               cardColor: Color(0xFF212121),
@@ -45,7 +53,7 @@ class MyHomePage extends StatefulWidget {
   createState() => _MyHomePageState(bloc: bloc);
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   int currentPage = 0;
   final ThemeBloc bloc;
 
@@ -60,34 +68,26 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(
-      SystemUiOverlayStyle(
-        systemNavigationBarColor: Theme.of(context).scaffoldBackgroundColor,
-      ),
-    );
     return Scaffold(
       backgroundColor: Theme.of(context).cardColor,
       appBar: null,
       body: pages[currentPage],
-      bottomNavigationBar: BottomNavigationBar(
+      bottomNavigationBar: CustomBottomBar(
         currentIndex: currentPage,
         items: navbarItemBuilder,
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         onTap: (index) => setState(() => currentPage = index),
-        showSelectedLabels: true,
-        selectedItemColor: Theme.of(context).accentColor,
+        selectedColor: Theme.of(context).accentColor,
       ),
     );
   }
 
-  List<BottomNavigationBarItem> get navbarItemBuilder {
-    List<BottomNavigationBarItem> items = [];
+  List<Widget> get navbarItemBuilder {
+    List<Widget> items = [];
     for (int i = 0; i < pages.length; i++) {
       items.add(
-        BottomNavigationBarItem(
-          icon: Icon((pages[i] as dynamic).icon),
-          title: Text((pages[i] as dynamic).title),
-          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        Icon(
+          (pages[i] as dynamic).icon,
         ),
       );
     }

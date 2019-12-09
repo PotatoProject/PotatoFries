@@ -89,6 +89,7 @@ abstract class PageLayout {
                     icon: Icon(Icons.color_lens),
                     itemPosition: j,
                     categoryIndex: categoryIndex,
+                    headerAncestor: section.title
                   ),
                 );
                 break;
