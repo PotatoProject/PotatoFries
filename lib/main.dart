@@ -5,6 +5,8 @@ import 'package:potato_fries/bloc/theme_bloc.dart';
 import 'package:potato_fries/internal/page_data.dart';
 import 'package:potato_fries/ui/scroll_behavior.dart';
 
+import 'internal/methods.dart';
+
 void main() => runApp(PotatoFriesRoot());
 
 class PotatoFriesRoot extends StatelessWidget {
@@ -53,30 +55,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     super.initState();
     setPages(context, bloc);
-    setColors();
-  }
-
-  void setColors() async {
-    Color dark = Color(
-      int.parse(
-        "ff" +
-            await AndroidFlutterSettings.getProp(
-                "persist.sys.theme.accent_dark"),
-        radix: 16,
-      ),
-    );
-    Color light = Color(
-      int.parse(
-        "ff" +
-            await AndroidFlutterSettings.getProp(
-                "persist.sys.theme.accent_light"),
-        radix: 16,
-      ),
-    );
-
-    bloc.changeAccent(
-      Theme.of(context).brightness == Brightness.dark ? dark : light,
-    );
+    setColors(context);
   }
 
   @override

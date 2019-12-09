@@ -1,5 +1,6 @@
 import 'package:android_flutter_settings/android_flutter_settings.dart';
 import 'package:flutter/material.dart';
+import 'package:potato_fries/internal/methods.dart';
 import 'package:potato_fries/internal/page_data.dart';
 import 'package:potato_fries/pagelayout/page_layout.dart';
 import 'package:potato_fries/provider/base.dart';
@@ -20,28 +21,31 @@ class ThemesPageLayout extends PageLayout {
               title: 'Accent color',
               subtitle: 'Pick your favourite color!',
               onChange: (dark, light, {ctx}) {
-                bloc.changeAccent(
-                  Theme.of(ctx ?? context).brightness == Brightness.dark
-                      ? dark
-                      : light,
-                );
               },
-              defaultDark: Colors.black,
-              defaultLight: Colors.black,
+              defaultDark: dark,
+              defaultLight: light,
               lightnessDeltaCenter: 0.15,
               lightnessDeltaEnd: 0.6,
-              onApply: (String dark, String light) {
+              onApply: (String newDark, String newLight) {
                 AndroidFlutterSettings.setProp(
                   'persist.sys.theme.accent_dark',
-                  dark,
+                  newDark,
                 );
                 AndroidFlutterSettings.setProp(
                   'persist.sys.theme.accent_light',
-                  light,
+                  newLight,
                 );
 
-                //AndroidFlutterSettings.reloadAssets('com.android.settings');
-                //AndroidFlutterSettings.reloadAssets('com.android.systemui');
+                setColors(context);
+
+                bloc.changeAccent(
+                  Theme.of(context).brightness == Brightness.dark
+                      ? dark
+                      : light,
+                );
+
+                AndroidFlutterSettings.reloadAssets('com.android.settings');
+                AndroidFlutterSettings.reloadAssets('com.android.systemui');
               },
             ),
           ]

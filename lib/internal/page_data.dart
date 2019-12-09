@@ -14,6 +14,9 @@ import 'package:potato_fries/pages/themes.dart';
 List<Widget> pages = [];
 ThemeBloc bloc;
 
+Color dark;
+Color light;
+
 void setPages(BuildContext context, ThemeBloc passedBloc) {
   if (pages.length == 0) {
     bloc = passedBloc;
