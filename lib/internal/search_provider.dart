@@ -63,9 +63,7 @@ class SearchProvider {
   int categoryIndex;
   String headerAncestor;
   BaseDataProvider provider;
-  double min;
-  double max;
-  double defval;
+  Map<String, dynamic> extraData;
 
   SearchProvider({
     @required this.title,
@@ -78,9 +76,7 @@ class SearchProvider {
     @required this.categoryIndex,
     this.headerAncestor,
     this.provider,
-    this.min,
-    this.max,
-    this.defval,
+    this.extraData,
   });
 }
 

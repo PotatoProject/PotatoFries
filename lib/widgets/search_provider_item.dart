@@ -55,9 +55,11 @@ class SearchProviderItem extends StatelessWidget {
                 (provider.headerAncestor != null
                     ? " > " + provider.headerAncestor
                     : ""),
-            min: provider.min,
-            max: provider.max,
-            defval: provider.defval,
+            min: provider.extraData["min"],
+            max: provider.extraData["max"],
+            defval: provider.extraData["defval"],
+            percentage: provider.extraData["percentage"],
+            percentageMode: provider.extraData["percentageMode"],
           );
           break;
       }

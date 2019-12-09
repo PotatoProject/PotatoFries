@@ -74,9 +74,13 @@ abstract class PageLayout {
                     categoryIndex: categoryIndex,
                     headerAncestor: section.title,
                     provider: tile.provider,
-                    min: tile.min,
-                    max: tile.max,
-                    defval: tile.defval
+                    extraData: {
+                      "min": tile.min,
+                      "max": tile.max,
+                      "defval": tile.defval,
+                      "percentage": tile.percentage,
+                      "percentageMode": tile.percentageMode
+                    }
                   ),
                 );
                 break;
