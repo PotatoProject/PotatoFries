@@ -5,6 +5,7 @@ import 'package:potato_fries/pages/buttons_and_navigation.dart';
 import 'package:potato_fries/pages/quick_settings.dart';
 import 'package:potato_fries/pages/themes.dart';
 import 'package:potato_fries/ui/sizeable_list_tile.dart';
+import 'package:potato_fries/widgets/settings_slider_tile.dart';
 import 'package:potato_fries/widgets/settings_switch_tile.dart';
 
 class SearchProviderItem extends StatelessWidget {
@@ -16,25 +17,50 @@ class SearchProviderItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (provider.setting != null &&
-        provider.inputType == SettingInputType.SWITCH) {
-      return SettingsSwitchTile(
-        icon: provider.icon,
-        setting: provider.setting,
-        type: provider.type,
-        title: provider.title,
-        subtitle: provider.description != null ? provider.description : null,
-        onTap: () => Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => executePush(),
-          ),
-        ),
-        footer: parseCategory(provider) +
-            (provider.headerAncestor != null
-                ? " > " + provider.headerAncestor
-                : ""),
-      );
+    if (provider.setting != null) {
+      switch(provider.inputType) {
+        case SettingInputType.SWITCH:
+          return SettingsSwitchTile(
+            icon: provider.icon,
+            setting: provider.setting,
+            type: provider.type,
+            title: provider.title,
+            subtitle: provider.description != null ? provider.description : null,
+            provider: provider.provider,
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => executePush(),
+              ),
+            ),
+            footer: parseCategory(provider) +
+                (provider.headerAncestor != null
+                    ? " > " + provider.headerAncestor
+                    : ""),
+          );
+          break;
+        case SettingInputType.SLIDER:
+          return SettingsSliderTile(
+            setting: provider.setting,
+            type: provider.type,
+            title: provider.title,
+            provider: provider.provider,
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => executePush(),
+              ),
+            ),
+            footer: parseCategory(provider) +
+                (provider.headerAncestor != null
+                    ? " > " + provider.headerAncestor
+                    : ""),
+            min: provider.min,
+            max: provider.max,
+            defval: provider.defval,
+          );
+          break;
+      }
     } else {
       return SizeableListTile(
         icon: provider.icon,

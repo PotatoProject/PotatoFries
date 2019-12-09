@@ -58,6 +58,7 @@ abstract class PageLayout {
                     itemPosition: j,
                     categoryIndex: categoryIndex,
                     headerAncestor: section.title,
+                    provider: tile.provider,
                   ),
                 );
                 break;
@@ -72,6 +73,10 @@ abstract class PageLayout {
                     itemPosition: j,
                     categoryIndex: categoryIndex,
                     headerAncestor: section.title,
+                    provider: tile.provider,
+                    min: tile.min,
+                    max: tile.max,
+                    defval: tile.defval
                   ),
                 );
                 break;

@@ -1,5 +1,6 @@
 import 'package:android_flutter_settings/android_flutter_settings.dart';
 import 'package:flutter/material.dart';
+import 'package:potato_fries/provider/base.dart';
 
 ///
 /// Search providers
@@ -61,28 +62,26 @@ class SearchProvider {
   int itemPosition;
   int categoryIndex;
   String headerAncestor;
+  BaseDataProvider provider;
+  double min;
+  double max;
+  double defval;
 
   SearchProvider({
-    @required String title,
-    String setting,
-    SettingType type,
-    SettingInputType inputType,
-    String description,
-    Widget icon,
-    @required int itemPosition,
-    @required int categoryIndex,
-    String headerAncestor,
-  }) {
-    this.title = title;
-    this.setting = setting;
-    this.type = type;
-    this.inputType = inputType;
-    this.description = description;
-    this.icon = icon;
-    this.itemPosition = itemPosition;
-    this.categoryIndex = categoryIndex;
-    this.headerAncestor = headerAncestor;
-  }
+    @required this.title,
+    this.setting,
+    this.type,
+    this.inputType,
+    this.description,
+    this.icon,
+    @required this.itemPosition,
+    @required this.categoryIndex,
+    this.headerAncestor,
+    this.provider,
+    this.min,
+    this.max,
+    this.defval,
+  });
 }
 
 enum SettingInputType { SLIDER, SWITCH }
