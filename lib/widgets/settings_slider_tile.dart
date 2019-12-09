@@ -15,6 +15,8 @@ class SettingsSliderTile extends StatefulWidget {
   final double defval;
   final Function() onTap;
   final BaseDataProvider provider;
+  final bool percentage;
+  final PercentageMode percentageMode;
 
   SettingsSliderTile({
     @required this.title,
@@ -27,9 +29,13 @@ class SettingsSliderTile extends StatefulWidget {
     this.max = 0,
     this.provider,
     this.defval,
+    this.percentage = false,
+    this.percentageMode = PercentageMode.ABSOLUTE,
   })  : assert(title != null),
         assert(setting != null),
-        assert(type != null);
+        assert(type != null),
+        assert(percentage != null),
+        assert(percentageMode != null);
 
   @override
   _SettingsSliderTileState createState() => _SettingsSliderTileState();
@@ -48,9 +54,16 @@ class _SettingsSliderTileState extends State<SettingsSliderTile> {
     if (value < widget.min || value > widget.max) value = widget.min;
     return SizeableListTile(
       title: widget.title,
-      icon: FittedBox(
-        fit: BoxFit.scaleDown,
-        child: Text(value.toInt().toString()),
+      icon: Container(
+        width: 24,
+        alignment: Alignment.center,
+        child: Text(
+          (widget.percentage
+                ? widget.percentageMode == PercentageMode.ABSOLUTE
+                    ? (value / widget.max) * 100
+                    : ((value - widget.min) / (widget.max - widget.min)) * 100
+                : value.toInt()
+          ).toInt().toString()),
       ),
       subtitle: SettingsSlider(
         type: widget.type,
@@ -66,3 +79,5 @@ class _SettingsSliderTileState extends State<SettingsSliderTile> {
     );
   }
 }
+
+enum PercentageMode { RELATIVE, ABSOLUTE }

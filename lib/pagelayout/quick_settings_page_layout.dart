@@ -34,10 +34,11 @@ class QuickSettingsPageLayout extends PageLayout {
             SettingsSliderTile(
               setting: 'qs_panel_bg_alpha',
               type: SettingType.SYSTEM,
-              min: 100,
+              min: 102,
               max: 255,
               title: 'QS Panel Opacity',
               provider: provider,
+              percentage: true,
             ),
           ],
         ),
