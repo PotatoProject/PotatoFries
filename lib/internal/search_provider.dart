@@ -5,10 +5,7 @@ import 'package:potato_fries/provider/base.dart';
 ///
 /// Search providers
 ///
-/// This file contains definitions for search
-/// results that should appear on search route.
-/// Unfortunately for the time being these providers
-/// are all hardcoded until we don't find a better way to generate them.
+/// This file contains the base class that defines what a provider is and how it works
 ///
 ///
 /// How to define a basic provider
@@ -26,8 +23,11 @@ import 'package:potato_fries/provider/base.dart';
 ///   tile is a switch or slider one
 /// - A special int value that indicates the position of the item in its listview
 ///   (unfortunately must be entered manually for now)
-/// - And last but not least, the category of the provider, for example the location of the
+/// - The category of the provider, for example the location of the
 ///   setting modifier, like themes, lockscreen, qs and so on
+/// - (o) The title of the item section ancestor, used for displaying it on search route
+/// - (o) A provider, manages and updates the values of the item, can be used for switches and sliders
+/// - (o) Extra data, literally, its used to pass some data that is unique or required for specific items
 ///
 /// Example:
 ///   SearchProvider(
@@ -39,16 +39,13 @@ import 'package:potato_fries/provider/base.dart';
 ///     icon: Icon(Icons.search),
 ///     itemPosition: 5, // this starts from 0
 ///     categoryIndex: 2, // this ranges from 0 to 5
+///     headerAncestor: "Colors",
+///     provider: this.provider,
+///     extraData: {
+///       "variable": 2
+///     }
 ///   )
-///
-///
-/// Why can't we generate those?
-///
-/// At first glance i thought of adding the generator code on the ui elements,
-/// but later figured out that those don't get layed out when you first run the app,
-/// so the user would have to actually open every page for the providers to be added,
-/// so this method seems better for now. Improvements are always welcome.
-///
+/// 
 
 List<SearchProvider> searchItems = [];
 
