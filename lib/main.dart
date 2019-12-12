@@ -1,10 +1,10 @@
-import 'package:android_flutter_settings/android_flutter_settings.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:potato_fries/bloc/theme_bloc.dart';
+import 'package:potato_fries/internal/app_info.dart';
 import 'package:potato_fries/internal/page_data.dart';
 import 'package:potato_fries/ui/scroll_behavior.dart';
 import 'package:potato_fries/widgets/custom_bottom_bar.dart';
+import 'package:provider/provider.dart';
 
 import 'internal/methods.dart';
 
@@ -14,33 +14,40 @@ class PotatoFriesRoot extends StatelessWidget {
   final bloc = ThemeBloc();
 
   @override
-  Widget build(context) => StreamBuilder<Color>(
-        initialData: Colors.blue,
-        stream: bloc.currentAccent,
-        builder: (context, snapshot) {
-          return MaterialApp(
-            builder: (context, child) => ScrollConfiguration(
-              behavior: NoGlowScrollBehavior(),
-              child: child,
-            ),
-            title: 'Fries',
-            theme: ThemeData.light().copyWith(
-              accentColor: snapshot.data,
-              appBarTheme: AppBarTheme(
-                textTheme: Theme.of(context).textTheme,
-                actionsIconTheme: Theme.of(context).iconTheme,
-                iconTheme: Theme.of(context).iconTheme
+  Widget build(context) => MultiProvider(
+        providers: [
+          ChangeNotifierProvider<AppInfoProvider>.value(
+            value: AppInfoProvider(),
+          ),
+        ],
+        child: StreamBuilder<Color>(
+          initialData: Colors.blue,
+          stream: bloc.currentAccent,
+          builder: (context, snapshot) {
+            return MaterialApp(
+              builder: (context, child) => ScrollConfiguration(
+                behavior: NoGlowScrollBehavior(),
+                child: child,
               ),
-            ),
-            darkTheme: ThemeData.dark().copyWith(
-              accentColor: snapshot.data,
-              cardColor: Color(0xFF212121),
-              scaffoldBackgroundColor: Color(0xFF151618),
-            ),
-            home: MyHomePage(bloc: bloc),
-            debugShowCheckedModeBanner: false,
-          );
-        },
+              title: 'Fries',
+              theme: ThemeData.light().copyWith(
+                accentColor: snapshot.data,
+                appBarTheme: AppBarTheme(
+                  textTheme: Theme.of(context).textTheme,
+                  actionsIconTheme: Theme.of(context).iconTheme,
+                  iconTheme: Theme.of(context).iconTheme
+                ),
+              ),
+              darkTheme: ThemeData.dark().copyWith(
+                accentColor: snapshot.data,
+                cardColor: Color(0xFF212121),
+                scaffoldBackgroundColor: Color(0xFF151618),
+              ),
+              home: MyHomePage(bloc: bloc),
+              debugShowCheckedModeBanner: false,
+            );
+          },
+        ),
       );
 }
 
@@ -64,6 +71,10 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
     super.initState();
     setPages(context, bloc);
     setColors(context);
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      initAppInfo(context);
+    });
   }
 
   @override

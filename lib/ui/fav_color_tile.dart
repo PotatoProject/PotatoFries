@@ -27,7 +27,7 @@ class _FavColorTileState extends State<FavColorTile> {
     return Padding(
       padding: EdgeInsets.all(8),
       child: SizedBox.fromSize(
-        size: Size.square(54),
+        size: Size.square(widget.size),
         child: InkWell(
           onTap: () => widget.onTap(widget.base, widget.lightLightness, widget.darkLightness),
           onLongPress: widget.onDelete,

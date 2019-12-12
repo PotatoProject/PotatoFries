@@ -274,7 +274,17 @@ class _ColorPickerState extends State<ColorPicker> {
                   size: Size.square(48),
                   child: InkWell(
                     onTap: () {
-                      listKey.currentState.insertItem(1);
+                      String stringHSL =
+                          [hue.toString(), saturation.toString(), lightness.toString()].join(":");
+                      
+                      String stringLightnesses =
+                          [lightnessLight.toString(), lightnessDark.toString()].join(":");
+                      
+                      String readyString = [stringHSL, stringLightnesses].join("|");
+
+                      appInfo.savedColors = List.from(appInfo.savedColors)..add(readyString);
+                      
+                      listKey.currentState.insertItem(0);
                     },
                     borderRadius: BorderRadius.circular(48),
                     child: Container(
@@ -303,30 +313,48 @@ class _ColorPickerState extends State<ColorPicker> {
               Expanded(
                 child: AnimatedList(
                   key: listKey,
+                  padding: EdgeInsets.all(0),
                   scrollDirection: Axis.horizontal,
-                  initialItemCount: 5,
+                  initialItemCount: appInfo.savedColors.length,
                   itemBuilder: (context, index, enterAnim) {
+
+                    List<String> reverseColors = appInfo.savedColors.reversed.toList();
+
+                    String fetchedString = reverseColors[index];
+                    List<String> fetchedStringHSL = fetchedString.split("|")[0].split(":");
+                    List<String> fetchedStringLightnesses = fetchedString.split("|")[1].split(":");
+                    List<double> baseHSL = List.generate(fetchedStringHSL.length, (i) {
+                      return double.parse(fetchedStringHSL[i]);
+                    });
+                    List<double> lightnessLightDark = List.generate(fetchedStringLightnesses.length, (i) {
+                      return double.parse(fetchedStringLightnesses[i]);
+                    });
+
                     return FadeTransition(
                       opacity: enterAnim,
                       child: FavColorTile(
-                        base: HSLColor.fromAHSL(1, hue, saturation, lightness),
-                        lightLightness: lightnessLight,
-                        darkLightness: lightnessDark,
+                        base: HSLColor.fromAHSL(1, baseHSL[0], baseHSL[1], baseHSL[2]),
+                        lightLightness: lightnessLightDark[0],
+                        darkLightness: lightnessLightDark[1],
                         onTap: (base, light, dark) {
                           hue = base.hue;
                           saturation = base.saturation;
+                          lightness = base.lightness;
                           lightnessLight = light;
                           lightnessDark = dark;
                           setState(() {});
                         },
                         onDelete: () {
+                          reverseColors.removeAt(index);
+                          List<String> originalList = reverseColors.reversed.toList();
+                          appInfo.savedColors = List.from(originalList);
                           listKey.currentState.removeItem(index, (context, removeAnim) {
                             return FadeTransition(
                               opacity: removeAnim,
                               child: FavColorTile(
-                                base: HSLColor.fromAHSL(1, hue, saturation, lightness),
-                                lightLightness: lightnessLight,
-                                darkLightness: lightnessDark,
+                                base: HSLColor.fromAHSL(1, baseHSL[0], baseHSL[1], baseHSL[2]),
+                                lightLightness: lightnessLightDark[0],
+                                darkLightness: lightnessLightDark[1],
                               ),
                             );
                           }, duration: Duration(milliseconds: 200));
