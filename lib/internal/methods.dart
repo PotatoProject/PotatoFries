@@ -11,30 +11,28 @@ void launchUrl(String url) async {
     throw 'Could not launch $url!';
 }
 
+void setColors(BuildContext context) async {
+  dark = Color(
+    int.parse(
+      "ff" +
+          await AndroidFlutterSettings.getProp(
+              "persist.sys.theme.accent_dark"),
+      radix: 16,
+    ),
+  );
+  light = Color(
+    int.parse(
+      "ff" +
+          await AndroidFlutterSettings.getProp(
+              "persist.sys.theme.accent_light"),
+      radix: 16,
+    ),
+  );
 
-
-  void setColors(BuildContext context) async {
-    dark = Color(
-      int.parse(
-        "ff" +
-            await AndroidFlutterSettings.getProp(
-                "persist.sys.theme.accent_dark"),
-        radix: 16,
-      ),
-    );
-    light = Color(
-      int.parse(
-        "ff" +
-            await AndroidFlutterSettings.getProp(
-                "persist.sys.theme.accent_light"),
-        radix: 16,
-      ),
-    );
-
-    bloc.changeAccent(
-      Theme.of(context).brightness == Brightness.dark ? dark : light,
-    );
-  }
+  bloc.changeAccent(
+    Theme.of(context).brightness == Brightness.dark ? dark : light,
+  );
+}
 
 void showColorPicker(
   BuildContext context, {
@@ -49,6 +47,7 @@ void showColorPicker(
 }) {
   showModalBottomSheet(
     context: context,
+    isScrollControlled: true,
     builder: (context) => ColorPicker(
       lightnessLocked: lightnessLocked,
       lightnessDeltaCenter: lightnessDeltaCenter,
