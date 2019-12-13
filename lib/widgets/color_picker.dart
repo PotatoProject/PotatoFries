@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:potato_fries/internal/page_data.dart';
+import 'package:potato_fries/ui/accent_preview.dart';
 import 'package:potato_fries/ui/fav_color_tile.dart';
 
 class ColorPicker extends StatefulWidget {
@@ -173,21 +174,22 @@ class _ColorPickerState extends State<ColorPicker> {
                   child: Row(
                     mainAxisSize: MainAxisSize.max,
                     children: <Widget>[
-                      accentPreview(
-                        lightnessLight,
-                        'Light',
-                        BorderRadius.only(
+                      AccentPreview(
+                        color: HSLColor.fromAHSL(1, hue, saturation, lightnessLight),
+                        title: 'Light',
+                        borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(16),
                           bottomLeft: Radius.circular(16),
                         ),
                       ),
-                      accentPreview(
-                        lightnessDark,
-                        'Dark',
-                        BorderRadius.only(
+                      AccentPreview(
+                        color: HSLColor.fromAHSL(1, hue, saturation, lightnessDark),
+                        title: 'Dark',
+                        borderRadius: BorderRadius.only(
                           topRight: Radius.circular(16),
                           bottomRight: Radius.circular(16),
                         ),
+                        isDark: true,
                       ),
                     ],
                   ),
@@ -371,57 +373,6 @@ class _ColorPickerState extends State<ColorPicker> {
       ],
     );
   }
-
-  Widget accentPreview(
-    double lightness,
-    String title,
-    BorderRadius borderRadius,
-  ) {
-    return Expanded(
-      child: Container(
-        decoration: BoxDecoration(
-          color: HSLColor.fromAHSL(1, hue, saturation, lightness).toColor(),
-          borderRadius: borderRadius,
-        ),
-        child: Stack(
-          children: <Widget>[
-            Center(
-              child: Text(
-                '#' +
-                    HSLColor.fromAHSL(1, hue, saturation, lightness)
-                        .toColor()
-                        .value
-                        .toRadixString(16)
-                        .substring(2, 8),
-                style: TextStyle(
-                  color: lightness > 0.5
-                      ? Colors.black.withOpacity(0.70)
-                      : Colors.white.withOpacity(0.70),
-                  fontFamily: 'monospace',
-                ),
-              ),
-            ),
-            Positioned(
-              bottom: 0,
-              left: 0,
-              right: 0,
-              child: Center(
-                child: Padding(
-                  padding: const EdgeInsets.only(bottom: 4.0),
-                  child: Text(
-                    title,
-                    style: TextStyle(
-                      color: lightness > 0.5
-                          ? Colors.black.withOpacity(0.40)
-                          : Colors.white.withOpacity(0.40),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
 }
+
+enum SelectedColor { LIGHT, DARK }

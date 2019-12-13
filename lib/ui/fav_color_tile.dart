@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class FavColorTile extends StatefulWidget {
+class FavColorTile extends StatelessWidget {
   final HSLColor base;
   final double lightLightness;
   final double darkLightness;
@@ -18,41 +18,36 @@ class FavColorTile extends StatefulWidget {
   });
 
   @override
-  _FavColorTileState createState() => _FavColorTileState();
-}
-
-class _FavColorTileState extends State<FavColorTile> {
-  @override
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.all(8),
       child: SizedBox.fromSize(
-        size: Size.square(widget.size),
+        size: Size.square(size),
         child: InkWell(
-          onTap: () => widget.onTap(widget.base, widget.lightLightness, widget.darkLightness),
-          onLongPress: widget.onDelete,
-          borderRadius: BorderRadius.circular(widget.size / 2),
+          onTap: () => onTap(base, lightLightness, darkLightness),
+          onLongPress: onDelete,
+          borderRadius: BorderRadius.circular(size / 2),
           child: Row(
             children: <Widget>[
               Container(
-                height: widget.size,
-                width: widget.size / 2,
+                height: size,
+                width: size / 2,
                 decoration: BoxDecoration(
-                  color: widget.base.withLightness(widget.lightLightness).toColor(),
+                  color: base.withLightness(lightLightness).toColor(),
                   borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(widget.size / 2),
-                    bottomLeft: Radius.circular(widget.size / 2)
+                    topLeft: Radius.circular(size / 2),
+                    bottomLeft: Radius.circular(size / 2)
                   ),
                 ),
               ),
               Container(
-                height: widget.size,
-                width: widget.size / 2,
+                height: size,
+                width: size / 2,
                 decoration: BoxDecoration(
-                  color: widget.base.withLightness(widget.darkLightness).toColor(),
+                  color: base.withLightness(darkLightness).toColor(),
                   borderRadius: BorderRadius.only(
-                    topRight: Radius.circular(widget.size / 2),
-                    bottomRight: Radius.circular(widget.size / 2)
+                    topRight: Radius.circular(size / 2),
+                    bottomRight: Radius.circular(size / 2)
                   ),
                 ),
               ),
