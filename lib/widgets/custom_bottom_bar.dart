@@ -38,7 +38,7 @@ class CustomBottomBar extends StatelessWidget {
       widgets.add(
         IconButton(
           icon: items[i],
-          color: currentIndex == i ? selectedColor ?? Theme.of(context).accentColor : null,
+          color: currentIndex == i ? selectedColor ?? Theme.of(context).accentColor : Theme.of(context).iconTheme.color.withOpacity(0.4),
           onPressed: () => onTap(i),
         ),
       );

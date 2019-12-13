@@ -5,6 +5,7 @@ class AccentPreview extends StatelessWidget {
   final HSLColor color;
   final String title;
   final BorderRadius borderRadius;
+  final bool selected;
   final void Function() onTap;
   final void Function(Color) onDialogComplete;
   final isDark;
@@ -13,6 +14,7 @@ class AccentPreview extends StatelessWidget {
     @required this.color,
     @required this.title,
     @required this.borderRadius,
+    this.selected = false,
     this.onTap,
     this.onDialogComplete,
     this.isDark = false,
@@ -25,6 +27,10 @@ class AccentPreview extends StatelessWidget {
         decoration: BoxDecoration(
           color: HSLColor.fromAHSL(1, color.hue, color.saturation, color.lightness).toColor(),
           borderRadius: borderRadius,
+          border: selected ? Border.all(
+            color: Theme.of(context).textTheme.title.color.withOpacity(0.90),
+            width: 2
+          ) : null
         ),
         child: Material(
           color: Colors.transparent,

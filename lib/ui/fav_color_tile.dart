@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
 
 class FavColorTile extends StatelessWidget {
-  final HSLColor base;
-  final double lightLightness;
-  final double darkLightness;
+  final HSLColor light;
+  final HSLColor dark;
   final double size;
-  final void Function(HSLColor, double, double) onTap;
+  final void Function(HSLColor, HSLColor) onTap;
   final Function() onDelete;
 
   FavColorTile({
-    @required this.base,
-    @required this.lightLightness,
-    @required this.darkLightness,
+    @required this.light,
+    @required this.dark,
     this.size = 48,
     this.onTap,
     this.onDelete,
@@ -24,7 +22,7 @@ class FavColorTile extends StatelessWidget {
       child: SizedBox.fromSize(
         size: Size.square(size),
         child: InkWell(
-          onTap: () => onTap(base, lightLightness, darkLightness),
+          onTap: () => onTap(light, dark),
           onLongPress: onDelete,
           borderRadius: BorderRadius.circular(size / 2),
           child: Row(
@@ -33,7 +31,7 @@ class FavColorTile extends StatelessWidget {
                 height: size,
                 width: size / 2,
                 decoration: BoxDecoration(
-                  color: base.withLightness(lightLightness).toColor(),
+                  color: light.toColor(),
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(size / 2),
                     bottomLeft: Radius.circular(size / 2)
@@ -44,7 +42,7 @@ class FavColorTile extends StatelessWidget {
                 height: size,
                 width: size / 2,
                 decoration: BoxDecoration(
-                  color: base.withLightness(darkLightness).toColor(),
+                  color: dark.toColor(),
                   borderRadius: BorderRadius.only(
                     topRight: Radius.circular(size / 2),
                     bottomRight: Radius.circular(size / 2)
