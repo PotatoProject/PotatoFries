@@ -20,45 +20,46 @@ class QuickSettings extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Map<String, dynamic> builtLayout =
-        QuickSettingsPageLayout().build(context, keyIndex, provider: provider);
-    List<GlobalKey> keys = builtLayout["keys"];
-    List<Widget> children = builtLayout["body"];
+    return ChangeNotifierProvider.value(
+      value: provider,
+      child: Builder(
+        builder: (context) {
+          Map<String, dynamic> builtLayout = QuickSettingsPageLayout()
+              .build(context, keyIndex, provider: provider);
+          List<GlobalKey> keys = builtLayout["keys"];
+          List<Widget> children = builtLayout["body"];
 
-    Future.delayed(
-      Duration.zero,
-      () async {
-        if (keyIndex != null)
-          Scrollable.ensureVisible(keys[keyIndex].currentContext);
-      },
+          Future.delayed(
+            Duration.zero,
+            () async {
+              if (keyIndex != null)
+                Scrollable.ensureVisible(keys[keyIndex].currentContext);
+            },
+          );
+
+          if (keyIndex != null) {
+            return Scaffold(
+              backgroundColor: Theme.of(context).cardColor,
+              body: Builder(
+                builder: (context) => FriesPage(
+                  title: title,
+                  header: _header(context),
+                  children: children,
+                ),
+              ),
+            );
+          } else {
+            return Builder(
+              builder: (context) => FriesPage(
+                title: title,
+                header: _header(context),
+                children: children,
+              ),
+            );
+          }
+        },
+      ),
     );
-
-    if (keyIndex != null) {
-      return Scaffold(
-        backgroundColor: Theme.of(context).cardColor,
-        body: ChangeNotifierProvider.value(
-          value: provider,
-          child: Builder(
-            builder: (context) => FriesPage(
-              title: title,
-              header: _header(context),
-              children: children,
-            ),
-          ),
-        ),
-      );
-    } else {
-      return ChangeNotifierProvider.value(
-        value: provider,
-        child: Builder(
-          builder: (context) => FriesPage(
-            title: title,
-            header: _header(context),
-            children: children,
-          ),
-        ),
-      );
-    }
   }
 
   Widget _header(context) => Padding(

@@ -18,7 +18,6 @@ class ThemesPageLayout extends PageLayout {
           ColorPickerTile(
             title: 'Accent color',
             subtitle: 'Pick your favourite color!',
-            onChange: (dark, light, {ctx}) {},
             defaultDark: dark,
             defaultLight: light,
             lightnessDeltaCenter: 0.15,

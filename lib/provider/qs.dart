@@ -6,12 +6,19 @@ class QSDataProvider extends BaseDataProvider {
     loadData();
   }
 
-  Map<String, dynamic> extraData = Map();
+  Map<String, dynamic> _extraData = Map();
+
+  Map<String, dynamic> get extraData => _extraData;
+
+  set extraData(Map<String, dynamic> val) {
+    _extraData = val;
+    notifyListeners();
+  }
 
   void loadData() async {
     String colorSetting = 'qs_panel_bg_color';
     SettingType colorSettingType = SettingType.SYSTEM;
-    extraData['${colorSettingType.toString()}/$colorSetting'] =
+    _extraData['${colorSettingType.toString()}/$colorSetting'] =
         await AndroidFlutterSettings.getInt(colorSetting, colorSettingType);
     notifyListeners();
   }

@@ -40,9 +40,14 @@ class _ColorPickerTileState extends State<ColorPickerTile> {
   Color light;
 
   @override
-  Widget build(BuildContext context) {
+  void initState() {
     dark = widget.defaultDark ?? widget.defaultColor;
     light = widget.defaultLight ?? widget.defaultColor;
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return SizeableListTile(
       title: widget.title,
       subtitle: Text(widget.subtitle),
@@ -87,7 +92,13 @@ class _ColorPickerTileState extends State<ColorPickerTile> {
               );
           });
         },
-        onApply: widget.onApply,
+        onApply: (String newDark, String newLight) {
+          setState(() {
+            dark = Color(int.parse('0xff' + newDark));
+            light = Color(int.parse('0xff' + newLight));
+          });
+          if (widget.onApply != null) widget.onApply(newDark, newLight);
+        },
         lightnessDeltaCenter: widget.lightnessDeltaCenter,
         lightnessDeltaEnd: widget.lightnessDeltaEnd,
         lightnessMin: widget.lightnessMin,
