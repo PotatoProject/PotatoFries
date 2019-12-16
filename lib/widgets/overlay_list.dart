@@ -33,12 +33,13 @@ class _OverlayListState extends State<OverlayList> {
           trailing: Text(text),
           onTap: () async {
             dynamic result = await showDialog(
-                context: context,
-                builder: (context) {
-                  return OverlayListDialog(
-                    title: widget.title,
-                  );
-                },);
+              context: context,
+              builder: (context) {
+                return OverlayListDialog(
+                  title: widget.title,
+                );
+              },
+            );
 
             if (result != null) setState(() => text = result);
           },

@@ -27,16 +27,10 @@ class Section extends StatelessWidget {
           child: Divider(),
         ),
         Padding(
-          padding: EdgeInsets.symmetric(
-            vertical: 6,
-            horizontal: 16
-          ),
+          padding: EdgeInsets.symmetric(vertical: 6, horizontal: 16),
           child: Text(
             title.toUpperCase(),
-            style: TextStyle(
-              color: color,
-              fontWeight: FontWeight.bold
-            ),
+            style: TextStyle(color: color, fontWeight: FontWeight.bold),
           ),
         ),
         Column(

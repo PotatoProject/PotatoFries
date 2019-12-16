@@ -45,7 +45,7 @@ import 'package:potato_fries/provider/base.dart';
 ///       "variable": 2
 ///     }
 ///   )
-/// 
+///
 List<SearchProvider> searchItems = [];
 
 class SearchProvider {

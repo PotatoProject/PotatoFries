@@ -38,4 +38,5 @@ void setPages(BuildContext context, ThemeBloc passedBloc) {
   }
 }
 
-void initAppInfo(BuildContext context) => appInfo = Provider.of<AppInfoProvider>(context);
+void initAppInfo(BuildContext context) =>
+    appInfo = Provider.of<AppInfoProvider>(context);

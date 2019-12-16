@@ -122,7 +122,8 @@ class QuickSettings extends StatelessWidget {
                           Builder(
                             builder: (context) {
                               TimeOfDay time = TimeOfDay.now();
-                              return Text(time.format(context), style: TextStyle(color: Colors.white));
+                              return Text(time.format(context),
+                                  style: TextStyle(color: Colors.white));
                             },
                           ),
                           Container(),

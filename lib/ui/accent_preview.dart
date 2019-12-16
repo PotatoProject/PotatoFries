@@ -25,13 +25,19 @@ class AccentPreview extends StatelessWidget {
     return Expanded(
       child: Container(
         decoration: BoxDecoration(
-          color: HSLColor.fromAHSL(1, color.hue, color.saturation, color.lightness).toColor(),
-          borderRadius: borderRadius,
-          border: selected ? Border.all(
-            color: Theme.of(context).textTheme.title.color.withOpacity(0.90),
-            width: 2
-          ) : null
-        ),
+            color: HSLColor.fromAHSL(
+                    1, color.hue, color.saturation, color.lightness)
+                .toColor(),
+            borderRadius: borderRadius,
+            border: selected
+                ? Border.all(
+                    color: Theme.of(context)
+                        .textTheme
+                        .title
+                        .color
+                        .withOpacity(0.90),
+                    width: 2)
+                : null),
         child: Material(
           color: Colors.transparent,
           child: InkWell(
@@ -41,24 +47,26 @@ class AccentPreview extends StatelessWidget {
               var result = await showDialog(
                 context: context,
                 builder: (context) => AccentPreviewHexPicker(
-                  color: HSLColor.fromAHSL(1, color.hue, color.saturation, color.lightness),
+                  color: HSLColor.fromAHSL(
+                      1, color.hue, color.saturation, color.lightness),
                   isDarkPicker: isDark,
                 ),
               );
 
-              if(onDialogComplete != null && result != null)
-                  onDialogComplete(result);
+              if (onDialogComplete != null && result != null)
+                onDialogComplete(result);
             },
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Text(
                   '#' +
-                    HSLColor.fromAHSL(1, color.hue, color.saturation, color.lightness)
-                        .toColor()
-                        .value
-                        .toRadixString(16)
-                        .substring(2, 8),
+                      HSLColor.fromAHSL(
+                              1, color.hue, color.saturation, color.lightness)
+                          .toColor()
+                          .value
+                          .toRadixString(16)
+                          .substring(2, 8),
                   style: TextStyle(
                     color: color.lightness > 0.5
                         ? Colors.black.withOpacity(0.70)
@@ -105,11 +113,9 @@ class _AccentPreviewHexPickerState extends State<AccentPreviewHexPicker> {
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      String hexColor = widget.color.toColor()
-          .value
-          .toRadixString(16)
-          .substring(2, 8);
-      
+      String hexColor =
+          widget.color.toColor().value.toRadixString(16).substring(2, 8);
+
       controller = TextEditingController(text: hexColor);
       controller.selection = TextSelection.collapsed(offset: 6);
       FocusScope.of(context).requestFocus(node);
@@ -133,9 +139,7 @@ class _AccentPreviewHexPickerState extends State<AccentPreviewHexPicker> {
                 child: TextField(
                   controller: controller,
                   focusNode: node,
-                  inputFormatters: [
-                    LengthLimitingTextInputFormatter(6)
-                  ],
+                  inputFormatters: [LengthLimitingTextInputFormatter(6)],
                 ),
               ),
             ],
@@ -161,18 +165,19 @@ class _AccentPreviewHexPickerState extends State<AccentPreviewHexPicker> {
         FlatButton(
           child: Text("Confirm"),
           onPressed: () {
-            if(controller.text.length == 6 && RegExp("^[0-9A-Fa-f]+\$").hasMatch(controller.text)) {
+            if (controller.text.length == 6 &&
+                RegExp("^[0-9A-Fa-f]+\$").hasMatch(controller.text)) {
               Color textColor = Color(int.parse(controller.text, radix: 16));
 
-              if(textColor.computeLuminance() > 0.5) {
-                if(!widget.isDarkPicker) {
+              if (textColor.computeLuminance() > 0.5) {
+                if (!widget.isDarkPicker) {
                   setState(() {
                     error = true;
                     errorMessage = "Color is too bright";
                   });
                 }
               } else {
-                if(widget.isDarkPicker) {
+                if (widget.isDarkPicker) {
                   setState(() {
                     error = true;
                     errorMessage = "Color is too dark";
@@ -180,7 +185,7 @@ class _AccentPreviewHexPickerState extends State<AccentPreviewHexPicker> {
                 }
               }
 
-              if(!error) {
+              if (!error) {
                 Navigator.pop(context, textColor);
               }
             } else {
@@ -192,9 +197,7 @@ class _AccentPreviewHexPickerState extends State<AccentPreviewHexPicker> {
           },
           color: Theme.of(context).accentColor,
           textColor: Theme.of(context).dialogBackgroundColor,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(4)
-          ),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
         ),
       ],
     );

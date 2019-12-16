@@ -33,10 +33,9 @@ class PotatoFriesRoot extends StatelessWidget {
               theme: ThemeData.light().copyWith(
                 accentColor: snapshot.data,
                 appBarTheme: AppBarTheme(
-                  textTheme: Theme.of(context).textTheme,
-                  actionsIconTheme: Theme.of(context).iconTheme,
-                  iconTheme: Theme.of(context).iconTheme
-                ),
+                    textTheme: Theme.of(context).textTheme,
+                    actionsIconTheme: Theme.of(context).iconTheme,
+                    iconTheme: Theme.of(context).iconTheme),
               ),
               darkTheme: ThemeData.dark().copyWith(
                 accentColor: snapshot.data,

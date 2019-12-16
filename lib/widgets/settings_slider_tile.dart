@@ -57,13 +57,13 @@ class _SettingsSliderTileState extends State<SettingsSliderTile> {
       icon: Container(
         width: 24,
         alignment: Alignment.center,
-        child: Text(
-          (widget.percentage
+        child: Text((widget.percentage
                 ? widget.percentageMode == PercentageMode.ABSOLUTE
                     ? (value / widget.max) * 100
                     : ((value - widget.min) / (widget.max - widget.min)) * 100
-                : value.toInt()
-          ).toInt().toString()),
+                : value.toInt())
+            .toInt()
+            .toString()),
       ),
       subtitle: SettingsSlider(
         type: widget.type,

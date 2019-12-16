@@ -14,41 +14,35 @@ class ThemesPageLayout extends PageLayout {
 
   @override
   List<Widget> body(BuildContext context, {BaseDataProvider provider}) => [
-        Section(
-          title: "Colors",
-          children: <Widget>[
-            ColorPickerTile(
-              title: 'Accent color',
-              subtitle: 'Pick your favourite color!',
-              onChange: (dark, light, {ctx}) {
-              },
-              defaultDark: dark,
-              defaultLight: light,
-              lightnessDeltaCenter: 0.15,
-              lightnessDeltaEnd: 0.6,
-              onApply: (String newDark, String newLight) {
-                AndroidFlutterSettings.setProp(
-                  'persist.sys.theme.accent_dark',
-                  newDark,
-                );
-                AndroidFlutterSettings.setProp(
-                  'persist.sys.theme.accent_light',
-                  newLight,
-                );
+        Section(title: "Colors", children: <Widget>[
+          ColorPickerTile(
+            title: 'Accent color',
+            subtitle: 'Pick your favourite color!',
+            onChange: (dark, light, {ctx}) {},
+            defaultDark: dark,
+            defaultLight: light,
+            lightnessDeltaCenter: 0.15,
+            lightnessDeltaEnd: 0.6,
+            onApply: (String newDark, String newLight) {
+              AndroidFlutterSettings.setProp(
+                'persist.sys.theme.accent_dark',
+                newDark,
+              );
+              AndroidFlutterSettings.setProp(
+                'persist.sys.theme.accent_light',
+                newLight,
+              );
 
-                setColors(context);
+              setColors(context);
 
-                bloc.changeAccent(
-                  Theme.of(context).brightness == Brightness.dark
-                      ? dark
-                      : light,
-                );
+              bloc.changeAccent(
+                Theme.of(context).brightness == Brightness.dark ? dark : light,
+              );
 
-                AndroidFlutterSettings.reloadAssets('com.android.settings');
-                AndroidFlutterSettings.reloadAssets('com.android.systemui');
-              },
-            ),
-          ]
-        ),
+              AndroidFlutterSettings.reloadAssets('com.android.settings');
+              AndroidFlutterSettings.reloadAssets('com.android.systemui');
+            },
+          ),
+        ]),
       ];
 }

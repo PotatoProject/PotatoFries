@@ -18,14 +18,15 @@ class SearchProviderItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (provider.setting != null) {
-      switch(provider.inputType) {
+      switch (provider.inputType) {
         case SettingInputType.SWITCH:
           return SettingsSwitchTile(
             icon: provider.icon,
             setting: provider.setting,
             type: provider.type,
             title: provider.title,
-            subtitle: provider.description != null ? provider.description : null,
+            subtitle:
+                provider.description != null ? provider.description : null,
             provider: provider.provider,
             onTap: () => Navigator.push(
               context,
@@ -66,8 +67,9 @@ class SearchProviderItem extends StatelessWidget {
           return SizeableListTile(
             icon: provider.icon,
             title: provider.title,
-            subtitle:
-            provider.description != null ? Text(provider.description) : null,
+            subtitle: provider.description != null
+                ? Text(provider.description)
+                : null,
             onTap: () => Navigator.push(
               context,
               MaterialPageRoute(

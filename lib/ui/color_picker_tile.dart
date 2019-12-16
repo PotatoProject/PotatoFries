@@ -68,29 +68,28 @@ class _ColorPickerTileState extends State<ColorPickerTile> {
           )
         ],
       ),
-      onTap: () =>
-          showColorPicker(
-            context,
-            onChange: (dark, light, {ctx}) {
-              widget.onChange(dark, light, ctx: ctx ?? context);
-              Future.delayed(Duration.zero, () {
-                if (mounted)
-                  setState(
-                        () {
-                      this.dark = dark;
-                      this.light = light;
-                    },
-                  );
-              });
-            },
-            onApply: widget.onApply,
-            lightnessDeltaCenter: widget.lightnessDeltaCenter,
-            lightnessDeltaEnd: widget.lightnessDeltaEnd,
-            lightnessLocked: widget.lightnessLocked,
-            defaultColor: widget.defaultColor,
-            defaultDark: widget.defaultDark,
-            defaultLight: widget.defaultLight,
-          ),
+      onTap: () => showColorPicker(
+        context,
+        onChange: (dark, light, {ctx}) {
+          widget.onChange(dark, light, ctx: ctx ?? context);
+          Future.delayed(Duration.zero, () {
+            if (mounted)
+              setState(
+                () {
+                  this.dark = dark;
+                  this.light = light;
+                },
+              );
+          });
+        },
+        onApply: widget.onApply,
+        lightnessDeltaCenter: widget.lightnessDeltaCenter,
+        lightnessDeltaEnd: widget.lightnessDeltaEnd,
+        lightnessLocked: widget.lightnessLocked,
+        defaultColor: widget.defaultColor,
+        defaultDark: widget.defaultDark,
+        defaultLight: widget.defaultLight,
+      ),
     );
   }
 }

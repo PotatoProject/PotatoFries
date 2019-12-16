@@ -15,8 +15,7 @@ void setColors(BuildContext context) async {
   dark = Color(
     int.parse(
       "ff" +
-          await AndroidFlutterSettings.getProp(
-              "persist.sys.theme.accent_dark"),
+          await AndroidFlutterSettings.getProp("persist.sys.theme.accent_dark"),
       radix: 16,
     ),
   );
@@ -54,9 +53,9 @@ void showColorPicker(
       lightnessDeltaEnd: lightnessDeltaEnd,
       onApply: onApply,
       onChange: onChange,
-      defaultDark:defaultDark,
-      defaultLight:defaultLight,
-      defaultColor:defaultColor,
+      defaultDark: defaultDark,
+      defaultLight: defaultLight,
+      defaultColor: defaultColor,
     ),
   );
 }

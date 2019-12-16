@@ -8,13 +8,13 @@ import 'package:potato_fries/widgets/settings_slider_tile.dart';
 import 'package:potato_fries/widgets/settings_switch_tile.dart';
 
 /// PageLayout
-/// 
+///
 /// This file contains the definition of the PageLayout class and all the methods.
 /// This class is abstract and needs to be extended before being used anywhere.
-/// 
-/// 
+///
+///
 /// What makes a PageLayout?
-/// 
+///
 /// A PageLayout is made of simply one thing: a body. This body isn't defined by default (it's abstract)
 /// and it has to be defined when extending the class.
 /// Basically a body tells what's inside a PageLayout, so all the widgets that compose a page must go in there.
@@ -22,10 +22,10 @@ import 'package:potato_fries/widgets/settings_switch_tile.dart';
 /// A body, when compiled, gets passed a required context and an optional provider, those get used by the
 /// widgets inside the function body.
 /// The body gets compiled on [PageLayout.build].
-/// 
-/// 
+///
+///
 /// More info about [PageLayout.build]
-/// 
+///
 /// This is a method that should usually not be overridden, but if you really have to override it, be sure
 /// to call the super method.
 /// This method basically compiles body, cycles through its children and, by creating a new list, assign to
@@ -34,26 +34,26 @@ import 'package:potato_fries/widgets/settings_switch_tile.dart';
 /// Keys contains a list of GlobalKeys that were assigned on compilation, its used to the page manager for
 /// scrolling to the item when clicked on the search route;
 /// Body, as the name suggests, passes the widget to actually build.
-/// 
+///
 /// This method gets passed three arguments: context, a selectedIndex and an optional provider.
 /// Context and provider get used to call body and to get the contents, while selectedIndex gets used for
 /// highlighting the current selected item.
-/// 
-/// 
+///
+///
 /// Let's talk about [PageLayout.compileProviders]
-/// 
+///
 /// This is a method that should be called only once, at app startup basically. We don't need to compile
 /// searchProviders anytime after anyways so it's fine.
 /// It basically cycles through the body (and their children ofc) to add every single supported item
 /// into the SearchProviders list that gets used to index search items.
 /// It uses lots of magic and you don't really need to know how it works, it just works™
-/// 
-/// 
+///
+///
 /// Last but not least, [PageLayout.categoryIndex]
-/// 
+///
 /// This is really just a little int value that stores the page category index data used for SearchProviders,
 /// that's all lol
-/// 
+///
 abstract class PageLayout {
   List<Widget> body(BuildContext context, {BaseDataProvider provider});
 
@@ -73,14 +73,15 @@ abstract class PageLayout {
               .where((item) => item.title == (body[i] as dynamic).title)
               .length ==
           0) {
-        if(body[i].runtimeType.toString() == "Section") {
+        if (body[i].runtimeType.toString() == "Section") {
           Section section = body[i] as Section;
           List<Widget> sectionChildren = section.children;
 
-          for(int j = 0; j < sectionChildren.length; j++) {
+          for (int j = 0; j < sectionChildren.length; j++) {
             switch (sectionChildren[j].runtimeType.toString()) {
               case "SizeableListTile":
-                SizeableListTile tile = (sectionChildren[j] as SizeableListTile);
+                SizeableListTile tile =
+                    (sectionChildren[j] as SizeableListTile);
                 searchItems.add(
                   SearchProvider(
                     title: tile.title,
@@ -93,7 +94,8 @@ abstract class PageLayout {
                 );
                 break;
               case "SettingsSwitchTile":
-                SettingsSwitchTile tile = (sectionChildren[j] as SettingsSwitchTile);
+                SettingsSwitchTile tile =
+                    (sectionChildren[j] as SettingsSwitchTile);
                 searchItems.add(
                   SearchProvider(
                     title: tile.title,
@@ -110,38 +112,37 @@ abstract class PageLayout {
                 );
                 break;
               case "SettingsSliderTile":
-                SettingsSliderTile tile = (sectionChildren[j] as SettingsSliderTile);
+                SettingsSliderTile tile =
+                    (sectionChildren[j] as SettingsSliderTile);
                 searchItems.add(
                   SearchProvider(
-                    title: tile.title,
-                    setting: tile.setting,
-                    type: tile.type,
-                    inputType: SettingInputType.SLIDER,
-                    itemPosition: j,
-                    categoryIndex: categoryIndex,
-                    headerAncestor: section.title,
-                    provider: tile.provider,
-                    extraData: {
-                      "min": tile.min,
-                      "max": tile.max,
-                      "defval": tile.defval,
-                      "percentage": tile.percentage,
-                      "percentageMode": tile.percentageMode
-                    }
-                  ),
+                      title: tile.title,
+                      setting: tile.setting,
+                      type: tile.type,
+                      inputType: SettingInputType.SLIDER,
+                      itemPosition: j,
+                      categoryIndex: categoryIndex,
+                      headerAncestor: section.title,
+                      provider: tile.provider,
+                      extraData: {
+                        "min": tile.min,
+                        "max": tile.max,
+                        "defval": tile.defval,
+                        "percentage": tile.percentage,
+                        "percentageMode": tile.percentageMode
+                      }),
                 );
                 break;
               case "ColorPickerTile":
                 ColorPickerTile tile = (sectionChildren[j] as ColorPickerTile);
                 searchItems.add(
                   SearchProvider(
-                    title: tile.title,
-                    description: tile.subtitle,
-                    icon: Icon(Icons.color_lens),
-                    itemPosition: j,
-                    categoryIndex: categoryIndex,
-                    headerAncestor: section.title
-                  ),
+                      title: tile.title,
+                      description: tile.subtitle,
+                      icon: Icon(Icons.color_lens),
+                      itemPosition: j,
+                      categoryIndex: categoryIndex,
+                      headerAncestor: section.title),
                 );
                 break;
               default:
@@ -149,7 +150,9 @@ abstract class PageLayout {
                 break;
             }
           }
-        } else throw Exception("Every element on the root of a PageLayout must be a Section");
+        } else
+          throw Exception(
+              "Every element on the root of a PageLayout must be a Section");
       }
     }
   }

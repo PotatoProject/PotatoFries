@@ -25,41 +25,41 @@ class _FavColorTileState extends State<FavColorTile> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.all(8),
-      child: SizedBox.fromSize(
-        size: Size.square(widget.size),
-        child: InkWell(
-          onTap: () => widget.onTap(widget.base, widget.lightLightness, widget.darkLightness),
-          onLongPress: widget.onDelete,
-          borderRadius: BorderRadius.circular(widget.size / 2),
-          child: Row(
-            children: <Widget>[
-              Container(
-                height: widget.size,
-                width: widget.size / 2,
-                decoration: BoxDecoration(
-                  color: widget.base.withLightness(widget.lightLightness).toColor(),
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(widget.size / 2),
-                    bottomLeft: Radius.circular(widget.size / 2)
-                  ),
-                ),
-              ),
-              Container(
-                height: widget.size,
-                width: widget.size / 2,
-                decoration: BoxDecoration(
-                  color: widget.base.withLightness(widget.darkLightness).toColor(),
-                  borderRadius: BorderRadius.only(
-                    topRight: Radius.circular(widget.size / 2),
-                    bottomRight: Radius.circular(widget.size / 2)
-                  ),
-                ),
-              ),
-            ],
-          )
-        )
-      )
-    );
+        padding: EdgeInsets.all(8),
+        child: SizedBox.fromSize(
+            size: Size.square(widget.size),
+            child: InkWell(
+                onTap: () => widget.onTap(
+                    widget.base, widget.lightLightness, widget.darkLightness),
+                onLongPress: widget.onDelete,
+                borderRadius: BorderRadius.circular(widget.size / 2),
+                child: Row(
+                  children: <Widget>[
+                    Container(
+                      height: widget.size,
+                      width: widget.size / 2,
+                      decoration: BoxDecoration(
+                        color: widget.base
+                            .withLightness(widget.lightLightness)
+                            .toColor(),
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(widget.size / 2),
+                            bottomLeft: Radius.circular(widget.size / 2)),
+                      ),
+                    ),
+                    Container(
+                      height: widget.size,
+                      width: widget.size / 2,
+                      decoration: BoxDecoration(
+                        color: widget.base
+                            .withLightness(widget.darkLightness)
+                            .toColor(),
+                        borderRadius: BorderRadius.only(
+                            topRight: Radius.circular(widget.size / 2),
+                            bottomRight: Radius.circular(widget.size / 2)),
+                      ),
+                    ),
+                  ],
+                ))));
   }
 }

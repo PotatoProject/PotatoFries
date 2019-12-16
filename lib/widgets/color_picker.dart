@@ -118,8 +118,8 @@ class _ColorPickerState extends State<ColorPicker> {
                         mini: true,
                         child: Icon(
                           Icons.check,
-                          color:
-                              HSLColor.fromAHSL(1, hue, saturation, 0.85).toColor(),
+                          color: HSLColor.fromAHSL(1, hue, saturation, 0.85)
+                              .toColor(),
                         ),
                         onPressed: () {
                           String dark = HSLColor.fromAHSL(
@@ -138,7 +138,8 @@ class _ColorPickerState extends State<ColorPicker> {
                           Navigator.of(context).pop();
                         },
                         backgroundColor:
-                            HSLColor.fromAHSL(1, hue, saturation, 0.5).toColor(),
+                            HSLColor.fromAHSL(1, hue, saturation, 0.5)
+                                .toColor(),
                       ),
                     ),
                   ],
@@ -151,14 +152,16 @@ class _ColorPickerState extends State<ColorPicker> {
                 child: Container(
                   height: MediaQuery.of(context).size.height / 12,
                   decoration: BoxDecoration(
-                    color: HSLColor.fromAHSL(1, hue, saturation, lightnessNeutral)
-                        .toColor(),
+                    color:
+                        HSLColor.fromAHSL(1, hue, saturation, lightnessNeutral)
+                            .toColor(),
                     borderRadius: BorderRadius.circular(16),
                   ),
                   child: Center(
                     child: Text(
                       '#' +
-                          HSLColor.fromAHSL(1, hue, saturation, lightnessNeutral)
+                          HSLColor.fromAHSL(
+                                  1, hue, saturation, lightnessNeutral)
                               .toColor()
                               .value
                               .toRadixString(16)
@@ -208,12 +211,12 @@ class _ColorPickerState extends State<ColorPicker> {
                   Container(
                     width: (MediaQuery.of(context).size.width / 10) * 7,
                     child: Slider(
-                      activeColor:
-                          HSLColor.fromAHSL(1, hue, saturation, lightnessNeutral)
-                              .toColor(),
-                      inactiveColor:
-                          HSLColor.fromAHSL(0.25, hue, saturation, lightnessNeutral)
-                              .toColor(),
+                      activeColor: HSLColor.fromAHSL(
+                              1, hue, saturation, lightnessNeutral)
+                          .toColor(),
+                      inactiveColor: HSLColor.fromAHSL(
+                              0.25, hue, saturation, lightnessNeutral)
+                          .toColor(),
                       value: hue,
                       min: 0,
                       max: 360,
@@ -229,12 +232,12 @@ class _ColorPickerState extends State<ColorPicker> {
                   Container(
                     width: (MediaQuery.of(context).size.width / 10) * 7,
                     child: Slider(
-                      activeColor:
-                          HSLColor.fromAHSL(1, hue, saturation, lightnessNeutral)
-                              .toColor(),
-                      inactiveColor:
-                          HSLColor.fromAHSL(0.25, hue, saturation, lightnessNeutral)
-                              .toColor(),
+                      activeColor: HSLColor.fromAHSL(
+                              1, hue, saturation, lightnessNeutral)
+                          .toColor(),
+                      inactiveColor: HSLColor.fromAHSL(
+                              0.25, hue, saturation, lightnessNeutral)
+                          .toColor(),
                       value: saturation,
                       min: 0,
                       max: 1,
@@ -252,9 +255,9 @@ class _ColorPickerState extends State<ColorPicker> {
                     Container(
                       width: (MediaQuery.of(context).size.width / 10) * 7,
                       child: Slider(
-                        activeColor:
-                            HSLColor.fromAHSL(1, hue, saturation, lightnessNeutral)
-                                .toColor(),
+                        activeColor: HSLColor.fromAHSL(
+                                1, hue, saturation, lightnessNeutral)
+                            .toColor(),
                         inactiveColor: HSLColor.fromAHSL(
                                 0.25, hue, saturation, lightnessNeutral)
                             .toColor(),
@@ -277,42 +280,54 @@ class _ColorPickerState extends State<ColorPicker> {
           child: Row(
             children: <Widget>[
               Padding(
-                padding: EdgeInsets.all(8),
-                child: SizedBox.fromSize(
-                  size: Size.square(48),
-                  child: InkWell(
-                    onTap: () {
-                      String stringHSL =
-                          [hue.toString(), saturation.toString(), lightness.toString()].join(":");
-                      
-                      String stringLightnesses =
-                          [lightnessLight.toString(), lightnessDark.toString()].join(":");
-                      
-                      String readyString = [stringHSL, stringLightnesses].join("|");
+                  padding: EdgeInsets.all(8),
+                  child: SizedBox.fromSize(
+                      size: Size.square(48),
+                      child: InkWell(
+                        onTap: () {
+                          String stringHSL = [
+                            hue.toString(),
+                            saturation.toString(),
+                            lightness.toString()
+                          ].join(":");
 
-                      appInfo.savedColors = List.from(appInfo.savedColors)..add(readyString);
-                      
-                      listKey.currentState.insertItem(0);
-                    },
-                    borderRadius: BorderRadius.circular(48),
-                    child: Container(
-                      decoration: BoxDecoration(
+                          String stringLightnesses = [
+                            lightnessLight.toString(),
+                            lightnessDark.toString()
+                          ].join(":");
+
+                          String readyString =
+                              [stringHSL, stringLightnesses].join("|");
+
+                          appInfo.savedColors = List.from(appInfo.savedColors)
+                            ..add(readyString);
+
+                          listKey.currentState.insertItem(0);
+                        },
                         borderRadius: BorderRadius.circular(48),
-                        border: Border.all(
-                          color: Theme.of(context).textTheme.subtitle.color.withAlpha(80),
-                          width: 2,
-                        )
-                      ),
-                      child: Center(
-                        child: Icon(
-                          Icons.add,
-                          color: Theme.of(context).textTheme.subtitle.color.withAlpha(80),
+                        child: Container(
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(48),
+                              border: Border.all(
+                                color: Theme.of(context)
+                                    .textTheme
+                                    .subtitle
+                                    .color
+                                    .withAlpha(80),
+                                width: 2,
+                              )),
+                          child: Center(
+                            child: Icon(
+                              Icons.add,
+                              color: Theme.of(context)
+                                  .textTheme
+                                  .subtitle
+                                  .color
+                                  .withAlpha(80),
+                            ),
+                          ),
                         ),
-                      ),
-                    ),
-                  )
-                )
-              ),
+                      ))),
               VerticalDivider(
                 indent: 8,
                 endIndent: 8,
@@ -325,23 +340,28 @@ class _ColorPickerState extends State<ColorPicker> {
                   scrollDirection: Axis.horizontal,
                   initialItemCount: appInfo.savedColors.length,
                   itemBuilder: (context, index, enterAnim) {
-
-                    List<String> reverseColors = appInfo.savedColors.reversed.toList();
+                    List<String> reverseColors =
+                        appInfo.savedColors.reversed.toList();
 
                     String fetchedString = reverseColors[index];
-                    List<String> fetchedStringHSL = fetchedString.split("|")[0].split(":");
-                    List<String> fetchedStringLightnesses = fetchedString.split("|")[1].split(":");
-                    List<double> baseHSL = List.generate(fetchedStringHSL.length, (i) {
+                    List<String> fetchedStringHSL =
+                        fetchedString.split("|")[0].split(":");
+                    List<String> fetchedStringLightnesses =
+                        fetchedString.split("|")[1].split(":");
+                    List<double> baseHSL =
+                        List.generate(fetchedStringHSL.length, (i) {
                       return double.parse(fetchedStringHSL[i]);
                     });
-                    List<double> lightnessLightDark = List.generate(fetchedStringLightnesses.length, (i) {
+                    List<double> lightnessLightDark =
+                        List.generate(fetchedStringLightnesses.length, (i) {
                       return double.parse(fetchedStringLightnesses[i]);
                     });
 
                     return FadeTransition(
                       opacity: enterAnim,
                       child: FavColorTile(
-                        base: HSLColor.fromAHSL(1, baseHSL[0], baseHSL[1], baseHSL[2]),
+                        base: HSLColor.fromAHSL(
+                            1, baseHSL[0], baseHSL[1], baseHSL[2]),
                         lightLightness: lightnessLightDark[0],
                         darkLightness: lightnessLightDark[1],
                         onTap: (base, light, dark) {
@@ -354,13 +374,16 @@ class _ColorPickerState extends State<ColorPicker> {
                         },
                         onDelete: () {
                           reverseColors.removeAt(index);
-                          List<String> originalList = reverseColors.reversed.toList();
+                          List<String> originalList =
+                              reverseColors.reversed.toList();
                           appInfo.savedColors = List.from(originalList);
-                          listKey.currentState.removeItem(index, (context, removeAnim) {
+                          listKey.currentState.removeItem(index,
+                              (context, removeAnim) {
                             return FadeTransition(
                               opacity: removeAnim,
                               child: FavColorTile(
-                                base: HSLColor.fromAHSL(1, baseHSL[0], baseHSL[1], baseHSL[2]),
+                                base: HSLColor.fromAHSL(
+                                    1, baseHSL[0], baseHSL[1], baseHSL[2]),
                                 lightLightness: lightnessLightDark[0],
                                 darkLightness: lightnessLightDark[1],
                               ),

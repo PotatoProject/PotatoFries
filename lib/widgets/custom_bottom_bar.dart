@@ -34,11 +34,13 @@ class CustomBottomBar extends StatelessWidget {
   List<Widget> barBuilder(BuildContext context) {
     List<Widget> widgets = [];
 
-    for(int i = 0; i < items.length; i++) {
+    for (int i = 0; i < items.length; i++) {
       widgets.add(
         IconButton(
           icon: items[i],
-          color: currentIndex == i ? selectedColor ?? Theme.of(context).accentColor : Theme.of(context).iconTheme.color.withOpacity(0.4),
+          color: currentIndex == i
+              ? selectedColor ?? Theme.of(context).accentColor
+              : Theme.of(context).iconTheme.color.withOpacity(0.4),
           onPressed: () => onTap(i),
         ),
       );
