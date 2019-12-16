@@ -21,16 +21,14 @@ class ColorPicker extends StatefulWidget {
     this.onApply,
     this.title = 'Color picker',
     this.onChange,
-    this.lightnessMin = 0,
-    this.lightnessMax = 1,
-    this.lightnessDeltaCenter = 0,
-    this.lightnessDeltaEnd = 0,
+    this.lightnessMin = 0.0,
+    this.lightnessMax = 1.0,
+    this.lightnessDeltaCenter = 0.0,
+    this.lightnessDeltaEnd = 0.0,
     this.defaultDark,
     this.defaultLight,
     this.defaultColor,
-  })  : assert(lightnessDeltaCenter + lightnessDeltaEnd <= 1),
-        assert(!lightnessLocked &&
-            (lightnessDeltaCenter != 0 || lightnessDeltaEnd != 0));
+  }) : assert(lightnessDeltaCenter + lightnessDeltaEnd <= 1);
 
   @override
   _ColorPickerState createState() => _ColorPickerState();

@@ -32,13 +32,7 @@ class ThemesPageLayout extends PageLayout {
                 'persist.sys.theme.accent_light',
                 newLight,
               );
-
               setColors(context);
-
-              bloc.changeAccent(
-                Theme.of(context).brightness == Brightness.dark ? dark : light,
-              );
-
               AndroidFlutterSettings.reloadAssets('com.android.settings');
               AndroidFlutterSettings.reloadAssets('com.android.systemui');
             },

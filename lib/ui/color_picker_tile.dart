@@ -7,6 +7,8 @@ class ColorPickerTile extends StatefulWidget {
   final Function onApply;
   final double lightnessDeltaCenter;
   final double lightnessDeltaEnd;
+  final double lightnessMin;
+  final double lightnessMax;
   final bool lightnessLocked;
   final String title;
   final String subtitle;
@@ -17,8 +19,10 @@ class ColorPickerTile extends StatefulWidget {
   ColorPickerTile({
     this.onChange,
     this.onApply,
-    this.lightnessDeltaCenter,
-    this.lightnessDeltaEnd,
+    this.lightnessDeltaCenter = 0.0,
+    this.lightnessDeltaEnd = 0.0,
+    this.lightnessMin = 0.0,
+    this.lightnessMax = 1.0,
     this.lightnessLocked = false,
     this.title,
     this.subtitle,
@@ -71,7 +75,8 @@ class _ColorPickerTileState extends State<ColorPickerTile> {
       onTap: () => showColorPicker(
         context,
         onChange: (dark, light, {ctx}) {
-          widget.onChange(dark, light, ctx: ctx ?? context);
+          if (widget.onChange != null)
+            widget.onChange(dark, light, ctx: ctx ?? context);
           Future.delayed(Duration.zero, () {
             if (mounted)
               setState(
@@ -85,6 +90,8 @@ class _ColorPickerTileState extends State<ColorPickerTile> {
         onApply: widget.onApply,
         lightnessDeltaCenter: widget.lightnessDeltaCenter,
         lightnessDeltaEnd: widget.lightnessDeltaEnd,
+        lightnessMin: widget.lightnessMin,
+        lightnessMax: widget.lightnessMax,
         lightnessLocked: widget.lightnessLocked,
         defaultColor: widget.defaultColor,
         defaultDark: widget.defaultDark,

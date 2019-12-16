@@ -36,8 +36,10 @@ void setColors(BuildContext context) async {
 void showColorPicker(
   BuildContext context, {
   bool lightnessLocked = false,
-  double lightnessDeltaCenter = 0,
-  double lightnessDeltaEnd = 0,
+  double lightnessDeltaCenter = 0.0,
+  double lightnessDeltaEnd = 0.0,
+  double lightnessMin = 0.0,
+  double lightnessMax = 1.0,
   Function onApply,
   Function onChange,
   Color defaultDark,
@@ -51,6 +53,8 @@ void showColorPicker(
       lightnessLocked: lightnessLocked,
       lightnessDeltaCenter: lightnessDeltaCenter,
       lightnessDeltaEnd: lightnessDeltaEnd,
+      lightnessMin: lightnessMin,
+      lightnessMax: lightnessMax,
       onApply: onApply,
       onChange: onChange,
       defaultDark: defaultDark,
