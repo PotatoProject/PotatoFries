@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:potato_fries/internal/page_data.dart';
-import 'package:potato_fries/ui/accent_preview.dart';
 import 'package:potato_fries/ui/fav_color_tile.dart';
 
 class ColorPicker extends StatefulWidget {
@@ -41,13 +40,6 @@ class _ColorPickerState extends State<ColorPicker> {
   double hue = 0;
   double saturation = 0.5;
   double lightness = 0.5;
-
-  double lightHue = 0, darkHue = 0;
-  double lightSaturation = 0, darkSaturation = 0;
-  double lightLightness = 0, darkLightness = 0;
-
-  SelectedColor selectedColor = SelectedColor.LIGHT;
-
   GlobalKey<AnimatedListState> listKey = GlobalKey<AnimatedListState>();
 
   @override
@@ -64,12 +56,17 @@ class _ColorPickerState extends State<ColorPicker> {
           } else {
             var d = HSLColor.fromColor(widget.defaultDark ?? Colors.white);
             var l = HSLColor.fromColor(widget.defaultLight ?? Colors.black);
-            lightHue = l.hue;
-            darkHue = d.hue;
-            lightSaturation = l.saturation;
-            darkSaturation = d.saturation;
-            lightLightness = l.lightness;
-            darkLightness = d.lightness;
+            hue = d.hue;
+            saturation = d.saturation;
+            lightness = (d.lightness -
+                    l.lightness -
+                    widget.lightnessDeltaCenter) /
+                (1 - widget.lightnessDeltaEnd - widget.lightnessDeltaCenter);
+            if (lightness > widget.lightnessMax) {
+              lightness = widget.lightnessMax;
+            } else if (lightness < widget.lightnessMin) {
+              lightness = widget.lightnessMin;
+            }
           }
         },
       ),
@@ -121,25 +118,27 @@ class _ColorPickerState extends State<ColorPicker> {
                         mini: true,
                         child: Icon(
                           Icons.check,
-                          color: Theme.of(context).bottomSheetTheme.backgroundColor,
+                          color:
+                              HSLColor.fromAHSL(1, hue, saturation, 0.85).toColor(),
                         ),
                         onPressed: () {
                           String dark = HSLColor.fromAHSL(
                             1,
-                            darkHue,
-                            darkSaturation,
-                            darkLightness,
+                            hue,
+                            saturation,
+                            lightnessDark,
                           ).toColor().value.toRadixString(16).substring(2, 8);
                           String light = HSLColor.fromAHSL(
                             1,
-                            lightHue,
-                            lightSaturation,
-                            lightLightness,
+                            hue,
+                            saturation,
+                            lightnessLight,
                           ).toColor().value.toRadixString(16).substring(2, 8);
                           widget.onApply(dark, light);
                           Navigator.of(context).pop();
                         },
-                        backgroundColor: Theme.of(context).accentColor,
+                        backgroundColor:
+                            HSLColor.fromAHSL(1, hue, saturation, 0.5).toColor(),
                       ),
                     ),
                   ],
@@ -182,40 +181,21 @@ class _ColorPickerState extends State<ColorPicker> {
                   child: Row(
                     mainAxisSize: MainAxisSize.max,
                     children: <Widget>[
-                      AccentPreview(
-                        color: HSLColor.fromAHSL(1, lightHue, lightSaturation, lightLightness),
-                        title: 'Light',
-                        borderRadius: BorderRadius.only(
+                      accentPreview(
+                        lightnessLight,
+                        'Light',
+                        BorderRadius.only(
                           topLeft: Radius.circular(16),
                           bottomLeft: Radius.circular(16),
                         ),
-                        selected: selectedColor == SelectedColor.LIGHT,
-                        onTap: () => setState(() => selectedColor = SelectedColor.LIGHT),
-                        onDialogComplete: (color) {
-                          HSLColor light = HSLColor.fromColor(color);
-                          lightHue = light.hue;
-                          lightSaturation = light.saturation;
-                          lightLightness = light.lightness;
-                          setState(() {});
-                        },
                       ),
-                      AccentPreview(
-                        color: HSLColor.fromAHSL(1, darkHue, darkSaturation, darkLightness),
-                        title: 'Dark',
-                        borderRadius: BorderRadius.only(
+                      accentPreview(
+                        lightnessDark,
+                        'Dark',
+                        BorderRadius.only(
                           topRight: Radius.circular(16),
                           bottomRight: Radius.circular(16),
                         ),
-                        selected: selectedColor == SelectedColor.DARK,
-                        isDark: true,
-                        onTap: () => setState(() => selectedColor = SelectedColor.DARK),
-                        onDialogComplete: (color) {
-                          HSLColor dark = HSLColor.fromColor(color);
-                          darkHue = dark.hue;
-                          darkSaturation = dark.saturation;
-                          darkLightness = dark.lightness;
-                          setState(() {});
-                        },
                       ),
                     ],
                   ),
@@ -228,14 +208,16 @@ class _ColorPickerState extends State<ColorPicker> {
                   Container(
                     width: (MediaQuery.of(context).size.width / 10) * 7,
                     child: Slider(
-                      activeColor: Theme.of(context).accentColor,
-                      inactiveColor: Theme.of(context).accentColor.withAlpha(120),
-                      value: selectedColor == SelectedColor.LIGHT ? lightHue : darkHue,
+                      activeColor:
+                          HSLColor.fromAHSL(1, hue, saturation, lightnessNeutral)
+                              .toColor(),
+                      inactiveColor:
+                          HSLColor.fromAHSL(0.25, hue, saturation, lightnessNeutral)
+                              .toColor(),
+                      value: hue,
                       min: 0,
                       max: 360,
-                      onChanged: (d) => setState(() => selectedColor == SelectedColor.LIGHT ?
-                          lightHue = d :
-                          darkHue = d),
+                      onChanged: (d) => setState(() => hue = d),
                     ),
                   )
                 ],
@@ -247,14 +229,16 @@ class _ColorPickerState extends State<ColorPicker> {
                   Container(
                     width: (MediaQuery.of(context).size.width / 10) * 7,
                     child: Slider(
-                      activeColor: Theme.of(context).accentColor,
-                      inactiveColor: Theme.of(context).accentColor.withAlpha(120),
-                      value: selectedColor == SelectedColor.LIGHT ? lightSaturation : darkSaturation,
+                      activeColor:
+                          HSLColor.fromAHSL(1, hue, saturation, lightnessNeutral)
+                              .toColor(),
+                      inactiveColor:
+                          HSLColor.fromAHSL(0.25, hue, saturation, lightnessNeutral)
+                              .toColor(),
+                      value: saturation,
                       min: 0,
                       max: 1,
-                      onChanged: (d) => setState(() => selectedColor == SelectedColor.LIGHT ?
-                          lightSaturation = d :
-                          darkSaturation = d),
+                      onChanged: (d) => setState(() => saturation = d),
                     ),
                   ),
                 ],
@@ -268,14 +252,16 @@ class _ColorPickerState extends State<ColorPicker> {
                     Container(
                       width: (MediaQuery.of(context).size.width / 10) * 7,
                       child: Slider(
-                        activeColor: Theme.of(context).accentColor,
-                        inactiveColor: Theme.of(context).accentColor.withAlpha(120),
-                        value: selectedColor == SelectedColor.LIGHT ? lightLightness : darkLightness,
-                        min: selectedColor == SelectedColor.LIGHT ? 0 : 0.5,
-                        max: selectedColor == SelectedColor.LIGHT ? 0.5 : 1,
-                        onChanged: (d) => setState(() => selectedColor == SelectedColor.LIGHT ?
-                            lightLightness = d :
-                            darkLightness = d),
+                        activeColor:
+                            HSLColor.fromAHSL(1, hue, saturation, lightnessNeutral)
+                                .toColor(),
+                        inactiveColor: HSLColor.fromAHSL(
+                                0.25, hue, saturation, lightnessNeutral)
+                            .toColor(),
+                        value: lightness,
+                        min: widget.lightnessMin,
+                        max: widget.lightnessMax,
+                        onChanged: (d) => setState(() => lightness = d),
                       ),
                     ),
                   ],
@@ -296,13 +282,13 @@ class _ColorPickerState extends State<ColorPicker> {
                   size: Size.square(48),
                   child: InkWell(
                     onTap: () {
-                      String lightHSL =
-                          [lightHue.toString(), lightSaturation.toString(), lightLightness.toString()].join(":");
+                      String stringHSL =
+                          [hue.toString(), saturation.toString(), lightness.toString()].join(":");
                       
-                      String darkHSL =
-                          [darkHue.toString(), darkSaturation.toString(), darkLightness.toString()].join(":");
+                      String stringLightnesses =
+                          [lightnessLight.toString(), lightnessDark.toString()].join(":");
                       
-                      String readyString = [lightHSL, darkHSL].join("|");
+                      String readyString = [stringHSL, stringLightnesses].join("|");
 
                       appInfo.savedColors = List.from(appInfo.savedColors)..add(readyString);
                       
@@ -339,30 +325,31 @@ class _ColorPickerState extends State<ColorPicker> {
                   scrollDirection: Axis.horizontal,
                   initialItemCount: appInfo.savedColors.length,
                   itemBuilder: (context, index, enterAnim) {
+
                     List<String> reverseColors = appInfo.savedColors.reversed.toList();
 
                     String fetchedString = reverseColors[index];
-                    List<String> fetchedLightHSL = fetchedString.split("|")[0].split(":");
-                    List<String> fetchedDarkHSL = fetchedString.split("|")[1].split(":");
-                    List<double> lightHSL = List.generate(fetchedLightHSL.length, (i) {
-                      return double.parse(fetchedLightHSL[i]);
+                    List<String> fetchedStringHSL = fetchedString.split("|")[0].split(":");
+                    List<String> fetchedStringLightnesses = fetchedString.split("|")[1].split(":");
+                    List<double> baseHSL = List.generate(fetchedStringHSL.length, (i) {
+                      return double.parse(fetchedStringHSL[i]);
                     });
-                    List<double> darkHSL = List.generate(fetchedDarkHSL.length, (i) {
-                      return double.parse(fetchedDarkHSL[i]);
+                    List<double> lightnessLightDark = List.generate(fetchedStringLightnesses.length, (i) {
+                      return double.parse(fetchedStringLightnesses[i]);
                     });
 
                     return FadeTransition(
                       opacity: enterAnim,
                       child: FavColorTile(
-                        light: HSLColor.fromAHSL(1, lightHSL[0], lightHSL[1], lightHSL[2]),
-                        dark: HSLColor.fromAHSL(1, darkHSL[0], darkHSL[1], darkHSL[2]),
-                        onTap: (light, dark) {
-                          lightHue = light.hue;
-                          lightSaturation = light.saturation;
-                          lightLightness = light.lightness;
-                          darkHue = dark.hue;
-                          darkSaturation = dark.saturation;
-                          darkLightness = dark.lightness;
+                        base: HSLColor.fromAHSL(1, baseHSL[0], baseHSL[1], baseHSL[2]),
+                        lightLightness: lightnessLightDark[0],
+                        darkLightness: lightnessLightDark[1],
+                        onTap: (base, light, dark) {
+                          hue = base.hue;
+                          saturation = base.saturation;
+                          lightness = base.lightness;
+                          lightnessLight = light;
+                          lightnessDark = dark;
                           setState(() {});
                         },
                         onDelete: () {
@@ -373,8 +360,9 @@ class _ColorPickerState extends State<ColorPicker> {
                             return FadeTransition(
                               opacity: removeAnim,
                               child: FavColorTile(
-                                light: HSLColor.fromAHSL(1, lightHSL[0], lightHSL[1], lightHSL[2]),
-                                dark: HSLColor.fromAHSL(1, darkHSL[0], darkHSL[1], darkHSL[2]),
+                                base: HSLColor.fromAHSL(1, baseHSL[0], baseHSL[1], baseHSL[2]),
+                                lightLightness: lightnessLightDark[0],
+                                darkLightness: lightnessLightDark[1],
                               ),
                             );
                           }, duration: Duration(milliseconds: 200));
@@ -391,6 +379,57 @@ class _ColorPickerState extends State<ColorPicker> {
       ],
     );
   }
-}
 
-enum SelectedColor { LIGHT, DARK }
+  Widget accentPreview(
+    double lightness,
+    String title,
+    BorderRadius borderRadius,
+  ) {
+    return Expanded(
+      child: Container(
+        decoration: BoxDecoration(
+          color: HSLColor.fromAHSL(1, hue, saturation, lightness).toColor(),
+          borderRadius: borderRadius,
+        ),
+        child: Stack(
+          children: <Widget>[
+            Center(
+              child: Text(
+                '#' +
+                    HSLColor.fromAHSL(1, hue, saturation, lightness)
+                        .toColor()
+                        .value
+                        .toRadixString(16)
+                        .substring(2, 8),
+                style: TextStyle(
+                  color: lightness > 0.5
+                      ? Colors.black.withOpacity(0.70)
+                      : Colors.white.withOpacity(0.70),
+                  fontFamily: 'monospace',
+                ),
+              ),
+            ),
+            Positioned(
+              bottom: 0,
+              left: 0,
+              right: 0,
+              child: Center(
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom: 4.0),
+                  child: Text(
+                    title,
+                    style: TextStyle(
+                      color: lightness > 0.5
+                          ? Colors.black.withOpacity(0.40)
+                          : Colors.white.withOpacity(0.40),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}

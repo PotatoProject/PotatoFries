@@ -62,6 +62,23 @@ class SearchProviderItem extends StatelessWidget {
             percentageMode: provider.extraData["percentageMode"],
           );
           break;
+        default:
+          return SizeableListTile(
+            icon: provider.icon,
+            title: provider.title,
+            subtitle:
+            provider.description != null ? Text(provider.description) : null,
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => executePush(),
+              ),
+            ),
+            footer: parseCategory(provider) +
+                (provider.headerAncestor != null
+                    ? " > " + provider.headerAncestor
+                    : ""),
+          );
       }
     } else {
       return SizeableListTile(
