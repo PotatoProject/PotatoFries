@@ -43,6 +43,9 @@ final Map<String, dynamic> qsColors = {
     'subtitle': 'Choose your favorite color!',
     'widget': WidgetType.COLOR_PICKER,
     'setting_type': SettingType.SYSTEM,
-    'widget_data': {}
+    'widget_data': {
+      'lightness_min': 0.0,
+      'lightness_max': 0.6,
+    }
   },
 };

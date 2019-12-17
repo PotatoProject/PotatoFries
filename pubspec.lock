@@ -6,7 +6,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: c60ec5da3c0c0e603888affacaab760a2cade8a5
+      resolved-ref: de985a65c97f1300ea2fc5198c7d545b4bddcf88
       url: "https://github.com/AgentFabulous/android_flutter_settings"
     source: git
     version: "0.0.1"

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:potato_fries/data/app.dart';
 import 'package:potato_fries/provider/qs.dart';
 import 'package:potato_fries/utils/methods.dart';
+import 'package:potato_fries/widgets/color_picker.dart';
 import 'package:potato_fries/widgets/directory.dart';
 import 'package:potato_fries/widgets/settings_slider.dart';
 import 'package:potato_fries/widgets/settings_switch.dart';
@@ -112,9 +113,32 @@ class _QuickSettingsBody extends StatelessWidget {
                         },
                       );
                     case WidgetType.COLOR_PICKER:
-                      return ListTile(
-                        title: Text(_value['title']),
-                        subtitle: Text('Color Picker'),
+                      return ColorPickerTile(
+                        title: _value['title'],
+                        subtitle: _value['subtitle'],
+                        onApply: (Color color) {
+                          provider.setValue(
+                            settingsKey(
+                              _key,
+                              _value['setting_type'],
+                            ),
+                            color.value,
+                          );
+                        },
+                        lightnessMin: _value['widget_data']['lightness_min'],
+                        lightnessMax: _value['widget_data']['lightness_max'],
+                        getColor: () {
+                          return Color(
+                            provider.getValue(
+                                  settingsKey(
+                                    _key,
+                                    _value['setting_type'],
+                                  ),
+                                ) ??
+                                0,
+                          );
+                        },
+                        defaultColor: Colors.transparent,
                       );
                     default:
                       return ListTile(
