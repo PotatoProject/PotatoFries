@@ -38,7 +38,7 @@ class _SettingsSliderTileState extends State<SettingsSliderTile> {
 
   @override
   Widget build(BuildContext context) {
-    value = widget.getValue().toDouble() ?? widget.min;
+    value = widget.getValue()?.toDouble() ?? widget.min;
     if (value < widget.min || value > widget.max) value = widget.min;
     return SizeableListTile(
       title: widget.title,

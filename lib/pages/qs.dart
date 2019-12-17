@@ -86,8 +86,12 @@ class _QuickSettingsBody extends StatelessWidget {
                     case WidgetType.SLIDER:
                       return SettingsSliderTile(
                         title: _value['title'],
-                        min: (_value['widget_data']['min'] as int).toDouble(),
-                        max: (_value['widget_data']['max'] as int).toDouble(),
+                        min:
+                            (_value['widget_data']['min'] as int)?.toDouble() ??
+                                0.0,
+                        max:
+                            (_value['widget_data']['max'] as int)?.toDouble() ??
+                                0.0,
                         percentage: _value['widget_data']['percentage'],
                         setValue: (val) {
                           provider.setValue(
