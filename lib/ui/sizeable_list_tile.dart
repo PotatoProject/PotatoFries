@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 
 class SizeableListTile extends StatelessWidget {
-  double height;
-  double width;
-  Widget icon;
-  Widget trailing;
-  String title;
-  Widget subtitle;
-  String footer;
-  bool selected;
-  Color backgroundColor;
-  Color elementsColor;
-  Color selectedColor;
-  Function() onTap;
+  final double height;
+  final double width;
+  final Widget icon;
+  final Widget trailing;
+  final String title;
+  final Widget subtitle;
+  final String footer;
+  final bool selected;
+  final Color backgroundColor;
+  final Color elementsColor;
+  final Color selectedColor;
+  final Function() onTap;
 
   SizeableListTile({
     this.height,
@@ -31,11 +31,10 @@ class SizeableListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (elementsColor == null) {
-      elementsColor = Theme.of(context).brightness == Brightness.light
-          ? Colors.black
-          : Colors.white;
-    }
+    var _elementsColor =
+        elementsColor ?? Theme.of(context).brightness == Brightness.light
+            ? Colors.black
+            : Colors.white;
 
     return InkWell(
       child: Container(
@@ -50,7 +49,7 @@ class SizeableListTile extends StatelessWidget {
               child: IconTheme(
                 child: icon ?? Container(width: 24),
                 data: IconThemeData(
-                  color: selected ? selectedColor : elementsColor,
+                  color: selected ? selectedColor : _elementsColor,
                 ),
               ),
             ),
@@ -66,7 +65,7 @@ class SizeableListTile extends StatelessWidget {
                       style: TextStyle(
                         letterSpacing: 0.3,
                         fontSize: 16,
-                        color: selected ? selectedColor : elementsColor,
+                        color: selected ? selectedColor : _elementsColor,
                       ),
                     ),
                     Visibility(
@@ -76,7 +75,7 @@ class SizeableListTile extends StatelessWidget {
                         style: TextStyle(
                           color: selected
                               ? selectedColor.withAlpha(160)
-                              : elementsColor.withAlpha(160),
+                              : _elementsColor.withAlpha(160),
                           fontSize: 13,
                         ),
                       ),
@@ -95,7 +94,7 @@ class SizeableListTile extends StatelessWidget {
                             style: TextStyle(
                               color: selected
                                   ? selectedColor.withAlpha(160)
-                                  : elementsColor.withAlpha(160),
+                                  : _elementsColor.withAlpha(160),
                               fontSize: 13,
                             ),
                           ),
@@ -107,14 +106,8 @@ class SizeableListTile extends StatelessWidget {
               ),
             ),
             Container(
-              margin: trailing == null
-                  ? null
-                  : EdgeInsets.fromLTRB(
-                      16,
-                      8,
-                      8,
-                      8,
-                    ),
+              margin:
+                  trailing == null ? null : EdgeInsets.fromLTRB(16, 8, 8, 8),
               child: trailing ?? Container(),
             ),
           ],
