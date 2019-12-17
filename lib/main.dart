@@ -16,26 +16,31 @@ class FriesRoot extends StatelessWidget {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider.value(
       value: provider,
-      child: MaterialApp(
-        builder: (context, child) => ScrollConfiguration(
-          behavior: NoGlowScrollBehavior(),
-          child: child,
-        ),
-        title: 'Fries',
-        theme: ThemeData.light().copyWith(
-          accentColor: provider.accentDark,
-          appBarTheme: AppBarTheme(
-            actionsIconTheme: Theme.of(context).iconTheme,
-            iconTheme: Theme.of(context).iconTheme,
-            textTheme: Theme.of(context).textTheme,
-          ),
-        ),
-        darkTheme: ThemeData.dark().copyWith(
-          accentColor: provider.accentLight,
-          cardColor: Color(0xFF212121),
-          scaffoldBackgroundColor: Color(0xFF151618),
-        ),
-        home: FriesHome(),
+      child: Builder(
+        builder: (context) {
+          var appInfoProvider = Provider.of<AppInfoProvider>(context);
+          return MaterialApp(
+            builder: (context, child) => ScrollConfiguration(
+              behavior: NoGlowScrollBehavior(),
+              child: child,
+            ),
+            title: 'Fries',
+            theme: ThemeData.light().copyWith(
+              accentColor: appInfoProvider.accentDark,
+              appBarTheme: AppBarTheme(
+                actionsIconTheme: Theme.of(context).iconTheme,
+                iconTheme: Theme.of(context).iconTheme,
+                textTheme: Theme.of(context).textTheme,
+              ),
+            ),
+            darkTheme: ThemeData.dark().copyWith(
+              accentColor: appInfoProvider.accentLight,
+              cardColor: Color(0xFF212121),
+              scaffoldBackgroundColor: Color(0xFF151618),
+            ),
+            home: FriesHome(),
+          );
+        }
       ),
     );
   }
