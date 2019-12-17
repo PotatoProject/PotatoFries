@@ -1,0 +1,39 @@
+buildscript {
+    repositories {
+        google()
+        jcenter()
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.5.3'
+        classpath 'com.jween.gradle:android-soexcluder:1.1'
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        jcenter()
+    }
+    afterEvaluate {
+        if (plugins.hasPlugin('android') ||
+                plugins.hasPlugin('com.android.application') ||
+                plugins.hasPlugin('com.android.library')) {
+            dependencies {
+                compileOnly fileTree(dir: 'libs/', include: ['*.jar'])
+            }
+        }
+    }
+}
+
+rootProject.buildDir = '../build'
+subprojects {
+    project.buildDir = "${rootProject.buildDir}/${project.name}"
+}
+subprojects {
+    project.evaluationDependsOn(':app')
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
