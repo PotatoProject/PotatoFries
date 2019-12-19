@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:potato_fries/data/app.dart';
 import 'package:potato_fries/provider/qs.dart';
 import 'package:potato_fries/utils/methods.dart';
+import 'package:potato_fries/utils/obj_gen.dart';
 import 'package:potato_fries/widgets/color_picker.dart';
 import 'package:potato_fries/widgets/directory.dart';
 import 'package:potato_fries/widgets/settings_slider.dart';
@@ -140,9 +141,11 @@ class _QuickSettingsBody extends StatelessWidget {
                         },
                         defaultColor: Colors.transparent,
                       );
+                    case WidgetType.CUSTOM:
+                      return ObjectGen.fromString(_value['setting_type']);
                     default:
                       return ListTile(
-                        title: Text(_value['title']),
+                        title: Text(_value['title'] ?? 'Bruh.'),
                         subtitle: Text('bro wat'),
                       );
                   }
