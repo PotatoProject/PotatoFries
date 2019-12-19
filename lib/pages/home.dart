@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:potato_fries/pages/qs.dart';
+import 'package:potato_fries/pages/themes.dart';
 import 'package:potato_fries/provider/app_info.dart';
 import 'package:potato_fries/ui/custom_bottom_bar.dart';
+import 'package:potato_fries/widgets/directory.dart';
 import 'package:provider/provider.dart';
 
 class FriesHome extends StatefulWidget {
@@ -10,6 +12,12 @@ class FriesHome extends StatefulWidget {
 }
 
 class _FriesHomeState extends State<FriesHome> {
+  @override
+  void initState() {
+    registerCustomWidgets();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     var provider = Provider.of<AppInfoProvider>(context);
@@ -34,7 +42,7 @@ class _FriesHomeState extends State<FriesHome> {
             case 2:
               return Container();
             case 3:
-              return Container();
+              return Themes();
             case 4:
               return Container();
             case 5:
