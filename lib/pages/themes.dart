@@ -60,6 +60,10 @@ class _ThemesBody extends StatelessWidget {
                   var _key = workingMap.keys.elementAt(index);
                   var _value = workingMap[_key];
                   var provider = Provider.of<ThemesDataProvider>(context);
+                  var appInfoProvider = Provider.of<AppInfoProvider>(context);
+                  if (_value['version'] != null &&
+                      !appInfoProvider.isCompatible(_value['version']))
+                    return Container();
                   switch (_value['widget']) {
                     case WidgetType.SWITCH:
                       return SettingsSwitchTile(
