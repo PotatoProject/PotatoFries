@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:potato_fries/data/app.dart';
+import 'package:potato_fries/provider/app_info.dart';
 import 'package:potato_fries/provider/themes.dart';
 import 'package:potato_fries/utils/methods.dart';
 import 'package:potato_fries/utils/obj_gen.dart';
@@ -60,6 +61,10 @@ class _ThemesBody extends StatelessWidget {
                   var _key = workingMap.keys.elementAt(index);
                   var _value = workingMap[_key];
                   var provider = Provider.of<ThemesDataProvider>(context);
+                  var appInfoProvider = Provider.of<AppInfoProvider>(context);
+                  if (_value['version'] != null &&
+                      !appInfoProvider.isCompatible(_value['version']))
+                    return Container();
                   switch (_value['widget']) {
                     case WidgetType.SWITCH:
                       return SettingsSwitchTile(
