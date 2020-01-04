@@ -60,3 +60,42 @@ void showColorPickerDual(
     ),
   );
 }
+
+Map<String, dynamic> parseVerNum(String vernum) {
+  Map<String, dynamic> ret = Map();
+  String build;
+  String version;
+  if (vernum.contains('+')) {
+    version = vernum.split('+')[0];
+    build = vernum.split('+')[1];
+  } else {
+    version = vernum;
+    build = '0';
+  }
+  ret['MAJOR'] = (int.tryParse(version.split('.')[0]));
+  ret['MINOR'] = (int.tryParse(version.split('.')[1]));
+  ret['PATCH'] = version.split('.')[2];
+  ret['BUILD'] = (int.tryParse(build));
+  return ret;
+}
+
+bool isVersionCompatible(String target, dynamic hostVersion) {
+  Map<String, dynamic> targetVersion = parseVerNum(target);
+  if (hostVersion is String) {
+    hostVersion = parseVerNum(hostVersion);
+  }
+  int _targetPatch = getNum(targetVersion['PATCH']);
+  int _hostPatch = getNum(hostVersion['PATCH']);
+  return hostVersion['MAJOR'] >= targetVersion['MAJOR'] &&
+      hostVersion['MINOR'] >= targetVersion['MINOR'] &&
+      _hostPatch >= _targetPatch;
+  ;
+}
+
+bool isNumber(String item) => '0123456789'.split('').contains(item);
+
+int getNum(String ip) {
+  List l = List.from(ip.split(''));
+  l.removeWhere((c) => !isNumber(c));
+  return int.tryParse(l.join());
+}
