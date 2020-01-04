@@ -32,15 +32,16 @@
             <meta-data
                 android:name="io.flutter.app.android.SplashScreenUntilFirstFrame"
                 android:value="true" />
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
         </activity>
 
         <activity-alias android:enabled="true" android:exported="true" android:name=".TopLevelSettingsActivity" android:targetActivity=".MainActivity">
             <intent-filter>
                 <action android:name="com.android.settings.action.IA_SETTINGS"/>
                 <category android:name="android.intent.category.DEFAULT"/>
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
             </intent-filter>
             <meta-data android:name="com.android.settings.category" android:value="com.android.settings.category.ia.homepage"/>
             <meta-data android:name="com.android.settings.summary" android:resource="@string/desc_activity_top_level"/>
