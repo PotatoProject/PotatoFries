@@ -41,8 +41,8 @@ class QsDataProvider extends ChangeNotifier {
   }
 
   void loadData() async {
-    for (String qsKey in appData['qs'].keys) {
-      Map curMap = appData['qs'][qsKey];
+    for (String categoryKey in appData['qs'].keys) {
+      Map curMap = appData['qs'][categoryKey];
       for (String key in curMap.keys) {
         switch (curMap[key]['widget']) {
           case WidgetType.SWITCH:
