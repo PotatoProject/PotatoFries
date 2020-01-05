@@ -2,22 +2,21 @@ import 'package:android_flutter_settings/android_flutter_settings.dart';
 import 'package:flutter/material.dart';
 import 'package:potato_fries/provider/qs.dart';
 import 'package:potato_fries/utils/methods.dart';
-import 'package:potato_fries/widgets/page_parser.dart';
 import 'package:provider/provider.dart';
 
-class QuickSettings extends StatelessWidget {
+class Buttons extends StatelessWidget {
   final QsDataProvider provider = QsDataProvider();
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider.value(
       value: provider,
-      child: _QuickSettingsBody(),
+      child: _ButtonsBody(),
     );
   }
 }
 
-class _QuickSettingsBody extends StatelessWidget {
+class _ButtonsBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -28,7 +27,6 @@ class _QuickSettingsBody extends StatelessWidget {
           elevation: 0,
         ),
         _header(context),
-        PageParser(dataKey: 'qs'),
       ],
     );
   }
