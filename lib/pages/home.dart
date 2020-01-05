@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:potato_fries/pages/buttons.dart';
+import 'package:potato_fries/pages/lock_screen.dart';
 import 'package:potato_fries/pages/qs.dart';
+import 'package:potato_fries/pages/status_bar.dart';
 import 'package:potato_fries/pages/themes.dart';
 import 'package:potato_fries/provider/app_info.dart';
 import 'package:potato_fries/ui/custom_bottom_bar.dart';
@@ -40,13 +43,13 @@ class _FriesHomeState extends State<FriesHome> {
             case 1:
               return QuickSettings();
             case 2:
-              return Container();
+              return Buttons();
             case 3:
               return Themes();
             case 4:
-              return Container();
+              return StatusBar();
             case 5:
-              return Container();
+              return LockScreen();
             default:
               return Container();
           }
