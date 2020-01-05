@@ -4,8 +4,8 @@ import 'package:potato_fries/data/app.dart';
 import 'package:potato_fries/utils/methods.dart';
 import 'package:potato_fries/widgets/directory.dart';
 
-class ThemesDataProvider extends ChangeNotifier {
-  ThemesDataProvider() {
+class LockScreenDataProvider extends ChangeNotifier {
+  LockScreenDataProvider() {
     loadData();
   }
 
@@ -41,8 +41,8 @@ class ThemesDataProvider extends ChangeNotifier {
   }
 
   void loadData() async {
-    for (String categoryKey in appData['themes'].keys) {
-      Map curMap = appData['themes'][categoryKey];
+    for (String categoryKey in appData['lock_screen'].keys) {
+      Map curMap = appData['lock_screen'][categoryKey];
       for (String key in curMap.keys) {
         switch (curMap[key]['widget']) {
           case WidgetType.SWITCH:
