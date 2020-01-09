@@ -4,6 +4,7 @@ import 'package:potato_fries/widgets/directory.dart';
 
 final Map<String, dynamic> qsData = {
   'Colors': qsColors,
+  'Brightness': qsBrightness,
 };
 
 final Map<String, dynamic> qsColors = {
@@ -46,6 +47,27 @@ final Map<String, dynamic> qsColors = {
     'widget_data': {
       'lightness_min': 0.0,
       'lightness_max': 0.6,
+    }
+  },
+};
+
+final Map<String, dynamic> qsBrightness = {
+  'qs_show_brightness': {
+    'title': 'Brightness slider',
+    'subtitle': 'Show a brightness slider in the quick settings panel',
+    'widget': WidgetType.SWITCH,
+    'setting_type': SettingType.SYSTEM,
+    'widget_data': {
+      'default': true,
+    }
+  },
+  'qs_brightness_position_bottom': {
+    'title': 'Brightness slider on bottom',
+    'subtitle': 'Show a brightness slider on bottom quick settings',
+    'widget': WidgetType.SWITCH,
+    'setting_type': SettingType.SYSTEM,
+    'widget_data': {
+      'default': false,
     }
   },
 };
