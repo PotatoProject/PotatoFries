@@ -26,7 +26,7 @@ class _StatusBarBody extends StatelessWidget {
           elevation: 0,
         ),
         _header(context),
-        PageParser(dataKey: 'buttons_and_gestures'),
+        PageParser(dataKey: 'status_bar'),
       ],
     );
   }
