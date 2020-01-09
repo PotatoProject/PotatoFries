@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:potato_fries/data/app.dart';
 import 'package:potato_fries/provider/app_info.dart';
+import 'package:potato_fries/provider/lock_screen.dart';
 import 'package:potato_fries/provider/qs.dart';
+import 'package:potato_fries/provider/status_bar.dart';
 import 'package:potato_fries/provider/themes.dart';
 import 'package:potato_fries/provider/buttons.dart';
 import 'package:potato_fries/utils/methods.dart';
@@ -58,6 +60,12 @@ class PageParser extends StatelessWidget {
                     break;
                   case 'buttons_and_gestures':
                     provider = Provider.of<ButtonsDataProvider>(context);
+                    break;
+                  case 'lock_screen':
+                    provider = Provider.of<LockScreenDataProvider>(context);
+                    break;
+                  case 'status_bar':
+                    provider = Provider.of<StatusBarDataProvider>(context);
                     break;
                 }
                 var appInfoProvider = Provider.of<AppInfoProvider>(context);
