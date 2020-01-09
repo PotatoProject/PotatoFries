@@ -7,14 +7,13 @@ final Map<String, dynamic> buttons = {
 };
 
 final Map<String, dynamic> notif = {
-  'notification_sound_vib_screen_on':{
+  'notification_sound_vib_screen_on': {
     'title': 'Notification sound if active',
     'subtitle': 'Play sound and vibration for notifications when screen is on',
-    'widget' : WidgetType.SWITCH,
+    'widget': WidgetType.SWITCH,
     'setting_type': SettingType.SYSTEM,
-        'widget_data': {
+    'widget_data': {
       'default': true,
     }
-
   },
 };
