@@ -26,7 +26,7 @@ class _LockScreenBody extends StatelessWidget {
           elevation: 0,
         ),
         _header(context),
-        PageParser(dataKey: 'buttons_and_gestures'),
+        PageParser(dataKey: 'lock_screen'),
       ],
     );
   }
