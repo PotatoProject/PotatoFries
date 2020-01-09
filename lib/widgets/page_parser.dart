@@ -3,6 +3,7 @@ import 'package:potato_fries/data/app.dart';
 import 'package:potato_fries/provider/app_info.dart';
 import 'package:potato_fries/provider/qs.dart';
 import 'package:potato_fries/provider/themes.dart';
+import 'package:potato_fries/provider/buttons.dart';
 import 'package:potato_fries/utils/methods.dart';
 import 'package:potato_fries/utils/obj_gen.dart';
 import 'package:potato_fries/widgets/color_picker.dart';
@@ -54,6 +55,9 @@ class PageParser extends StatelessWidget {
                     break;
                   case 'themes':
                     provider = Provider.of<ThemesDataProvider>(context);
+                    break;
+                  case 'buttons_and_gestures':
+                    provider = Provider.of<ButtonsDataProvider>(context);
                     break;
                 }
                 var appInfoProvider = Provider.of<AppInfoProvider>(context);
