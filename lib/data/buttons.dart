@@ -5,6 +5,7 @@ import 'package:potato_fries/widgets/directory.dart';
 final Map<String, dynamic> buttons = {
   'System Buttons': sysbutton,
   'System Gestures': systemgesture,
+  'Power Menu Configuration': powermenu,
 };
 
 final Map<String, dynamic> sysbutton = {
@@ -16,6 +17,42 @@ final Map<String, dynamic> sysbutton = {
     'setting_type': SettingType.SYSTEM,
     'widget_data': {
       'default': false,
+    },
+    'version': '3.1.1',
+  },
+};
+
+final Map<String, dynamic> powermenu = {
+  'reboot_in_power_menu': {
+    'title': 'Restart',
+    'subtitle': 'Add restart in powermenu',
+    'icon': Icons.control_point,
+    'widget': WidgetType.SWITCH,
+    'setting_type': SettingType.SECURE,
+    'widget_data': {
+      'default': true,
+    },
+    'version': '3.1.1',
+  },
+  'advanced_reboot_in_power_menu': {
+    'title': 'Advanced restart',
+    'subtitle': 'Add advanced restart in powermenu',
+    'icon': Icons.control_point_duplicate,
+    'widget': WidgetType.SWITCH,
+    'setting_type': SettingType.SECURE,
+    'widget_data': {
+      'default': false,
+    },
+    'version': '3.1.1',
+  },
+  'screenshot_in_power_menu': {
+    'title': 'Screenshot menu',
+    'subtitle': 'Add screenshot in powermenu',
+    'icon': Icons.add_photo_alternate,
+    'widget': WidgetType.SWITCH,
+    'setting_type': SettingType.SECURE,
+    'widget_data': {
+      'default': true,
     },
     'version': '3.1.1',
   },
