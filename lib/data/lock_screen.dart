@@ -17,4 +17,16 @@ final Map<String, dynamic> lsstuff = {
       'default': true,
     }
   },
+  'lockscreen_media_blur': {
+    'title': 'Lockscreen blur level',
+    'subtitle': 'Configure blur intensity of lockscreen media art',
+    'widget': WidgetType.SLIDER,
+    'setting_type': SettingType.SYSTEM,
+    'widget_data': {
+      'default': true,
+      'min': 0,
+      'max': 25,
+      'percentage': false,
+    }
+  },
 };
