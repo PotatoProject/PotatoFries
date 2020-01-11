@@ -11,7 +11,7 @@ final Map<String, dynamic> buttons = {
 final Map<String, dynamic> sysbutton = {
   'volume_button_music_control': {
     'title': 'Volume button to skip tracks',
-    'subtitle':'Long press volume buttons to forward/backward track',
+    'subtitle': 'Long press volume buttons to forward/backward track',
     'icon': Icons.music_note,
     'widget': WidgetType.SWITCH,
     'setting_type': SettingType.SYSTEM,
@@ -24,7 +24,7 @@ final Map<String, dynamic> sysbutton = {
 final Map<String, dynamic> powermenu = {
   'reboot_in_power_menu': {
     'title': 'Restart',
-    'subtitle':'Add restart in powermenu',
+    'subtitle': 'Add restart in powermenu',
     'icon': Icons.control_point,
     'widget': WidgetType.SWITCH,
     'setting_type': SettingType.SECURE,
@@ -34,7 +34,7 @@ final Map<String, dynamic> powermenu = {
   },
   'advanced_reboot_in_power_menu': {
     'title': 'Advanced restart',
-    'subtitle':'Add advanced restart in powermenu',
+    'subtitle': 'Add advanced restart in powermenu',
     'icon': Icons.control_point_duplicate,
     'widget': WidgetType.SWITCH,
     'setting_type': SettingType.SECURE,
@@ -44,7 +44,7 @@ final Map<String, dynamic> powermenu = {
   },
   'screenshot_in_power_menu': {
     'title': 'Screenshot menu',
-    'subtitle':'Add screenshot in powermenu',
+    'subtitle': 'Add screenshot in powermenu',
     'icon': Icons.add_photo_alternate,
     'widget': WidgetType.SWITCH,
     'setting_type': SettingType.SECURE,
@@ -57,7 +57,7 @@ final Map<String, dynamic> powermenu = {
 final Map<String, dynamic> systemgesture = {
   'double_tap_sleep_gesture': {
     'title': 'Double tap Status bar to sleep',
-    'subtitle':'Tap twice on Status bar to put device in sleep',
+    'subtitle': 'Tap twice on Status bar to put device in sleep',
     'icon': Icons.touch_app,
     'widget': WidgetType.SWITCH,
     'setting_type': SettingType.SYSTEM,

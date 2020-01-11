@@ -6,7 +6,7 @@ final Map<String, dynamic> lockScreen = {
   'Lockscreen Stuff': lsstuff,
 };
 
-final Map<String, dynamic> lsstuff ={
+final Map<String, dynamic> lsstuff = {
   'lockscreen_media_metadata': {
     'title': 'Lockscreen media art',
     'subtitle': 'Show album art on lockscreen',
