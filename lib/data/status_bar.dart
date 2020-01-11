@@ -30,4 +30,13 @@ final Map<String, dynamic> neticons = {
       'default': false,
     }
   },
+  'volte_icon': {
+    'title': 'VoLTE icon',
+    'subtitle': 'Display VoLTE icon in status bar',
+    'widget': WidgetType.SWITCH,
+    'setting_type': SettingType.SYSTEM,
+    'widget_data': {
+      'default': true,
+    }
+  },
 };
