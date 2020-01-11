@@ -52,6 +52,16 @@ final Map<String, dynamic> powermenu = {
       'default': true,
     }
   },
+  'lockscreen_enable_power_menu': {
+    'title': 'Power menu on Lockscreen',
+    'subtitle': 'Allow accessing power menu on secure lock screen',
+    'icon': Icons.phonelink_lock,
+    'widget': WidgetType.SWITCH,
+    'setting_type': SettingType.SECURE,
+    'widget_data': {
+      'default': true,
+    }
+  },
 };
 
 final Map<String, dynamic> systemgesture = {
