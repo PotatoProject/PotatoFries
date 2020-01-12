@@ -66,6 +66,16 @@ class ButtonsDataProvider extends ChangeNotifier {
               mapSet: true,
             );
             break;
+          case WidgetType.DROPDOWN:
+            setValue(
+              settingsKey(key, curMap[key]['setting_type']),
+              await AndroidFlutterSettings.getString(
+                key,
+                curMap[key]['setting_type'],
+              ),
+              mapSet: true,
+            );
+            break;
         }
       }
     }

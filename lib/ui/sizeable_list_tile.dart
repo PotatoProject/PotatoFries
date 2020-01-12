@@ -5,7 +5,7 @@ class SizeableListTile extends StatelessWidget {
   final double width;
   final Widget icon;
   final Widget trailing;
-  final String title;
+  final dynamic title;
   final Widget subtitle;
   final String footer;
   final bool selected;
@@ -60,14 +60,16 @@ class SizeableListTile extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Text(
-                      title,
-                      style: TextStyle(
-                        letterSpacing: 0.3,
-                        fontSize: 16,
-                        color: selected ? selectedColor : _elementsColor,
-                      ),
-                    ),
+                    title is String
+                        ? Text(
+                            title,
+                            style: TextStyle(
+                              letterSpacing: 0.3,
+                              fontSize: 16,
+                              color: selected ? selectedColor : _elementsColor,
+                            ),
+                          )
+                        : title,
                     Visibility(
                       visible: subtitle != null,
                       child: DefaultTextStyle(
