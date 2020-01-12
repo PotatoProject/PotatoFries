@@ -70,120 +70,146 @@ class PageParser extends StatelessWidget {
                     break;
                 }
                 var appInfoProvider = Provider.of<AppInfoProvider>(context);
-                if (_value['version'] != null &&
-                    !appInfoProvider.isCompatible(_value['version']))
-                  return Container();
-                switch (_value['widget']) {
-                  case WidgetType.SWITCH:
-                    return SettingsSwitchTile(
-                      title: _value['title'],
-                      subtitle: _value['subtitle'],
-                      icon: Icon(_value['icon']),
-                      setValue: (val) {
-                        provider.setValue(
-                          settingsKey(
-                            _key,
-                            _value['setting_type'],
-                          ),
-                          val,
-                        );
-                      },
-                      getValue: () {
-                        return provider.getValue(
-                          settingsKey(
-                            _key,
-                            _value['setting_type'],
-                          ),
-                        );
-                      },
-                    );
-                  case WidgetType.SLIDER:
-                    return SettingsSliderTile(
-                      title: _value['title'],
-                      min: (_value['widget_data']['min'] as int)?.toDouble() ??
-                          0.0,
-                      max: (_value['widget_data']['max'] as int)?.toDouble() ??
-                          0.0,
-                      percentage: _value['widget_data']['percentage'],
-                      setValue: (val) {
-                        provider.setValue(
-                          settingsKey(
-                            _key,
-                            _value['setting_type'],
-                          ),
-                          val,
-                        );
-                      },
-                      getValue: () {
-                        return provider.getValue(
-                          settingsKey(
-                            _key,
-                            _value['setting_type'],
-                          ),
-                        );
-                      },
-                    );
-                  case WidgetType.COLOR_PICKER:
-                    return ColorPickerTile(
-                      title: _value['title'],
-                      subtitle: _value['subtitle'],
-                      onApply: (Color color) {
-                        provider.setValue(
-                          settingsKey(
-                            _key,
-                            _value['setting_type'],
-                          ),
-                          color.value,
-                        );
-                      },
-                      lightnessMin: _value['widget_data']['lightness_min'],
-                      lightnessMax: _value['widget_data']['lightness_max'],
-                      getColor: () {
-                        return Color(
-                          provider.getValue(
-                                settingsKey(
-                                  _key,
-                                  _value['setting_type'],
-                                ),
-                              ) ??
-                              0,
-                        );
-                      },
-                      defaultColor: Colors.transparent,
-                    );
-                  case WidgetType.CUSTOM:
-                    return ObjectGen.fromString(_value['setting_type']);
-                  case WidgetType.DROPDOWN:
-                    return SettingsDropdownTile(
-                      title: _value['title'],
-                      subtitle: _value['subtitle'],
-                      icon: Icon(_value['icon']),
-                      setValue: (val) {
-                        print('running set ' + val);
-                        provider.setValue(
-                          settingsKey(
-                            _key,
-                            _value['setting_type'],
-                          ),
-                          val,
-                        );
-                      },
-                      getValue: () {
-                        return provider.getValue(
-                          settingsKey(
-                            _key,
-                            _value['setting_type'],
-                          ),
-                        );
-                      },
-                      values: _value['widget_data']['values'],
-                    );
-                  default:
-                    return ListTile(
-                      title: Text(_value['title'] ?? 'Bruh.'),
-                      subtitle: Text('bro wat'),
-                    );
+                bool enabled = true;
+                if (_value['dependencies'] != null) {
+                  for (Map m in _value['dependencies']) {
+                    var sKey = settingsKey(m['name'], m['setting_type']);
+                    var sVal = provider.getValue(sKey);
+                    if (sVal != null) {
+                      enabled = enabled && sVal == m['value'];
+                    }
+                  }
                 }
+                return AnimatedOpacity(
+                  opacity: enabled ? 1.0 : 0.5,
+                  duration: Duration(milliseconds: 300),
+                  curve: Curves.easeInOut,
+                  child: IgnorePointer(
+                    ignoring: !enabled,
+                    child: Builder(
+                      builder: (context) {
+                        if (_value['version'] != null &&
+                            !appInfoProvider.isCompatible(_value['version']))
+                          return Container();
+                        switch (_value['widget']) {
+                          case WidgetType.SWITCH:
+                            return SettingsSwitchTile(
+                              title: _value['title'],
+                              subtitle: _value['subtitle'],
+                              icon: Icon(_value['icon']),
+                              setValue: (val) {
+                                provider.setValue(
+                                  settingsKey(
+                                    _key,
+                                    _value['setting_type'],
+                                  ),
+                                  val,
+                                );
+                              },
+                              getValue: () {
+                                return provider.getValue(
+                                  settingsKey(
+                                    _key,
+                                    _value['setting_type'],
+                                  ),
+                                );
+                              },
+                            );
+                          case WidgetType.SLIDER:
+                            return SettingsSliderTile(
+                              title: _value['title'],
+                              min: (_value['widget_data']['min'] as int)
+                                      ?.toDouble() ??
+                                  0.0,
+                              max: (_value['widget_data']['max'] as int)
+                                      ?.toDouble() ??
+                                  0.0,
+                              percentage: _value['widget_data']['percentage'],
+                              setValue: (val) {
+                                provider.setValue(
+                                  settingsKey(
+                                    _key,
+                                    _value['setting_type'],
+                                  ),
+                                  val,
+                                );
+                              },
+                              getValue: () {
+                                return provider.getValue(
+                                  settingsKey(
+                                    _key,
+                                    _value['setting_type'],
+                                  ),
+                                );
+                              },
+                            );
+                          case WidgetType.COLOR_PICKER:
+                            return ColorPickerTile(
+                              title: _value['title'],
+                              subtitle: _value['subtitle'],
+                              onApply: (Color color) {
+                                provider.setValue(
+                                  settingsKey(
+                                    _key,
+                                    _value['setting_type'],
+                                  ),
+                                  color.value,
+                                );
+                              },
+                              lightnessMin: _value['widget_data']
+                                  ['lightness_min'],
+                              lightnessMax: _value['widget_data']
+                                  ['lightness_max'],
+                              getColor: () {
+                                return Color(
+                                  provider.getValue(
+                                        settingsKey(
+                                          _key,
+                                          _value['setting_type'],
+                                        ),
+                                      ) ??
+                                      0,
+                                );
+                              },
+                              defaultColor: Colors.transparent,
+                            );
+                          case WidgetType.CUSTOM:
+                            return ObjectGen.fromString(_value['setting_type']);
+                          case WidgetType.DROPDOWN:
+                            return SettingsDropdownTile(
+                              title: _value['title'],
+                              subtitle: _value['subtitle'],
+                              icon: Icon(_value['icon']),
+                              setValue: (val) {
+                                print('running set ' + val);
+                                provider.setValue(
+                                  settingsKey(
+                                    _key,
+                                    _value['setting_type'],
+                                  ),
+                                  val,
+                                );
+                              },
+                              getValue: () {
+                                return provider.getValue(
+                                  settingsKey(
+                                    _key,
+                                    _value['setting_type'],
+                                  ),
+                                );
+                              },
+                              values: _value['widget_data']['values'],
+                            );
+                          default:
+                            return ListTile(
+                              title: Text(_value['title'] ?? 'Bruh.'),
+                              subtitle: Text('bro wat'),
+                            );
+                        }
+                      },
+                    ),
+                  ),
+                );
               },
             );
             children.addAll(gen);
