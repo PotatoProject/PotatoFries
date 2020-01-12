@@ -10,6 +10,7 @@ import 'package:potato_fries/utils/methods.dart';
 import 'package:potato_fries/utils/obj_gen.dart';
 import 'package:potato_fries/widgets/color_picker.dart';
 import 'package:potato_fries/widgets/directory.dart';
+import 'package:potato_fries/widgets/settings_dropdown.dart';
 import 'package:potato_fries/widgets/settings_slider.dart';
 import 'package:potato_fries/widgets/settings_switch.dart';
 import 'package:provider/provider.dart';
@@ -152,6 +153,31 @@ class PageParser extends StatelessWidget {
                     );
                   case WidgetType.CUSTOM:
                     return ObjectGen.fromString(_value['setting_type']);
+                  case WidgetType.DROPDOWN:
+                    return SettingsDropdownTile(
+                      title: _value['title'],
+                      subtitle: _value['subtitle'],
+                      icon: Icon(_value['icon']),
+                      setValue: (val) {
+                        print('running set ' + val);
+                        provider.setValue(
+                          settingsKey(
+                            _key,
+                            _value['setting_type'],
+                          ),
+                          val,
+                        );
+                      },
+                      getValue: () {
+                        return provider.getValue(
+                          settingsKey(
+                            _key,
+                            _value['setting_type'],
+                          ),
+                        );
+                      },
+                      values: _value['widget_data']['values'],
+                    );
                   default:
                     return ListTile(
                       title: Text(_value['title'] ?? 'Bruh.'),
