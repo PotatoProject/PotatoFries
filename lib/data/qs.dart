@@ -25,7 +25,14 @@ final Map<String, dynamic> qsColors = {
     'setting_type': SettingType.SYSTEM,
     'widget_data': {
       'default': false,
-    }
+    },
+    'dependencies': [
+      {
+        'name': 'qs_panel_bg_use_fw',
+        'setting_type': SettingType.SYSTEM,
+        'value': false,
+      },
+    ]
   },
   'qs_panel_bg_alpha': {
     'title': 'QS Panel Opacity',
@@ -36,7 +43,14 @@ final Map<String, dynamic> qsColors = {
       'min': 100,
       'max': 255,
       'percentage': false,
-    }
+    },
+    'dependencies': [
+      {
+        'name': 'qs_panel_bg_use_fw',
+        'setting_type': SettingType.SYSTEM,
+        'value': false,
+      },
+    ],
   },
   'qs_panel_bg_color': {
     'title': 'Pick QS background color',
@@ -46,6 +60,18 @@ final Map<String, dynamic> qsColors = {
     'widget_data': {
       'lightness_min': 0.0,
       'lightness_max': 0.6,
-    }
+    },
+    'dependencies': [
+      {
+        'name': 'qs_panel_bg_use_fw',
+        'setting_type': SettingType.SYSTEM,
+        'value': false,
+      },
+      {
+        'name': 'qs_panel_bg_use_wall',
+        'setting_type': SettingType.SYSTEM,
+        'value': false,
+      },
+    ],
   },
 };
