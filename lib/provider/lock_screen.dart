@@ -44,6 +44,35 @@ class LockScreenDataProvider extends ChangeNotifier {
     for (String categoryKey in appData['lock_screen'].keys) {
       Map curMap = appData['lock_screen'][categoryKey];
       for (String key in curMap.keys) {
+        if (curMap[key]['dependencies'] != null) {
+          for (int i = 0; i < curMap[key]['dependencies'].length; i++) {
+            var depObj = curMap[key]['dependencies'][i];
+            var sKey = settingsKey(
+              depObj['name'],
+              depObj['setting_type'],
+            );
+            if (getValue(sKey) == null) {
+              dynamic getNative() async {
+                if (depObj['value'] is bool)
+                  return await AndroidFlutterSettings.getBool(
+                    depObj['name'],
+                    depObj['setting_type'],
+                  );
+                else if (depObj['value'] is double || depObj['value'] is int)
+                  return await AndroidFlutterSettings.getInt(
+                    depObj['name'],
+                    depObj['setting_type'],
+                  );
+                else
+                  return await AndroidFlutterSettings.getString(
+                    depObj['name'],
+                    depObj['setting_type'],
+                  );
+              }
+              setValue(sKey, await getNative(), mapSet: true);
+            }
+          }
+        }
         switch (curMap[key]['widget']) {
           case WidgetType.SWITCH:
             setValue(
