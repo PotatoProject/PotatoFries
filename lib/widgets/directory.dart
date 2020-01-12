@@ -5,6 +5,7 @@ enum WidgetType {
   COLOR_PICKER,
   COLOR_PICKER_DUAL,
   CUSTOM,
+  DROPDOWN,
   SLIDER,
   SWITCH,
 }

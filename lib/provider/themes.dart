@@ -34,6 +34,12 @@ class ThemesDataProvider extends ChangeNotifier {
           value,
           sType2Enum(key.split(':')[0]),
         );
+      } else if (value is String) {
+        await AndroidFlutterSettings.putString(
+          key.split(':')[1],
+          value,
+          sType2Enum(key.split(':')[0]),
+        );
       }
     }
     _data[key] = value;
@@ -60,6 +66,16 @@ class ThemesDataProvider extends ChangeNotifier {
             setValue(
               settingsKey(key, curMap[key]['setting_type']),
               await AndroidFlutterSettings.getInt(
+                key,
+                curMap[key]['setting_type'],
+              ),
+              mapSet: true,
+            );
+            break;
+          case WidgetType.DROPDOWN:
+            setValue(
+              settingsKey(key, curMap[key]['setting_type']),
+              await AndroidFlutterSettings.getString(
                 key,
                 curMap[key]['setting_type'],
               ),
