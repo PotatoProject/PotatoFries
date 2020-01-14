@@ -56,6 +56,17 @@ final Map<String, dynamic> powermenu = {
     },
     'version': '3.1.1',
   },
+  'screenrecord_in_power_menu': {
+    'title': 'Screenrecord menu',
+    'subtitle': 'Add screenrecord in powermenu',
+    'icon': Icons.fiber_manual_record,
+    'widget': WidgetType.SWITCH,
+    'setting_type': SettingType.SECURE,
+    'widget_data': {
+      'default': false,
+    },
+    'version': '3.1.1',
+  },
   'lockscreen_enable_power_menu': {
     'title': 'Power menu on Lockscreen',
     'subtitle': 'Allow accessing power menu on secure lock screen',
