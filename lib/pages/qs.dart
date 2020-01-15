@@ -1,6 +1,8 @@
 import 'package:android_flutter_settings/android_flutter_settings.dart';
 import 'package:flutter/material.dart';
+import 'package:potato_fries/provider/app_info.dart';
 import 'package:potato_fries/provider/qs.dart';
+import 'package:potato_fries/ui/shaped_icon.dart';
 import 'package:potato_fries/utils/methods.dart';
 import 'package:potato_fries/widgets/page_parser.dart';
 import 'package:provider/provider.dart';
@@ -231,13 +233,14 @@ class __QSTileState extends State<_QSTile> {
       onTap: () => setState(() => enabled = !enabled),
       child: Padding(
         padding: EdgeInsets.all(8),
-        child: CircleAvatar(
-          backgroundColor:
-              enabled ? tileColor : disabledIconColor.withAlpha(30),
+        child: ShapedIcon(
+          type: Provider.of<AppInfoProvider>(context).getIconShapeIndex(),
+          color: enabled ? tileColor : disabledIconColor.withAlpha(30),
           child: Icon(
             widget.icon,
             color: enabled ? iconColor : disabledIconColor,
           ),
+          iconSize: 40,
         ),
       ),
     );

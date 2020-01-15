@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:potato_fries/provider/app_info.dart';
 import 'package:potato_fries/provider/themes.dart';
+import 'package:potato_fries/ui/shaped_icon.dart';
 import 'package:potato_fries/widgets/page_parser.dart';
 import 'package:provider/provider.dart';
 
@@ -100,12 +102,14 @@ class _ThemesBody extends StatelessWidget {
 
   Widget _pref(BuildContext context, IconData icon, Color color) {
     return ListTile(
-      leading: CircleAvatar(
+      leading: ShapedIcon(
+        type: Provider.of<AppInfoProvider>(context).getIconShapeIndex(),
+        iconSize: 40,
         child: Icon(
           icon,
           color: Colors.white,
         ),
-        backgroundColor: color,
+        color: color,
       ),
       title: Container(
         height: 10,
