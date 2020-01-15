@@ -81,6 +81,27 @@ class AppInfoProvider extends ChangeNotifier {
         shapesPackages[index],
       );
 
+  int getIconPackIndex() {
+    List l = globalSysTheme[OVERLAY_CATEGORY_ICON_ANDROID].split('.');
+    l.removeLast();
+    return iconPackPrefixes.indexOf(l.join('.')) ?? 0;
+  }
+
+  void setIconPack(int index) {
+    setTheme(
+      OVERLAY_CATEGORY_ICON_SETTINGS,
+      iconPackPrefixes[index] + '.settings',
+    );
+    setTheme(
+      OVERLAY_CATEGORY_ICON_SYSUI,
+      iconPackPrefixes[index] + '.systemui',
+    );
+    setTheme(
+      OVERLAY_CATEGORY_ICON_ANDROID,
+      iconPackPrefixes[index] + '.android',
+    );
+  }
+
   void loadData() async {
     _accentDark = Color(await Resources.getAccentDark());
     _accentLight = Color(await Resources.getAccentLight());
