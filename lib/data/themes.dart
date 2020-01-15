@@ -13,4 +13,8 @@ final Map<String, dynamic> themeAccent = {
     'widget': WidgetType.CUSTOM,
     'setting_type': 'IconShapePicker',
   },
+  'system_icon_pack': {
+    'widget': WidgetType.CUSTOM,
+    'setting_type': 'IconPackPicker',
+  },
 };

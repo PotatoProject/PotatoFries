@@ -34,3 +34,15 @@ const List<String> shapesPackageLabels = [
   'Rounded Rectangle',
   'Squircle',
 ];
+
+const List<String> iconPackPrefixes = [
+  'com.android.theme.icon_pack.rounded',
+  'com.android.theme.icon_pack.filled',
+  'com.android.theme.icon_pack.circular',
+];
+
+const List<String> iconPackLabels = [
+  'Rounded',
+  'Filled',
+  'Circular',
+];

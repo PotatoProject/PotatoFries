@@ -37,7 +37,6 @@ class _SettingsDropdownTileState extends State<SettingsDropdownTile> {
   Widget build(BuildContext context) {
     value = widget.getValue();
     return SizeableListTile(
-//      title: widget.title,
       title: Container(
         width: double.maxFinite,
         child: DropdownButton(
