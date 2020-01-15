@@ -3,6 +3,7 @@ import 'package:potato_fries/data/app.dart';
 import 'package:potato_fries/provider/app_info.dart';
 import 'package:potato_fries/provider/buttons.dart';
 import 'package:potato_fries/provider/lock_screen.dart';
+import 'package:potato_fries/provider/misc.dart';
 import 'package:potato_fries/provider/qs.dart';
 import 'package:potato_fries/provider/status_bar.dart';
 import 'package:potato_fries/provider/themes.dart';
@@ -67,6 +68,9 @@ class PageParser extends StatelessWidget {
                     break;
                   case 'themes':
                     provider = Provider.of<ThemesDataProvider>(context);
+                    break;
+                  case 'misc':
+                    provider = Provider.of<MiscDataProvider>(context);
                     break;
                 }
                 var appInfoProvider = Provider.of<AppInfoProvider>(context);

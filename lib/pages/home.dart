@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:potato_fries/pages/buttons.dart';
 import 'package:potato_fries/pages/lock_screen.dart';
+import 'package:potato_fries/pages/misc.dart';
 import 'package:potato_fries/pages/qs.dart';
 import 'package:potato_fries/pages/status_bar.dart';
 import 'package:potato_fries/pages/themes.dart';
@@ -34,6 +35,7 @@ class _FriesHomeState extends State<FriesHome> {
           Icon(Icons.colorize),
           Icon(Icons.space_bar),
           Icon(Icons.lock),
+          Icon(Icons.star)
         ],
       ),
       body: Builder(
@@ -50,6 +52,8 @@ class _FriesHomeState extends State<FriesHome> {
               return StatusBar();
             case 5:
               return LockScreen();
+            case 6:
+              return Misc();
             default:
               return Container();
           }
