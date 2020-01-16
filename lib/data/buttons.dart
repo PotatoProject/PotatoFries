@@ -62,12 +62,22 @@ final Map<String, dynamic> powermenu = {
       'default': false,
     }
   },
+  'lockdown_in_power_menu': {
+    'title': 'Lockdown menu',
+    'subtitle': 'Add lockdown in powermenu',
+    'icon': Icons.lock_outline,
+    'widget': WidgetType.SWITCH,
+    'setting_type': SettingType.SECURE,
+    'widget_data': {
+      'default': false,
+    }
+  },
   'lockscreen_enable_power_menu': {
     'title': 'Power menu on Lockscreen',
     'subtitle': 'Allow accessing power menu on secure lock screen',
     'icon': Icons.phonelink_lock,
     'widget': WidgetType.SWITCH,
-    'setting_type': SettingType.SECURE,
+    'setting_type': SettingType.GLOBAL,
     'widget_data': {
       'default': true,
     }
