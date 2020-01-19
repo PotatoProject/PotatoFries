@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:potato_fries/widgets/directory.dart';
 
 final Map<String, dynamic> statusBar = {
-  'StatusBar Items': statusbaricons,
-  'Network icons': neticons,
+  'StatusBar Icons': statusbaricons,
 };
 
 final Map<String, dynamic> statusbaricons = {
@@ -18,9 +17,6 @@ final Map<String, dynamic> statusbaricons = {
       'default': false,
     }
   },
-};
-
-final Map<String, dynamic> neticons = {
   'show_fourg_icon': {
     'title': '4G icon',
     'subtitle': 'Display 4G icon in status bar instead LTE',
