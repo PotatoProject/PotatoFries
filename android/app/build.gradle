@@ -46,22 +46,24 @@ android {
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        manifestPlaceholders = [sharedUserId: ""]
     }
 
     signingConfigs {
-       release {
-           keyAlias keystoreProperties['keyAlias']
-           keyPassword keystoreProperties['keyPassword']
-           storeFile file(keystoreProperties['storeFile'])
-           storePassword keystoreProperties['storePassword']
-       }
-   }
+        release {
+            keyAlias keystoreProperties['keyAlias']
+            keyPassword keystoreProperties['keyPassword']
+            storeFile file(keystoreProperties['storeFile'])
+            storePassword keystoreProperties['storePassword']
+        }
+    }
 
-   buildTypes {
-       release {
-           signingConfig signingConfigs.release
-       }
-   }
+    buildTypes {
+        release {
+            signingConfig signingConfigs.release
+            manifestPlaceholders = [sharedUserId: "android.uid.system"]
+        }
+    }
 }
 
 flutter {
