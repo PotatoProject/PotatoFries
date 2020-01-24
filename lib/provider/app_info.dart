@@ -82,24 +82,25 @@ class AppInfoProvider extends ChangeNotifier {
       );
 
   int getIconPackIndex() {
-    List l = globalSysTheme[OVERLAY_CATEGORY_ICON_ANDROID].split('.');
+    List l = globalSysTheme[OVERLAY_CATEGORY_ICON_ANDROID]?.split('.');
+    if (l == null) return 0;
     l.removeLast();
     return iconPackPrefixes.indexOf(l.join('.')) ?? 0;
   }
 
   void setIconPack(int index) {
-    setTheme(
-      OVERLAY_CATEGORY_ICON_SETTINGS,
-      iconPackPrefixes[index] + '.settings',
-    );
-    setTheme(
-      OVERLAY_CATEGORY_ICON_SYSUI,
-      iconPackPrefixes[index] + '.systemui',
-    );
-    setTheme(
-      OVERLAY_CATEGORY_ICON_ANDROID,
-      iconPackPrefixes[index] + '.android',
-    );
+    List packages;
+    if (iconPackPrefixes[index] == null)
+      packages = [null, null, null];
+    else
+      packages = [
+        iconPackPrefixes[index] + '.settings',
+        iconPackPrefixes[index] + '.systemui',
+        iconPackPrefixes[index] + '.android',
+      ];
+    setTheme(OVERLAY_CATEGORY_ICON_SETTINGS, packages[0]);
+    setTheme(OVERLAY_CATEGORY_ICON_SYSUI, packages[1]);
+    setTheme(OVERLAY_CATEGORY_ICON_ANDROID, packages[2]);
   }
 
   void loadData() async {
