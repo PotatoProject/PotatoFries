@@ -75,6 +75,7 @@ class ButtonsDataProvider extends ChangeNotifier {
                     depObj['setting_type'],
                   );
               }
+
               setValue(sKey, await getNative(), mapSet: true);
             }
           }

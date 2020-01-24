@@ -29,6 +29,13 @@ final Map<String, dynamic> lsstuff = {
       'max': 25,
       'percentage': false,
     },
+    'dependencies': [
+      {
+        'name': 'lockscreen_media_metadata',
+        'setting_type': SettingType.SYSTEM,
+        'value': true,
+      },
+    ],
     'version': '3.1.1',
   },
 };
