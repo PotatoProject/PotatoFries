@@ -93,8 +93,10 @@ class PageParser extends StatelessWidget {
                     child: Builder(
                       builder: (context) {
                         if (_value['version'] != null &&
-                            !appInfoProvider.isCompatible(_value['version']))
-                          return Container();
+                            !appInfoProvider.isCompatible(
+                              _value['version'],
+                              max: _value['version_max'],
+                            )) return Container();
                         switch (_value['widget']) {
                           case WidgetType.SWITCH:
                             return SettingsSwitchTile(

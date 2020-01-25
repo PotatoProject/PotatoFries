@@ -46,8 +46,8 @@ class AppInfoProvider extends ChangeNotifier {
 
   Map get hostVersion => _hostVersion;
 
-  bool isCompatible(String version) =>
-      isVersionCompatible(version, _hostVersion);
+  bool isCompatible(String version, {String max}) =>
+      isVersionCompatible(version, _hostVersion, max: max);
 
   void loadTheme({bool notifyNeeded = true}) async {
     String theme = await AndroidFlutterSettings.getString(

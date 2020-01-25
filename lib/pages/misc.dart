@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:potato_fries/provider/lock_screen.dart';
 import 'package:potato_fries/provider/misc.dart';
 import 'package:potato_fries/widgets/page_parser.dart';
 import 'package:provider/provider.dart';

@@ -79,8 +79,10 @@ Map<String, dynamic> parseVerNum(String vernum) {
   return ret;
 }
 
-bool isVersionCompatible(String target, dynamic hostVersion) {
+bool isVersionCompatible(String target, dynamic hostVersion, {String max}) {
   Map<String, dynamic> targetVersion = parseVerNum(target);
+  Map<String, dynamic> maxVersion;
+  if (max != null) maxVersion = parseVerNum(max);
   if (hostVersion is String) {
     hostVersion = parseVerNum(hostVersion);
   }
@@ -88,8 +90,11 @@ bool isVersionCompatible(String target, dynamic hostVersion) {
   int _hostPatch = getNum(hostVersion['PATCH']);
   return hostVersion['MAJOR'] >= targetVersion['MAJOR'] &&
       hostVersion['MINOR'] >= targetVersion['MINOR'] &&
-      _hostPatch >= _targetPatch;
-  ;
+      _hostPatch >= _targetPatch &&
+      (maxVersion == null ||
+          (hostVersion['MAJOR'] <= maxVersion['MAJOR'] &&
+              hostVersion['MINOR'] <= maxVersion['MINOR'] &&
+              _hostPatch <= getNum(maxVersion['PATCH'])));
 }
 
 bool isNumber(String item) => '0123456789'.split('').contains(item);
