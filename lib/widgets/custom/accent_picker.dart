@@ -22,7 +22,7 @@ class AccentPicker extends StatelessWidget {
               Provider.of<AppInfoProvider>(context, listen: false).hostVersion;
           var settingImplVer = '3.1.1';
           var settingImpl = isVersionCompatible(settingImplVer, hostVer);
-          if (settingImpl) {
+          if (!settingImpl) {
             AndroidFlutterSettings.setProp(
               'persist.sys.theme.accent_dark',
               newDark,
