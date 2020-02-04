@@ -5,6 +5,7 @@ import 'package:potato_fries/widgets/directory.dart';
 final Map<String, dynamic> statusBar = {
   'StatusBar Icons': statusbaricons,
   'Clock': statusbarclock,
+  'Battery': statusbarbattery,
 };
 
 final Map<String, dynamic> statusbaricons = {
@@ -65,6 +66,25 @@ final Map<String, dynamic> statusbarclock = {
         '0': 'Hide AM/PM' ,
         '1': 'Small AM/PM' ,
         '2': 'Normal AM/PM' ,
+      }
+    },
+    'version': '3.1.1',
+  },
+};
+
+final Map<String, dynamic> statusbarbattery = {
+  'status_bar_battery_style': {
+    'title': 'Battery Style',
+    'icon': Icons.crop_portrait,
+    'widget': WidgetType.DROPDOWN,
+    'setting_type': SettingType.SYSTEM,
+    'widget_data': {
+      'values': {
+        '0': 'Portrait (Default)' ,
+        '1': 'Dotted circle' ,
+        '2': 'Circle' ,
+        '3': 'Text' ,
+        '4': 'Do not show' ,
       }
     },
     'version': '3.1.1',
