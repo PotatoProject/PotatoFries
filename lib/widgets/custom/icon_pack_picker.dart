@@ -11,8 +11,10 @@ class IconPackPicker extends StatelessWidget {
       title: 'Icon Pack',
       subtitle: 'Pick system icon pack (will reload Fries!)',
       icon: Icon(Icons.apps),
-      setValue: (val) => Provider.of<AppInfoProvider>(context).setIconPack(int.parse(val)),
-      getValue: () => Provider.of<AppInfoProvider>(context).getIconPackIndex().toString(),
+      setValue: (val) =>
+          Provider.of<AppInfoProvider>(context).setIconPack(int.parse(val)),
+      getValue: () =>
+          Provider.of<AppInfoProvider>(context).getIconPackIndex().toString(),
       values: Map.fromIterable(
         iconPackLabels,
         key: (element) => iconPackLabels.indexOf(element).toString(),
