@@ -58,4 +58,13 @@ final Map<String, dynamic> statusbaricons = {
       'default': true,
     },
   },
+  'use_old_mobiletype': {
+    'title': 'Old mobile data icons',
+    'subtitle': 'Merge signal and type icons',
+    'widget': WidgetType.SWITCH,
+    'setting_type': SettingType.SYSTEM,
+    'widget_data': {
+      'default': false,
+    },
+  },
 };
