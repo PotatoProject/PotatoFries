@@ -49,4 +49,13 @@ final Map<String, dynamic> statusbaricons = {
     },
     'version': '3.1.1',
   },
+  'statusbar_privacy_indicators': {
+    'title': 'Statusbar privacy indicators',
+    'subtitle': 'Show permission hub icons on statusbar',
+    'widget': WidgetType.SWITCH,
+    'setting_type': SettingType.SYSTEM,
+    'widget_data': {
+      'default': true,
+    },
+  },
 };
