@@ -1,6 +1,6 @@
 name: potato_fries
 description: Fries, with a bit of salt
-version: 1.0.4+9
+version: 1.0.5+10
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
