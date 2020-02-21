@@ -18,4 +18,3 @@ final Map<String, dynamic> spoofing = {
     }
   },
 };
-

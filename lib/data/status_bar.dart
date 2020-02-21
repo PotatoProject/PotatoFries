@@ -7,6 +7,17 @@ final Map<String, dynamic> statusBar = {
 };
 
 final Map<String, dynamic> statusbaricons = {
+  'smart_clock_enable': {
+    'title': 'Smart Clock',
+    'subtitle': 'Show statusbar clock periodically',
+    'icon': Icons.fiber_smart_record,
+    'widget': WidgetType.SWITCH,
+    'setting_type': SettingType.SYSTEM,
+    'widget_data': {
+      'default': false,
+    },
+    'version': '3.1.3',
+  },
   'status_bar_logo': {
     'title': 'POSP swag',
     'subtitle': 'Show off POSP logo on statusbar',
