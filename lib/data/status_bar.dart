@@ -4,6 +4,7 @@ import 'package:potato_fries/widgets/directory.dart';
 
 final Map<String, dynamic> statusBar = {
   'StatusBar Icons': statusbaricons,
+  'Network Traffic Monitor': netTraffic,
 };
 
 final Map<String, dynamic> statusbaricons = {
@@ -66,5 +67,44 @@ final Map<String, dynamic> statusbaricons = {
     'widget_data': {
       'default': false,
     },
+  },
+};
+
+final Map<String, dynamic> netTraffic = {
+  'network_traffic_state': {
+    'title': 'Network traffic',
+    'subtitle': 'Enable or disable network speed indicators',
+    'widget': WidgetType.SWITCH,
+    'setting_type': SettingType.SYSTEM,
+    'widget_data': {
+      'default': false,
+    },
+  },
+  'network_traffic_hidearrow': {
+    'title': 'Hide arrows',
+    'subtitle': 'Hide the network traffic indicator arrows',
+    'widget': WidgetType.SWITCH,
+    'setting_type': SettingType.SYSTEM,
+    'widget_data': {
+      'default': false,
+    },
+  },
+  'network_traffic_autohide_threshold': {
+    'title': 'Net activity autohide threshold (KB/s)',
+    'widget': WidgetType.SLIDER,
+    'setting_type': SettingType.SYSTEM,
+    'widget_data': {
+      'default': false,
+      'min': 0,
+      'max': 10,
+      'percentage': false,
+    },
+    'dependencies': [
+      {
+        'name': 'network_traffic_state',
+        'setting_type': SettingType.SYSTEM,
+        'value': true,
+      },
+    ],
   },
 };
