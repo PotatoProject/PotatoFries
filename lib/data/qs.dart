@@ -4,6 +4,7 @@ import 'package:potato_fries/widgets/directory.dart';
 
 final Map<String, dynamic> qsData = {
   'Colors': qsColors,
+  'Quick settings tweaks': qstweaks,
 };
 
 final Map<String, dynamic> qsColors = {
@@ -77,3 +78,63 @@ final Map<String, dynamic> qsColors = {
     ],
   },
 };
+final Map<String, dynamic> qstweaks = {
+  'qs_tile_title_visibility': {
+    'title': 'Show title of QS tiles',
+    'subtitle': 'Hide or show title of QS tiles',
+    'widget': WidgetType.SWITCH,
+    'setting_type': SettingType.SYSTEM,
+    'widget_data': {
+      'default': true,
+    },
+  },
+  'qs_rows_portrait': {
+    'title': 'Tiles rows on portrait',
+    'icon': Icons.crop_portrait,
+    'widget': WidgetType.SLIDER,
+    'setting_type': SettingType.SYSTEM,
+    'widget_data': {
+      'default': 3,
+      'min': 1,
+      'max': 5,
+      'percentage': false,
+    }
+  },
+  'qs_rows_landscape': {
+    'title': 'Tiles rows on landscape',
+    'icon': Icons.crop_portrait,
+    'widget': WidgetType.SLIDER,
+    'setting_type': SettingType.SYSTEM,
+    'widget_data': {
+      'default': 2,
+      'min': 1,
+      'max': 5,
+      'percentage': false,
+    }
+  },
+  'qs_columns_portrait': {
+    'title': 'Tiles columns on portrait',
+    'icon': Icons.crop_portrait,
+    'widget': WidgetType.SLIDER,
+    'setting_type': SettingType.SYSTEM,
+    'widget_data': {
+      'default': 3,
+      'min': 1,
+      'max': 7,
+      'percentage': false,
+    }
+  },
+  'qs_columns_landscape': {
+    'title': 'Tiles columns on landscape',
+    'icon': Icons.crop_portrait,
+    'widget': WidgetType.SLIDER,
+    'setting_type': SettingType.SYSTEM,
+    'widget_data': {
+      'default': 4,
+      'min': 1,
+      'max': 9,
+      'percentage': false,
+    }
+  },
+};
+
