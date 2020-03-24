@@ -12,6 +12,7 @@ class SettingsSliderTile extends StatefulWidget {
   final PercentageMode percentageMode;
   final Function setValue;
   final Function getValue;
+  final double defaultValue;
 
   SettingsSliderTile({
     @required this.title,
@@ -23,6 +24,7 @@ class SettingsSliderTile extends StatefulWidget {
     this.percentageMode = PercentageMode.ABSOLUTE,
     @required this.setValue,
     @required this.getValue,
+    this.defaultValue,
   })  : assert(title != null),
         assert(percentage != null),
         assert(percentageMode != null),
@@ -38,7 +40,7 @@ class _SettingsSliderTileState extends State<SettingsSliderTile> {
 
   @override
   Widget build(BuildContext context) {
-    value = widget.getValue()?.toDouble() ?? widget.min;
+    value = widget.getValue()?.toDouble() ?? widget.defaultValue ?? widget.min;
     if (value < widget.min || value > widget.max) value = widget.min;
     return SizeableListTile(
       title: widget.title,
