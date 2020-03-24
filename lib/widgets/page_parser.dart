@@ -112,6 +112,11 @@ class PageParser extends StatelessWidget {
                                   val,
                                 );
                               },
+                              defaultValue: _value.containsKey('widget_data') &&
+                                      _value['widget_data']
+                                          .containsKey('default')
+                                  ? _value['widget_data']['default']
+                                  : false,
                               getValue: () {
                                 return provider.getValue(
                                   settingsKey(
