@@ -5,6 +5,7 @@ import 'package:potato_fries/widgets/directory.dart';
 final Map<String, dynamic> statusBar = {
   'StatusBar Icons': statusbaricons,
   'Network Traffic Monitor': netTraffic,
+  'Display cutouts': displayCutouts,
 };
 
 final Map<String, dynamic> statusbaricons = {
@@ -115,6 +116,44 @@ final Map<String, dynamic> netTraffic = {
         'name': 'network_traffic_state',
         'setting_type': SettingType.SYSTEM,
         'value': true,
+      },
+    ],
+    'version': '3.1.5',
+  },
+};
+
+final Map<String, dynamic> displayCutouts = {
+  'display_cutout_mode': {
+    'title': 'Cutout mode',
+    'icon': Icons.aspect_ratio,
+    'widget': WidgetType.DROPDOWN,
+    'setting_type': SettingType.SYSTEM,
+    'widget_data': {
+      'values': {
+        '0': 'Normal',
+        '1': 'Immerse',
+        '2': 'Hide',
+      },
+      'default': '0',
+    },
+    'compat': {
+      'prop': 'ro.potato.has_cutout',
+    },
+    'version': '3.1.5',
+  },
+  'stock_statusbar_in_hide': {
+    'title': 'Stock Statusbar in hide',
+    'subtitle': 'Use default (usually larger) statusbar height in hide',
+    'widget': WidgetType.SWITCH,
+    'setting_type': SettingType.SYSTEM,
+    'widget_data': {
+      'default': true,
+    },
+    'dependencies': [
+      {
+        'name': 'display_cutout_mode',
+        'setting_type': SettingType.SYSTEM,
+        'value': '2',
       },
     ],
     'version': '3.1.5',
