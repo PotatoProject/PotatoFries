@@ -11,6 +11,7 @@ class SettingsDropdownTile extends StatefulWidget {
   final Function setValue;
   final Function getValue;
   final Map values;
+  final String defaultValue;
 
   SettingsDropdownTile({
     @required this.title,
@@ -21,10 +22,13 @@ class SettingsDropdownTile extends StatefulWidget {
     @required this.setValue,
     @required this.getValue,
     this.values,
+    this.defaultValue,
   })  : assert(title != null),
         assert(setValue != null),
         assert(getValue != null),
-        assert(values != null);
+        assert(values != null),
+        assert(defaultValue == null ||
+            (defaultValue != null && values.containsKey(defaultValue)));
 
   @override
   _SettingsDropdownTileState createState() => _SettingsDropdownTileState();
@@ -35,12 +39,12 @@ class _SettingsDropdownTileState extends State<SettingsDropdownTile> {
 
   @override
   Widget build(BuildContext context) {
-    value = widget.getValue();
+    value = widget.getValue() ?? widget.defaultValue ?? widget.values[0];
     return SizeableListTile(
       title: Container(
         width: double.maxFinite,
         child: DropdownButton(
-          value: value ?? widget.values[0],
+          value: value,
           items: widget.values.keys
               .map(
                 (k) => DropdownMenuItem(
