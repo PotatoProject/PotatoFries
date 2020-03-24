@@ -1,5 +1,6 @@
 import 'package:android_flutter_settings/android_flutter_settings.dart';
 import 'package:flutter/material.dart';
+import 'package:potato_fries/data/debug_constants.dart';
 import 'package:potato_fries/widgets/color_picker.dart';
 import 'package:potato_fries/widgets/color_picker_dual.dart';
 
@@ -88,13 +89,14 @@ bool isVersionCompatible(String target, dynamic hostVersion, {String max}) {
   }
   int _targetPatch = getNum(targetVersion['PATCH']);
   int _hostPatch = getNum(hostVersion['PATCH']);
-  return hostVersion['MAJOR'] >= targetVersion['MAJOR'] &&
-      hostVersion['MINOR'] >= targetVersion['MINOR'] &&
-      _hostPatch >= _targetPatch &&
-      (maxVersion == null ||
-          (hostVersion['MAJOR'] <= maxVersion['MAJOR'] &&
-              hostVersion['MINOR'] <= maxVersion['MINOR'] &&
-              _hostPatch <= getNum(maxVersion['PATCH'])));
+  return (DEBUG_VERSION_CHECK_DISABLE ||
+      hostVersion['MAJOR'] >= targetVersion['MAJOR'] &&
+          hostVersion['MINOR'] >= targetVersion['MINOR'] &&
+          _hostPatch >= _targetPatch &&
+          (maxVersion == null ||
+              (hostVersion['MAJOR'] <= maxVersion['MAJOR'] &&
+                  hostVersion['MINOR'] <= maxVersion['MINOR'] &&
+                  _hostPatch <= getNum(maxVersion['PATCH']))));
 }
 
 bool isNumber(String item) => '0123456789'.split('').contains(item);
