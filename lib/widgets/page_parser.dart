@@ -9,6 +9,7 @@ import 'package:potato_fries/provider/status_bar.dart';
 import 'package:potato_fries/provider/themes.dart';
 import 'package:potato_fries/utils/methods.dart';
 import 'package:potato_fries/utils/obj_gen.dart';
+import 'package:potato_fries/widgets/activity.dart';
 import 'package:potato_fries/widgets/color_picker.dart';
 import 'package:potato_fries/widgets/directory.dart';
 import 'package:potato_fries/widgets/settings_dropdown.dart';
@@ -223,6 +224,14 @@ class PageParser extends StatelessWidget {
                                 );
                               },
                               values: _value['widget_data']['values'],
+                            );
+                          case WidgetType.ACTIVITY:
+                            return ActivityTile(
+                              title: _value['title'],
+                              subtitle: _value['subtitle'],
+                              icon: Icon(_value['icon']),
+                              cls: _value['class'],
+                              pkg: _value['package'],
                             );
                           default:
                             return ListTile(

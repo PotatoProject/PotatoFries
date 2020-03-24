@@ -10,6 +10,7 @@ enum WidgetType {
   DROPDOWN,
   SLIDER,
   SWITCH,
+  ACTIVITY,
 }
 
 void registerCustomWidgets() {
