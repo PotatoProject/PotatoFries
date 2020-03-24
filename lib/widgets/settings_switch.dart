@@ -9,6 +9,7 @@ class SettingsSwitchTile extends StatefulWidget {
   final bool enabled;
   final Function setValue;
   final Function getValue;
+  final bool defaultValue;
 
   SettingsSwitchTile({
     @required this.title,
@@ -18,6 +19,7 @@ class SettingsSwitchTile extends StatefulWidget {
     this.enabled = true,
     @required this.setValue,
     @required this.getValue,
+    this.defaultValue,
   })  : assert(title != null),
         assert(setValue != null),
         assert(getValue != null);
@@ -31,7 +33,7 @@ class _SettingsSwitchTileState extends State<SettingsSwitchTile> {
 
   @override
   Widget build(BuildContext context) {
-    value = widget.getValue() ?? false;
+    value = widget.getValue() ?? widget.defaultValue ?? false;
     return SizeableListTile(
       title: widget.title,
       icon: widget.icon,
