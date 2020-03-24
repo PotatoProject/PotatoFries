@@ -1,5 +1,8 @@
 package com.potatoproject.fries;
 
+import android.app.Activity;
+import android.content.ComponentName;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -9,8 +12,12 @@ import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugins.GeneratedPluginRegistrant;
 
 public class MainActivity extends FlutterActivity {
+
+    private Activity mActivity;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        if (mActivity == null) mActivity = this;
         super.onCreate(savedInstanceState);
         GeneratedPluginRegistrant.registerWith(this);
         new MethodChannel(getFlutterView(), "fries/resources").setMethodCallHandler(
@@ -19,6 +26,21 @@ public class MainActivity extends FlutterActivity {
                         String pkg = call.argument("pkg");
                         String resName = call.argument("resName");
                         resultSuccess(result, getColor(pkg, resName));
+                    } else {
+                        result.notImplemented();
+                    }
+                }
+        );
+        new MethodChannel(getFlutterView(), "fries/utils").setMethodCallHandler(
+                (call, result) -> {
+                    if (call.method.equals("startActivity")) {
+                        final String pkg = call.argument("pkg");
+                        final String cls = call.argument("cls");
+                        if (pkg != null && cls != null) {
+                            mActivity.startActivity(new Intent().setComponent(new ComponentName(
+                                    pkg, cls)));
+                        }
+                        result.success(null);
                     } else {
                         result.notImplemented();
                     }
