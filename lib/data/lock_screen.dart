@@ -24,7 +24,7 @@ final Map<String, dynamic> lsstuff = {
     'widget': WidgetType.SLIDER,
     'setting_type': SettingType.SYSTEM,
     'widget_data': {
-      'default': true,
+      'default': 25,
       'min': 0,
       'max': 25,
       'percentage': false,
