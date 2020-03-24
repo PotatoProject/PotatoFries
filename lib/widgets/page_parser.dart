@@ -35,6 +35,39 @@ class PageParser extends StatelessWidget {
             List<Widget> children = [];
             String key = appData[dataKey].keys.elementAt(cindex);
             Map<String, dynamic> workingMap = appData[dataKey][key];
+            var provider;
+            switch (dataKey) {
+              case 'buttons_and_gestures':
+                provider = Provider.of<ButtonsDataProvider>(context);
+                break;
+              case 'lock_screen':
+                provider = Provider.of<LockScreenDataProvider>(context);
+                break;
+              case 'qs':
+                provider = Provider.of<QsDataProvider>(context);
+                break;
+              case 'status_bar':
+                provider = Provider.of<StatusBarDataProvider>(context);
+                break;
+              case 'themes':
+                provider = Provider.of<ThemesDataProvider>(context);
+                break;
+              case 'misc':
+                provider = Provider.of<MiscDataProvider>(context);
+                break;
+            }
+            var appInfoProvider = Provider.of<AppInfoProvider>(context);
+
+            bool emptySection = true;
+            for (String _key in workingMap.keys) {
+              var _value = workingMap[_key];
+              if (_value['version'] == null ||
+                  appInfoProvider.isCompatible(
+                    _value['version'],
+                    max: _value['version_max'],
+                  )) emptySection = false;
+            }
+            if (emptySection) return Container();
             children.add(Divider());
             children.add(
               Padding(
@@ -53,28 +86,6 @@ class PageParser extends StatelessWidget {
               (index) {
                 var _key = workingMap.keys.elementAt(index);
                 var _value = workingMap[_key];
-                var provider;
-                switch (dataKey) {
-                  case 'buttons_and_gestures':
-                    provider = Provider.of<ButtonsDataProvider>(context);
-                    break;
-                  case 'lock_screen':
-                    provider = Provider.of<LockScreenDataProvider>(context);
-                    break;
-                  case 'qs':
-                    provider = Provider.of<QsDataProvider>(context);
-                    break;
-                  case 'status_bar':
-                    provider = Provider.of<StatusBarDataProvider>(context);
-                    break;
-                  case 'themes':
-                    provider = Provider.of<ThemesDataProvider>(context);
-                    break;
-                  case 'misc':
-                    provider = Provider.of<MiscDataProvider>(context);
-                    break;
-                }
-                var appInfoProvider = Provider.of<AppInfoProvider>(context);
                 bool enabled = true;
                 if (_value['dependencies'] != null) {
                   for (Map m in _value['dependencies']) {
