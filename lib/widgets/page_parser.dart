@@ -224,6 +224,11 @@ class PageParser extends StatelessWidget {
                                 );
                               },
                               values: _value['widget_data']['values'],
+                              defaultValue:  _value.containsKey('widget_data') &&
+                                  _value['widget_data']
+                                      .containsKey('default')
+                                  ? (_value['widget_data']['default'])
+                                  : null,
                             );
                           case WidgetType.ACTIVITY:
                             return ActivityTile(
