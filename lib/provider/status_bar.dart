@@ -80,6 +80,15 @@ class StatusBarDataProvider extends ChangeNotifier {
             }
           }
         }
+        if (curMap[key]['compat'] != null) {
+          var val = await checkCompat(curMap[key]['compat']);
+          setValue(
+            settingsKey("$key~COMPAT", curMap[key]['setting_type']),
+            val,
+            mapSet: true,
+          );
+          if (!val) continue;
+        }
         switch (curMap[key]['widget']) {
           case WidgetType.SWITCH:
             setValue(

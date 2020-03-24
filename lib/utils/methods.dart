@@ -104,6 +104,14 @@ bool isVersionCompatible(
                   _hostPatch <= getNum(maxVersion['PATCH']))));
 }
 
+Future<bool> checkCompat(Map compat) async {
+  if (compat['prop'] != null &&
+      (await AndroidFlutterSettings.getProp(compat['prop']) == 'true' ||
+          await AndroidFlutterSettings.getProp(compat['prop']) == '1'))
+    return true;
+  return false;
+}
+
 bool isNumber(String item) => '0123456789'.split('').contains(item);
 
 int getNum(String ip) {

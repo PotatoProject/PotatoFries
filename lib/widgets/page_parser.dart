@@ -61,11 +61,17 @@ class PageParser extends StatelessWidget {
             bool emptySection = true;
             for (String _key in workingMap.keys) {
               var _value = workingMap[_key];
-              if (_value['version'] == null ||
-                  appInfoProvider.isCompatible(
-                    _value['version'],
-                    max: _value['version_max'],
-                  )) emptySection = false;
+              if ((_value['version'] == null ||
+                      appInfoProvider.isCompatible(_value['version'],
+                          max: _value['version_max'])) &&
+                  (_value['compat'] == null ||
+                      (provider.getValue(settingsKey(
+                            _key + '~COMPAT',
+                            _value['setting_type'],
+                          )) ??
+                          false))) {
+                emptySection = false;
+              }
             }
             if (emptySection) return Container();
             children.add(Divider());
@@ -104,11 +110,17 @@ class PageParser extends StatelessWidget {
                     ignoring: !enabled,
                     child: Builder(
                       builder: (context) {
-                        if (_value['version'] != null &&
-                            !appInfoProvider.isCompatible(
-                              _value['version'],
-                              max: _value['version_max'],
-                            )) return Container();
+                        if ((_value['version'] != null &&
+                                !appInfoProvider.isCompatible(_value['version'],
+                                    max: _value['version_max'])) ||
+                            (_value['compat'] != null &&
+                                !(provider.getValue(settingsKey(
+                                      _key + '~COMPAT',
+                                      _value['setting_type'],
+                                    )) ??
+                                    false))) {
+                          return Container();
+                        }
                         switch (_value['widget']) {
                           case WidgetType.SWITCH:
                             return SettingsSwitchTile(
