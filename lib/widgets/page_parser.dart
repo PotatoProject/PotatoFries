@@ -191,7 +191,11 @@ class PageParser extends StatelessWidget {
                                       0,
                                 );
                               },
-                              defaultColor: Colors.transparent,
+                              defaultColor: _value.containsKey('widget_data') &&
+                                      _value['widget_data']
+                                          .containsKey('default')
+                                  ? (_value['widget_data']['default'] as Color)
+                                  : Colors.transparent,
                             );
                           case WidgetType.CUSTOM:
                             return ObjectGen.fromString(_value['setting_type']);
