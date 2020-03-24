@@ -122,7 +122,7 @@ class _QuickSettingsBody extends StatelessWidget {
                           double opacity = 1.0;
                           var provider = Provider.of<QsDataProvider>(context);
                           if (!(provider.getValue(fwValsKey) ?? true)) {
-                            opacity = (provider.getValue(alphaKey) ?? 0) / 255;
+                            opacity = (provider.getValue(alphaKey) ?? 255) / 255;
                             if (provider.getValue(wallKey) ?? false) {
                               bgColor = Color(-12044500);
                             } else {
