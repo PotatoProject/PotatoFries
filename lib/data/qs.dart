@@ -39,7 +39,7 @@ final Map<String, dynamic> qsColors = {
     'widget': WidgetType.SLIDER,
     'setting_type': SettingType.SYSTEM,
     'widget_data': {
-      'default': false,
+      'default': 255,
       'min': 100,
       'max': 255,
       'percentage': false,
@@ -58,6 +58,8 @@ final Map<String, dynamic> qsColors = {
     'widget': WidgetType.COLOR_PICKER,
     'setting_type': SettingType.SYSTEM,
     'widget_data': {
+      // TODO: Fix this in framework, do something smarter about this default
+      'default': Colors.transparent,
       'lightness_min': 0.0,
       'lightness_max': 0.6,
     },
