@@ -20,11 +20,6 @@ class _StatusBarBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        AppBar(
-          title: Text('Status Bar'),
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-        ),
         _header(context),
         PageParser(dataKey: 'status_bar'),
       ],
