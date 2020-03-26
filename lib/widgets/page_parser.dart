@@ -19,15 +19,16 @@ import 'package:provider/provider.dart';
 
 class PageParser extends StatelessWidget {
   final String dataKey;
+  final bool useTopPadding;
 
-  PageParser({@required this.dataKey});
+  PageParser({@required this.dataKey, this.useTopPadding = true});
 
   @override
   Widget build(BuildContext context) => Expanded(
         child: ListView.builder(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 8.0,
-            vertical: 0.0,
+          padding: EdgeInsets.fromLTRB(
+            8, useTopPadding ? MediaQuery.of(context).padding.top : 8,
+            8, 8,
           ),
           shrinkWrap: true,
           itemCount: appData[dataKey].keys.length,
@@ -74,15 +75,16 @@ class PageParser extends StatelessWidget {
               }
             }
             if (emptySection) return Container();
-            children.add(Divider());
             children.add(
               Padding(
-                padding: EdgeInsets.symmetric(vertical: 6, horizontal: 16),
+                padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
                 child: Text(
                   key.toUpperCase(),
                   style: TextStyle(
                     color: Theme.of(context).accentColor,
                     fontWeight: FontWeight.bold,
+                    fontSize: 12,
+                    letterSpacing: 2,
                   ),
                 ),
               ),
