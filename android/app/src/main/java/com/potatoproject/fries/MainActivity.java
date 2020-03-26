@@ -7,20 +7,24 @@ import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.os.Bundle;
 
-import io.flutter.app.FlutterActivity;
+import androidx.annotation.NonNull;
+import io.flutter.embedding.android.FlutterActivity;
+import io.flutter.embedding.engine.FlutterEngine;
 import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugins.GeneratedPluginRegistrant;
 
 public class MainActivity extends FlutterActivity {
-
     private Activity mActivity;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void configureFlutterEngine(@NonNull FlutterEngine flutterEngine) {
+        GeneratedPluginRegistrant.registerWith(flutterEngine);
+        registerFlutterCallbacks(flutterEngine);
+    }
+
+    public void registerFlutterCallbacks(@NonNull FlutterEngine flutterEngine) {
         if (mActivity == null) mActivity = this;
-        super.onCreate(savedInstanceState);
-        GeneratedPluginRegistrant.registerWith(this);
-        new MethodChannel(getFlutterView(), "fries/resources").setMethodCallHandler(
+        new MethodChannel(flutterEngine.getDartExecutor(), "fries/resources").setMethodCallHandler(
                 (call, result) -> {
                     if (call.method.equals("getColor")) {
                         String pkg = call.argument("pkg");
@@ -31,7 +35,7 @@ public class MainActivity extends FlutterActivity {
                     }
                 }
         );
-        new MethodChannel(getFlutterView(), "fries/utils").setMethodCallHandler(
+        new MethodChannel(flutterEngine.getDartExecutor(), "fries/utils").setMethodCallHandler(
                 (call, result) -> {
                     if (call.method.equals("startActivity")) {
                         final String pkg = call.argument("pkg");
