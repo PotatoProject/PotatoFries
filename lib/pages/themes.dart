@@ -22,40 +22,40 @@ class _ThemesBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        AppBar(
-          title: Text('Themes'),
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-        ),
         _header(context),
-        PageParser(dataKey: 'themes'),
+        PageParser(
+          dataKey: 'themes',
+          useTopPadding: false,
+        ),
       ],
     );
   }
 
   Widget _header(context) => Padding(
-        padding: EdgeInsets.symmetric(horizontal: 8),
+        padding: EdgeInsets.only(
+          top: MediaQuery.of(context).padding.top,
+        ),
         child: SizedBox(
-          height: MediaQuery.of(context).size.height / 4.2,
-          width: MediaQuery.of(context).size.width - 24,
+          height: (MediaQuery.of(context).size.width / 16) * 9,
+          width: MediaQuery.of(context).size.width,
           child: Card(
             color: Theme.of(context).brightness == Brightness.dark
                 ? Colors.black
                 : Colors.white,
             shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
+            margin: EdgeInsets.all(0),
             child: ListView(
               physics: BouncingScrollPhysics(),
               padding: EdgeInsets.only(top: 6),
               children: <Widget>[
                 Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(8),
                   child: SizedBox(
-                    height: MediaQuery.of(context).size.height / 16,
+                    height: 56,
                     child: Card(
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(
-                            MediaQuery.of(context).size.height / 32),
+                        borderRadius: BorderRadius.circular(28),
                       ),
                       color: Theme.of(context).cardColor,
                       child: Row(
