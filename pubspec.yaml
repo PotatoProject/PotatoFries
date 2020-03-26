@@ -35,3 +35,6 @@ flutter:
     - family:  Logo
       fonts:
         - asset: fonts/Logo.ttf
+    - family:  CustomIcons
+      fonts:
+       - asset: fonts/CustomIcons.ttf
