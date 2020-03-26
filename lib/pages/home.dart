@@ -16,6 +16,7 @@ class FriesHome extends StatefulWidget {
 }
 
 class _FriesHomeState extends State<FriesHome> {
+  PageController pageController = PageController(initialPage: 0, keepPage: false);
   @override
   void initState() {
     registerCustomWidgets();
@@ -28,7 +29,10 @@ class _FriesHomeState extends State<FriesHome> {
     return Scaffold(
       bottomNavigationBar: CustomBottomBar(
         currentIndex: provider.pageIndex,
-        onTap: (index) => provider.pageIndex = index,
+        onTap: (index) {
+          provider.pageIndex = index;
+          pageController.jumpToPage(provider.pageIndex);
+        },
         items: [
           Icon(Icons.swap_vertical_circle),
           Icon(Icons.touch_app),
@@ -38,26 +42,17 @@ class _FriesHomeState extends State<FriesHome> {
           Icon(Icons.star)
         ],
       ),
-      body: Builder(
-        builder: (context) {
-          int i = provider.pageIndex + 1;
-          switch (i) {
-            case 1:
-              return QuickSettings();
-            case 2:
-              return Buttons();
-            case 3:
-              return Themes();
-            case 4:
-              return StatusBar();
-            case 5:
-              return LockScreen();
-            case 6:
-              return Misc();
-            default:
-              return Container();
-          }
-        },
+      body: PageView(
+        controller: pageController,
+        physics: NeverScrollableScrollPhysics(),
+        children: [
+          QuickSettings(),
+          Buttons(),
+          Themes(),
+          StatusBar(),
+          LockScreen(),
+          Misc(),
+        ],
       ),
     );
   }
