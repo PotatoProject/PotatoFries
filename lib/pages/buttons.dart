@@ -8,6 +8,7 @@ class Buttons extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print("buttons");
     return ChangeNotifierProvider.value(
       value: provider,
       child: _ButtonsBody(),

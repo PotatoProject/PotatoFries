@@ -8,6 +8,7 @@ class StatusBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print("statusbar");
     return ChangeNotifierProvider.value(
       value: provider,
       child: _StatusBarBody(),

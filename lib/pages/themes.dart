@@ -10,6 +10,7 @@ class Themes extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print("themes");
     return ChangeNotifierProvider.value(
       value: provider,
       child: _ThemesBody(),

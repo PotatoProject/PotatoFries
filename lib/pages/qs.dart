@@ -12,6 +12,7 @@ class QuickSettings extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print("qs");
     return ChangeNotifierProvider.value(
       value: provider,
       child: _QuickSettingsBody(),

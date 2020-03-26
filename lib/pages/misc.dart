@@ -8,6 +8,7 @@ class Misc extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print("misc");
     return ChangeNotifierProvider.value(
       value: provider,
       child: _LockScreenBody(),

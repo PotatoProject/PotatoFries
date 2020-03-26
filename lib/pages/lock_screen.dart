@@ -8,6 +8,7 @@ class LockScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print("lock");
     return ChangeNotifierProvider.value(
       value: provider,
       child: _LockScreenBody(),
