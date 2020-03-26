@@ -4,6 +4,7 @@ import 'package:potato_fries/pages/home.dart';
 import 'package:potato_fries/provider/app_info.dart';
 import 'package:potato_fries/ui/scroll_behavior.dart';
 import 'package:provider/provider.dart';
+import 'package:spicy_components/spicy_components.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -30,19 +31,8 @@ class FriesRoot extends StatelessWidget {
           ),
           debugShowCheckedModeBanner: false,
           title: 'Fries',
-          theme: ThemeData.light().copyWith(
-            accentColor: appInfoProvider.accentDark,
-            appBarTheme: AppBarTheme(
-              actionsIconTheme: Theme.of(context).iconTheme,
-              iconTheme: Theme.of(context).iconTheme,
-              textTheme: Theme.of(context).textTheme,
-            ),
-          ),
-          darkTheme: ThemeData.dark().copyWith(
-            accentColor: appInfoProvider.accentLight,
-            cardColor: Color(0xFF212121),
-            scaffoldBackgroundColor: Color(0xFF151618),
-          ),
+          theme: SpicyThemes.light(appInfoProvider.accentDark),
+          darkTheme: SpicyThemes.dark(appInfoProvider.accentLight),
           home: FriesHome(),
         );
       }),

@@ -16,6 +16,11 @@ dependencies:
   android_flutter_settings:
     git:
       url: https://github.com/AgentFabulous/android_flutter_settings
+  spicy_components:
+    git:
+      url: https://github.com/HrX03/SpicyUIComponents
+  outline_material_icons:
+  material_design_icons_flutter:
   provider: any
 
 dev_dependencies:
