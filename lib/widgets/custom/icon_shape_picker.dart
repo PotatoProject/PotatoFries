@@ -64,8 +64,11 @@ class _IconShapePickerState extends State<IconShapePicker> {
                             mainAxisSize: MainAxisSize.min,
                             children: <Widget>[
                               GestureDetector(
-                                onTap: () => _provider.setIconShape(
-                                    shapesPackageLabels.indexOf(l)),
+                                onTap: () {
+                                  Navigator.pop(context);
+                                  _provider.setIconShape(
+                                    shapesPackageLabels.indexOf(l));
+                                },
                                 child: ShapedIcon(
                                   iconSize: 56,
                                   type: shapesPackageLabels.indexOf(l),
