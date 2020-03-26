@@ -1,3 +1,7 @@
+import 'package:flutter/material.dart';
+import 'package:outline_material_icons/outline_material_icons.dart';
+import 'package:potato_fries/ui/custom_icons.dart';
+
 const String OVERLAY_CATEGORY_COLOR =
     'android.theme.customization.accent_color';
 
@@ -21,14 +25,14 @@ const String OVERLAY_CATEGORY_ICON_LAUNCHER =
 const String OVERLAY_CATEGORY_ICON_THEME_PICKER =
     'android.theme.customization.icon_pack.themepicker';
 
-const List<String> pageLabels = [
-  "Quick settings",
-  "Gestures",
-  "Themes",
-  "Statusbar",
-  "Lockscreen",
-  "Miscellaneous",
-];
+const Map<String, IconData> pageInfo = {
+  "Quick settings": CustomIcons.quick_settings,
+  "Gestures": OMIcons.touchApp,
+  "Themes": OMIcons.colorLens,
+  "Statusbar": CustomIcons.status_bar,
+  "Lockscreen": CustomIcons.screen_lock_portrait,
+  "Miscellaneous": Icons.tune,
+};
 
 const List<String> shapesPackages = [
   null,
