@@ -63,6 +63,7 @@ final Map<String, dynamic> qsColors = {
       'default': Colors.transparent,
       'lightness_min': 0.0,
       'lightness_max': 0.6,
+      'unset_preview': true,
     },
     'dependencies': [
       {

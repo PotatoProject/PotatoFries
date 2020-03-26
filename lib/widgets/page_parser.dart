@@ -219,6 +219,9 @@ class PageParser extends StatelessWidget {
                                           .containsKey('default')
                                   ? (_value['widget_data']['default'] as Color)
                                   : Colors.transparent,
+                              showUnsetPreview: _value['widget_data']
+                                      ['unset_preview'] ??
+                                  false,
                             );
                           case WidgetType.CUSTOM:
                             return ObjectGen.fromString(_value['setting_type']);
