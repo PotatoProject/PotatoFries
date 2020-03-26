@@ -16,7 +16,8 @@ class FriesHome extends StatefulWidget {
 }
 
 class _FriesHomeState extends State<FriesHome> {
-  PageController pageController = PageController(initialPage: 0, keepPage: false);
+  PageController pageController =
+      PageController(initialPage: 0, keepPage: false);
   @override
   void initState() {
     registerCustomWidgets();
