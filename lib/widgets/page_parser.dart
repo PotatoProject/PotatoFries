@@ -205,15 +205,14 @@ class PageParser extends StatelessWidget {
                               lightnessMax: _value['widget_data']
                                   ['lightness_max'],
                               getColor: () {
-                                return Color(
-                                  provider.getValue(
-                                        settingsKey(
-                                          _key,
-                                          _value['setting_type'],
-                                        ),
-                                      ) ??
-                                      0,
+                                var value = provider.getValue(
+                                  settingsKey(
+                                    _key,
+                                    _value['setting_type'],
+                                  ),
                                 );
+                                if (value == null) return value;
+                                return Color(value);
                               },
                               defaultColor: _value.containsKey('widget_data') &&
                                       _value['widget_data']
