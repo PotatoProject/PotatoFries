@@ -21,6 +21,15 @@ const String OVERLAY_CATEGORY_ICON_LAUNCHER =
 const String OVERLAY_CATEGORY_ICON_THEME_PICKER =
     'android.theme.customization.icon_pack.themepicker';
 
+const List<String> pageLabels = [
+  "Quick settings",
+  "Gestures",
+  "Themes",
+  "Statusbar",
+  "Lockscreen",
+  "Miscellaneous",
+];
+
 const List<String> shapesPackages = [
   null,
   'com.android.theme.icon.teardrop',
