@@ -1,7 +1,10 @@
 import 'package:android_flutter_settings/android_flutter_settings.dart';
 import 'package:flutter/material.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:outline_material_icons/outline_material_icons.dart';
 import 'package:potato_fries/provider/app_info.dart';
 import 'package:potato_fries/provider/qs.dart';
+import 'package:potato_fries/ui/custom_icons.dart';
 import 'package:potato_fries/ui/shaped_icon.dart';
 import 'package:potato_fries/utils/methods.dart';
 import 'package:potato_fries/widgets/page_parser.dart';
@@ -132,13 +135,13 @@ class _QuickSettingsBody extends StatelessWidget {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: <Widget>[
-                                _QSTile(icon: Icons.wifi, enabled: true),
+                                _QSTile(icon: MdiIcons.wifiStrength4, enabled: true),
                                 _QSTile(icon: Icons.bluetooth),
                                 _QSTile(icon: Icons.swap_vert, enabled: true),
-                                _QSTile(icon: Icons.do_not_disturb_on),
-                                _QSTile(icon: Icons.highlight),
+                                _QSTile(icon: OMIcons.removeCircleOutline),
+                                _QSTile(icon: CustomIcons.flashlight_outline),
                                 _QSTile(
-                                  icon: Icons.screen_rotation,
+                                  icon: CustomIcons.qs_rotate,
                                   enabled: true,
                                 ),
                               ],
