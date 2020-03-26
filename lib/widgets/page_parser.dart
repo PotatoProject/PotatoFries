@@ -231,7 +231,6 @@ class PageParser extends StatelessWidget {
                               subtitle: _value['subtitle'],
                               icon: Icon(_value['icon']),
                               setValue: (val) {
-                                print('running set ' + val);
                                 provider.setValue(
                                   settingsKey(
                                     _key,

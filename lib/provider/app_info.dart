@@ -64,7 +64,6 @@ class AppInfoProvider extends ChangeNotifier {
       globalSysTheme.remove(key);
     else
       globalSysTheme[key] = value;
-    print('Setting ' + globalSysTheme.toString());
     await AndroidFlutterSettings.putString(
       'theme_customization_overlay_packages',
       jsonEncode(globalSysTheme),
