@@ -4,6 +4,10 @@ import 'package:potato_fries/data/debug_constants.dart';
 import 'package:potato_fries/widgets/color_picker.dart';
 import 'package:potato_fries/widgets/color_picker_dual.dart';
 
+import 'package:potato_fries/provider/app_info.dart';
+
+import '../provider/app_info.dart';
+
 String settingsKey(String setting, SettingType type) =>
     splitSettingType(type) + ':' + setting;
 
@@ -12,6 +16,41 @@ String splitSettingType(SettingType type) => type.toString().split('.')[1];
 SettingType sType2Enum(String s) => SettingType.values.firstWhere(
       (st) => st.toString() == ('SettingType.' + s),
     );
+
+void showNavigationSheet({
+  BuildContext context,
+  AppInfoProvider provider,
+  Map<String, IconData> items,
+  Function(int index) onTap
+}) {
+  showModalBottomSheet(
+    context: context,
+    isScrollControlled: false,
+    builder: (context) => Column(
+      mainAxisSize: MainAxisSize.min,
+      children: List.generate(items.length, (index) => ListTile(
+        leading: Icon(
+          items.values.toList()[index],
+          color: provider.pageIndex == index
+              ? Theme.of(context).accentColor
+              : Theme.of(context).iconTheme.color,
+        ),
+        title: Text(
+          items.keys.toList()[index],
+          style: TextStyle(
+            color: provider.pageIndex == index
+                ? Theme.of(context).accentColor
+                : Theme.of(context).iconTheme.color,
+          ),
+        ),
+        onTap: () {
+          onTap(index);
+          Navigator.pop(context);
+        },
+      )),
+    ),
+  );
+}
 
 void showColorPicker(
   BuildContext context, {

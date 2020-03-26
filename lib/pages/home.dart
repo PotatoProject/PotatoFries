@@ -7,12 +7,13 @@ import 'package:potato_fries/pages/qs.dart';
 import 'package:potato_fries/pages/status_bar.dart';
 import 'package:potato_fries/pages/themes.dart';
 import 'package:potato_fries/provider/app_info.dart';
-import 'package:potato_fries/ui/custom_bottom_bar.dart';
+import 'package:potato_fries/ui/custom_icons.dart';
 import 'package:potato_fries/widgets/directory.dart';
 import 'package:provider/provider.dart';
 import 'package:spicy_components/spicy_components.dart';
 
 import '../data/constants.dart';
+import '../utils/methods.dart';
 
 class FriesHome extends StatefulWidget {
   @override
@@ -37,10 +38,18 @@ class _FriesHomeState extends State<FriesHome> {
           IconButton(
             icon: Icon(Icons.menu),
             padding: EdgeInsets.all(0),
-            onPressed: () {},
+            onPressed: () => showNavigationSheet(
+              context: context,
+              provider: provider,
+              items: pageInfo,
+              onTap: (index) {
+                provider.pageIndex = index;
+                pageController.jumpToPage(provider.pageIndex);
+              },
+            ),
           ),
           Text(
-            pageLabels[provider.pageIndex],
+            pageInfo.keys.toList()[provider.pageIndex],
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.w500,
