@@ -24,13 +24,11 @@ class _QuickSettingsBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        AppBar(
-          title: Text('Quick Settings'),
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-        ),
         _header(context),
-        PageParser(dataKey: 'qs'),
+        PageParser(
+          dataKey: 'qs',
+          useTopPadding: false,
+        ),
       ],
     );
   }
@@ -41,16 +39,17 @@ class _QuickSettingsBody extends StatelessWidget {
     String colorKey = settingsKey('qs_panel_bg_color', SettingType.SYSTEM);
     String alphaKey = settingsKey('qs_panel_bg_alpha', SettingType.SYSTEM);
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 8),
+      padding: EdgeInsets.only(
+        top: MediaQuery.of(context).padding.top,
+      ),
       child: SizedBox(
-        height: MediaQuery.of(context).size.height / 3.4,
-        width: MediaQuery.of(context).size.width - 24,
+        height: (MediaQuery.of(context).size.width / 16) * 9,
+        width: MediaQuery.of(context).size.width,
         child: Card(
           semanticContainer: true,
           clipBehavior: Clip.antiAliasWithSaveLayer,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16),
-          ),
+          margin: EdgeInsets.all(0),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
           child: Stack(
             children: <Widget>[
               Positioned(
@@ -63,20 +62,11 @@ class _QuickSettingsBody extends StatelessWidget {
                 ),
               ),
               Container(
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(16),
-                      topRight: Radius.circular(16),
-                    ),
-                    color: Colors.black38),
-                height: MediaQuery.of(context).size.height / 3.4,
+                decoration: BoxDecoration(color: Colors.black38),
+                height: (MediaQuery.of(context).size.width / 16) * 9,
               ),
               Container(
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(16),
-                    topRight: Radius.circular(16),
-                  ),
                   gradient: LinearGradient(
                     colors: [Colors.black, Colors.transparent],
                     begin: Alignment.topCenter,
@@ -84,7 +74,7 @@ class _QuickSettingsBody extends StatelessWidget {
                     stops: [0.10, 0.95],
                   ),
                 ),
-                height: MediaQuery.of(context).size.height / 3.5,
+                height: (MediaQuery.of(context).size.width / 16) * 9,
               ),
               ListView(
                 physics: BouncingScrollPhysics(),
