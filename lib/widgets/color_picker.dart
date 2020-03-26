@@ -11,6 +11,7 @@ class ColorPickerTile extends StatefulWidget {
   final Function getColor;
   final double lightnessMin;
   final double lightnessMax;
+  final bool showUnsetPreview;
 
   ColorPickerTile({
     this.onApply,
@@ -20,6 +21,7 @@ class ColorPickerTile extends StatefulWidget {
     this.getColor,
     this.lightnessMin = 0,
     this.lightnessMax = 1,
+    this.showUnsetPreview = false,
   });
 
   @override
@@ -31,7 +33,8 @@ class _ColorPickerTileState extends State<ColorPickerTile> {
 
   @override
   Widget build(BuildContext context) {
-    color = widget.getColor() ?? widget.defaultColor ?? Colors.transparent;
+    var acquiredColor = widget.getColor();
+    color = acquiredColor ?? widget.defaultColor ?? Colors.transparent;
     return SizeableListTile(
       title: widget.title,
       subtitle: Text(widget.subtitle),
@@ -41,7 +44,23 @@ class _ColorPickerTileState extends State<ColorPickerTile> {
             height: 24,
             width: 24,
             decoration: BoxDecoration(
-              color: color,
+              color: (widget.showUnsetPreview && acquiredColor == null)
+                  ? null
+                  : color,
+              gradient: !(widget.showUnsetPreview && acquiredColor == null)
+                  ? null
+                  : SweepGradient(
+                      colors: [
+                        Colors.red,
+                        Colors.purpleAccent,
+                        Colors.blue,
+                        Colors.cyan,
+                        Colors.green,
+                        Colors.yellow,
+                        Colors.red,
+                      ],
+                      tileMode: TileMode.clamp,
+                    ),
               borderRadius: BorderRadius.all(Radius.circular(12)),
             ),
           ),
