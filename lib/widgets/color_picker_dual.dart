@@ -1,3 +1,6 @@
+import 'dart:math' as math;
+
+import 'package:android_flutter_settings/android_flutter_settings.dart';
 import 'package:flutter/material.dart';
 import 'package:potato_fries/ui/sizeable_list_tile.dart';
 import 'package:potato_fries/utils/methods.dart';
@@ -15,6 +18,7 @@ class ColorPickerDualTile extends StatefulWidget {
   final Color defaultLight;
   final Color defaultDark;
   final Color defaultColor;
+  final bool hasDiscoSetting;
 
   ColorPickerDualTile({
     this.onChange,
@@ -29,6 +33,7 @@ class ColorPickerDualTile extends StatefulWidget {
     this.defaultDark,
     this.defaultLight,
     this.defaultColor,
+    this.hasDiscoSetting = false,
   });
 
   @override
@@ -38,6 +43,7 @@ class ColorPickerDualTile extends StatefulWidget {
 class _ColorPickerDualTileState extends State<ColorPickerDualTile> {
   Color dark;
   Color light;
+  bool discoReady;
 
   @override
   void initState() {
@@ -107,6 +113,7 @@ class _ColorPickerDualTileState extends State<ColorPickerDualTile> {
         defaultColor: widget.defaultColor,
         defaultDark: widget.defaultDark,
         defaultLight: widget.defaultLight,
+        hasDiscoSetting: widget.hasDiscoSetting,
       ),
     );
   }
@@ -125,6 +132,7 @@ class ColorPickerDual extends StatefulWidget {
   final Color defaultDark;
   final Color defaultLight;
   final Color defaultColor;
+  final bool hasDiscoSetting;
 
   ColorPickerDual({
     this.lightnessLocked = false,
@@ -138,10 +146,78 @@ class ColorPickerDual extends StatefulWidget {
     this.defaultDark,
     this.defaultLight,
     this.defaultColor,
+    this.hasDiscoSetting = false,
   }) : assert(lightnessDeltaCenter + lightnessDeltaEnd <= 1);
 
   @override
   _ColorPickerDualState createState() => _ColorPickerDualState();
+}
+
+class DiscoSetting extends StatefulWidget {
+  final bool isEnabled;
+  final Function onTap;
+
+  DiscoSetting({@required this.isEnabled, @required this.onTap});
+
+  @override
+  _DiscoSettingState createState() => _DiscoSettingState();
+}
+
+class _DiscoSettingState extends State<DiscoSetting>
+    with SingleTickerProviderStateMixin {
+  Animation<double> animation;
+  AnimationController controller;
+
+  @override
+  void initState() {
+    controller = AnimationController(
+        duration: const Duration(milliseconds: 500), vsync: this);
+    animation = Tween<double>(begin: 0, end: math.pi * 2).animate(controller)
+      ..addListener(() {
+        setState(() {});
+      });
+    super.initState();
+  }
+
+  void startAnim() => controller?.repeat();
+
+  void stopAnim() => controller?.stop();
+
+  @override
+  void dispose() {
+    controller?.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    widget.isEnabled ? startAnim() : stopAnim();
+    return GestureDetector(
+      onTap: widget.onTap,
+      child: Transform.rotate(
+        angle: animation.value,
+        child: Container(
+          height: 36,
+          width: 36,
+          decoration: BoxDecoration(
+            gradient: SweepGradient(
+              colors: [
+                Colors.red,
+                Colors.purpleAccent,
+                Colors.blue,
+                Colors.cyan,
+                Colors.green,
+                Colors.yellow,
+                Colors.red,
+              ],
+              tileMode: TileMode.clamp,
+            ),
+            borderRadius: BorderRadius.all(Radius.circular(18)),
+          ),
+        ),
+      ),
+    );
+  }
 }
 
 class _ColorPickerDualState extends State<ColorPickerDual> {
@@ -149,38 +225,47 @@ class _ColorPickerDualState extends State<ColorPickerDual> {
   double saturation = 0.5;
   double lightness = 0.5;
   GlobalKey<AnimatedListState> listKey = GlobalKey<AnimatedListState>();
+  bool isDiscoEnabled = false;
+  final discoProp = 'persist.sys.theme.accent_disco';
 
   @override
   void initState() {
     Future.delayed(
       Duration.zero,
-      () => setState(
-        () {
-          if (widget.defaultColor != null) {
-            var c = HSLColor.fromColor(widget.defaultColor);
-            hue = c.hue;
-            saturation = c.saturation;
-            lightness = c.lightness;
-          } else {
-            var d = HSLColor.fromColor(widget.defaultDark ?? Colors.white);
-            var l = HSLColor.fromColor(widget.defaultLight ?? Colors.black);
-            hue = d.hue;
-            saturation = d.saturation;
-            lightness = (d.lightness -
-                    l.lightness -
-                    widget.lightnessDeltaCenter) /
-                (1 - widget.lightnessDeltaEnd - widget.lightnessDeltaCenter);
-            if (lightness > widget.lightnessMax) {
-              lightness = widget.lightnessMax;
-            } else if (lightness < widget.lightnessMin) {
-              lightness = widget.lightnessMin;
+      () async {
+        await updateDisco();
+        setState(
+          () {
+            if (widget.defaultColor != null) {
+              var c = HSLColor.fromColor(widget.defaultColor);
+              hue = c.hue;
+              saturation = c.saturation;
+              lightness = c.lightness;
+            } else {
+              var d = HSLColor.fromColor(widget.defaultDark ?? Colors.white);
+              var l = HSLColor.fromColor(widget.defaultLight ?? Colors.black);
+              hue = d.hue;
+              saturation = d.saturation;
+              lightness = (d.lightness -
+                      l.lightness -
+                      widget.lightnessDeltaCenter) /
+                  (1 - widget.lightnessDeltaEnd - widget.lightnessDeltaCenter);
+              if (lightness > widget.lightnessMax) {
+                lightness = widget.lightnessMax;
+              } else if (lightness < widget.lightnessMin) {
+                lightness = widget.lightnessMin;
+              }
             }
-          }
-        },
-      ),
+            updateDisco();
+          },
+        );
+      },
     );
     super.initState();
   }
+
+  Future<void> updateDisco() async =>
+      isDiscoEnabled = await AndroidFlutterSettings.getProp(discoProp) == "1";
 
   @override
   Widget build(BuildContext context) {
@@ -203,6 +288,10 @@ class _ColorPickerDualState extends State<ColorPickerDual> {
         HSLColor.fromAHSL(1, hue, saturation, lightnessLight).toColor(),
         ctx: context,
       );
+    print('dark: ' +
+        lightnessDark.toString() +
+        ' light: ' +
+        lightnessLight.toString());
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
@@ -219,32 +308,66 @@ class _ColorPickerDualState extends State<ColorPickerDual> {
                       widget.title,
                       style: Theme.of(context).textTheme.title,
                     ),
+                    Spacer(),
+                    Visibility(
+                      visible: widget.hasDiscoSetting,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                        child: DiscoSetting(
+                          isEnabled: isDiscoEnabled,
+                          onTap: () async {
+                            AndroidFlutterSettings.setProp(
+                                discoProp, isDiscoEnabled ? "0" : "1");
+                            await updateDisco();
+                            setState(() {});
+                            if (isDiscoEnabled) {
+                              AndroidFlutterSettings.reloadAssets(
+                                  'com.android.settings');
+                              AndroidFlutterSettings.reloadAssets(
+                                  'com.android.systemui');
+                            }
+                          },
+                        ),
+                      ),
+                    ),
                     Visibility(
                       visible: widget.onApply != null,
                       child: FloatingActionButton(
                         elevation: 0,
                         mini: true,
                         child: Icon(
-                          Icons.check,
+                          widget.hasDiscoSetting && isDiscoEnabled
+                              ? Icons.close
+                              : Icons.check,
                           color: HSLColor.fromAHSL(1, hue, saturation, 0.85)
                               .toColor(),
                         ),
-                        onPressed: () {
-                          String dark = HSLColor.fromAHSL(
-                            1,
-                            hue,
-                            saturation,
-                            lightnessDark,
-                          ).toColor().value.toRadixString(16).substring(2, 8);
-                          String light = HSLColor.fromAHSL(
-                            1,
-                            hue,
-                            saturation,
-                            lightnessLight,
-                          ).toColor().value.toRadixString(16).substring(2, 8);
-                          widget.onApply(dark, light);
-                          Navigator.of(context).pop();
-                        },
+                        onPressed: widget.hasDiscoSetting && isDiscoEnabled
+                            ? () => Navigator.of(context).pop()
+                            : () {
+                                String dark = HSLColor.fromAHSL(
+                                  1,
+                                  hue,
+                                  saturation,
+                                  lightnessDark,
+                                )
+                                    .toColor()
+                                    .value
+                                    .toRadixString(16)
+                                    .substring(2, 8);
+                                String light = HSLColor.fromAHSL(
+                                  1,
+                                  hue,
+                                  saturation,
+                                  lightnessLight,
+                                )
+                                    .toColor()
+                                    .value
+                                    .toRadixString(16)
+                                    .substring(2, 8);
+                                widget.onApply(dark, light);
+                                Navigator.of(context).pop();
+                              },
                         backgroundColor:
                             HSLColor.fromAHSL(1, hue, saturation, 0.5)
                                 .toColor(),
@@ -253,129 +376,142 @@ class _ColorPickerDualState extends State<ColorPickerDual> {
                   ],
                 ),
               ),
-              Visibility(
-                visible: widget.lightnessLocked ||
-                    (widget.lightnessDeltaEnd == 0 &&
-                        widget.lightnessDeltaCenter == 0),
-                child: Container(
-                  height: MediaQuery.of(context).size.height / 12,
-                  decoration: BoxDecoration(
-                    color:
-                        HSLColor.fromAHSL(1, hue, saturation, lightnessNeutral)
-                            .toColor(),
-                    borderRadius: BorderRadius.circular(16),
-                  ),
-                  child: Center(
-                    child: Text(
-                      '#' +
-                          HSLColor.fromAHSL(
-                                  1, hue, saturation, lightnessNeutral)
-                              .toColor()
-                              .value
-                              .toRadixString(16)
-                              .substring(2, 8),
-                      style: TextStyle(
-                        color: lightnessNeutral > 0.5
-                            ? Colors.black.withOpacity(0.70)
-                            : Colors.white.withOpacity(0.70),
-                        fontFamily: 'monospace',
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              Visibility(
-                visible: widget.lightnessDeltaEnd != 0 ||
-                    widget.lightnessDeltaCenter != 0,
-                child: Container(
-                  height: MediaQuery.of(context).size.height / 12,
-                  child: Row(
-                    mainAxisSize: MainAxisSize.max,
+              AnimatedOpacity(
+                opacity: widget.hasDiscoSetting && isDiscoEnabled ? 0.5 : 1.0,
+                duration: Duration(milliseconds: 300),
+                curve: Curves.easeInOut,
+                child: IgnorePointer(
+                  ignoring: widget.hasDiscoSetting && isDiscoEnabled,
+                  child: Column(
                     children: <Widget>[
-                      accentPreview(
-                        lightnessLight,
-                        'Light',
-                        BorderRadius.only(
-                          topLeft: Radius.circular(16),
-                          bottomLeft: Radius.circular(16),
+                      Visibility(
+                        visible: widget.lightnessLocked ||
+                            (widget.lightnessDeltaEnd == 0 &&
+                                widget.lightnessDeltaCenter == 0),
+                        child: Container(
+                          height: MediaQuery.of(context).size.height / 12,
+                          decoration: BoxDecoration(
+                            color: HSLColor.fromAHSL(
+                                    1, hue, saturation, lightnessNeutral)
+                                .toColor(),
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                          child: Center(
+                            child: Text(
+                              '#' +
+                                  HSLColor.fromAHSL(
+                                          1, hue, saturation, lightnessNeutral)
+                                      .toColor()
+                                      .value
+                                      .toRadixString(16)
+                                      .substring(2, 8),
+                              style: TextStyle(
+                                color: lightnessNeutral > 0.5
+                                    ? Colors.black.withOpacity(0.70)
+                                    : Colors.white.withOpacity(0.70),
+                                fontFamily: 'monospace',
+                              ),
+                            ),
+                          ),
                         ),
                       ),
-                      accentPreview(
-                        lightnessDark,
-                        'Dark',
-                        BorderRadius.only(
-                          topRight: Radius.circular(16),
-                          bottomRight: Radius.circular(16),
+                      Visibility(
+                        visible: widget.lightnessDeltaEnd != 0 ||
+                            widget.lightnessDeltaCenter != 0,
+                        child: Container(
+                          height: MediaQuery.of(context).size.height / 12,
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            children: <Widget>[
+                              accentPreview(
+                                lightnessLight,
+                                'Light',
+                                BorderRadius.only(
+                                  topLeft: Radius.circular(16),
+                                  bottomLeft: Radius.circular(16),
+                                ),
+                              ),
+                              accentPreview(
+                                lightnessDark,
+                                'Dark',
+                                BorderRadius.only(
+                                  topRight: Radius.circular(16),
+                                  bottomRight: Radius.circular(16),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      Row(
+                        children: <Widget>[
+                          Text('Hue'),
+                          Spacer(),
+                          Container(
+                            width: (MediaQuery.of(context).size.width / 10) * 7,
+                            child: Slider(
+                              activeColor: HSLColor.fromAHSL(
+                                      1, hue, saturation, lightnessNeutral)
+                                  .toColor(),
+                              inactiveColor: HSLColor.fromAHSL(
+                                      0.25, hue, saturation, lightnessNeutral)
+                                  .toColor(),
+                              value: hue,
+                              min: 0,
+                              max: 360,
+                              onChanged: (d) => setState(() => hue = d),
+                            ),
+                          )
+                        ],
+                      ),
+                      Row(
+                        children: <Widget>[
+                          Text('Saturation'),
+                          Spacer(),
+                          Container(
+                            width: (MediaQuery.of(context).size.width / 10) * 7,
+                            child: Slider(
+                              activeColor: HSLColor.fromAHSL(
+                                      1, hue, saturation, lightnessNeutral)
+                                  .toColor(),
+                              inactiveColor: HSLColor.fromAHSL(
+                                      0.25, hue, saturation, lightnessNeutral)
+                                  .toColor(),
+                              value: saturation,
+                              min: 0,
+                              max: 1,
+                              onChanged: (d) => setState(() => saturation = d),
+                            ),
+                          ),
+                        ],
+                      ),
+                      Visibility(
+                        visible: !widget.lightnessLocked,
+                        child: Row(
+                          children: <Widget>[
+                            Text('Lightness'),
+                            Spacer(),
+                            Container(
+                              width:
+                                  (MediaQuery.of(context).size.width / 10) * 7,
+                              child: Slider(
+                                activeColor: HSLColor.fromAHSL(
+                                        1, hue, saturation, lightnessNeutral)
+                                    .toColor(),
+                                inactiveColor: HSLColor.fromAHSL(
+                                        0.25, hue, saturation, lightnessNeutral)
+                                    .toColor(),
+                                value: lightness,
+                                min: widget.lightnessMin,
+                                max: widget.lightnessMax,
+                                onChanged: (d) => setState(() => lightness = d),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ],
                   ),
-                ),
-              ),
-              Row(
-                children: <Widget>[
-                  Text('Hue'),
-                  Spacer(),
-                  Container(
-                    width: (MediaQuery.of(context).size.width / 10) * 7,
-                    child: Slider(
-                      activeColor: HSLColor.fromAHSL(
-                              1, hue, saturation, lightnessNeutral)
-                          .toColor(),
-                      inactiveColor: HSLColor.fromAHSL(
-                              0.25, hue, saturation, lightnessNeutral)
-                          .toColor(),
-                      value: hue,
-                      min: 0,
-                      max: 360,
-                      onChanged: (d) => setState(() => hue = d),
-                    ),
-                  )
-                ],
-              ),
-              Row(
-                children: <Widget>[
-                  Text('Saturation'),
-                  Spacer(),
-                  Container(
-                    width: (MediaQuery.of(context).size.width / 10) * 7,
-                    child: Slider(
-                      activeColor: HSLColor.fromAHSL(
-                              1, hue, saturation, lightnessNeutral)
-                          .toColor(),
-                      inactiveColor: HSLColor.fromAHSL(
-                              0.25, hue, saturation, lightnessNeutral)
-                          .toColor(),
-                      value: saturation,
-                      min: 0,
-                      max: 1,
-                      onChanged: (d) => setState(() => saturation = d),
-                    ),
-                  ),
-                ],
-              ),
-              Visibility(
-                visible: !widget.lightnessLocked,
-                child: Row(
-                  children: <Widget>[
-                    Text('Lightness'),
-                    Spacer(),
-                    Container(
-                      width: (MediaQuery.of(context).size.width / 10) * 7,
-                      child: Slider(
-                        activeColor: HSLColor.fromAHSL(
-                                1, hue, saturation, lightnessNeutral)
-                            .toColor(),
-                        inactiveColor: HSLColor.fromAHSL(
-                                0.25, hue, saturation, lightnessNeutral)
-                            .toColor(),
-                        value: lightness,
-                        min: widget.lightnessMin,
-                        max: widget.lightnessMax,
-                        onChanged: (d) => setState(() => lightness = d),
-                      ),
-                    ),
-                  ],
                 ),
               ),
             ],
