@@ -6,6 +6,13 @@ import 'package:potato_fries/widgets/color_picker_dual.dart';
 import 'package:provider/provider.dart';
 
 class AccentPicker extends StatelessWidget {
+  bool canDoTheDisco(BuildContext context) {
+    var hostVer =
+        Provider.of<AppInfoProvider>(context, listen: false).hostVersion;
+    var discoMinVer = '3.1.5';
+    return isVersionCompatible(discoMinVer, hostVer, strict: true);
+  }
+
   @override
   Widget build(BuildContext context) =>
       // TODO: Clean-up dark light semantic confusion
@@ -50,5 +57,6 @@ class AccentPicker extends StatelessWidget {
           Provider.of<AppInfoProvider>(context, listen: false).accentLight =
               Color(int.parse('0xff' + newDark));
         },
+        hasDiscoSetting: canDoTheDisco(context),
       );
 }
