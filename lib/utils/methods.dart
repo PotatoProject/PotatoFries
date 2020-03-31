@@ -84,6 +84,7 @@ void showColorPickerDual(
   Color defaultDark,
   Color defaultLight,
   Color defaultColor,
+  bool hasDiscoSetting = false,
 }) {
   showModalBottomSheet(
     context: context,
@@ -97,6 +98,7 @@ void showColorPickerDual(
       defaultDark: defaultDark,
       defaultLight: defaultLight,
       defaultColor: defaultColor,
+      hasDiscoSetting: hasDiscoSetting,
     ),
   );
 }
