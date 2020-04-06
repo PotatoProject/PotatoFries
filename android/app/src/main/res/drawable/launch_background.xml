@@ -2,10 +2,4 @@
 <!-- Modify this file to customize your launch splash screen -->
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:drawable="@color/fries_bg_color" />
-
-    <item>
-        <bitmap
-            android:gravity="center"
-            android:src="@mipmap/ic_launcher_foreground" />
-    </item> 
 </layer-list>
