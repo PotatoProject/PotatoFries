@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d1dc2966_3ef878e9",
+        "filename": "lib/pages/home.dart",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2020-04-06T13:31:50Z",
+      "side": 1,
+      "message": "delet",
+      "range": {
+        "startLine": 59,
+        "startChar": 0,
+        "endLine": 73,
+        "endChar": 10
+      },
+      "revId": "31b91f3939e8c2965ed77115039fe13683672a3d",
+      "serverId": "8720d348-3d66-43e6-b480-1d69039ac554",
+      "unresolved": true
+    }
+  ]
+}
