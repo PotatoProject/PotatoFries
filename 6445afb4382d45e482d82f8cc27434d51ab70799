@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "79e0f182_7900b088",
+        "filename": "android/app/src/main/java/com/potatoproject/fries/EngineCache.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2020-04-06T13:33:04Z",
+      "side": 1,
+      "message": "whitespace",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 12
+      },
+      "revId": "6445afb4382d45e482d82f8cc27434d51ab70799",
+      "serverId": "8720d348-3d66-43e6-b480-1d69039ac554",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67989433_8c1cd732",
+        "filename": "lib/widgets/custom/icon_shape_picker.dart",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2020-04-06T13:33:04Z",
+      "side": 1,
+      "message": "feels nicer if you don\u0027t pop :)",
+      "range": {
+        "startLine": 67,
+        "startChar": 0,
+        "endLine": 71,
+        "endChar": 34
+      },
+      "revId": "6445afb4382d45e482d82f8cc27434d51ab70799",
+      "serverId": "8720d348-3d66-43e6-b480-1d69039ac554",
+      "unresolved": true
+    }
+  ]
+}
