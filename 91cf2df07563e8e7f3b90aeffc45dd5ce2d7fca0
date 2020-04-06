@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f180197c_2350ddd1",
+        "filename": "lib/ui/custom_icons.dart",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2020-04-06T13:32:25Z",
+      "side": 1,
+      "message": "whitespace",
+      "range": {
+        "startLine": 14,
+        "startChar": 3,
+        "endLine": 14,
+        "endChar": 4
+      },
+      "revId": "91cf2df07563e8e7f3b90aeffc45dd5ce2d7fca0",
+      "serverId": "8720d348-3d66-43e6-b480-1d69039ac554",
+      "unresolved": true
+    }
+  ]
+}
