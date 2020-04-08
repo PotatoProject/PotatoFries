@@ -67,7 +67,8 @@ class PageParser extends StatelessWidget {
               if ((_value['version'] == null ||
                       appInfoProvider.isCompatible(_value['version'],
                           max: _value['version_max'])) &&
-                  (_value['compat'] == null ||
+                  (appInfoProvider.isCompatCheckDisabled() ||
+                      _value['compat'] == null ||
                       (provider.getValue(settingsKey(
                             _key + '~COMPAT',
                             _value['setting_type'],
@@ -117,12 +118,13 @@ class PageParser extends StatelessWidget {
                         if ((_value['version'] != null &&
                                 !appInfoProvider.isCompatible(_value['version'],
                                     max: _value['version_max'])) ||
-                            (_value['compat'] != null &&
-                                !(provider.getValue(settingsKey(
-                                      _key + '~COMPAT',
-                                      _value['setting_type'],
-                                    )) ??
-                                    false))) {
+                            (appInfoProvider.isCompatCheckDisabled() ||
+                                _value['compat'] != null &&
+                                    !(provider.getValue(settingsKey(
+                                          _key + '~COMPAT',
+                                          _value['setting_type'],
+                                        )) ??
+                                        false))) {
                           return Container();
                         }
                         switch (_value['widget']) {
