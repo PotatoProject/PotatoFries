@@ -78,15 +78,8 @@ class _IconShapePickerState extends State<IconShapePicker> {
                         );
                       }).toList(),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 24.0),
-                      child: Text(
-                        'Note: Applying a new icon shape will reload Fries!',
-                        style: Theme.of(context)
-                            .textTheme
-                            .subtitle
-                            .copyWith(color: Theme.of(context).disabledColor),
-                      ),
+                    SizedBox(
+                      height: 24,
                     ),
                   ],
                 ),
