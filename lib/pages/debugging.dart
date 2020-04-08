@@ -134,7 +134,9 @@ class DebuggingPage extends StatelessWidget {
                   SizeableListTile(
                     title: "Overlay Controller",
                     icon: Icon(Icons.layers),
-                    subtitle: Text('Enable/disable any overlay'),
+                    subtitle: Text(
+                      'Enable/disable any overlay, trigger asset reload for a package',
+                    ),
                     onTap: () => showDialog(
                       context: context,
                       builder: (context) => OverlayControl(),
@@ -267,7 +269,10 @@ class _ActivityLaunchState extends State<ActivityLaunch> {
               );
             }
           },
-          child: Text('Launch'),
+          child: Text(
+            'Launch',
+            style: TextStyle(color: Theme.of(context).accentColor),
+          ),
         ),
       ],
     );
@@ -354,8 +359,8 @@ class _SettingsControlState extends State<SettingsControl> {
                     },
                     color: Theme.of(context).accentColor,
                     textColor: Theme.of(context).brightness == Brightness.dark
-                        ? Colors.white
-                        : Colors.black,
+                        ? Colors.black
+                        : Colors.white,
                   ),
                 ),
               ],
@@ -444,8 +449,8 @@ class _SettingsControlState extends State<SettingsControl> {
                     },
                     color: Theme.of(context).accentColor,
                     textColor: Theme.of(context).brightness == Brightness.dark
-                        ? Colors.white
-                        : Colors.black,
+                        ? Colors.black
+                        : Colors.white,
                   ),
                 ),
               ],
@@ -476,25 +481,86 @@ class OverlayControl extends StatefulWidget {
 }
 
 class _OverlayControlState extends State<OverlayControl> {
-  final _formKey = GlobalKey<FormState>();
+  final _formKeyOverlay = GlobalKey<FormState>();
+  final _formKeyTarget = GlobalKey<FormState>();
 
-  final TextEditingController _controller = TextEditingController();
+  final TextEditingController _controllerOverlayPkg = TextEditingController();
+  final TextEditingController _controllerTargetPkg = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      contentPadding: const EdgeInsets.fromLTRB(24.0, 20.0, 24.0, 00),
+      contentPadding: const EdgeInsets.fromLTRB(24.0, 20.0, 24.0, 0),
       title: Text('Overlay controller'),
       content: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
+          Text(
+            "Overlay",
+            style: TextStyle(color: Theme.of(context).accentColor),
+          ),
           Form(
-            key: _formKey,
+            key: _formKeyOverlay,
             child: Column(
               children: <Widget>[
                 TextFormField(
-                  controller: _controller,
-                  decoration: InputDecoration(hintText: 'Package name'),
+                  controller: _controllerOverlayPkg,
+                  decoration: InputDecoration(hintText: 'Overlay package name'),
+                  validator: (value) {
+                    if (value != null && value.isNotEmpty)
+                      return null;
+                    else
+                      return "This cannot be empty!";
+                  },
+                ),
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 16.0),
+            child: Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                MaterialButton(
+                  onPressed: () {
+                    if (_formKeyOverlay.currentState.validate()) {
+                      AndroidFlutterSettings.overlaySetEnabled(
+                          _controllerOverlayPkg.text, true);
+                    }
+                  },
+                  color: Colors.green,
+                  textColor: Colors.white,
+                  child: Text('Enable'),
+                ),
+                SizedBox(width: 16),
+                MaterialButton(
+                  onPressed: () {
+                    if (_formKeyOverlay.currentState.validate()) {
+                      AndroidFlutterSettings.overlaySetEnabled(
+                          _controllerOverlayPkg.text, false);
+                    }
+                  },
+                  color: Colors.red,
+                  textColor: Colors.white,
+                  child: Text('Disable'),
+                ),
+              ],
+            ),
+          ),
+          SizedBox(height: 16),
+          Text(
+            "Package",
+            style: TextStyle(color: Theme.of(context).accentColor),
+          ),
+          Form(
+            key: _formKeyTarget,
+            child: Column(
+              children: <Widget>[
+                TextFormField(
+                  controller: _controllerTargetPkg,
+                  decoration: InputDecoration(hintText: 'Target package name'),
                   validator: (value) {
                     if (value != null && value.isNotEmpty)
                       return null;
@@ -513,26 +579,16 @@ class _OverlayControlState extends State<OverlayControl> {
               children: <Widget>[
                 MaterialButton(
                   onPressed: () {
-                    if (_formKey.currentState.validate()) {
-                      AndroidFlutterSettings.overlaySetEnabled(
-                          _controller.text, true);
+                    if (_formKeyTarget.currentState.validate()) {
+                      AndroidFlutterSettings.reloadAssets(
+                          _controllerTargetPkg.text);
                     }
                   },
-                  color: Colors.green,
-                  textColor: Colors.white,
-                  child: Text('Enable'),
-                ),
-                SizedBox(width: 16),
-                MaterialButton(
-                  onPressed: () {
-                    if (_formKey.currentState.validate()) {
-                      AndroidFlutterSettings.overlaySetEnabled(
-                          _controller.text, false);
-                    }
-                  },
-                  color: Colors.red,
-                  textColor: Colors.white,
-                  child: Text('Disable'),
+                  color: Theme.of(context).accentColor,
+                  textColor: Theme.of(context).brightness == Brightness.dark
+                      ? Colors.black
+                      : Colors.white,
+                  child: Text('Asset Reload'),
                 ),
               ],
             ),
