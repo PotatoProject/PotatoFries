@@ -6,7 +6,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: faab9f1b3ba44d9a32bb6ab477053e0edf4086c2
+      resolved-ref: "33770a00598bc9de63fd649c59d9cd356aa5ea97"
       url: "https://github.com/AgentFabulous/android_flutter_settings"
     source: git
     version: "0.0.1"
@@ -245,7 +245,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "37affabd1cfb29b999466f1796b8b6f71169165e"
+      resolved-ref: "848fe2a36f0ee756e392438d5207ee1a07b2cf81"
       url: "https://github.com/HrX03/SpicyUIComponents"
     source: git
     version: "0.0.1"

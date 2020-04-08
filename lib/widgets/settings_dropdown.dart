@@ -79,25 +79,3 @@ class _SettingsDropdownTileState extends State<SettingsDropdownTile> {
     );
   }
 }
-
-class SettingsDropDown extends StatelessWidget {
-  final bool enabled;
-  final Function setValue;
-  final bool value;
-
-  SettingsDropDown({
-    this.enabled = true,
-    @required this.setValue,
-    @required this.value,
-  })  : assert(setValue != null),
-        assert(value != null);
-
-  @override
-  Widget build(BuildContext context) {
-    return Switch(
-      activeColor: Theme.of(context).accentColor,
-      value: value,
-      onChanged: enabled ? (b) => setValue(b) : null,
-    );
-  }
-}

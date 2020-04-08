@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:potato_fries/data/constants.dart';
 import 'package:potato_fries/pages/buttons.dart';
+import 'package:potato_fries/pages/debugging.dart';
 import 'package:potato_fries/pages/lock_screen.dart';
 import 'package:potato_fries/pages/misc.dart';
 import 'package:potato_fries/pages/qs.dart';
@@ -34,33 +35,58 @@ class _FriesHomeState extends State<FriesHome> {
     return Scaffold(
       bottomNavigationBar: SpicyBottomBar(
         leftItems: [
-          IconButton(
-            icon: Icon(Icons.menu),
-            padding: EdgeInsets.all(0),
-            onPressed: () => showNavigationSheet(
-              context: context,
-              provider: provider,
-              items: pageInfo,
-              onTap: (index) {
-                provider.pageIndex = index;
-                pageController.jumpToPage(provider.pageIndex);
-              },
+          GestureDetector(
+            onLongPress: provider.flag1 && provider.flag2 == 5
+                ? provider.flag3
+                    ? () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => DebuggingPage(),
+                          ),
+                        )
+                    : () => provider.setFlag3()
+                : null,
+            child: IconButton(
+              icon: provider.flag1 && provider.flag2 == 5 && provider.flag3
+                  ? Icon(Icons.bug_report)
+                  : Icon(Icons.menu),
+              padding: EdgeInsets.all(0),
+              onPressed: () => showNavigationSheet(
+                context: context,
+                provider: provider,
+                items: pageInfo,
+                onTap: (index) {
+                  provider.pageIndex = index;
+                  pageController.jumpToPage(provider.pageIndex);
+                },
+              ),
             ),
           ),
-          Text(
-            pageInfo.keys.toList()[provider.pageIndex],
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.w500,
-              color: Theme.of(context).iconTheme.color.withOpacity(0.7),
+          GestureDetector(
+            onTap: provider.flag3 ? null : () => provider.flag2 += 1,
+            onLongPress: provider.flag3 ? null : () => provider.flag2 = 0,
+            child: Text(
+              pageInfo.keys.toList()[provider.pageIndex],
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.w500,
+                color: Theme.of(context).iconTheme.color.withOpacity(0.7),
+              ),
             ),
           ),
         ],
         rightItems: [
-          IconButton(
-            icon: Icon(MdiIcons.accountGroupOutline),
-            padding: EdgeInsets.all(0),
-            onPressed: () {},
+          GestureDetector(
+            onLongPress: () => provider.setFlag1(),
+            child: IconButton(
+              icon: Icon(
+                provider.flag1
+                    ? MdiIcons.accountGroup
+                    : MdiIcons.accountGroupOutline,
+              ),
+              padding: EdgeInsets.all(0),
+              onPressed: () {},
+            ),
           ),
         ],
       ),

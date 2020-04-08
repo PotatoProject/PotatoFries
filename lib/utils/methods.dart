@@ -1,6 +1,5 @@
 import 'package:android_flutter_settings/android_flutter_settings.dart';
 import 'package:flutter/material.dart';
-import 'package:potato_fries/data/debug_constants.dart';
 import 'package:potato_fries/provider/app_info.dart';
 import 'package:potato_fries/widgets/color_picker.dart';
 import 'package:potato_fries/widgets/color_picker_dual.dart';
@@ -102,6 +101,8 @@ void showColorPickerDual(
 }
 
 Map<String, dynamic> parseVerNum(String vernum) {
+  var exp = RegExp(r"^((([0-9]+)\.([0-9]+)\.([0-9]+)(?:-([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?)(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?)$");
+  if (!exp.hasMatch(vernum)) return null;
   Map<String, dynamic> ret = Map();
   String build;
   String version;
@@ -116,8 +117,13 @@ Map<String, dynamic> parseVerNum(String vernum) {
   ret['MINOR'] = (int.tryParse(version.split('.')[1]));
   ret['PATCH'] = version.split('.')[2];
   ret['BUILD'] = (int.tryParse(build));
+  assert(isVersionValid(ret));
   return ret;
 }
+
+String verNumString(Map ver) => isVersionValid(ver)
+    ? "${ver['MAJOR']}.${ver['MINOR']}.${ver['PATCH']}+${ver['BUILD']}"
+    : null;
 
 bool isVersionCompatible(
   String target,
@@ -133,14 +139,13 @@ bool isVersionCompatible(
   }
   int _targetPatch = getNum(targetVersion['PATCH']);
   int _hostPatch = getNum(hostVersion['PATCH']);
-  return ((!strict && DEBUG_VERSION_CHECK_DISABLE) ||
-      hostVersion['MAJOR'] >= targetVersion['MAJOR'] &&
-          hostVersion['MINOR'] >= targetVersion['MINOR'] &&
-          _hostPatch >= _targetPatch &&
-          (maxVersion == null ||
-              (hostVersion['MAJOR'] <= maxVersion['MAJOR'] &&
-                  hostVersion['MINOR'] <= maxVersion['MINOR'] &&
-                  _hostPatch <= getNum(maxVersion['PATCH']))));
+  return hostVersion['MAJOR'] >= targetVersion['MAJOR'] &&
+      hostVersion['MINOR'] >= targetVersion['MINOR'] &&
+      _hostPatch >= _targetPatch &&
+      (maxVersion == null ||
+          (hostVersion['MAJOR'] <= maxVersion['MAJOR'] &&
+              hostVersion['MINOR'] <= maxVersion['MINOR'] &&
+              _hostPatch <= getNum(maxVersion['PATCH'])));
 }
 
 Future<bool> checkCompat(Map compat) async {
@@ -158,3 +163,9 @@ int getNum(String ip) {
   l.removeWhere((c) => !isNumber(c));
   return int.tryParse(l.join());
 }
+
+bool isVersionValid(Map ver) => (ver != null &&
+    (ver.containsKey('MAJOR') && ver['MAJOR'] is int) &&
+    (ver.containsKey('MINOR') && ver['MINOR'] is int) &&
+    (ver.containsKey('PATCH') && ver['PATCH'] is String) &&
+    (ver.containsKey('BUILD') && ver['BUILD'] is int));
