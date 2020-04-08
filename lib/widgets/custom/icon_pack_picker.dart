@@ -9,7 +9,7 @@ class IconPackPicker extends StatelessWidget {
   Widget build(BuildContext context) {
     return SettingsDropdownTile(
       title: 'Icon Pack',
-      subtitle: 'Pick system icon pack (will reload Fries!)',
+      subtitle: 'Pick system icon pack',
       icon: Icon(Icons.apps),
       setValue: (val) => Provider.of<AppInfoProvider>(context, listen: false)
           .setIconPack(int.parse(val)),
