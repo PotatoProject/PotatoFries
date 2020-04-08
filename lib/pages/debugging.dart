@@ -7,6 +7,7 @@ import 'package:potato_fries/ui/sizeable_list_tile.dart';
 import 'package:potato_fries/utils/methods.dart';
 import 'package:potato_fries/widgets/settings_switch.dart';
 import 'package:provider/provider.dart';
+import 'package:simple_animations/simple_animations.dart';
 import 'package:spicy_components/spicy_components.dart';
 
 class DebuggingPage extends StatelessWidget {
@@ -176,22 +177,43 @@ class DebuggingPage extends StatelessWidget {
           ],
         ),
       ),
-      bottomNavigationBar: SpicyBottomBar(
-        leftItems: [
-          IconButton(
-            icon: Icon(Icons.arrow_back),
-            padding: EdgeInsets.all(0),
-            onPressed: () => Navigator.pop(context),
-          ),
-          Text(
-            'Debug menu',
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.w500,
-              color: Theme.of(context).iconTheme.color.withOpacity(0.7),
-            ),
-          ),
-        ],
+      bottomNavigationBar: ControlledAnimation(
+        playback: Playback.LOOP,
+        tween: Tween<double>(begin: 0, end: 360),
+        duration: Duration(seconds: 2),
+        builder: (context, anim) {
+          HSLColor rainbow = HSLColor.fromAHSL(
+            1.0,
+            anim,
+            1,
+            0.5,
+          );
+          Color textColor = rainbow.toColor().computeLuminance() > 0.5
+              ? Colors.black
+              : Colors.white;
+
+          return SpicyBottomBar(
+            bgColor: rainbow.toColor(),
+            leftItems: [
+              IconButton(
+                icon: Icon(
+                  Icons.arrow_back
+                ),
+                color: textColor.withOpacity(0.7),
+                padding: EdgeInsets.all(0),
+                onPressed: () => Navigator.pop(context),
+              ),
+              Text(
+                'Debug menu',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w500,
+                  color: textColor.withOpacity(0.7),
+                ),
+              ),
+            ],
+          );
+        },
       ),
     );
   }
