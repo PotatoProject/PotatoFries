@@ -1,55 +1,83 @@
 import 'package:android_flutter_settings/android_flutter_settings.dart';
 import 'package:flutter/material.dart';
+import 'package:outline_material_icons/outline_material_icons.dart';
 import 'package:potato_fries/app_native/utils.dart';
 import 'package:potato_fries/provider/app_info.dart';
 import 'package:potato_fries/ui/sizeable_list_tile.dart';
 import 'package:potato_fries/utils/methods.dart';
 import 'package:potato_fries/widgets/settings_switch.dart';
 import 'package:provider/provider.dart';
+import 'package:spicy_components/spicy_components.dart';
 
 class DebuggingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    TextStyle heading = TextStyle(fontSize: 24, fontWeight: FontWeight.bold);
     var appInfoProvider = Provider.of<AppInfoProvider>(context);
     var verNum =
         verNumString(appInfoProvider.hostVersion) ?? "Invalid Version!";
     return Scaffold(
-      appBar: AppBar(
-        title: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            Text('Advanced options'),
-            Icon(Icons.bug_report),
-          ],
-        ),
-        centerTitle: true,
-      ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(20),
+        padding: EdgeInsets.only(
+            top: MediaQuery.of(context).padding.top + 8, left: 16, right: 16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
+            header("Build Info"),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 8.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text("Build Info", style: heading),
-                  Row(
-                    children: <Widget>[
-                      Text(verNum),
-                      Visibility(
-                        visible: appInfoProvider.getVersionOverride() != null,
-                        child: Text(" (FAKE)",
-                            style: TextStyle(color: Colors.red)),
-                      )
-                    ],
-                  ),
-                  Text("${appInfoProvider.dish} - ${appInfoProvider.type}"),
-                  Text("${appInfoProvider.model} (${appInfoProvider.device})"),
-                  Text(appInfoProvider.exactBuild),
-                ],
+              child: DefaultTextStyle(
+                style: TextStyle(
+                  color:
+                      Theme.of(context).textTheme.title.color.withOpacity(0.7),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Row(
+                      children: <Widget>[
+                        Text(
+                          "Version number: ",
+                          style: TextStyle(
+                            color: Theme.of(context)
+                                .textTheme
+                                .title
+                                .color
+                                .withOpacity(0.9),
+                          ),
+                        ),
+                        Text(
+                          verNum,
+                          style: TextStyle(
+                            color: Theme.of(context)
+                                .textTheme
+                                .title
+                                .color
+                                .withOpacity(0.7),
+                          ),
+                        ),
+                        Visibility(
+                          visible: appInfoProvider.getVersionOverride() != null,
+                          child: Text(
+                            " (FAKE)",
+                            style: TextStyle(color: Colors.red),
+                          ),
+                        )
+                      ],
+                    ),
+                    buildInfoRow(
+                      "Build type: ",
+                      "${appInfoProvider.dish} - ${appInfoProvider.type}",
+                    ),
+                    buildInfoRow(
+                      "Device info: ",
+                      "${appInfoProvider.model} (${appInfoProvider.device})",
+                    ),
+                    buildInfoRow(
+                      "Build name: ",
+                      appInfoProvider.exactBuild,
+                    ),
+                  ],
+                ),
               ),
             ),
             Padding(
@@ -57,10 +85,10 @@ class DebuggingPage extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Text("Version and compatibility", style: heading),
+                  header("Version and compatibility"),
                   SizeableListTile(
                     title: "Disable version checking",
-                    icon: Icon(Icons.track_changes),
+                    icon: Icon(OMIcons.trackChanges),
                     subtitle: Text("Disable all non-strict version checks"),
                     trailing: SettingsSwitch(
                       setValue: (v) =>
@@ -72,7 +100,7 @@ class DebuggingPage extends StatelessWidget {
                   ),
                   SizeableListTile(
                     title: "Disable compatibility checking",
-                    icon: Icon(Icons.developer_board),
+                    icon: Icon(OMIcons.developerBoard),
                     subtitle: Text("Disable all feature compatibility checks"),
                     trailing: SettingsSwitch(
                       setValue: (v) =>
@@ -84,7 +112,7 @@ class DebuggingPage extends StatelessWidget {
                   ),
                   SizeableListTile(
                     title: "Spoof version",
-                    icon: Icon(Icons.flash_on),
+                    icon: Icon(OMIcons.flashOn),
                     subtitle: Text(appInfoProvider.getVersionOverride() == null
                         ? 'Set a fake vernum'
                         : 'Fake version: ' +
@@ -102,10 +130,10 @@ class DebuggingPage extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Text("Activity", style: heading),
+                  header("Activity"),
                   SizeableListTile(
                     title: "Launch Activity",
-                    icon: Icon(Icons.launch),
+                    icon: Icon(OMIcons.launch),
                     subtitle: Text('Start any activity'),
                     onTap: () => showDialog(
                       context: context,
@@ -120,10 +148,10 @@ class DebuggingPage extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Text("Settings and overlays", style: heading),
+                  header("Settings and overlays"),
                   SizeableListTile(
                     title: "Write or read settings",
-                    icon: Icon(Icons.settings),
+                    icon: Icon(OMIcons.settings),
                     subtitle:
                         Text('Write or read any System/Secure/Global settings'),
                     onTap: () => showDialog(
@@ -133,7 +161,7 @@ class DebuggingPage extends StatelessWidget {
                   ),
                   SizeableListTile(
                     title: "Overlay Controller",
-                    icon: Icon(Icons.layers),
+                    icon: Icon(OMIcons.layers),
                     subtitle: Text(
                       'Enable/disable any overlay, trigger asset reload for a package',
                     ),
@@ -148,8 +176,72 @@ class DebuggingPage extends StatelessWidget {
           ],
         ),
       ),
+      bottomNavigationBar: SpicyBottomBar(
+        leftItems: [
+          IconButton(
+            icon: Icon(Icons.arrow_back),
+            padding: EdgeInsets.all(0),
+            onPressed: () => Navigator.pop(context),
+          ),
+          Text(
+            'Debug menu',
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.w500,
+              color: Theme.of(context).iconTheme.color.withOpacity(0.7),
+            ),
+          ),
+        ],
+      ),
     );
   }
+
+  Widget header(String text) => Builder(
+        builder: (context) {
+          TextStyle heading = TextStyle(
+            color: Theme.of(context).accentColor,
+            fontWeight: FontWeight.bold,
+            fontSize: 12,
+            letterSpacing: 2,
+          );
+
+          return Text(
+            text.toUpperCase(),
+            style: heading,
+          );
+        },
+      );
+
+  Widget buildInfoRow(String title, String content) => Builder(
+        builder: (context) {
+          return RichText(
+            text: TextSpan(
+              children: [
+                TextSpan(
+                  text: title,
+                  style: TextStyle(
+                    color: Theme.of(context)
+                        .textTheme
+                        .title
+                        .color
+                        .withOpacity(0.9),
+                  ),
+                ),
+                TextSpan(
+                  text: content,
+                  style: TextStyle(
+                    color: Theme.of(context)
+                        .textTheme
+                        .title
+                        .color
+                        .withOpacity(0.7),
+                  ),
+                ),
+              ],
+            ),
+          );
+        },
+      );
 }
 
 class VersionChanger extends StatefulWidget {
