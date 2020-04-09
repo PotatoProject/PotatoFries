@@ -1,6 +1,7 @@
 import 'package:android_flutter_settings/android_flutter_settings.dart';
 import 'package:flutter/material.dart';
 import 'package:potato_fries/provider/app_info.dart';
+import 'package:potato_fries/utils/methods.dart';
 import 'package:potato_fries/widgets/color_picker_dual.dart';
 import 'package:provider/provider.dart';
 
@@ -45,8 +46,7 @@ class AccentPicker extends StatelessWidget {
             SettingType.SECURE,
           );
         }
-        AndroidFlutterSettings.reloadAssets('com.android.settings');
-        AndroidFlutterSettings.reloadAssets('com.android.systemui');
+        reloadSystemElements();
         Provider
             .of<AppInfoProvider>(context, listen: false)
             .accentDark =

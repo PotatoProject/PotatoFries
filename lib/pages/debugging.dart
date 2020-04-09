@@ -722,7 +722,8 @@ class _OverlayControlState extends State<OverlayControl> {
                   onPressed: () {
                     if (_formKeyTarget.currentState.validate()) {
                       AndroidFlutterSettings.reloadAssets(
-                          _controllerTargetPkg.text);
+                        _controllerTargetPkg.text,
+                      );
                     }
                   },
                   color: Theme.of(context).accentColor,

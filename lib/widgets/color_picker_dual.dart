@@ -316,12 +316,7 @@ class _ColorPickerDualState extends State<ColorPickerDual> {
                                 discoProp, isDiscoEnabled ? "0" : "1");
                             await updateDisco();
                             setState(() {});
-                            if (isDiscoEnabled) {
-                              AndroidFlutterSettings.reloadAssets(
-                                  'com.android.settings');
-                              AndroidFlutterSettings.reloadAssets(
-                                  'com.android.systemui');
-                            }
+                            reloadSystemElements();
                           },
                         ),
                       ),
