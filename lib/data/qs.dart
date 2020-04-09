@@ -18,6 +18,28 @@ final Map<String, dynamic> qsColors = {
       'default': true,
     }
   },
+  'qs_panel_bg_rgb': {
+    'title': 'pubg fortnite cod rgb epic gamer qs mode',
+    'subtitle': 'hahayes',
+    'icon': Icons.lightbulb_outline,
+    'widget': WidgetType.SWITCH,
+    'setting_type': SettingType.SYSTEM,
+    'widget_data': {
+      'default': false,
+    },
+    'dependencies': [
+      {
+        'name': 'qs_panel_bg_use_fw',
+        'setting_type': SettingType.SYSTEM,
+        'value': false,
+      },
+    ],
+    'compat': {
+      'prop': 'persist.sys.theme.accent_disco',
+      'values': ['0', '1'],
+    },
+    'version': '3.1.7',
+  },
   'qs_panel_bg_use_wall': {
     'title': 'Use wallpaper colors',
     'subtitle': 'Dynamically choose colors from the wallpaper',
@@ -30,6 +52,11 @@ final Map<String, dynamic> qsColors = {
     'dependencies': [
       {
         'name': 'qs_panel_bg_use_fw',
+        'setting_type': SettingType.SYSTEM,
+        'value': false,
+      },
+      {
+        'name': 'qs_panel_bg_rgb',
         'setting_type': SettingType.SYSTEM,
         'value': false,
       },
@@ -73,6 +100,11 @@ final Map<String, dynamic> qsColors = {
       },
       {
         'name': 'qs_panel_bg_use_wall',
+        'setting_type': SettingType.SYSTEM,
+        'value': false,
+      },
+      {
+        'name': 'qs_panel_bg_rgb',
         'setting_type': SettingType.SYSTEM,
         'value': false,
       },
