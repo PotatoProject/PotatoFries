@@ -174,3 +174,12 @@ bool isVersionValid(Map ver) => (ver != null &&
     (ver.containsKey('MINOR') && ver['MINOR'] is int) &&
     (ver.containsKey('PATCH') && ver['PATCH'] is String) &&
     (ver.containsKey('BUILD') && ver['BUILD'] is int));
+
+void reloadSystemElements() {
+  var reload = [
+    'com.android.settings',
+    'com.android.systemui',
+    'android',
+  ];
+  for (var r in reload) AndroidFlutterSettings.reloadAssets(r);
+}
