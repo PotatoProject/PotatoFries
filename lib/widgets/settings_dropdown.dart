@@ -64,12 +64,19 @@ class _SettingsDropdownTileState extends State<SettingsDropdownTile> {
         builder: (context) {
           if (widget.subtitle == null && widget.title == null) return null;
           if (widget.subtitle == null)
-            return Text(widget.title, style: TextStyle(color: Colors.white));
+            return Text(widget.title,
+                style: TextStyle(
+                    color: Theme.of(context).brightness == Brightness.dark
+                        ? Colors.white
+                        : Colors.black));
           else
             return CrossFadePeriodic(
               firstChild: Text(
                 widget.title,
-                style: TextStyle(color: Colors.white),
+                style: TextStyle(
+                    color: Theme.of(context).brightness == Brightness.dark
+                        ? Colors.white
+                        : Colors.black),
               ),
               secondChild: Text(widget.subtitle),
             );
