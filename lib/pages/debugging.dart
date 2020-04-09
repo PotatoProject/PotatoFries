@@ -10,7 +10,26 @@ import 'package:provider/provider.dart';
 import 'package:simple_animations/simple_animations.dart';
 import 'package:spicy_components/spicy_components.dart';
 
-class DebuggingPage extends StatelessWidget {
+class DebuggingPage extends StatefulWidget {
+  @override
+  _DebuggingPageState createState() => _DebuggingPageState();
+}
+
+class _DebuggingPageState extends State<DebuggingPage> {
+  bool discoEnabled = false;
+  final discoProp = 'persist.sys.theme.accent_disco';
+
+  @override
+  void initState() {
+    super.initState();
+    updateDisco();
+  }
+
+  void updateDisco() async {
+    discoEnabled = await AndroidFlutterSettings.getProp(discoProp) == "1";
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     var appInfoProvider = Provider.of<AppInfoProvider>(context);
@@ -178,9 +197,9 @@ class DebuggingPage extends StatelessWidget {
         ),
       ),
       bottomNavigationBar: ControlledAnimation(
-        playback: Playback.LOOP,
+        playback: discoEnabled ? Playback.LOOP : Playback.PAUSE,
         tween: Tween<double>(begin: 0, end: 360),
-        duration: Duration(seconds: 2),
+        duration: Duration(seconds: 5),
         builder: (context, anim) {
           HSLColor rainbow = HSLColor.fromAHSL(
             1.0,
@@ -193,13 +212,17 @@ class DebuggingPage extends StatelessWidget {
               : Colors.white;
 
           return SpicyBottomBar(
-            bgColor: rainbow.toColor(),
+            bgColor: discoEnabled
+                ? rainbow.toColor()
+                : Theme.of(context).accentColor,
             leftItems: [
               IconButton(
-                icon: Icon(
-                  Icons.arrow_back
-                ),
-                color: textColor.withOpacity(0.7),
+                icon: Icon(Icons.arrow_back),
+                color: discoEnabled
+                    ? textColor.withOpacity(0.7)
+                    : Theme.of(context).brightness == Brightness.dark
+                        ? Colors.black
+                        : Colors.white,
                 padding: EdgeInsets.all(0),
                 onPressed: () => Navigator.pop(context),
               ),
@@ -208,7 +231,11 @@ class DebuggingPage extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w500,
-                  color: textColor.withOpacity(0.7),
+                  color: discoEnabled
+                      ? textColor.withOpacity(0.7)
+                      : Theme.of(context).brightness == Brightness.dark
+                          ? Colors.black
+                          : Colors.white,
                 ),
               ),
             ],
