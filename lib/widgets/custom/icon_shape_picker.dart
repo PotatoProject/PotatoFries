@@ -6,25 +6,6 @@ import 'package:potato_fries/ui/sizeable_list_tile.dart';
 import 'package:provider/provider.dart';
 
 class IconShapePicker extends StatefulWidget {
-//  final String title;
-//  final String subtitle;
-//  final String footer;
-//  final Widget icon;
-//  final bool enabled;
-//  final Function setValue;
-//  final Function getValue;
-//
-//  IconShapePicker({
-//    @required this.title,
-//    this.subtitle,
-//    this.footer,
-//    this.icon,
-//    this.enabled = true,
-//    @required this.setValue,
-//    @required this.getValue,
-//  })  : assert(title != null),
-//        assert(setValue != null),
-//        assert(getValue != null);
 
   @override
   _IconShapePickerState createState() => _IconShapePickerState();
@@ -38,8 +19,6 @@ class _IconShapePickerState extends State<IconShapePicker> {
     return SizeableListTile(
       title: 'Icon Shape',
       onTap: () {
-//        var newVal = _provider.getIconShapeIndex() + 1;
-//        _provider.setIconShape(newVal >= 4 ? 0 : newVal);
         showModalBottomSheet(
             context: context,
             builder: (context) {
@@ -64,8 +43,11 @@ class _IconShapePickerState extends State<IconShapePicker> {
                             mainAxisSize: MainAxisSize.min,
                             children: <Widget>[
                               GestureDetector(
-                                onTap: () => _provider.setIconShape(
-                                    shapesPackageLabels.indexOf(l)),
+                                onTap: () {
+                                  Navigator.pop(context);
+                                  _provider.setIconShape(
+                                    shapesPackageLabels.indexOf(l));
+                                },
                                 child: ShapedIcon(
                                   iconSize: 56,
                                   type: shapesPackageLabels.indexOf(l),
