@@ -103,4 +103,15 @@ final Map<String, dynamic> systemgesture = {
     },
     'version': '3.1.1',
   },
+  'three_finger_gesture': {
+    'title': 'Three finger screenshot',
+    'subtitle': 'Swipe down with three fingers to screenshot',
+    'icon': Icons.camera,
+    'widget': WidgetType.SWITCH,
+    'setting_type': SettingType.SYSTEM,
+    'widget_data': {
+      'default': false,
+    },
+    'version': '3.1.7',
+  },
 };
