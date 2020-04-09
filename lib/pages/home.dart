@@ -64,15 +64,35 @@ class _FriesHomeState extends State<FriesHome> {
           ),
           GestureDetector(
             onTap: provider.flag3 ? null : () => provider.flag2 += 1,
-            onLongPress: provider.flag3 ? null : () => provider.flag2 = 0,
-            child: Text(
-              pageInfo.keys.toList()[provider.pageIndex],
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.w500,
-                color: Theme.of(context).iconTheme.color.withOpacity(0.7),
-              ),
-            ),
+            onLongPress: provider.flag2 == 3
+                ? () {
+                    provider.setFlag4();
+                    provider.flag2 = 0;
+                  }
+                : provider.flag3 ? null : () => provider.flag2 = 0,
+            child: Builder(builder: (context) {
+              var textColor;
+              switch (provider.flag2) {
+                case 1:
+                  textColor = Colors.red;
+                  break;
+                case 2:
+                  textColor = Colors.green;
+                  break;
+                case 3:
+                  textColor = Colors.blue;
+                  break;
+              }
+              return Text(
+                pageInfo.keys.toList()[provider.pageIndex],
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w500,
+                  color: textColor ??
+                      Theme.of(context).iconTheme.color.withOpacity(0.7),
+                ),
+              );
+            }),
           ),
         ],
         rightItems: [
