@@ -14,7 +14,7 @@ final Map<String, dynamic> statusbaricons = {
   'status_bar_logo': {
     'title': 'POSP swag',
     'subtitle': 'Show off POSP logo on statusbar',
-    'icon': Icons.crop_portrait,
+    'icon': Icons.android,
     'widget': WidgetType.SWITCH,
     'setting_type': SettingType.SYSTEM,
     'widget_data': {
@@ -25,6 +25,7 @@ final Map<String, dynamic> statusbaricons = {
   'show_fourg_icon': {
     'title': '4G icon',
     'subtitle': 'Display 4G icon in status bar instead LTE',
+    'icon': Icons.signal_cellular_4_bar,
     'widget': WidgetType.SWITCH,
     'setting_type': SettingType.SYSTEM,
     'widget_data': {
@@ -35,6 +36,7 @@ final Map<String, dynamic> statusbaricons = {
   'volte_icon': {
     'title': 'VoLTE icon',
     'subtitle': 'Display HD icon in status bar for VoLTE',
+    'icon': Icons.signal_cellular_null,
     'widget': WidgetType.SWITCH,
     'setting_type': SettingType.SYSTEM,
     'widget_data': {
@@ -45,6 +47,7 @@ final Map<String, dynamic> statusbaricons = {
   'use_old_mobiletype': {
     'title': 'Old mobile data icons',
     'subtitle': 'Merge signal and type icons',
+    'icon': Icons.network_locked,
     'widget': WidgetType.SWITCH,
     'setting_type': SettingType.SYSTEM,
     'widget_data': {
@@ -55,6 +58,7 @@ final Map<String, dynamic> statusbaricons = {
   'statusbar_privacy_indicators': {
     'title': 'Statusbar privacy indicators',
     'subtitle': 'Show permission hub icons on statusbar',
+    'icon': Icons.phonelink_lock,
     'widget': WidgetType.SWITCH,
     'setting_type': SettingType.SYSTEM,
     'widget_data': {
@@ -62,12 +66,21 @@ final Map<String, dynamic> statusbaricons = {
     },
     'version': '3.1.5',
   },
+  'systemui_tuner_statusbar': {
+    'title': 'System statusbar icons' ,
+    'subtitle': 'Disable/Enable system icons from statusbar',
+    'icon': Icons.settings_system_daydream,
+    'widget': WidgetType.ACTIVITY ,
+    'class': 'com.android.systemui.tuner.StatusbarItemsActivity' ,
+    'package': 'com.android.systemui' ,
+  }
 };
 
 final Map<String, dynamic> netTraffic = {
   'network_traffic_state': {
     'title': 'Network traffic',
     'subtitle': 'Enable or disable network speed indicators',
+    'icon': Icons.compare_arrows,
     'widget': WidgetType.SWITCH,
     'setting_type': SettingType.SYSTEM,
     'widget_data': {
@@ -78,6 +91,7 @@ final Map<String, dynamic> netTraffic = {
   'network_traffic_hidearrow': {
     'title': 'Hide arrows',
     'subtitle': 'Hide the network traffic indicator arrows',
+    'icon': Icons.arrow_drop_down,
     'widget': WidgetType.SWITCH,
     'setting_type': SettingType.SYSTEM,
     'widget_data': {
@@ -135,6 +149,7 @@ final Map<String, dynamic> displayCutouts = {
   'stock_statusbar_in_hide': {
     'title': 'Stock Statusbar in hide',
     'subtitle': 'Use default (usually larger) statusbar height in hide',
+    'icon': Icons.check_box_outline_blank,
     'widget': WidgetType.SWITCH,
     'setting_type': SettingType.SYSTEM,
     'widget_data': {
@@ -157,7 +172,7 @@ final Map<String, dynamic> displayCutouts = {
 final Map<String, dynamic> statusbarbattery = {
   'status_bar_battery_style': {
     'title': 'Battery Style',
-    'icon': Icons.crop_portrait,
+    'icon': Icons.battery_unknown,
     'widget': WidgetType.DROPDOWN,
     'setting_type': SettingType.SYSTEM,
     'widget_data': {
@@ -173,7 +188,7 @@ final Map<String, dynamic> statusbarbattery = {
   },
   'status_bar_show_battery_percent': {
     'title': 'Battery Percentage',
-    'icon': Icons.crop_portrait,
+    'icon': Icons.battery_full,
     'widget': WidgetType.DROPDOWN,
     'setting_type': SettingType.SYSTEM,
     'widget_data': {
@@ -200,7 +215,7 @@ final Map<String, dynamic> statusbarclock = {
   },
   'status_bar_clock': {
     'title': 'Hide or show clock on statusbar',
-    'icon': Icons.crop_portrait,
+    'icon': Icons.access_time,
     'widget': WidgetType.DROPDOWN,
     'setting_type': SettingType.SECURE,
     'widget_data': {
@@ -236,7 +251,7 @@ final Map<String, dynamic> statusbarclock = {
   },
   'statusbar_clock_date_display': {
     'title': 'Date size',
-    'icon': Icons.crop_portrait,
+    'icon': Icons.format_size,
     'widget': WidgetType.DROPDOWN,
     'setting_type': SettingType.SECURE,
     'widget_data': {
@@ -251,7 +266,7 @@ final Map<String, dynamic> statusbarclock = {
   },
   'statusbar_clock_date_style': {
     'title': 'Date style',
-    'icon': Icons.crop_portrait,
+    'icon': Icons.format_size,
     'widget': WidgetType.DROPDOWN,
     'setting_type': SettingType.SECURE,
     'widget_data': {
@@ -266,7 +281,7 @@ final Map<String, dynamic> statusbarclock = {
   },
   'statusbar_clock_date_position': {
     'title': 'Date position',
-    'icon': Icons.crop_portrait,
+    'icon': Icons.insert_chart,
     'widget': WidgetType.DROPDOWN,
     'setting_type': SettingType.SECURE,
     'widget_data': {
