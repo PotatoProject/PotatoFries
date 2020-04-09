@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:potato_fries/provider/app_info.dart';
 import 'package:potato_fries/widgets/color_picker.dart';
 import 'package:potato_fries/widgets/color_picker_dual.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 String settingsKey(String setting, SettingType type) =>
     splitSettingType(type) + ':' + setting;
@@ -182,4 +183,18 @@ void reloadSystemElements() {
     'android',
   ];
   for (var r in reload) AndroidFlutterSettings.reloadAssets(r);
+}
+
+void launchUrl(String url, {BuildContext context}) async {
+  if (await canLaunch(url))
+    await launch(url);
+  else {
+    if (context != null) {
+      Scaffold.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Unable to open $url!'),
+        ),
+      );
+    }
+  }
 }

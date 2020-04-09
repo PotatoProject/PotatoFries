@@ -105,7 +105,10 @@ class _FriesHomeState extends State<FriesHome> {
                     : MdiIcons.accountGroupOutline,
               ),
               padding: EdgeInsets.all(0),
-              onPressed: () {},
+              onPressed: () => launchUrl(
+                'https://potatoproject.co/#team',
+                context: context,
+              ),
             ),
           ),
         ],
