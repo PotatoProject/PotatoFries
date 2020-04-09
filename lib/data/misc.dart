@@ -15,6 +15,7 @@ final Map<String, dynamic> spoofing = {
     'setting_type': SettingType.GLOBAL,
     'widget_data': {
       'default': true,
-    }
+    },
+    'version': '3.1.2',
   },
 };

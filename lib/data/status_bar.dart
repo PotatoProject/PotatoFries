@@ -67,12 +67,12 @@ final Map<String, dynamic> statusbaricons = {
     'version': '3.1.5',
   },
   'systemui_tuner_statusbar': {
-    'title': 'System statusbar icons' ,
+    'title': 'System statusbar icons',
     'subtitle': 'Disable/Enable system icons from statusbar',
     'icon': Icons.settings_system_daydream,
-    'widget': WidgetType.ACTIVITY ,
-    'class': 'com.android.systemui.tuner.StatusbarItemsActivity' ,
-    'package': 'com.android.systemui' ,
+    'widget': WidgetType.ACTIVITY,
+    'class': 'com.android.systemui.tuner.StatusbarItemsActivity',
+    'package': 'com.android.systemui',
   }
 };
 
@@ -177,14 +177,15 @@ final Map<String, dynamic> statusbarbattery = {
     'setting_type': SettingType.SYSTEM,
     'widget_data': {
       'values': {
-        '0': 'Portrait' ,
-        '1': 'Circle' ,
-        '2': 'Dotted Circle' ,
-        '3': 'Solid Circle' ,
-        '4': 'Hidden' ,
+        '0': 'Portrait',
+        '1': 'Circle',
+        '2': 'Dotted Circle',
+        '3': 'Solid Circle',
+        '4': 'Hidden',
       },
       'default': '0',
     },
+    'version': '3.1.7',
   },
   'status_bar_show_battery_percent': {
     'title': 'Battery Percentage',
@@ -193,15 +194,27 @@ final Map<String, dynamic> statusbarbattery = {
     'setting_type': SettingType.SYSTEM,
     'widget_data': {
       'values': {
-        '0': 'Disabled' ,
-        '1': 'Enabled' ,
-        '2': 'Enabled while charging' ,
+        '0': 'Disabled',
+        '1': 'Enabled',
+        '2': 'Enabled while charging',
       },
       'default': '0',
     },
+    'version': '3.1.7',
   },
 };
 final Map<String, dynamic> statusbarclock = {
+  'status_bar_clock': {
+    'title': 'Enable statusbar clock',
+    'subtitle': 'Choose whether to show or hide the clock',
+    'icon': Icons.access_time,
+    'widget': WidgetType.SWITCH,
+    'setting_type': SettingType.SECURE,
+    'widget_data': {
+      'default': true,
+    },
+    'version': '3.1.7',
+  },
   'smart_clock_enable': {
     'title': 'Smart Clock',
     'subtitle': 'Show statusbar clock periodically',
@@ -211,28 +224,14 @@ final Map<String, dynamic> statusbarclock = {
     'widget_data': {
       'default': false,
     },
-    'version': '3.1.3',
-  },
-  'status_bar_clock': {
-    'title': 'Hide or show clock on statusbar',
-    'icon': Icons.access_time,
-    'widget': WidgetType.DROPDOWN,
-    'setting_type': SettingType.SECURE,
-    'widget_data': {
-      'values': {
-        '0': 'Hide' ,
-        '1': 'Show' ,
-      },
-      'default': '1'
-    },
     'dependencies': [
       {
-        'name': 'smart_clock_enable',
-        'setting_type': SettingType.SYSTEM,
-        'value': false,
+        'name': 'status_bar_clock',
+        'setting_type': SettingType.SECURE,
+        'value': true,
       },
     ],
-    'version': '3.1.5',
+    'version': '3.1.3',
   },
   'statusbar_clock_am_pm_style': {
     'title': 'AM/PM style',
@@ -241,13 +240,20 @@ final Map<String, dynamic> statusbarclock = {
     'setting_type': SettingType.SECURE,
     'widget_data': {
       'values': {
-        '0': 'Hide AM/PM' ,
-        '1': 'Small AM/PM' ,
-        '2': 'Normal AM/PM' ,
+        '0': 'Hide AM/PM',
+        '1': 'Small AM/PM',
+        '2': 'Normal AM/PM',
       },
       'default': '0',
     },
-    'version': '3.1.5',
+    'dependencies': [
+      {
+        'name': 'status_bar_clock',
+        'setting_type': SettingType.SECURE,
+        'value': true,
+      },
+    ],
+    'version': '3.1.7',
   },
   'statusbar_clock_date_display': {
     'title': 'Date size',
@@ -256,13 +262,20 @@ final Map<String, dynamic> statusbarclock = {
     'setting_type': SettingType.SECURE,
     'widget_data': {
       'values': {
-        '0': 'No date' ,
-        '1': 'Small date' ,
-        '2': 'Normal date' ,
+        '0': 'No date',
+        '1': 'Small date',
+        '2': 'Normal date',
       },
       'default': '0',
     },
-    'version': '3.1.5',
+    'dependencies': [
+      {
+        'name': 'status_bar_clock',
+        'setting_type': SettingType.SECURE,
+        'value': true,
+      },
+    ],
+    'version': '3.1.7',
   },
   'statusbar_clock_date_style': {
     'title': 'Date style',
@@ -271,13 +284,20 @@ final Map<String, dynamic> statusbarclock = {
     'setting_type': SettingType.SECURE,
     'widget_data': {
       'values': {
-        '0': 'Regular' ,
-        '1': 'Lowercase' ,
-        '2': 'Uppercase' ,
+        '0': 'Regular',
+        '1': 'Lowercase',
+        '2': 'Uppercase',
       },
       'default': '0',
     },
-    'version': '3.1.5',
+    'dependencies': [
+      {
+        'name': 'status_bar_clock',
+        'setting_type': SettingType.SECURE,
+        'value': true,
+      },
+    ],
+    'version': '3.1.7',
   },
   'statusbar_clock_date_position': {
     'title': 'Date position',
@@ -286,11 +306,18 @@ final Map<String, dynamic> statusbarclock = {
     'setting_type': SettingType.SECURE,
     'widget_data': {
       'values': {
-        '0': 'Left of clock' ,
-        '1': 'Right of clock' ,
+        '0': 'Left of clock',
+        '1': 'Right of clock',
       },
       'default': '0',
     },
-    'version': '3.1.5',
+    'dependencies': [
+      {
+        'name': 'status_bar_clock',
+        'setting_type': SettingType.SECURE,
+        'value': true,
+      },
+    ],
+    'version': '3.1.7',
   },
 };
