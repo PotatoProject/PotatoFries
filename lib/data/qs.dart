@@ -125,7 +125,6 @@ final Map<String, dynamic> qstweaks = {
   },
   'qs_rows_portrait': {
     'title': 'Tiles rows on portrait',
-    'icon': Icons.crop_portrait,
     'widget': WidgetType.SLIDER,
     'setting_type': SettingType.SYSTEM,
     'widget_data': {
@@ -138,7 +137,6 @@ final Map<String, dynamic> qstweaks = {
   },
   'qs_columns_portrait': {
     'title': 'Tiles columns on portrait',
-    'icon': Icons.crop_portrait,
     'widget': WidgetType.SLIDER,
     'setting_type': SettingType.SYSTEM,
     'widget_data': {
@@ -151,7 +149,6 @@ final Map<String, dynamic> qstweaks = {
   },
   'qs_rows_landscape': {
     'title': 'Tiles rows on landscape',
-    'icon': Icons.crop_portrait,
     'widget': WidgetType.SLIDER,
     'setting_type': SettingType.SYSTEM,
     'widget_data': {
@@ -164,7 +161,6 @@ final Map<String, dynamic> qstweaks = {
   },
   'qs_columns_landscape': {
     'title': 'Tiles columns on landscape',
-    'icon': Icons.crop_portrait,
     'widget': WidgetType.SLIDER,
     'setting_type': SettingType.SYSTEM,
     'widget_data': {
