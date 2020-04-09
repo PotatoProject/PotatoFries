@@ -31,6 +31,7 @@ class AppInfoProvider extends ChangeNotifier {
   bool _flag1 = false;
   int _flag2 = 0;
   bool _flag3 = false;
+  bool _flag4 = false;
 
   Map globalSysTheme = Map();
 
@@ -59,6 +60,7 @@ class AppInfoProvider extends ChangeNotifier {
     _flag1 = false;
     _flag2 = 0;
     _flag3 = false;
+    // flag4 controls disco settings. Do not reset!
   }
 
   set flag2(int val) {
@@ -67,16 +69,36 @@ class AppInfoProvider extends ChangeNotifier {
       _flag2 = 0;
       return;
     }
-    if (val == 0 || val >= 5) {
-      if (val != 5) _resetFlags();
-      notifyListeners();
-    }
+    if (val == 0 || val > 5) _resetFlags();
+    notifyListeners();
   }
 
   setFlag3() {
     if (!_flag3) {
       _flag3 = true;
       notifyListeners();
+    }
+  }
+
+  setFlag4() async {
+    if (_flag2 == 3 && !_flag4) {
+      _flag4 = isCompatible('3.1.7');
+      if (_flag4) {
+        await AndroidFlutterSettings.setProp(
+          'persist.sys.theme.accent_disco',
+          '0',
+        );
+        notifyListeners();
+      }
+    }
+  }
+
+  loadFlag4() async {
+    if (isCompatible('3.1.7')) {
+      var _disco = await AndroidFlutterSettings.getProp(
+              'persist.sys.theme.accent_disco') ??
+          "";
+      _flag4 = _disco != "";
     }
   }
 
@@ -93,6 +115,8 @@ class AppInfoProvider extends ChangeNotifier {
   int get flag2 => _flag2;
 
   bool get flag3 => _flag3;
+
+  bool get flag4 => _flag4 && isCompatible('3.1.7');
 
   bool isCompatible(String version, {String max, bool strict = false}) =>
       (!strict && _debug.versionCheckDisabled) ||
@@ -163,6 +187,7 @@ class AppInfoProvider extends ChangeNotifier {
     } else {
       _debug.versionSpoof = newVer;
     }
+    loadFlag4();
     notifyListeners();
     return ret;
   }
@@ -171,6 +196,7 @@ class AppInfoProvider extends ChangeNotifier {
 
   void setVersionCheckDisabled(bool disable) {
     _debug.versionCheckDisabled = disable;
+    loadFlag4();
     notifyListeners();
   }
 
@@ -178,6 +204,7 @@ class AppInfoProvider extends ChangeNotifier {
 
   void setCompatCheckDisabled(bool disable) {
     _debug.compatCheckDisabled = disable;
+    loadFlag4();
     notifyListeners();
   }
 
@@ -205,6 +232,7 @@ class AppInfoProvider extends ChangeNotifier {
       default:
         type = "Community";
     }
+    loadFlag4();
     notifyListeners();
   }
 }

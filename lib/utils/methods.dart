@@ -103,7 +103,8 @@ void showColorPickerDual(
 }
 
 Map<String, dynamic> parseVerNum(String vernum) {
-  var exp = RegExp(r"^((([0-9]+)\.([0-9]+)\.([0-9]+)(?:-([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?)(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?)$");
+  var exp = RegExp(
+      r"^((([0-9]+)\.([0-9]+)\.([0-9]+)(?:-([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?)(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?)$");
   if (!exp.hasMatch(vernum)) return null;
   Map<String, dynamic> ret = Map();
   String build;
@@ -151,10 +152,12 @@ bool isVersionCompatible(
 }
 
 Future<bool> checkCompat(Map compat) async {
-  if (compat['prop'] != null &&
-      (await AndroidFlutterSettings.getProp(compat['prop']) == 'true' ||
-          await AndroidFlutterSettings.getProp(compat['prop']) == '1'))
-    return true;
+  if (compat['prop'] != null) {
+    String propData = await AndroidFlutterSettings.getProp(compat['prop']);
+    return compat['values'] == null
+        ? (propData == 'true' || propData == '1')
+        : compat['values'].contains(propData);
+  }
   return false;
 }
 
