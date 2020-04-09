@@ -26,7 +26,8 @@ class _DebuggingPageState extends State<DebuggingPage> {
   }
 
   void updateDisco() async {
-    discoEnabled = await AndroidFlutterSettings.getProp(discoProp) == "1";
+    var propData = await AndroidFlutterSettings.getProp(discoProp);
+    discoEnabled = propData != null && propData != "";
     setState(() {});
   }
 
