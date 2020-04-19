@@ -7,6 +7,7 @@ final Map<String, dynamic> buttons = {
   'System Buttons': sysbutton,
   'System Gestures': systemgesture,
   'Power Menu Configuration': powermenu,
+  'Navigation Bar': navkeys,
 };
 
 final Map<String, dynamic> sysbutton = {
@@ -114,5 +115,22 @@ final Map<String, dynamic> systemgesture = {
       'default': false,
     },
     'version': '3.1.7',
+  },
+};
+
+final Map<String, dynamic> navkeys = {
+  'navigation_bar_show': {
+    'title': 'Navigation bar',
+    'subtitle': 'Show system software navigation keys',
+    'icon': Icons.compare_arrows,
+    'widget': WidgetType.SWITCH,
+    'setting_type': SettingType.SYSTEM,
+    'widget_data': {
+      'default': true,
+    },
+    'compat': {
+      'prop': 'ro.potato.has_hwkeys',
+    },
+    'version': '3.1.9',
   },
 };
