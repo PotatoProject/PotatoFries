@@ -120,11 +120,11 @@ class PageParser extends StatelessWidget {
                                     max: _value['version_max'])) ||
                             (!appInfoProvider.isCompatCheckDisabled() &&
                                 _value['compat'] != null &&
-                                    !(provider.getValue(settingsKey(
-                                          _key + '~COMPAT',
-                                          _value['setting_type'],
-                                        )) ??
-                                        false))) {
+                                !(provider.getValue(settingsKey(
+                                      _key + '~COMPAT',
+                                      _value['setting_type'],
+                                    )) ??
+                                    false))) {
                           return Container();
                         }
                         switch (_value['widget']) {
