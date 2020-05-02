@@ -103,7 +103,10 @@ class PageParser extends StatelessWidget {
                     var sKey = settingsKey(m['name'], m['setting_type']);
                     var sVal = provider.getValue(sKey);
                     if (sVal != null) {
-                      enabled = enabled && sVal == m['value'];
+                      enabled = enabled &&
+                          (m['values'] != null
+                              ? (m['values'] as List).contains(sVal)
+                              : sVal == m['value']);
                     }
                   }
                 }

@@ -256,8 +256,8 @@ final Map<String, dynamic> statusbarclock = {
     'version': '3.1.7',
   },
   'statusbar_clock_date_display': {
-    'title': 'Date size',
-    'icon': Icons.format_size,
+    'title': 'Date visibility',
+    'icon': Icons.visibility,
     'widget': WidgetType.DROPDOWN,
     'setting_type': SettingType.SECURE,
     'widget_data': {
@@ -291,6 +291,11 @@ final Map<String, dynamic> statusbarclock = {
       'default': '0',
     },
     'dependencies': [
+      {
+        'name': 'statusbar_clock_date_display',
+        'setting_type': SettingType.SECURE,
+        'values': ['1', '2'],
+      },
       {
         'name': 'status_bar_clock',
         'setting_type': SettingType.SECURE,
@@ -328,6 +333,11 @@ final Map<String, dynamic> statusbarclock = {
     },
     'dependencies': [
       {
+        'name': 'statusbar_clock_date_display',
+        'setting_type': SettingType.SECURE,
+        'values': ['1', '2'],
+      },
+      {
         'name': 'status_bar_clock',
         'setting_type': SettingType.SECURE,
         'value': true,
@@ -348,6 +358,11 @@ final Map<String, dynamic> statusbarclock = {
       'default': '0',
     },
     'dependencies': [
+      {
+        'name': 'statusbar_clock_date_display',
+        'setting_type': SettingType.SECURE,
+        'values': ['1', '2'],
+      },
       {
         'name': 'status_bar_clock',
         'setting_type': SettingType.SECURE,
