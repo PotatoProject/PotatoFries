@@ -6,7 +6,6 @@ import 'package:potato_fries/ui/sizeable_list_tile.dart';
 import 'package:provider/provider.dart';
 
 class IconShapePicker extends StatefulWidget {
-
   @override
   _IconShapePickerState createState() => _IconShapePickerState();
 }
@@ -46,7 +45,7 @@ class _IconShapePickerState extends State<IconShapePicker> {
                                 onTap: () {
                                   Navigator.pop(context);
                                   _provider.setIconShape(
-                                    shapesPackageLabels.indexOf(l));
+                                      shapesPackageLabels.indexOf(l));
                                 },
                                 child: ShapedIcon(
                                   iconSize: 56,
