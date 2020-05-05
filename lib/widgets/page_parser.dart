@@ -7,6 +7,7 @@ import 'package:potato_fries/provider/misc.dart';
 import 'package:potato_fries/provider/qs.dart';
 import 'package:potato_fries/provider/status_bar.dart';
 import 'package:potato_fries/provider/themes.dart';
+import 'package:potato_fries/ui/smart_icon.dart';
 import 'package:potato_fries/utils/methods.dart';
 import 'package:potato_fries/utils/obj_gen.dart';
 import 'package:potato_fries/widgets/activity.dart';
@@ -136,7 +137,7 @@ class PageParser extends StatelessWidget {
                             return SettingsSwitchTile(
                               title: _value['title'],
                               subtitle: _value['subtitle'],
-                              icon: Icon(_value['icon']),
+                              icon: SmartIcon(_value['icon']),
                               setValue: (val) {
                                 provider.setValue(
                                   settingsKey(
@@ -239,7 +240,7 @@ class PageParser extends StatelessWidget {
                             return SettingsDropdownTile(
                               title: _value['title'],
                               subtitle: _value['subtitle'],
-                              icon: Icon(_value['icon']),
+                              icon: SmartIcon(_value['icon']),
                               setValue: (val) {
                                 provider.setValue(
                                   settingsKey(
@@ -268,7 +269,7 @@ class PageParser extends StatelessWidget {
                             return ActivityTile(
                               title: _value['title'],
                               subtitle: _value['subtitle'],
-                              icon: Icon(_value['icon']),
+                              icon: SmartIcon(_value['icon']),
                               cls: _value['class'],
                               pkg: _value['package'],
                             );
