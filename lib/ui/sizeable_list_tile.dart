@@ -40,10 +40,13 @@ class SizeableListTile extends StatelessWidget {
 
     return InkWell(
       child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 16),
+        padding: EdgeInsets.symmetric(
+          horizontal: 16,
+          vertical: 8,
+        ),
         height: height,
-        width: width ?? null,
-        color: backgroundColor ?? null,
+        width: width,
+        color: backgroundColor,
         child: Row(
           children: <Widget>[
             Container(
