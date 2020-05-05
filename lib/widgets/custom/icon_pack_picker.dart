@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:potato_fries/data/constants.dart';
 import 'package:potato_fries/provider/app_info.dart';
 import 'package:potato_fries/widgets/settings_dropdown.dart';
@@ -10,7 +11,7 @@ class IconPackPicker extends StatelessWidget {
     return SettingsDropdownTile(
       title: 'System icon Pack',
       subtitle: 'Pick system icon pack',
-      icon: Icon(Icons.apps),
+      icon: Icon(MdiIcons.wifiStrength3),
       setValue: (val) => Provider.of<AppInfoProvider>(context, listen: false)
           .setIconPack(int.parse(val)),
       getValue: () =>
