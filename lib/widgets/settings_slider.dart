@@ -95,6 +95,7 @@ class SettingsSlider extends StatelessWidget {
         min: min,
         max: max,
         value: value,
+        divisions: max.toInt() - 1,
         activeColor: Theme.of(context).accentColor,
         inactiveColor: Theme.of(context).accentColor.withOpacity(0.25),
         onChanged: enabled ? onChanged : null,
