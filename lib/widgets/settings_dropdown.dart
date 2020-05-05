@@ -41,7 +41,40 @@ class _SettingsDropdownTileState extends State<SettingsDropdownTile> {
   Widget build(BuildContext context) {
     value = widget.getValue() ?? widget.defaultValue ?? widget.values[0];
     return SizeableListTile(
-      title: Container(
+      height: 64,
+      title: widget.title,
+      subtitle: widget.subtitle != null ? Text(widget.subtitle) : null,
+      icon: widget.icon,
+      trailing: Text(
+        widget.values[value],
+        style: TextStyle(
+            color: Theme.of(context).textTheme.title.color.withAlpha(160)),
+      ),
+      onTap: () async {
+        var result = await showModalBottomSheet(
+            context: context,
+            isScrollControlled: false,
+            builder: (context) => ListView(
+                  shrinkWrap: true,
+                  children: List.generate(widget.values.length, (index) {
+                    bool selected = widget.values.values.toList()[index] ==
+                        widget.values[value];
+                    return SizeableListTile(
+                      height: 56,
+                      title: widget.values.values.toList()[index],
+                      icon: selected ? Icon(Icons.check) : null,
+                      selected: selected,
+                      onTap: () => Navigator.pop(
+                          context, widget.values.keys.toList()[index]),
+                    );
+                  }),
+                ));
+
+        if (result != null) {
+          widget.setValue(result);
+        }
+      },
+      /*title: Container(
         width: double.maxFinite,
         child: DropdownButton(
           value: value,
@@ -82,7 +115,7 @@ class _SettingsDropdownTileState extends State<SettingsDropdownTile> {
             );
         },
       ),
-      footer: widget.footer,
+      footer: widget.footer,*/
     );
   }
 }

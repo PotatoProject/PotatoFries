@@ -36,6 +36,8 @@ class SizeableListTile extends StatelessWidget {
             ? Colors.black
             : Colors.white;
 
+    var _selectedColor = selectedColor ?? Theme.of(context).accentColor;
+
     return InkWell(
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 16),
@@ -49,7 +51,7 @@ class SizeableListTile extends StatelessWidget {
               child: IconTheme(
                 child: icon ?? Container(width: 24),
                 data: IconThemeData(
-                  color: selected ? selectedColor : _elementsColor,
+                  color: selected ? _selectedColor : _elementsColor,
                 ),
               ),
             ),
@@ -66,7 +68,7 @@ class SizeableListTile extends StatelessWidget {
                             style: TextStyle(
                               letterSpacing: 0.3,
                               fontSize: 16,
-                              color: selected ? selectedColor : _elementsColor,
+                              color: selected ? _selectedColor : _elementsColor,
                             ),
                           )
                         : title,
@@ -76,7 +78,7 @@ class SizeableListTile extends StatelessWidget {
                         child: subtitle ?? Container(),
                         style: TextStyle(
                           color: selected
-                              ? selectedColor.withAlpha(160)
+                              ? _selectedColor.withAlpha(160)
                               : _elementsColor.withAlpha(160),
                           fontSize: 13,
                         ),
@@ -95,7 +97,7 @@ class SizeableListTile extends StatelessWidget {
                             footer ?? "",
                             style: TextStyle(
                               color: selected
-                                  ? selectedColor.withAlpha(160)
+                                  ? _selectedColor.withAlpha(160)
                                   : _elementsColor.withAlpha(160),
                               fontSize: 13,
                             ),
