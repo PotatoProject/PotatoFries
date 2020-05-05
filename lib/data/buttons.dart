@@ -1,5 +1,6 @@
 import 'package:android_flutter_settings/android_flutter_settings.dart';
 import 'package:flutter/material.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:potato_fries/widgets/directory.dart';
 
 final Map<String, dynamic> buttons = {
@@ -26,7 +27,7 @@ final Map<String, dynamic> powermenu = {
   'reboot_in_power_menu': {
     'title': 'Restart',
     'subtitle': 'Add restart in powermenu',
-    'icon': Icons.control_point,
+    'icon': MdiIcons.restart,
     'widget': WidgetType.SWITCH,
     'setting_type': SettingType.SECURE,
     'widget_data': {
@@ -37,7 +38,7 @@ final Map<String, dynamic> powermenu = {
   'advanced_reboot_in_power_menu': {
     'title': 'Advanced restart',
     'subtitle': 'Add advanced restart in powermenu',
-    'icon': Icons.control_point_duplicate,
+    'icon': Icons.data_usage,
     'widget': WidgetType.SWITCH,
     'setting_type': SettingType.SECURE,
     'widget_data': {
@@ -48,7 +49,7 @@ final Map<String, dynamic> powermenu = {
   'screenshot_in_power_menu': {
     'title': 'Screenshot menu',
     'subtitle': 'Add screenshot in powermenu',
-    'icon': Icons.add_photo_alternate,
+    'icon': MdiIcons.cellphoneScreenshot,
     'widget': WidgetType.SWITCH,
     'setting_type': SettingType.SECURE,
     'widget_data': {
@@ -59,7 +60,7 @@ final Map<String, dynamic> powermenu = {
   'screenrecord_in_power_menu': {
     'title': 'Screenrecord menu',
     'subtitle': 'Add screenrecord in powermenu',
-    'icon': Icons.fiber_manual_record,
+    'icon': MdiIcons.video,
     'widget': WidgetType.SWITCH,
     'setting_type': SettingType.SECURE,
     'widget_data': {

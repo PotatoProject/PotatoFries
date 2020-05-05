@@ -1,5 +1,6 @@
 import 'package:android_flutter_settings/android_flutter_settings.dart';
 import 'package:flutter/material.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:potato_fries/widgets/directory.dart';
 
 final Map<String, dynamic> statusBar = {
@@ -36,7 +37,7 @@ final Map<String, dynamic> statusbaricons = {
   'volte_icon': {
     'title': 'VoLTE icon',
     'subtitle': 'Display HD icon in status bar for VoLTE',
-    'icon': Icons.signal_cellular_null,
+    'icon': Icons.hd,
     'widget': WidgetType.SWITCH,
     'setting_type': SettingType.SYSTEM,
     'widget_data': {
@@ -58,7 +59,7 @@ final Map<String, dynamic> statusbaricons = {
   'statusbar_privacy_indicators': {
     'title': 'Statusbar privacy indicators',
     'subtitle': 'Show permission hub icons on statusbar',
-    'icon': Icons.phonelink_lock,
+    'icon': MdiIcons.security,
     'widget': WidgetType.SWITCH,
     'setting_type': SettingType.SYSTEM,
     'widget_data': {
@@ -80,7 +81,7 @@ final Map<String, dynamic> netTraffic = {
   'network_traffic_state': {
     'title': 'Network traffic',
     'subtitle': 'Enable or disable network speed indicators',
-    'icon': Icons.compare_arrows,
+    'icon': Icons.swap_vert,
     'widget': WidgetType.SWITCH,
     'setting_type': SettingType.SYSTEM,
     'widget_data': {
@@ -91,7 +92,6 @@ final Map<String, dynamic> netTraffic = {
   'network_traffic_hidearrow': {
     'title': 'Hide arrows',
     'subtitle': 'Hide the network traffic indicator arrows',
-    'icon': Icons.arrow_drop_down,
     'widget': WidgetType.SWITCH,
     'setting_type': SettingType.SYSTEM,
     'widget_data': {
@@ -172,7 +172,7 @@ final Map<String, dynamic> displayCutouts = {
 final Map<String, dynamic> statusbarbattery = {
   'status_bar_battery_style': {
     'title': 'Battery Style',
-    'icon': Icons.battery_unknown,
+    'icon': Icons.battery_full,
     'widget': WidgetType.DROPDOWN,
     'setting_type': SettingType.SYSTEM,
     'widget_data': {
@@ -189,7 +189,7 @@ final Map<String, dynamic> statusbarbattery = {
   },
   'status_bar_show_battery_percent': {
     'title': 'Battery Percentage',
-    'icon': Icons.battery_full,
+    'icon': MdiIcons.percent,
     'widget': WidgetType.DROPDOWN,
     'setting_type': SettingType.SYSTEM,
     'widget_data': {
@@ -218,7 +218,7 @@ final Map<String, dynamic> statusbarclock = {
   'smart_clock_enable': {
     'title': 'Smart Clock',
     'subtitle': 'Show statusbar clock periodically',
-    'icon': Icons.fiber_smart_record,
+    'icon': MdiIcons.timerSandEmpty,
     'widget': WidgetType.SWITCH,
     'setting_type': SettingType.SYSTEM,
     'widget_data': {
@@ -235,7 +235,6 @@ final Map<String, dynamic> statusbarclock = {
   },
   'statusbar_clock_am_pm_style': {
     'title': 'AM/PM style',
-    'icon': Icons.crop_portrait,
     'widget': WidgetType.DROPDOWN,
     'setting_type': SettingType.SECURE,
     'widget_data': {
@@ -347,7 +346,6 @@ final Map<String, dynamic> statusbarclock = {
   },
   'statusbar_clock_date_position': {
     'title': 'Date position',
-    'icon': Icons.insert_chart,
     'widget': WidgetType.DROPDOWN,
     'setting_type': SettingType.SECURE,
     'widget_data': {
