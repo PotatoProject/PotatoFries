@@ -8,9 +8,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  flutter_svg: ^0.13.0
-  cupertino_icons: ^0.1.2
-  shared_preferences: ^0.5.1+1
+  flutter_svg: any
+  shared_preferences: any
   url_launcher: any
   simple_animations: any
   android_flutter_settings:
@@ -19,8 +18,8 @@ dependencies:
   spicy_components:
     git:
       url: https://github.com/HrX03/SpicyUIComponents
-  outline_material_icons:
-  material_design_icons_flutter:
+  outline_material_icons: any
+  material_design_icons_flutter: any
   provider: any
 
 dev_dependencies:
