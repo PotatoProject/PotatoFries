@@ -8,8 +8,4 @@ class NoGlowScrollBehavior extends ScrollBehavior {
     AxisDirection axisDirection,
   ) =>
       child;
-
-  @override
-  ScrollPhysics getScrollPhysics(BuildContext context) =>
-      const BouncingScrollPhysics();
 }

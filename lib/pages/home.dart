@@ -1,13 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:potato_fries/data/constants.dart';
-import 'package:potato_fries/pages/buttons.dart';
 import 'package:potato_fries/pages/debugging.dart';
-import 'package:potato_fries/pages/lock_screen.dart';
-import 'package:potato_fries/pages/misc.dart';
-import 'package:potato_fries/pages/qs.dart';
-import 'package:potato_fries/pages/status_bar.dart';
-import 'package:potato_fries/pages/themes.dart';
 import 'package:potato_fries/provider/app_info.dart';
 import 'package:potato_fries/utils/methods.dart';
 import 'package:potato_fries/widgets/directory.dart';

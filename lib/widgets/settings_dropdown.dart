@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:potato_fries/ui/cross_fade.dart';
 import 'package:potato_fries/ui/sizeable_list_tile.dart';
 
 class SettingsDropdownTile extends StatefulWidget {

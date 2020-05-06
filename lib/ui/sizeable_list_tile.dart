@@ -78,15 +78,24 @@ class SizeableListTile extends StatelessWidget {
                         : title,
                     Visibility(
                       visible: subtitle != null,
-                      child: DefaultTextStyle(
-                        child: subtitle ?? Container(),
-                        style: TextStyle(
-                          color: selected
-                              ? _selectedColor.withAlpha(160)
-                              : _elementsColor.withAlpha(160),
-                          fontSize: 13,
-                        ),
-                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Divider(
+                            height: 4,
+                            color: Colors.transparent,
+                          ),
+                          DefaultTextStyle(
+                            child: subtitle ?? Container(),
+                            style: TextStyle(
+                              color: selected
+                                  ? _selectedColor.withAlpha(160)
+                                  : _elementsColor.withAlpha(160),
+                              fontSize: 13,
+                            ),
+                          ),
+                        ],
+                      )
                     ),
                     Visibility(
                       visible: footer != null,
