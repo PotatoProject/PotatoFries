@@ -29,7 +29,7 @@ class _IconShapePickerState extends State<IconShapePicker> {
                     Padding(
                       padding: const EdgeInsets.only(bottom: 24.0),
                       child: Text(
-                        'Icon Shape',
+                        'System icon Shape',
                         style: Theme.of(context).textTheme.title,
                       ),
                     ),
@@ -81,12 +81,11 @@ class _IconShapePickerState extends State<IconShapePicker> {
           );
         }).toList(),
       ),
-      subtitle: Text('Set system-wide icon shape'),
-      trailing: Stack(
-        alignment: AlignmentDirectional.centerEnd,
+      subtitle: Stack(
+        alignment: AlignmentDirectional.centerStart,
         children: shapesPackageLabels.map((t) {
           return AnimatedOpacity(
-            opacity: shapesPackageLabels.indexOf(t) == curType ? 0.75 : 0.0,
+            opacity: shapesPackageLabels.indexOf(t) == curType ? 1 : 0.0,
             duration: Duration(milliseconds: 300),
             curve: Curves.easeInOut,
             child: Text(t),

@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-import 'package:outline_material_icons/outline_material_icons.dart';
 import 'package:potato_fries/pages/buttons.dart';
 import 'package:potato_fries/pages/lock_screen.dart';
 import 'package:potato_fries/pages/misc.dart';
@@ -7,7 +5,6 @@ import 'package:potato_fries/pages/page.dart';
 import 'package:potato_fries/pages/qs.dart';
 import 'package:potato_fries/pages/status_bar.dart';
 import 'package:potato_fries/pages/themes.dart';
-import 'package:potato_fries/ui/custom_icons.dart';
 
 const String OVERLAY_CATEGORY_COLOR =
     'android.theme.customization.accent_color';
