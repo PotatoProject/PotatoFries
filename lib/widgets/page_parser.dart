@@ -22,11 +22,9 @@ class PageParser extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Expanded(
         child: ListView.builder(
-          padding: EdgeInsets.fromLTRB(
-            8,
-            useTopPadding ? MediaQuery.of(context).padding.top : 8,
-            8,
-            8,
+          padding: EdgeInsets.only(
+            top: useTopPadding ? MediaQuery.of(context).padding.top : 8,
+            bottom: 8,
           ),
           shrinkWrap: true,
           itemCount: appData[dataKey].keys.length,
