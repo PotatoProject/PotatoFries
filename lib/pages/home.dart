@@ -54,7 +54,7 @@ class _FriesHomeState extends State<FriesHome> {
               onPressed: () => showNavigationSheet(
                 context: context,
                 provider: provider,
-                items: pageInfo,
+                items: pages,
                 onTap: (index) {
                   provider.pageIndex = index;
                   pageController.jumpToPage(provider.pageIndex);
@@ -84,7 +84,7 @@ class _FriesHomeState extends State<FriesHome> {
                   break;
               }
               return Text(
-                pageInfo.keys.toList()[provider.pageIndex],
+                pages[provider.pageIndex].title,
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w500,
@@ -116,14 +116,7 @@ class _FriesHomeState extends State<FriesHome> {
       body: PageView(
         controller: pageController,
         physics: NeverScrollableScrollPhysics(),
-        children: [
-          QuickSettings(),
-          Buttons(),
-          Themes(),
-          StatusBar(),
-          LockScreen(),
-          Misc(),
-        ],
+        children: pages,
       ),
     );
   }

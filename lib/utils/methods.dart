@@ -1,5 +1,6 @@
 import 'package:android_flutter_settings/android_flutter_settings.dart';
 import 'package:flutter/material.dart';
+import 'package:potato_fries/pages/page.dart';
 import 'package:potato_fries/provider/app_info.dart';
 import 'package:potato_fries/widgets/color_picker.dart';
 import 'package:potato_fries/widgets/color_picker_dual.dart';
@@ -17,7 +18,7 @@ SettingType sType2Enum(String s) => SettingType.values.firstWhere(
 void showNavigationSheet({
   BuildContext context,
   AppInfoProvider provider,
-  Map<String, IconData> items,
+  List<Page> items,
   Function(int index) onTap,
 }) {
   showModalBottomSheet(
@@ -29,13 +30,13 @@ void showNavigationSheet({
         items.length,
         (index) => ListTile(
           leading: Icon(
-            items.values.toList()[index],
+            items[index].icon,
             color: provider.pageIndex == index
                 ? Theme.of(context).accentColor
                 : Theme.of(context).iconTheme.color,
           ),
           title: Text(
-            items.keys.toList()[index],
+            items[index].title,
             style: TextStyle(
               color: provider.pageIndex == index
                   ? Theme.of(context).accentColor
