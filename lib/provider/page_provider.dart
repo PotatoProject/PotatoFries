@@ -4,8 +4,10 @@ import 'package:potato_fries/data/app.dart';
 import 'package:potato_fries/utils/methods.dart';
 import 'package:potato_fries/widgets/directory.dart';
 
-class ThemesDataProvider extends ChangeNotifier {
-  ThemesDataProvider() {
+class PageProvider extends ChangeNotifier {
+  final String providerKey;
+
+  PageProvider(this.providerKey) {
     loadData();
   }
 
@@ -47,8 +49,8 @@ class ThemesDataProvider extends ChangeNotifier {
   }
 
   void loadData() async {
-    for (String categoryKey in appData['themes'].keys) {
-      Map curMap = appData['themes'][categoryKey];
+    for (String categoryKey in appData[this.providerKey].keys) {
+      Map curMap = appData[this.providerKey][categoryKey];
       for (String key in curMap.keys) {
         if (curMap[key]['dependencies'] != null) {
           for (int i = 0; i < curMap[key]['dependencies'].length; i++) {

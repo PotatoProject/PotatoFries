@@ -1,12 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:potato_fries/data/app.dart';
 import 'package:potato_fries/provider/app_info.dart';
-import 'package:potato_fries/provider/buttons.dart';
-import 'package:potato_fries/provider/lock_screen.dart';
-import 'package:potato_fries/provider/misc.dart';
-import 'package:potato_fries/provider/qs.dart';
-import 'package:potato_fries/provider/status_bar.dart';
-import 'package:potato_fries/provider/themes.dart';
+import 'package:potato_fries/provider/page_provider.dart';
 import 'package:potato_fries/ui/smart_icon.dart';
 import 'package:potato_fries/utils/methods.dart';
 import 'package:potato_fries/utils/obj_gen.dart';
@@ -39,27 +34,7 @@ class PageParser extends StatelessWidget {
             List<Widget> children = [];
             String key = appData[dataKey].keys.elementAt(cindex);
             Map<String, dynamic> workingMap = appData[dataKey][key];
-            var provider;
-            switch (dataKey) {
-              case 'buttons_and_gestures':
-                provider = Provider.of<ButtonsDataProvider>(context);
-                break;
-              case 'lock_screen':
-                provider = Provider.of<LockScreenDataProvider>(context);
-                break;
-              case 'qs':
-                provider = Provider.of<QsDataProvider>(context);
-                break;
-              case 'status_bar':
-                provider = Provider.of<StatusBarDataProvider>(context);
-                break;
-              case 'themes':
-                provider = Provider.of<ThemesDataProvider>(context);
-                break;
-              case 'misc':
-                provider = Provider.of<MiscDataProvider>(context);
-                break;
-            }
+            var provider = Provider.of<PageProvider>(context);
             var appInfoProvider = Provider.of<AppInfoProvider>(context);
 
             bool emptySection = true;

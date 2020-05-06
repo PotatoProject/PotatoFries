@@ -2,37 +2,41 @@ import 'package:android_flutter_settings/android_flutter_settings.dart';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:outline_material_icons/outline_material_icons.dart';
+import 'package:potato_fries/pages/page.dart';
 import 'package:potato_fries/provider/app_info.dart';
-import 'package:potato_fries/provider/qs.dart';
+import 'package:potato_fries/provider/page_provider.dart';
+import 'package:potato_fries/provider/page_provider_registry.dart';
 import 'package:potato_fries/ui/custom_icons.dart';
 import 'package:potato_fries/ui/shaped_icon.dart';
 import 'package:potato_fries/utils/methods.dart';
 import 'package:potato_fries/widgets/page_parser.dart';
 import 'package:provider/provider.dart';
 
-class QuickSettings extends StatelessWidget {
-  final QsDataProvider provider = QsDataProvider();
+class QuickSettings extends Page {
+  @override
+  String get title => "Quick settings";
+
+  @override
+  IconData get icon => CustomIcons.quick_settings;
+
+  @override
+  String get providerKey => "qs";
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider.value(
-      value: provider,
-      child: _QuickSettingsBody(),
-    );
-  }
-}
-
-class _QuickSettingsBody extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        _header(context),
-        PageParser(
-          dataKey: 'qs',
-          useTopPadding: false,
+      value: PageProviderRegistry.getProvider(providerKey),
+      child: Builder(
+        builder: (providerContext) => Column(
+          children: <Widget>[
+            _header(providerContext),
+            PageParser(
+              dataKey: providerKey,
+              useTopPadding: false,
+            ),
+          ],
         ),
-      ],
+      ),
     );
   }
 
@@ -113,7 +117,7 @@ class _QuickSettingsBody extends StatelessWidget {
                                   ? Colors.black
                                   : Colors.white;
                           double opacity = 1.0;
-                          var provider = Provider.of<QsDataProvider>(context);
+                          var provider = Provider.of<PageProvider>(context);
                           if (!(provider.getValue(fwValsKey) ?? true)) {
                             opacity =
                                 (provider.getValue(alphaKey) ?? 255) / 255;
@@ -206,7 +210,7 @@ class __QSTileState extends State<_QSTile> {
         ? Colors.white70
         : Colors.black87;
 
-    var provider = Provider.of<QsDataProvider>(context);
+    var provider = Provider.of<PageProvider>(context);
     String fwValsKey = settingsKey('qs_panel_bg_use_fw', SettingType.SYSTEM);
     String wallKey = settingsKey('qs_panel_bg_use_wall', SettingType.SYSTEM);
     String colorKey = settingsKey('qs_panel_bg_color', SettingType.SYSTEM);
