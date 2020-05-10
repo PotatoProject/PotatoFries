@@ -2,7 +2,7 @@ import 'package:android_flutter_settings/android_flutter_settings.dart';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:outline_material_icons/outline_material_icons.dart';
-import 'package:potato_fries/pages/page.dart';
+import 'package:potato_fries/pages/base_page.dart';
 import 'package:potato_fries/provider/app_info.dart';
 import 'package:potato_fries/provider/page_provider.dart';
 import 'package:potato_fries/provider/page_provider_registry.dart';
@@ -12,7 +12,7 @@ import 'package:potato_fries/utils/methods.dart';
 import 'package:potato_fries/widgets/page_parser.dart';
 import 'package:provider/provider.dart';
 
-class QuickSettings extends Page {
+class QuickSettings extends BasePage {
   @override
   String get title => "Quick settings";
 

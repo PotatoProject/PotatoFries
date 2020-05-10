@@ -127,7 +127,7 @@ class _ColorPickerState extends State<ColorPicker> {
                 children: <Widget>[
                   Text(
                     widget.title,
-                    style: Theme.of(context).textTheme.title,
+                    style: Theme.of(context).textTheme.headline6,
                   ),
                   Visibility(
                     visible: widget.onApply != null,

@@ -1,3 +1,4 @@
+import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:potato_fries/data/constants.dart';
@@ -14,9 +15,6 @@ class FriesHome extends StatefulWidget {
 }
 
 class _FriesHomeState extends State<FriesHome> {
-  PageController pageController =
-      PageController(initialPage: 0, keepPage: false);
-
   @override
   void initState() {
     registerCustomWidgets();
@@ -51,7 +49,6 @@ class _FriesHomeState extends State<FriesHome> {
                 items: pages,
                 onTap: (index) {
                   provider.pageIndex = index;
-                  pageController.jumpToPage(provider.pageIndex);
                 },
               ),
             ),
@@ -107,10 +104,19 @@ class _FriesHomeState extends State<FriesHome> {
           ),
         ],
       ),
-      body: PageView(
-        controller: pageController,
-        physics: NeverScrollableScrollPhysics(),
-        children: pages,
+      body: PageTransitionSwitcher(
+        transitionBuilder: (
+          Widget child,
+          Animation<double> animation,
+          Animation<double> secondaryAnimation,
+        ) {
+          return FadeThroughTransition(
+            animation: animation,
+            secondaryAnimation: secondaryAnimation,
+            child: child,
+          );
+        },
+        child: pages[provider.pageIndex],
       ),
     );
   }

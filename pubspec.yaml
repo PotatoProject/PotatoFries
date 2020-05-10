@@ -21,6 +21,7 @@ dependencies:
   outline_material_icons: any
   material_design_icons_flutter: any
   provider: any
+  animations: any
 
 dev_dependencies:
   flutter_test:

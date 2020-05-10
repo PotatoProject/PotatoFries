@@ -31,8 +31,14 @@ class FriesRoot extends StatelessWidget {
           ),
           debugShowCheckedModeBanner: false,
           title: 'Fries',
-          theme: SpicyThemes.light(appInfoProvider.accentDark),
-          darkTheme: SpicyThemes.dark(appInfoProvider.accentLight),
+          theme: SpicyThemes.light(appInfoProvider.accentDark).copyWith(
+            canvasColor: SpicyThemes.light(appInfoProvider.accentLight)
+                .scaffoldBackgroundColor,
+          ),
+          darkTheme: SpicyThemes.dark(appInfoProvider.accentLight).copyWith(
+            canvasColor: SpicyThemes.dark(appInfoProvider.accentLight)
+                .scaffoldBackgroundColor,
+          ),
           home: FriesHome(),
         );
       }),
