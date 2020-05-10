@@ -1,7 +1,7 @@
+import 'package:potato_fries/pages/base_page.dart';
 import 'package:potato_fries/pages/buttons.dart';
 import 'package:potato_fries/pages/lock_screen.dart';
 import 'package:potato_fries/pages/misc.dart';
-import 'package:potato_fries/pages/page.dart';
 import 'package:potato_fries/pages/qs.dart';
 import 'package:potato_fries/pages/status_bar.dart';
 import 'package:potato_fries/pages/themes.dart';
@@ -29,7 +29,7 @@ const String OVERLAY_CATEGORY_ICON_LAUNCHER =
 const String OVERLAY_CATEGORY_ICON_THEME_PICKER =
     'android.theme.customization.icon_pack.themepicker';
 
-List<Page> pages = [
+List<BasePage> pages = [
   QuickSettings(),
   Buttons(),
   Themes(),
