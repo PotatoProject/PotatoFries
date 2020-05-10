@@ -30,7 +30,7 @@ class _IconShapePickerState extends State<IconShapePicker> {
                       padding: const EdgeInsets.only(bottom: 24.0),
                       child: Text(
                         'System icon Shape',
-                        style: Theme.of(context).textTheme.title,
+                        style: Theme.of(context).textTheme.headline6,
                       ),
                     ),
                     Row(
