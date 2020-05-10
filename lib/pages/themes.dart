@@ -119,7 +119,7 @@ class Themes extends BasePage {
         height: 10,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8),
-          color: Theme.of(context).textTheme.body1.color.withOpacity(0.2),
+          color: Theme.of(context).textTheme.headline6.color.withOpacity(0.2),
         ),
       ),
       subtitle: Padding(
@@ -128,7 +128,7 @@ class Themes extends BasePage {
           height: 10,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8),
-            color: Theme.of(context).textTheme.body1.color.withOpacity(0.15),
+            color: Theme.of(context).textTheme.headline6.color.withOpacity(0.15),
           ),
         ),
       ),

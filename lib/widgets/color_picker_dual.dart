@@ -302,7 +302,7 @@ class _ColorPickerDualState extends State<ColorPickerDual> {
                   children: <Widget>[
                     Text(
                       widget.title,
-                      style: Theme.of(context).textTheme.title,
+                      style: Theme.of(context).textTheme.headline6,
                     ),
                     Spacer(),
                     Visibility(

@@ -44,7 +44,7 @@ class _SettingsDropdownTileState extends State<SettingsDropdownTile> {
       subtitle: Text(
         widget.values[value],
         style: TextStyle(
-          color: Theme.of(context).textTheme.title.color
+          color: Theme.of(context).textTheme.headline6.color
               .withAlpha(160)
         ),
       ),

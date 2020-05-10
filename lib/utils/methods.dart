@@ -35,6 +35,7 @@ void showNavigationSheet({
                 ? Theme.of(context).accentColor
                 : Theme.of(context).iconTheme.color,
           ),
+          contentPadding: EdgeInsets.symmetric(horizontal: 24),
           title: Text(
             items[index].title,
             style: TextStyle(

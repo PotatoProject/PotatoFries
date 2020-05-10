@@ -49,7 +49,7 @@ class _DebuggingPageState extends State<DebuggingPage> {
               child: DefaultTextStyle(
                 style: TextStyle(
                   color:
-                      Theme.of(context).textTheme.title.color.withOpacity(0.7),
+                      Theme.of(context).textTheme.headline6.color.withOpacity(0.7),
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -61,7 +61,7 @@ class _DebuggingPageState extends State<DebuggingPage> {
                           style: TextStyle(
                             color: Theme.of(context)
                                 .textTheme
-                                .title
+                                .headline6
                                 .color
                                 .withOpacity(0.9),
                           ),
@@ -71,7 +71,7 @@ class _DebuggingPageState extends State<DebuggingPage> {
                           style: TextStyle(
                             color: Theme.of(context)
                                 .textTheme
-                                .title
+                                .headline6
                                 .color
                                 .withOpacity(0.7),
                           ),
@@ -272,7 +272,7 @@ class _DebuggingPageState extends State<DebuggingPage> {
                   style: TextStyle(
                     color: Theme.of(context)
                         .textTheme
-                        .title
+                        .headline6
                         .color
                         .withOpacity(0.9),
                   ),
@@ -282,7 +282,7 @@ class _DebuggingPageState extends State<DebuggingPage> {
                   style: TextStyle(
                     color: Theme.of(context)
                         .textTheme
-                        .title
+                        .headline6
                         .color
                         .withOpacity(0.7),
                   ),
