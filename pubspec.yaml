@@ -13,8 +13,7 @@ dependencies:
   url_launcher: any
   simple_animations: any
   android_flutter_settings:
-    git:
-      url: https://github.com/AgentFabulous/android_flutter_settings
+    path: /home/hrx/FlutterApps/android_flutter_settings
   spicy_components:
     git:
       url: https://github.com/HrX03/SpicyUIComponents
