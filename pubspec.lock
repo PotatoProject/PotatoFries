@@ -4,9 +4,11 @@ packages:
   android_flutter_settings:
     dependency: "direct main"
     description:
-      path: "/home/hrx/FlutterApps/android_flutter_settings"
-      relative: false
-    source: path
+      path: "."
+      ref: HEAD
+      resolved-ref: "7444a942087bb8a0437785b92ecae7023e6f2550"
+      url: "https://github.com/AgentFabulous/android_flutter_settings"
+    source: git
     version: "0.0.1"
   animations:
     dependency: "direct main"
@@ -120,7 +122,7 @@ packages:
       name: material_design_icons_flutter
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.0.5145"
+    version: "4.0.5245"
   meta:
     dependency: transitive
     description:
@@ -183,7 +185,7 @@ packages:
       name: provider
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.1.1"
+    version: "4.1.2"
   quiver:
     dependency: transitive
     description:
@@ -204,7 +206,7 @@ packages:
       name: sa_multi_tween
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.1.0"
+    version: "1.1.1"
   sa_stateless_animation:
     dependency: transitive
     description:
@@ -225,7 +227,7 @@ packages:
       name: shared_preferences
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.5.7+1"
+    version: "0.5.7+2"
   shared_preferences_macos:
     dependency: transitive
     description:
@@ -239,7 +241,7 @@ packages:
       name: shared_preferences_platform_interface
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.3"
+    version: "1.0.4"
   shared_preferences_web:
     dependency: transitive
     description:
@@ -253,7 +255,7 @@ packages:
       name: simple_animations
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.2.0"
+    version: "2.2.1"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -330,7 +332,7 @@ packages:
       name: url_launcher
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "5.4.5"
+    version: "5.4.7"
   url_launcher_macos:
     dependency: transitive
     description:
@@ -344,14 +346,14 @@ packages:
       name: url_launcher_platform_interface
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.6"
+    version: "1.0.7"
   url_launcher_web:
     dependency: transitive
     description:
       name: url_launcher_web
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.1.1+4"
+    version: "0.1.1+5"
   vector_math:
     dependency: transitive
     description:
@@ -368,4 +370,4 @@ packages:
     version: "3.6.1"
 sdks:
   dart: ">=2.7.0 <3.0.0"
-  flutter: ">=1.17.0 <2.0.0"
+  flutter: ">=1.16.0 <2.0.0"
