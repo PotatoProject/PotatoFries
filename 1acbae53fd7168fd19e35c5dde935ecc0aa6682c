@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fe9cd2d2_cdd4c8d7",
+        "filename": "lib/data/themes.dart",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1000039
+      },
+      "writtenOn": "2020-05-12T12:46:52Z",
+      "side": 1,
+      "message": "prefer merging accent and theme all in one category, theme category would be better",
+      "revId": "1acbae53fd7168fd19e35c5dde935ecc0aa6682c",
+      "serverId": "8720d348-3d66-43e6-b480-1d69039ac554",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "faffa4d3_9b541195",
+        "filename": "lib/data/themes.dart",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000039
+      },
+      "writtenOn": "2020-05-12T12:46:52Z",
+      "side": 1,
+      "message": "move this to the theme map to make it consistent",
+      "revId": "1acbae53fd7168fd19e35c5dde935ecc0aa6682c",
+      "serverId": "8720d348-3d66-43e6-b480-1d69039ac554",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "118d51e2_4b2912ff",
+        "filename": "lib/data/themes.dart",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000039
+      },
+      "writtenOn": "2020-05-12T12:46:52Z",
+      "side": 1,
+      "message": "identation",
+      "revId": "1acbae53fd7168fd19e35c5dde935ecc0aa6682c",
+      "serverId": "8720d348-3d66-43e6-b480-1d69039ac554",
+      "unresolved": true
+    }
+  ]
+}
