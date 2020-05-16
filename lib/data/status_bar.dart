@@ -181,7 +181,8 @@ final Map<String, dynamic> statusbarbattery = {
         '1': 'Circle',
         '2': 'Dotted Circle',
         '3': 'Solid Circle',
-        '4': 'Hidden',
+        '4': 'Text',
+        '5': 'Hidden',
       },
       'default': '0',
     },
@@ -194,13 +195,23 @@ final Map<String, dynamic> statusbarbattery = {
     'setting_type': SettingType.SYSTEM,
     'widget_data': {
       'values': {
-        '0': 'Disabled',
-        '1': 'Enabled',
-        '2': 'Enabled while charging',
+        '0': 'Hidden',
+        '1': 'Inside the icon',
+        '2': 'Next to the icon',
       },
       'default': '0',
     },
     'version': '3.1.7',
+  },
+  'qs_header_show_battery_percent':{
+    'title': 'QS battery percentage',
+    'subtitle': 'Show battery percentage in the QS header instead of Estimate',
+    'icon': Icons.battery_std,
+    'widget':WidgetType.SWITCH,
+    'setting_type': SettingType.SYSTEM,
+    'widget_data': {
+      'default': true,
+    },
   },
 };
 final Map<String, dynamic> statusbarclock = {
