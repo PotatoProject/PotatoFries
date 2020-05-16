@@ -65,3 +65,10 @@ const List<String> iconPackLabels = [
   'Filled',
   'Circular',
 ];
+
+const Map<String, String> lockClocks = {
+  'Default': 'com.android.keyguard.clock.DefaultClockController',
+  'Bubble': 'com.android.keyguard.clock.BubbleClockController',
+  'Analog': 'com.android.keyguard.clock.AnalogClockController',
+  'Type': 'com.android.keyguard.clock.TypeClockController',
+};

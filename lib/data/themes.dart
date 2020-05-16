@@ -19,6 +19,10 @@ final Map<String, dynamic> theme = {
     'widget': WidgetType.CUSTOM,
     'setting_type': 'IconPackPicker',
   },
+  'lock_screen_clock': {
+    'widget': WidgetType.CUSTOM,
+    'setting_type': 'LockScreenClockPicker',
+  },
   'color_bucket_overlay': {
     'title': 'Theme mode',
     'icon': Icons.color_lens,
