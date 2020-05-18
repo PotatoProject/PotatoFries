@@ -1,5 +1,6 @@
 import 'package:android_flutter_settings/android_flutter_settings.dart';
 import 'package:flutter/material.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:potato_fries/widgets/directory.dart';
 
 final Map<String, dynamic> qsData = {
@@ -16,7 +17,25 @@ final Map<String, dynamic> qsColors = {
     'setting_type': SettingType.SYSTEM,
     'widget_data': {
       'default': true,
-    }
+    },
+  },
+  'qs_tiles_bg_disco': {
+    'title': 'QS Tile Disco',
+    'subtitle': 'Make your QS Tiles colorful!',
+    'icon': MdiIcons.formatColorFill,
+    'widget': WidgetType.SWITCH,
+    'setting_type': SettingType.SYSTEM,
+    'widget_data': {
+      'default': false,
+    },
+    'dependencies': [
+      {
+        'name': 'qs_panel_bg_use_fw',
+        'setting_type': SettingType.SYSTEM,
+        'value': true,
+      },
+    ],
+    'version': '3.1.7',
   },
   'qs_panel_bg_rgb': {
     'title': 'pubg fortnite cod rgb epic gamer qs mode',
