@@ -71,8 +71,7 @@ class ClockOptions extends StatelessWidget {
         builder: (context) {
           var provider = Provider.of<ThemesProvider>(context);
           String curClock = provider.getLSClockData();
-          return Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          return Wrap(
             children: <Widget>[
               ClockPreviewWrapper(
                 child: DefaultClockPreview(),
@@ -94,6 +93,11 @@ class ClockOptions extends StatelessWidget {
                 title: lockClocks.keys.toList()[3],
                 enabled: curClock == lockClocks.keys.toList()[3],
               ),
+              ClockPreviewWrapper(
+                child: DefaultBoldClockPreview(),
+                title: lockClocks.keys.toList()[4],
+                enabled: curClock == lockClocks.keys.toList()[4],
+              ),
             ],
           );
         },
@@ -112,7 +116,9 @@ class ClockPreviewWrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var provider = Provider.of<ThemesProvider>(context);
-    return Column(
+    return Container(
+        width: MediaQuery.of(context).size.width / 4,
+      child: Column (
       children: <Widget>[
         GestureDetector(
           onTap: () => provider.setLSClockData(title),
@@ -155,6 +161,7 @@ class ClockPreviewWrapper extends StatelessWidget {
           ),
         ),
       ],
+      ),
     );
   }
 }
@@ -173,6 +180,22 @@ class DefaultClockPreview extends StatelessWidget {
         ),
       );
 }
+
+class DefaultBoldClockPreview extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) => Center(
+        child: Text(
+          MaterialLocalizations.of(context).formatTimeOfDay(
+            TimeOfDay.now(),
+            alwaysUse24HourFormat: true,
+          ),
+          style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: Theme.of(context).textTheme.bodyText1.fontSize + 6),
+        ),
+      );
+}
+
 
 class AnalogClockPreview extends StatelessWidget {
   @override
