@@ -71,4 +71,5 @@ const Map<String, String> lockClocks = {
   'Bubble': 'com.android.keyguard.clock.BubbleClockController',
   'Analog': 'com.android.keyguard.clock.AnalogClockController',
   'Type': 'com.android.keyguard.clock.TypeClockController',
+  'Bold': 'com.android.keyguard.clock.DefaultBoldClockController',
 };

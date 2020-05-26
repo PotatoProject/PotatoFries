@@ -71,8 +71,7 @@ class ClockOptions extends StatelessWidget {
         builder: (context) {
           var provider = Provider.of<ThemesProvider>(context);
           String curClock = provider.getLSClockData();
-          return Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          return Wrap(
             children: <Widget>[
               ClockPreviewWrapper(
                 child: DefaultClockPreview(),
@@ -94,6 +93,11 @@ class ClockOptions extends StatelessWidget {
                 title: lockClocks.keys.toList()[3],
                 enabled: curClock == lockClocks.keys.toList()[3],
               ),
+              ClockPreviewWrapper(
+                child: DefaultBoldClockPreview(),
+                title: lockClocks.keys.toList()[4],
+                enabled: curClock == lockClocks.keys.toList()[4],
+              ),
             ],
           );
         },
@@ -112,49 +116,53 @@ class ClockPreviewWrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var provider = Provider.of<ThemesProvider>(context);
-    return Column(
-      children: <Widget>[
-        GestureDetector(
-          onTap: () => provider.setLSClockData(title),
-          child: Container(
-            width: 100,
-            height: 100,
-            decoration: BoxDecoration(
-              border: Border.all(
-                width: 2.0,
-                color: Theme.of(context).accentColor,
+    return Container(
+      width: MediaQuery.of(context).size.width / 4,
+      child: Column(
+        children: <Widget>[
+          GestureDetector(
+            onTap: () => provider.setLSClockData(title),
+            child: Container(
+              width: 100,
+              height: 100,
+              decoration: BoxDecoration(
+                border: Border.all(
+                  width: 2.0,
+                  color: Theme.of(context).accentColor,
+                ),
+                borderRadius: BorderRadius.all(
+                  Radius.circular(16.0),
+                ),
+                color: Colors.transparent,
               ),
-              borderRadius: BorderRadius.all(
-                Radius.circular(16.0),
-              ),
-              color: Colors.transparent,
+              child: child,
             ),
-            child: child,
           ),
-        ),
-        SizedBox(height: 8),
-        Center(
-          child: InputChip(
-            avatar: enabled
-                ? Icon(
-                    Icons.check,
-                    color: enabled
-                        ? Theme.of(context).scaffoldBackgroundColor
-                        : null,
-                  )
-                : null,
-            isEnabled: true,
-            label: Text(
-              title,
-              style: enabled
-                  ? TextStyle(color: Theme.of(context).scaffoldBackgroundColor)
+          SizedBox(height: 8),
+          Center(
+            child: InputChip(
+              avatar: enabled
+                  ? Icon(
+                      Icons.check,
+                      color: enabled
+                          ? Theme.of(context).scaffoldBackgroundColor
+                          : null,
+                    )
                   : null,
+              isEnabled: true,
+              label: Text(
+                title,
+                style: enabled
+                    ? TextStyle(
+                        color: Theme.of(context).scaffoldBackgroundColor)
+                    : null,
+              ),
+              backgroundColor: enabled ? Theme.of(context).accentColor : null,
+              onPressed: () => provider.setLSClockData(title),
             ),
-            backgroundColor: enabled ? Theme.of(context).accentColor : null,
-            onPressed: () => provider.setLSClockData(title),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
@@ -169,6 +177,21 @@ class DefaultClockPreview extends StatelessWidget {
           ),
           style: TextStyle(
               fontWeight: FontWeight.w300,
+              fontSize: Theme.of(context).textTheme.bodyText1.fontSize + 6),
+        ),
+      );
+}
+
+class DefaultBoldClockPreview extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) => Center(
+        child: Text(
+          MaterialLocalizations.of(context).formatTimeOfDay(
+            TimeOfDay.now(),
+            alwaysUse24HourFormat: true,
+          ),
+          style: TextStyle(
+              fontWeight: FontWeight.bold,
               fontSize: Theme.of(context).textTheme.bodyText1.fontSize + 6),
         ),
       );
