@@ -72,4 +72,6 @@ const Map<String, String> lockClocks = {
   'Analog': 'com.android.keyguard.clock.AnalogClockController',
   'Type': 'com.android.keyguard.clock.TypeClockController',
   'Bold': 'com.android.keyguard.clock.DefaultBoldClockController',
+  'Sammy': 'com.android.keyguard.clock.SamsungClockController',
+  'Sammy Bold': 'com.android.keyguard.clock.SamsungBoldClockController',
 };
