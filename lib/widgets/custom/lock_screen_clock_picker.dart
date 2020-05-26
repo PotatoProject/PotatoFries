@@ -98,6 +98,16 @@ class ClockOptions extends StatelessWidget {
                 title: lockClocks.keys.toList()[4],
                 enabled: curClock == lockClocks.keys.toList()[4],
               ),
+              ClockPreviewWrapper(
+                child: SamsungClockPreview(),
+                title: lockClocks.keys.toList()[5],
+                enabled: curClock == lockClocks.keys.toList()[5],
+              ),
+              ClockPreviewWrapper(
+                child: SamsungBoldClockPreview(),
+                title: lockClocks.keys.toList()[6],
+                enabled: curClock == lockClocks.keys.toList()[6],
+              ),
             ],
           );
         },
@@ -457,3 +467,65 @@ const List<String> typeMinute = [
   "Fifty\nEight",
   "Fifty\nNine",
 ];
+
+class SamsungClockPreview extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(
+            MaterialLocalizations.of(context).formatHour(
+              TimeOfDay.now(),
+              alwaysUse24HourFormat: true,
+            ),
+            style: TextStyle(
+                fontWeight: FontWeight.w300,
+                fontSize: Theme.of(context).textTheme.bodyText1.fontSize + 6),
+          ),
+          Text(
+            MaterialLocalizations.of(context).formatMinute(
+              TimeOfDay.now(),
+            ),
+            style: TextStyle(
+                fontWeight: FontWeight.w300,
+                fontSize: Theme.of(context).textTheme.bodyText1.fontSize + 6),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class SamsungBoldClockPreview extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(
+            MaterialLocalizations.of(context).formatHour(
+              TimeOfDay.now(),
+              alwaysUse24HourFormat: true,
+            ),
+            style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: Theme.of(context).textTheme.bodyText1.fontSize + 6),
+          ),
+          Text(
+            MaterialLocalizations.of(context).formatMinute(
+              TimeOfDay.now(),
+            ),
+            style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: Theme.of(context).textTheme.bodyText1.fontSize + 6),
+          ),
+        ],
+      ),
+    );
+  }
+}
