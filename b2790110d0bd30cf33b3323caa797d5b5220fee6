@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bdcfacdc_c52f06c5",
+        "filename": "lib/widgets/custom/lock_screen_clock_picker.dart",
+        "patchSetId": 1
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1000039
+      },
+      "writtenOn": "2020-05-26T20:01:42Z",
+      "side": 1,
+      "message": "indentation here",
+      "range": {
+        "startLine": 120,
+        "startChar": 6,
+        "endLine": 120,
+        "endChar": 8
+      },
+      "revId": "b2790110d0bd30cf33b3323caa797d5b5220fee6",
+      "serverId": "8720d348-3d66-43e6-b480-1d69039ac554",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "510d9260_a6ee5da0",
+        "filename": "lib/widgets/custom/lock_screen_clock_picker.dart",
+        "patchSetId": 1
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1000039
+      },
+      "writtenOn": "2020-05-26T20:01:42Z",
+      "side": 1,
+      "message": "applies here too, i\u0027d run flutter format on this file tbh",
+      "revId": "b2790110d0bd30cf33b3323caa797d5b5220fee6",
+      "serverId": "8720d348-3d66-43e6-b480-1d69039ac554",
+      "unresolved": true
+    }
+  ]
+}
