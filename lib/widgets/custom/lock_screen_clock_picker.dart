@@ -23,6 +23,7 @@ class _LockScreenClockPickerState extends State<LockScreenClockPicker> {
       onTap: () {
         showModalBottomSheet(
             context: context,
+            isScrollControlled: true,
             builder: (context) {
               return Padding(
                 padding: const EdgeInsets.symmetric(vertical: 16.0),
@@ -72,6 +73,9 @@ class ClockOptions extends StatelessWidget {
           var provider = Provider.of<ThemesProvider>(context);
           String curClock = provider.getLSClockData();
           return Wrap(
+            spacing: 16.0,
+            runSpacing: 8.0,
+            alignment: WrapAlignment.center,
             children: <Widget>[
               ClockPreviewWrapper(
                 child: DefaultClockPreview(),
@@ -107,6 +111,11 @@ class ClockOptions extends StatelessWidget {
                 child: SamsungBoldClockPreview(),
                 title: lockClocks.keys.toList()[6],
                 enabled: curClock == lockClocks.keys.toList()[6],
+              ),
+              ClockPreviewWrapper(
+                child: SfunyClockPreview(),
+                title: lockClocks.keys.toList()[7],
+                enabled: curClock == lockClocks.keys.toList()[7],
               ),
             ],
           );
@@ -390,84 +399,6 @@ class TypeClockPreview extends StatelessWidget {
   }
 }
 
-const typeHeader = "It's";
-const List<String> typeHour = [
-  "Twelve",
-  "One",
-  "Two",
-  "Three",
-  "Four",
-  "Five",
-  "Six",
-  "Seven",
-  "Eight",
-  "Nine",
-  "Ten",
-  "Eleven",
-];
-const List<String> typeMinute = [
-  "O' Clock",
-  "Oh One",
-  "Oh Two",
-  "Oh Three",
-  "Oh Four",
-  "Oh Five",
-  "Oh Six",
-  "Oh Seven",
-  "Oh Eight",
-  "Oh Nine",
-  "Ten",
-  "Eleven",
-  "Twelve",
-  "Thirteen",
-  "Fourteen",
-  "Fifteen",
-  "Sixteen",
-  "Seventeen",
-  "Eighteen",
-  "Nineteen",
-  "Twenty",
-  "Twenty\nOne",
-  "Twenty\nTwo",
-  "Twenty\nThree",
-  "Twenty\nFour",
-  "Twenty\nFive",
-  "Twenty\nSix",
-  "Twenty\nSeven",
-  "Twenty\nEight",
-  "Twenty\nNine",
-  "Thirty",
-  "Thirty\nOne",
-  "Thirty\nTwo",
-  "Thirty\nThree",
-  "Thirty\nFour",
-  "Thirty\nFive",
-  "Thirty\nSix",
-  "Thirty\nSeven",
-  "Thirty\nEight",
-  "Thirty\nNine",
-  "Forty",
-  "Forty\nOne",
-  "Forty\nTwo",
-  "Forty\nThree",
-  "Forty\nFour",
-  "Forty\nFive",
-  "Forty\nSix",
-  "Forty\nSeven",
-  "Forty\nEight",
-  "Forty\nNine",
-  "Fifty",
-  "Fifty\nOne",
-  "Fifty\nTwo",
-  "Fifty\nThree",
-  "Fifty\nFour",
-  "Fifty\nFive",
-  "Fifty\nSix",
-  "Fifty\nSeven",
-  "Fifty\nEight",
-  "Fifty\nNine",
-];
-
 class SamsungClockPreview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -522,6 +453,38 @@ class SamsungBoldClockPreview extends StatelessWidget {
             ),
             style: TextStyle(
                 fontWeight: FontWeight.bold,
+                fontSize: Theme.of(context).textTheme.bodyText1.fontSize + 6),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class SfunyClockPreview extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          Text(
+            MaterialLocalizations.of(context).formatHour(
+              TimeOfDay.now(),
+              alwaysUse24HourFormat: true,
+            ),
+            style: TextStyle(
+                fontWeight: FontWeight.w300,
+                fontSize: Theme.of(context).textTheme.bodyText1.fontSize + 15),
+          ),
+          SizedBox(width: 2),
+          Text(
+            MaterialLocalizations.of(context).formatMinute(
+              TimeOfDay.now(),
+            ),
+            style: TextStyle(
+                fontWeight: FontWeight.w300,
                 fontSize: Theme.of(context).textTheme.bodyText1.fontSize + 6),
           ),
         ],
