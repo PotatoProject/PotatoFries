@@ -39,4 +39,21 @@ final Map<String, dynamic> theme = {
     },
     'version': '3.1.8',
   },
+  'sysui_volume_plugin': {
+    'title': 'Volume panel',
+    'icon': Icons.music_note,
+    'widget': WidgetType.DROPDOWN,
+    'setting_type': SettingType.SYSTEM,
+    'widget_data': {
+      'values': {
+        'co.potatoproject.plugin.volume.aosp': 'Aosp',
+        'co.potatoproject.plugin.volume.fancy': 'Fancy',
+        'co.potatoproject.plugin.volume.toggle': 'Toggle',
+        'co.potatoproject.plugin.volume.oreo': 'Oreo',
+      },
+      'default': 'co.potatoproject.plugin.volume.aosp',
+    },
+    'version': '3.2.0',
+    'cooldown': 1500,
+  },
 };
