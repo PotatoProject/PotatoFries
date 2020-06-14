@@ -10,6 +10,7 @@ class SettingsSwitchTile extends StatefulWidget {
   final Function setValue;
   final Function getValue;
   final bool defaultValue;
+  final int cooldown;
 
   SettingsSwitchTile({
     @required this.title,
@@ -20,6 +21,7 @@ class SettingsSwitchTile extends StatefulWidget {
     @required this.setValue,
     @required this.getValue,
     this.defaultValue,
+    this.cooldown,
   })  : assert(title != null),
         assert(setValue != null),
         assert(getValue != null);
@@ -30,27 +32,41 @@ class SettingsSwitchTile extends StatefulWidget {
 
 class _SettingsSwitchTileState extends State<SettingsSwitchTile> {
   bool value = false;
+  bool coolingDown = false;
 
   @override
   Widget build(BuildContext context) {
     value = widget.getValue() ?? widget.defaultValue ?? false;
-    return SizeableListTile(
-      title: widget.title,
-      icon: widget.icon,
-      subtitle: widget.subtitle == null ? null : Text(widget.subtitle),
-      footer: widget.footer,
-      trailing: SettingsSwitch(
-        enabled: widget.enabled,
-        setValue: (v) {
-          setState(() => value = v);
-          widget.setValue(value);
-        },
-        value: value,
+    return AnimatedOpacity(
+      opacity: coolingDown ? 0.5 : 1.0,
+      duration: Duration(milliseconds: 300),
+      child: IgnorePointer(
+        ignoring: coolingDown,
+        child: SizeableListTile(
+          title: widget.title,
+          icon: widget.icon,
+          subtitle: widget.subtitle == null ? null : Text(widget.subtitle),
+          footer: widget.footer,
+          trailing: SettingsSwitch(
+            enabled: widget.enabled,
+            setValue: (v) {
+              setState(() => value = v);
+              widget.setValue(value);
+              setState(() => coolingDown = true);
+              Future.delayed(Duration(milliseconds: widget.cooldown),
+                  () => setState(() => coolingDown = false));
+            },
+            value: value,
+          ),
+          onTap: () {
+            setState(() => value = !value);
+            widget.setValue(value);
+            setState(() => coolingDown = true);
+            Future.delayed(Duration(milliseconds: widget.cooldown),
+                () => setState(() => coolingDown = false));
+          },
+        ),
       ),
-      onTap: () {
-        setState(() => value = !value);
-        widget.setValue(value);
-      },
     );
   }
 }
