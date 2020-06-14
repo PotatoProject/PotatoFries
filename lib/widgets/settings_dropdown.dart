@@ -11,6 +11,7 @@ class SettingsDropdownTile extends StatefulWidget {
   final Function getValue;
   final Map values;
   final String defaultValue;
+  final int cooldown;
 
   SettingsDropdownTile({
     @required this.title,
@@ -22,6 +23,7 @@ class SettingsDropdownTile extends StatefulWidget {
     @required this.getValue,
     this.values,
     this.defaultValue,
+    this.cooldown,
   })  : assert(title != null),
         assert(setValue != null),
         assert(getValue != null),
@@ -35,42 +37,53 @@ class SettingsDropdownTile extends StatefulWidget {
 
 class _SettingsDropdownTileState extends State<SettingsDropdownTile> {
   String value = '';
+  bool coolingDown = false;
 
   @override
   Widget build(BuildContext context) {
     value = widget.getValue() ?? widget.defaultValue ?? widget.values[0];
-    return SizeableListTile(
-      title: widget.title,
-      subtitle: Text(
-        widget.values[value],
-        style: TextStyle(
-            color: Theme.of(context).textTheme.headline6.color.withAlpha(160)),
-      ),
-      icon: widget.icon,
-      onTap: () async {
-        var result = await showModalBottomSheet(
-            context: context,
-            isScrollControlled: false,
-            builder: (context) => ListView(
-                  shrinkWrap: true,
-                  physics: ClampingScrollPhysics(),
-                  children: List.generate(widget.values.length, (index) {
-                    bool selected = widget.values.values.toList()[index] ==
-                        widget.values[value];
-                    return SizeableListTile(
-                      title: widget.values.values.toList()[index],
-                      icon: selected ? Icon(Icons.check) : null,
-                      selected: selected,
-                      onTap: () => Navigator.pop(
-                          context, widget.values.keys.toList()[index]),
-                    );
-                  }),
-                ));
+    return AnimatedOpacity(
+      opacity: coolingDown ? 0.5 : 1,
+      duration: Duration(milliseconds: 300),
+      child: IgnorePointer(
+        ignoring: coolingDown,
+        child: SizeableListTile(
+          title: widget.title,
+          subtitle: Text(
+            widget.values[value],
+            style: TextStyle(
+                color: Theme.of(context).textTheme.headline6.color.withAlpha(160)),
+          ),
+          icon: widget.icon,
+          onTap: () async {
+            var result = await showModalBottomSheet(
+                context: context,
+                isScrollControlled: false,
+                builder: (context) => ListView(
+                      shrinkWrap: true,
+                      physics: ClampingScrollPhysics(),
+                      children: List.generate(widget.values.length, (index) {
+                        bool selected = widget.values.values.toList()[index] ==
+                            widget.values[value];
+                        return SizeableListTile(
+                          title: widget.values.values.toList()[index],
+                          icon: selected ? Icon(Icons.check) : null,
+                          selected: selected,
+                          onTap: () => Navigator.pop(
+                              context, widget.values.keys.toList()[index]),
+                        );
+                      }),
+                    ));
 
-        if (result != null) {
-          widget.setValue(result);
-        }
-      },
+            if (result != null) {
+              widget.setValue(result);
+              setState(() => coolingDown = true);
+              Future.delayed(Duration(milliseconds: widget.cooldown),
+                  () => setState(() => coolingDown = false));
+            }
+          },
+        ),
+      ),
     );
   }
 }

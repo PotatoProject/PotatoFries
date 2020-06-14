@@ -110,6 +110,7 @@ class PageParser extends StatelessWidget {
                               title: _value['title'],
                               subtitle: _value['subtitle'],
                               icon: SmartIcon(_value['icon']),
+                              cooldown: _value['cooldown'] as int,
                               setValue: (val) {
                                 provider.setValue(
                                   settingsKey(
@@ -213,6 +214,7 @@ class PageParser extends StatelessWidget {
                               title: _value['title'],
                               subtitle: _value['subtitle'],
                               icon: SmartIcon(_value['icon']),
+                              cooldown: _value['cooldown'] as int,
                               setValue: (val) {
                                 provider.setValue(
                                   settingsKey(

@@ -17,6 +17,8 @@
 
 # Visual Studio Code related
 .vscode/
+**/.project
+**/.settings
 
 # Flutter/Dart/Pub related
 **/doc/api/
