@@ -269,6 +269,15 @@ class _ColorPickerDualState extends State<ColorPickerDual> {
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
+    Orientation orientation = MediaQuery.of(context).orientation;
+    if (orientation == Orientation.landscape) {
+      var temp = width;
+      width = height;
+      height = temp;
+    }
+
     lightness = widget.lightnessLocked ? 0.5 : lightness;
     double lightnessLight = lightness;
     double lightnessDark = lightness;
@@ -410,7 +419,12 @@ class _ColorPickerDualState extends State<ColorPickerDual> {
                         visible: widget.lightnessDeltaEnd != 0 ||
                             widget.lightnessDeltaCenter != 0,
                         child: Container(
-                          height: MediaQuery.of(context).size.height / 12,
+                          height: orientation == Orientation.portrait
+                              ? height / 12
+                              : height / 10,
+                          width: orientation == Orientation.landscape
+                              ? width * 0.8
+                              : double.infinity,
                           child: Row(
                             mainAxisSize: MainAxisSize.max,
                             children: <Widget>[
@@ -439,7 +453,7 @@ class _ColorPickerDualState extends State<ColorPickerDual> {
                           Text('Hue'),
                           Spacer(),
                           Container(
-                            width: (MediaQuery.of(context).size.width / 10) * 7,
+                            width: (width / 10) * 7,
                             child: Slider(
                               activeColor: HSLColor.fromAHSL(
                                       1, hue, saturation, lightnessNeutral)
@@ -460,7 +474,7 @@ class _ColorPickerDualState extends State<ColorPickerDual> {
                           Text('Saturation'),
                           Spacer(),
                           Container(
-                            width: (MediaQuery.of(context).size.width / 10) * 7,
+                            width: (width / 10) * 7,
                             child: Slider(
                               activeColor: HSLColor.fromAHSL(
                                       1, hue, saturation, lightnessNeutral)
@@ -483,8 +497,7 @@ class _ColorPickerDualState extends State<ColorPickerDual> {
                             Text('Lightness'),
                             Spacer(),
                             Container(
-                              width:
-                                  (MediaQuery.of(context).size.width / 10) * 7,
+                              width: (width / 10) * 7,
                               child: Slider(
                                 activeColor: HSLColor.fromAHSL(
                                         1, hue, saturation, lightnessNeutral)

@@ -8,7 +8,7 @@ import 'package:potato_fries/ui/sizeable_list_tile.dart';
 import 'package:potato_fries/utils/methods.dart';
 import 'package:potato_fries/widgets/settings_switch.dart';
 import 'package:provider/provider.dart';
-import 'package:simple_animations/simple_animations.dart';
+import 'package:sa_v1_migration/sa_v1_migration.dart';
 import 'package:spicy_components/spicy_components.dart';
 
 class DebuggingPage extends StatefulWidget {

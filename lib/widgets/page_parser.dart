@@ -22,11 +22,11 @@ class PageParser extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Expanded(
         child: ListView.builder(
+          physics: BouncingScrollPhysics(),
           padding: EdgeInsets.only(
             top: useTopPadding ? MediaQuery.of(context).padding.top : 8,
             bottom: 8,
           ),
-          shrinkWrap: true,
           itemCount: appData[dataKey].keys.length,
           itemBuilder: (context, cindex) {
             List<Widget> children = [];

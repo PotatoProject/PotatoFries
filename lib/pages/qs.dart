@@ -45,13 +45,25 @@ class QuickSettings extends BasePage {
     String wallKey = settingsKey('qs_panel_bg_use_wall', SettingType.SYSTEM);
     String colorKey = settingsKey('qs_panel_bg_color', SettingType.SYSTEM);
     String alphaKey = settingsKey('qs_panel_bg_alpha', SettingType.SYSTEM);
+
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
+    Orientation orientation = MediaQuery.of(context).orientation;
+    if (orientation == Orientation.landscape) {
+      var temp = width;
+      width = height;
+      height = temp;
+    }
+
     return Padding(
       padding: EdgeInsets.only(
         top: MediaQuery.of(context).padding.top,
       ),
       child: SizedBox(
-        height: (MediaQuery.of(context).size.width / 16) * 9,
-        width: MediaQuery.of(context).size.width,
+        height: orientation == Orientation.portrait
+            ? (width / 16) * 9
+            : height * 0.2,
+        width: width,
         child: Card(
           semanticContainer: true,
           clipBehavior: Clip.antiAliasWithSaveLayer,
@@ -70,7 +82,7 @@ class QuickSettings extends BasePage {
               ),
               Container(
                 decoration: BoxDecoration(color: Colors.black38),
-                height: (MediaQuery.of(context).size.width / 16) * 9,
+                height: (width / 16) * 9,
               ),
               Container(
                 decoration: BoxDecoration(
@@ -81,7 +93,7 @@ class QuickSettings extends BasePage {
                     stops: [0.10, 0.95],
                   ),
                 ),
-                height: (MediaQuery.of(context).size.width / 16) * 9,
+                height: (width / 16) * 9,
               ),
               ListView(
                 physics: BouncingScrollPhysics(),
@@ -109,7 +121,7 @@ class QuickSettings extends BasePage {
                   Padding(
                     padding: const EdgeInsets.all(4.0),
                     child: SizedBox(
-                      height: MediaQuery.of(context).size.height / 8,
+                      height: height / 8,
                       child: Builder(
                         builder: (context) {
                           Color bgColor =

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:potato_fries/pages/home.dart';
 import 'package:potato_fries/provider/app_info.dart';
 import 'package:potato_fries/ui/scroll_behavior.dart';
@@ -17,10 +16,6 @@ class FriesRoot extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.portraitUp,
-      DeviceOrientation.portraitDown,
-    ]);
     return ChangeNotifierProvider.value(
       value: provider,
       child: Builder(builder: (context) {

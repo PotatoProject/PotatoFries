@@ -23,7 +23,7 @@ void showNavigationSheet({
 }) {
   showModalBottomSheet(
     context: context,
-    isScrollControlled: false,
+    isScrollControlled: true,
     builder: (context) => Column(
       mainAxisSize: MainAxisSize.min,
       children: List.generate(
