@@ -36,6 +36,8 @@ class _SettingsSwitchTileState extends State<SettingsSwitchTile> {
 
   @override
   Widget build(BuildContext context) {
+    print(widget.cooldown);
+
     value = widget.getValue() ?? widget.defaultValue ?? false;
     return AnimatedOpacity(
       opacity: coolingDown ? 0.5 : 1.0,
@@ -52,18 +54,22 @@ class _SettingsSwitchTileState extends State<SettingsSwitchTile> {
             setValue: (v) {
               setState(() => value = v);
               widget.setValue(value);
-              setState(() => coolingDown = true);
-              Future.delayed(Duration(milliseconds: widget.cooldown),
-                  () => setState(() => coolingDown = false));
+              if (widget.cooldown != null) {
+                setState(() => coolingDown = true);
+                Future.delayed(Duration(milliseconds: widget.cooldown),
+                    () => setState(() => coolingDown = false));
+              }
             },
             value: value,
           ),
           onTap: () {
             setState(() => value = !value);
             widget.setValue(value);
-            setState(() => coolingDown = true);
-            Future.delayed(Duration(milliseconds: widget.cooldown),
-                () => setState(() => coolingDown = false));
+            if (widget.cooldown != null) {
+              setState(() => coolingDown = true);
+              Future.delayed(Duration(milliseconds: widget.cooldown),
+                  () => setState(() => coolingDown = false));
+            }
           },
         ),
       ),
