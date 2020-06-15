@@ -77,9 +77,11 @@ class _SettingsDropdownTileState extends State<SettingsDropdownTile> {
 
             if (result != null) {
               widget.setValue(result);
-              setState(() => coolingDown = true);
-              Future.delayed(Duration(milliseconds: widget.cooldown),
-                  () => setState(() => coolingDown = false));
+              if(widget.cooldown != null) {
+                setState(() => coolingDown = true);
+                Future.delayed(Duration(milliseconds: widget.cooldown),
+                    () => setState(() => coolingDown = false));
+              }
             }
           },
         ),
