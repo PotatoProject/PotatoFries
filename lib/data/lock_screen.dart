@@ -3,10 +3,18 @@ import 'package:flutter/material.dart';
 import 'package:potato_fries/widgets/directory.dart';
 
 final Map<String, dynamic> lockScreen = {
-  'Lockscreen Stuff': lsstuff,
+  'Clocks': clocks,
+  'Album art': albumArt,
 };
 
-final Map<String, dynamic> lsstuff = {
+final Map<String, dynamic> clocks = {
+  'lock_screen_clock': {
+    'widget': WidgetType.CUSTOM,
+    'setting_type': 'LockScreenClockPicker',
+  },
+};
+
+final Map<String, dynamic> albumArt = {
   'lockscreen_media_metadata': {
     'title': 'Lockscreen media art',
     'subtitle': 'Show album art on lockscreen',
