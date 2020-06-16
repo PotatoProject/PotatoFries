@@ -14,4 +14,7 @@ class Resources {
 
   static Future<int> getAccentLight() async =>
       await getColor('android', 'accent_device_default_dark');
+
+  static Future<int> getBackgroundColor() async =>
+      await getColor('android', 'primary_device_default_dark');
 }

@@ -15,6 +15,7 @@ class AppInfoProvider extends ChangeNotifier {
   int _pageIndex = 0;
   Color _accentDark = Colors.lightBlueAccent;
   Color _accentLight = Colors.blueAccent;
+  Color _background = Colors.black;
   Map<String, dynamic> _hostVersion = {
     'MAJOR': 0,
     'MINOR': 0,
@@ -105,6 +106,8 @@ class AppInfoProvider extends ChangeNotifier {
   Color get accentDark => _accentDark;
 
   Color get accentLight => _accentLight;
+
+  Color get background => _background;
 
   int get pageIndex => _pageIndex;
 
@@ -213,6 +216,7 @@ class AppInfoProvider extends ChangeNotifier {
   void loadData() async {
     _accentDark = Color(await Resources.getAccentDark());
     _accentLight = Color(await Resources.getAccentLight());
+    _background = Color(await Resources.getBackgroundColor());
     // Populate version details
     String verNum = await AndroidFlutterSettings.getProp('ro.potato.vernum');
     _hostVersion = parseVerNum(verNum);

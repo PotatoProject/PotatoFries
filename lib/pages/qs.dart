@@ -114,7 +114,7 @@ class QuickSettings extends BasePage {
                         builder: (context) {
                           Color bgColor =
                               Theme.of(context).brightness == Brightness.dark
-                                  ? Colors.black
+                                  ? Theme.of(context).backgroundColor
                                   : Colors.white;
                           double opacity = 1.0;
                           var provider = Provider.of<PageProvider>(context);
