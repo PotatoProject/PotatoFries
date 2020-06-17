@@ -35,7 +35,7 @@ final Map<String, dynamic> theme = {
     },
     'version': '3.1.8',
   },
-  'sysui_volume_plugin': {
+  'systemui_plugin_volume': {
     'title': 'Volume panel',
     'icon': Icons.music_note,
     'widget': WidgetType.DROPDOWN,
@@ -43,9 +43,9 @@ final Map<String, dynamic> theme = {
     'widget_data': {
       'values': {
         'co.potatoproject.plugin.volume.aosp': 'Aosp',
-        'co.potatoproject.plugin.volume.fancy': 'Fancy',
-        'co.potatoproject.plugin.volume.toggle': 'Toggle',
+        'co.potatoproject.plugin.volume.compact': 'Compact',
         'co.potatoproject.plugin.volume.oreo': 'Oreo',
+        'co.potatoproject.plugin.volume.tiled': 'Tiled',
       },
       'default': 'co.potatoproject.plugin.volume.aosp',
     },
