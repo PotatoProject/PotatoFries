@@ -36,8 +36,6 @@ class _SettingsSwitchTileState extends State<SettingsSwitchTile> {
 
   @override
   Widget build(BuildContext context) {
-    print(widget.cooldown);
-
     value = widget.getValue() ?? widget.defaultValue ?? false;
     return AnimatedOpacity(
       opacity: coolingDown ? 0.5 : 1.0,
