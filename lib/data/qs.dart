@@ -132,6 +132,14 @@ final Map<String, dynamic> qsColors = {
 };
 
 final Map<String, dynamic> qstweaks = {
+  'qs_show_brightness_icon': {
+    'title': 'Show auto brightness icon on QS panel',
+    'widget': WidgetType.SWITCH,
+    'setting_type': SettingType.SYSTEM,
+    'widget_data': {
+      'default': true,
+    },
+  },
   'qs_tile_title_visibility': {
     'title': 'Show title of QS tiles',
     'subtitle': 'Hide or show title of QS tiles',
