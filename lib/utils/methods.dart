@@ -145,13 +145,20 @@ bool isVersionCompatible(
   }
   int _targetPatch = getNum(targetVersion['PATCH']);
   int _hostPatch = getNum(hostVersion['PATCH']);
-  return hostVersion['MAJOR'] >= targetVersion['MAJOR'] &&
-      hostVersion['MINOR'] >= targetVersion['MINOR'] &&
-      _hostPatch >= _targetPatch &&
-      (maxVersion == null ||
-          (hostVersion['MAJOR'] <= maxVersion['MAJOR'] &&
-              hostVersion['MINOR'] <= maxVersion['MINOR'] &&
-              _hostPatch <= getNum(maxVersion['PATCH'])));
+  // Check equality of major. We may not support a 3.x feature on 4.x, say.
+  bool ret = (hostVersion['MAJOR'] == targetVersion['MAJOR']) &&
+      ((hostVersion['MINOR'] > targetVersion['MINOR']) ||
+          (hostVersion['MINOR'] == targetVersion['MINOR'] &&
+              _hostPatch >= _targetPatch));
+  if (maxVersion != null) {
+    ret = ret &&
+        !(hostVersion['MAJOR'] > maxVersion['MAJOR'] ||
+            (hostVersion['MAJOR'] == maxVersion['MAJOR'] &&
+                (hostVersion['MINOR'] > maxVersion['MINOR'] ||
+                    (hostVersion['MINOR'] == maxVersion['MINOR'] &&
+                        _hostPatch <= getNum(maxVersion['PATCH'])))));
+  }
+  return ret;
 }
 
 Future<bool> checkCompat(Map compat) async {
