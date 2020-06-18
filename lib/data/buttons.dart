@@ -6,6 +6,7 @@ import 'package:potato_fries/widgets/directory.dart';
 final Map<String, dynamic> buttons = {
   'System Buttons': sysbutton,
   'System Gestures': systemgesture,
+  'Navigation': navigation,
   'Power Menu Configuration': powermenu,
   'Navigation Bar': navkeys,
 };
@@ -21,6 +22,33 @@ final Map<String, dynamic> sysbutton = {
       'default': false,
     },
     'version': '3.1.1',
+  },
+};
+
+final Map<String, dynamic> navigation = {
+  'navigation_handle_width': {
+    'title': 'Navigation handle length',
+    'widget': WidgetType.DROPDOWN,
+    'setting_type': SettingType.SYSTEM,
+    'widget_data': {
+      'values': {
+        '0': 'Stock',
+        '1': 'Medium',
+        '2': 'Long',
+      },
+      'default': '0',
+    },
+    'version': '3.2.0',
+  },
+  'sysui_nav_bar_inverse': {
+    'title': 'Swap navigation buttons',
+    'subtitle': 'Swap navigation buttons when using 3 button layout',
+    'widget': WidgetType.SWITCH,
+    'setting_type': SettingType.SECURE,
+    'widget_data': {
+      'default': false,
+    },
+    'version': '3.2.0',
   },
 };
 
