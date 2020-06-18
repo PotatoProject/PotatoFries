@@ -28,7 +28,8 @@ final Map<String, dynamic> sysbutton = {
 final Map<String, dynamic> navigation = {
   'sysui_nav_bar_hint': {
     'title': 'Show gestural pill',
-    'subtitle': 'Toggle the navigation handle/pill',
+    'subtitle': 'Toggle full screen navigation handle/pill',
+    'icon': MdiIcons.gestureSwipeUp,
     'widget': WidgetType.SWITCH,
     'setting_type': SettingType.SECURE,
     'widget_data': {
@@ -58,8 +59,9 @@ final Map<String, dynamic> navigation = {
     'version': '3.2.0',
   },
   'sysui_nav_bar_inverse': {
-    'title': 'Swap navigation buttons',
+    'title': 'Switch navigation buttons',
     'subtitle': 'Swap navigation buttons when using 3 button layout',
+    'icon': MdiIcons.swapHorizontal,
     'widget': WidgetType.SWITCH,
     'setting_type': SettingType.SECURE,
     'widget_data': {

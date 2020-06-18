@@ -42,7 +42,7 @@ final Map<String, dynamic> theme = {
     'setting_type': SettingType.SYSTEM,
     'widget_data': {
       'values': {
-        'co.potatoproject.plugin.volume.aosp': 'Aosp',
+        'co.potatoproject.plugin.volume.aosp': 'AOSP',
         'co.potatoproject.plugin.volume.compact': 'Compact',
         'co.potatoproject.plugin.volume.oreo': 'Oreo',
         'co.potatoproject.plugin.volume.tiled': 'Tiled',

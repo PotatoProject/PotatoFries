@@ -133,7 +133,9 @@ final Map<String, dynamic> qsColors = {
 
 final Map<String, dynamic> qstweaks = {
   'qs_show_brightness_icon': {
-    'title': 'Show auto brightness icon on QS panel',
+    'title': 'QS Auto brightness',
+    'subtitle': 'Show auto brightness icon on QS panel',
+    'icon': Icons.brightness_6,
     'widget': WidgetType.SWITCH,
     'setting_type': SettingType.SYSTEM,
     'widget_data': {
