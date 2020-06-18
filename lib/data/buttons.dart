@@ -26,6 +26,16 @@ final Map<String, dynamic> sysbutton = {
 };
 
 final Map<String, dynamic> navigation = {
+  'sysui_nav_bar_hint': {
+    'title': 'Show gestural pill',
+    'subtitle': 'Toggle the navigation handle/pill',
+    'widget': WidgetType.SWITCH,
+    'setting_type': SettingType.SECURE,
+    'widget_data': {
+      'default': true,
+    },
+    'version': '3.2.0',
+  },
   'navigation_handle_width': {
     'title': 'Navigation handle length',
     'widget': WidgetType.DROPDOWN,
@@ -38,6 +48,13 @@ final Map<String, dynamic> navigation = {
       },
       'default': '0',
     },
+    'dependencies': [
+      {
+        'name': 'sysui_nav_bar_hint',
+        'setting_type': SettingType.SECURE,
+        'value': true,
+      },
+    ],
     'version': '3.2.0',
   },
   'sysui_nav_bar_inverse': {
