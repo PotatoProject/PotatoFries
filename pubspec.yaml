@@ -22,6 +22,7 @@ dependencies:
   material_design_icons_flutter: any
   provider: any
   animations: any
+  video_player: any
 
 dev_dependencies:
   flutter_test:

@@ -40,30 +40,64 @@ class _SettingsSliderTileState extends State<SettingsSliderTile> {
 
   @override
   Widget build(BuildContext context) {
-    value = widget.getValue()?.toDouble() ?? widget.defaultValue ?? widget.min;
+    var _defaultValue = widget.defaultValue;
+    bool hasReset = false;
+    bool isCurrentDefault = false;
+    if (_defaultValue != null && _defaultValue == -1) {
+      _defaultValue = widget.min;
+      hasReset = true;
+      isCurrentDefault = (widget.getValue()?.toDouble() ??
+              widget.defaultValue ??
+              widget.min) ==
+          -1;
+    }
+
+    value = widget.getValue()?.toDouble() ?? _defaultValue ?? widget.min;
     if (value < widget.min || value > widget.max) value = widget.min;
     return SizeableListTile(
       title: widget.title,
       icon: Container(
         width: 24,
         alignment: Alignment.center,
-        child: Text((widget.percentage
-                ? widget.percentageMode == PercentageMode.ABSOLUTE
-                    ? (value / widget.max) * 100
-                    : ((value - widget.min) / (widget.max - widget.min)) * 100
-                : value.toInt())
-            .toInt()
-            .toString()),
+        child: isCurrentDefault
+            ? FittedBox(
+                fit: BoxFit.scaleDown,
+                child: Text('DEF'),
+              )
+            : Text((widget.percentage
+                    ? widget.percentageMode == PercentageMode.ABSOLUTE
+                        ? (value / widget.max) * 100
+                        : ((value - widget.min) / (widget.max - widget.min)) *
+                            100
+                    : value.toInt())
+                .toInt()
+                .toString()),
       ),
-      subtitle: SettingsSlider(
-        value: value,
-        enabled: widget.enabled,
-        min: widget.min,
-        max: widget.max,
-        onChanged: (v) {
-          setState(() => value = v);
-          widget.setValue(v);
-        },
+      subtitle: Row(
+        children: <Widget>[
+          Expanded(
+            child: SettingsSlider(
+              value: value,
+              enabled: widget.enabled,
+              min: widget.min,
+              max: widget.max,
+              onChanged: (v) {
+                setState(() => value = v);
+                widget.setValue(v);
+              },
+            ),
+          ),
+          Visibility(
+            visible: hasReset,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: IconButton(
+                onPressed: () => widget.setValue(-1),
+                icon: Icon(Icons.settings_backup_restore),
+              ),
+            ),
+          ),
+        ],
       ),
       footer: widget.footer,
     );

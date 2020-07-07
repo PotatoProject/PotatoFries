@@ -4,12 +4,80 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 import 'package:potato_fries/widgets/directory.dart';
 
 final Map<String, dynamic> statusBar = {
+  'Display cutouts': displayCutouts,
   'StatusBar Icons': statusbaricons,
   'Network Traffic Monitor': netTraffic,
-  'Display cutouts': displayCutouts,
   'Battery': statusbarbattery,
   'Clock': statusbarclock,
 };
+
+final Map<String, dynamic> displayCutouts = {
+  'display_cutout_mode': {
+    'title': 'Cutout mode',
+    'icon': Icons.aspect_ratio,
+    'widget': WidgetType.DROPDOWN,
+    'setting_type': SettingType.SYSTEM,
+    'widget_data': {
+      'values': {
+        '0': 'Normal',
+        '1': 'Immerse',
+        '2': 'Hide',
+      },
+      'default': '0',
+    },
+    'compat': {
+      'prop': 'ro.potato.has_cutout',
+    },
+    'version': '3.1.5',
+  },
+  'stock_statusbar_in_hide': {
+    'title': 'Stock Statusbar in Hide',
+    'subtitle': 'Use default (usually smaller) statusbar height in hide',
+    'icon': Icons.check_box_outline_blank,
+    'widget': WidgetType.SWITCH,
+    'setting_type': SettingType.SYSTEM,
+    'widget_data': {
+      'default': true,
+    },
+    'compat': {
+      'prop': 'ro.potato.has_cutout',
+    },
+    'dependencies': [
+      {
+        'name': 'display_cutout_mode',
+        'setting_type': SettingType.SYSTEM,
+        'value': '2',
+      },
+    ],
+    'version': '3.1.5',
+  },
+
+  'sysui_rounded_size': {
+    'title': 'Rounded corner radius',
+    'widget': WidgetType.SLIDER,
+    'setting_type': SettingType.SECURE,
+    'widget_data': {
+      'default': -1,
+      'min': 0,
+      'max': 50,
+      'percentage': false,
+    },
+    'version': '3.2.1',
+  },
+  'sysui_rounded_content_padding': {
+    'title': 'Statusbar content padding',
+    'widget': WidgetType.SLIDER,
+    'setting_type': SettingType.SECURE,
+    'widget_data': {
+      'default': 10, // TODO: Average value, use @com.android.systemui/dimen:rounded_corner_content_padding in future
+      'min': 0,
+      'max': 20,
+      'percentage': false,
+    },
+    'version': '3.2.1',
+  },
+};
+
 
 final Map<String, dynamic> statusbaricons = {
   'status_bar_logo': {
@@ -121,48 +189,6 @@ final Map<String, dynamic> netTraffic = {
         'name': 'network_traffic_state',
         'setting_type': SettingType.SYSTEM,
         'value': true,
-      },
-    ],
-    'version': '3.1.5',
-  },
-};
-
-final Map<String, dynamic> displayCutouts = {
-  'display_cutout_mode': {
-    'title': 'Cutout mode',
-    'icon': Icons.aspect_ratio,
-    'widget': WidgetType.DROPDOWN,
-    'setting_type': SettingType.SYSTEM,
-    'widget_data': {
-      'values': {
-        '0': 'Normal',
-        '1': 'Immerse',
-        '2': 'Hide',
-      },
-      'default': '0',
-    },
-    'compat': {
-      'prop': 'ro.potato.has_cutout',
-    },
-    'version': '3.1.5',
-  },
-  'stock_statusbar_in_hide': {
-    'title': 'Stock Statusbar in hide',
-    'subtitle': 'Use default (usually larger) statusbar height in hide',
-    'icon': Icons.check_box_outline_blank,
-    'widget': WidgetType.SWITCH,
-    'setting_type': SettingType.SYSTEM,
-    'widget_data': {
-      'default': true,
-    },
-    'compat': {
-      'prop': 'ro.potato.has_cutout',
-    },
-    'dependencies': [
-      {
-        'name': 'display_cutout_mode',
-        'setting_type': SettingType.SYSTEM,
-        'value': '2',
       },
     ],
     'version': '3.1.5',
