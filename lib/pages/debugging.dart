@@ -1,6 +1,7 @@
 import 'package:android_flutter_settings/android_flutter_settings.dart';
 import 'package:flutter/material.dart';
 import 'package:outline_material_icons/outline_material_icons.dart';
+import 'package:package_info/package_info.dart';
 import 'package:potato_fries/app_native/utils.dart';
 import 'package:potato_fries/provider/app_info.dart';
 import 'package:potato_fries/ui/sizeable_list_tile.dart';
@@ -36,6 +37,9 @@ class _DebuggingPageState extends State<DebuggingPage> {
     var appInfoProvider = Provider.of<AppInfoProvider>(context);
     var verNum =
         verNumString(appInfoProvider.hostVersion) ?? "Invalid Version!";
+    // ignore: non_constant_identifier_names
+    var DEBUG = false;
+    assert(DEBUG = true);
     return Scaffold(
       body: SingleChildScrollView(
         padding: EdgeInsets.only(
@@ -57,6 +61,44 @@ class _DebuggingPageState extends State<DebuggingPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
+                    Row(
+                      children: <Widget>[
+                        Text(
+                          "Fries build: ",
+                          style: TextStyle(
+                            color: Theme.of(context)
+                                .textTheme
+                                .headline6
+                                .color
+                                .withOpacity(0.9),
+                          ),
+                        ),
+                        FutureBuilder<PackageInfo>(
+                          future: PackageInfo.fromPlatform(),
+                          builder: (context, snapshot) {
+                            if (snapshot.data == null) return Container();
+                            return Text(
+                              snapshot.data.version + '+' + snapshot.data.buildNumber,
+                              style: TextStyle(
+                                color: Theme.of(context)
+                                    .textTheme
+                                    .headline6
+                                    .color
+                                    .withOpacity(0.7),
+                              ),
+                            );
+                          },
+                        ),
+
+                        Visibility(
+                          visible: DEBUG,
+                          child: Text(
+                            " (DEBUG)",
+                            style: TextStyle(color: Colors.red),
+                          ),
+                        )
+                      ],
+                    ),
                     Row(
                       children: <Widget>[
                         Text(

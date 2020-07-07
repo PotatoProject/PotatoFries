@@ -23,6 +23,7 @@ dependencies:
   provider: any
   animations: any
   video_player: any
+  package_info: any
 
 dev_dependencies:
   flutter_test:

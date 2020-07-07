@@ -24,12 +24,15 @@ class _FriesHomeState extends State<FriesHome> {
   @override
   Widget build(BuildContext context) {
     var provider = Provider.of<AppInfoProvider>(context);
+    // ignore: non_constant_identifier_names
+    var DEBUG = false;
+    assert(DEBUG = true);
     return Scaffold(
       bottomNavigationBar: SpicyBottomBar(
         leftItems: [
           GestureDetector(
-            onLongPress: provider.flag1 && provider.flag2 == 5
-                ? provider.flag3
+            onLongPress: (provider.flag1 && provider.flag2 == 5) || DEBUG
+                ? provider.flag3 || DEBUG
                     ? () => Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -39,7 +42,8 @@ class _FriesHomeState extends State<FriesHome> {
                     : () => provider.setFlag3()
                 : null,
             child: IconButton(
-              icon: provider.flag1 && provider.flag2 == 5 && provider.flag3
+              icon: (provider.flag1 && provider.flag2 == 5 && provider.flag3) ||
+                      DEBUG
                   ? Icon(Icons.bug_report)
                   : Icon(Icons.menu),
               padding: EdgeInsets.all(0),
