@@ -59,6 +59,11 @@ class _ThemeSelectorState extends State<ThemeSelector> {
                     contentPadding: EdgeInsets.symmetric(horizontal: 24),
                     title: Text(
                       f,
+                      style: _provider.background == titleColorMap[f]
+                          ? TextStyle(
+                              color: Theme.of(context).accentColor,
+                            )
+                          : TextStyle(),
                     ),
                     onTap: () {
                       AndroidFlutterSettings.putString(
