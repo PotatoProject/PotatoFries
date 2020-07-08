@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
+import androidx.core.content.res.ResourcesCompat;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -37,6 +38,8 @@ public class MainActivity extends FlutterActivity {
                         String pkg = call.argument("pkg");
                         String resName = call.argument("resName");
                         resultSuccess(result, getColor(pkg, resName));
+                    } else if (call.method.equals("getBgColor")) {
+                        resultSuccess(result, getBgColor());
                     } else {
                         result.notImplemented();
                     }
@@ -71,6 +74,10 @@ public class MainActivity extends FlutterActivity {
             e.printStackTrace();
         }
         return 0;
+    }
+
+    int getBgColor() {
+        return ResourcesCompat.getColor(getResources(), R.color.fries_bg_color, null);
     }
 
     private void resultSuccess(final MethodChannel.Result result, final Object object) {

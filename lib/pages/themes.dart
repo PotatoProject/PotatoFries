@@ -65,7 +65,7 @@ class Themes extends BasePage {
         width: width,
         child: Card(
           color: Theme.of(context).brightness == Brightness.dark
-              ? Colors.black
+              ? Theme.of(context).backgroundColor
               : Colors.white,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
           margin: EdgeInsets.all(0),
@@ -104,7 +104,7 @@ class Themes extends BasePage {
                               Icons.person,
                               color: Theme.of(context).brightness ==
                                       Brightness.dark
-                                  ? Colors.black
+                                  ? Theme.of(context).backgroundColor
                                   : Colors.white,
                             ),
                             backgroundColor: Theme.of(context).accentColor,

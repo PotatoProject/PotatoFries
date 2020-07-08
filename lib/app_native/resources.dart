@@ -9,12 +9,14 @@ class Resources {
         'resName': resName,
       });
 
+  static Future<int> getBgColor() async =>
+      await _channel.invokeMethod('getBgColor', {});
+
   static Future<int> getAccentDark() async =>
       await getColor('android', 'accent_device_default_light');
 
   static Future<int> getAccentLight() async =>
       await getColor('android', 'accent_device_default_dark');
 
-  static Future<int> getBackgroundColor() async =>
-      await getColor('android', 'primary_device_default_dark');
+  static Future<int> getBackgroundColor() async => await getBgColor();
 }
