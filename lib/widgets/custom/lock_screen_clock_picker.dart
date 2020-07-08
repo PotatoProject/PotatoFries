@@ -1,5 +1,6 @@
 import 'dart:math' as math;
 
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:potato_fries/data/constants.dart';
@@ -23,26 +24,29 @@ class _LockScreenClockPickerState extends State<LockScreenClockPicker> {
       title: 'Lock Screen Clock',
       onTap: () {
         showModalBottomSheet(
-            context: context,
-            isScrollControlled: true,
-            builder: (context) {
-              return Padding(
-                padding: const EdgeInsets.symmetric(vertical: 16.0),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    Text(
-                      'Lock Screen Clock',
-                      style: Theme.of(context).textTheme.headline6,
-                    ),
-                    SizedBox(
-                      height: 24,
-                    ),
-                    ClockOptions(provider),
-                  ],
-                ),
-              );
-            });
+          context: context,
+          isScrollControlled: true,
+          builder: (context) {
+            return Padding(
+              padding: const EdgeInsets.symmetric(vertical: 16.0),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  Text(
+                    'Lock Screen Clock',
+                    style: Theme.of(context).textTheme.headline6,
+                  ),
+                  SizedBox(
+                    height: 24,
+                  ),
+                  SingleChildScrollView(
+                    child: ClockOptions(provider),
+                  ),
+                ],
+              ),
+            );
+          },
+        );
       },
       icon: Icon(MdiIcons.lockClock),
       subtitle: Stack(
@@ -73,9 +77,10 @@ class ClockOptions extends StatelessWidget {
         builder: (context) {
           var provider = Provider.of<LockScreenProvider>(context);
           String curClock = provider.getLSClockData();
+          var orientation = MediaQuery.of(context).orientation;
           return Wrap(
-            spacing: 16.0,
-            runSpacing: 8.0,
+            spacing: orientation == Orientation.portrait ? 12.0 : 0,
+            runSpacing: orientation == Orientation.portrait ? 8.0 : 0,
             alignment: WrapAlignment.center,
             children: <Widget>[
               ClockPreviewWrapper(
