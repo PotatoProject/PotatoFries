@@ -2,6 +2,7 @@ import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:potato_fries/data/constants.dart';
+import 'package:potato_fries/pages/base_page.dart';
 import 'package:potato_fries/pages/debugging.dart';
 import 'package:potato_fries/provider/app_info.dart';
 import 'package:potato_fries/utils/methods.dart';
@@ -24,6 +25,11 @@ class _FriesHomeState extends State<FriesHome> {
   @override
   Widget build(BuildContext context) {
     var provider = Provider.of<AppInfoProvider>(context);
+
+    List<BasePage> _pages = List.from(pages);
+    if (!provider.audioFxSupported)
+      _pages.removeWhere((element) => element.providerKey == 'audiofx');
+
     // ignore: non_constant_identifier_names
     var DEBUG = false;
     assert(DEBUG = true);
@@ -50,7 +56,7 @@ class _FriesHomeState extends State<FriesHome> {
               onPressed: () => showNavigationSheet(
                 context: context,
                 provider: provider,
-                items: pages,
+                items: _pages,
                 onTap: (index) {
                   provider.pageIndex = index;
                 },
@@ -79,7 +85,7 @@ class _FriesHomeState extends State<FriesHome> {
                   break;
               }
               return Text(
-                pages[provider.pageIndex].title,
+                _pages[provider.pageIndex].title,
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w500,
@@ -120,7 +126,7 @@ class _FriesHomeState extends State<FriesHome> {
             child: child,
           );
         },
-        child: pages[provider.pageIndex],
+        child: _pages[provider.pageIndex],
       ),
     );
   }

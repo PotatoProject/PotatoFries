@@ -12,6 +12,7 @@ class SettingsDropdownTile extends StatefulWidget {
   final Map values;
   final String defaultValue;
   final int cooldown;
+  final Color selectedColor;
 
   SettingsDropdownTile({
     @required this.title,
@@ -24,6 +25,7 @@ class SettingsDropdownTile extends StatefulWidget {
     this.values,
     this.defaultValue,
     this.cooldown,
+    this.selectedColor,
   })  : assert(title != null),
         assert(setValue != null),
         assert(getValue != null),
@@ -52,32 +54,40 @@ class _SettingsDropdownTileState extends State<SettingsDropdownTile> {
           subtitle: Text(
             widget.values[value],
             style: TextStyle(
-                color: Theme.of(context).textTheme.headline6.color.withAlpha(160)),
+              color: Theme.of(context).textTheme.headline6.color.withAlpha(160),
+            ),
           ),
           icon: widget.icon,
           onTap: () async {
             var result = await showModalBottomSheet(
-                context: context,
-                isScrollControlled: false,
-                builder: (context) => ListView(
-                      shrinkWrap: true,
-                      physics: ClampingScrollPhysics(),
-                      children: List.generate(widget.values.length, (index) {
-                        bool selected = widget.values.values.toList()[index] ==
-                            widget.values[value];
-                        return SizeableListTile(
-                          title: widget.values.values.toList()[index],
-                          icon: selected ? Icon(Icons.check) : null,
-                          selected: selected,
-                          onTap: () => Navigator.pop(
-                              context, widget.values.keys.toList()[index]),
-                        );
-                      }),
-                    ));
+              context: context,
+              isScrollControlled: false,
+              builder: (context) => ListView(
+                shrinkWrap: true,
+                physics: ClampingScrollPhysics(),
+                children: List.generate(
+                  widget.values.length,
+                  (index) {
+                    bool selected = widget.values.values.toList()[index] ==
+                        widget.values[value];
+                    return SizeableListTile(
+                      selectedColor: widget.selectedColor,
+                      title: widget.values.values.toList()[index],
+                      icon: selected ? Icon(Icons.check) : null,
+                      selected: selected,
+                      onTap: () => Navigator.pop(
+                        context,
+                        widget.values.keys.toList()[index],
+                      ),
+                    );
+                  },
+                ),
+              ),
+            );
 
             if (result != null) {
               widget.setValue(result);
-              if(widget.cooldown != null) {
+              if (widget.cooldown != null) {
                 setState(() => coolingDown = true);
                 Future.delayed(Duration(milliseconds: widget.cooldown),
                     () => setState(() => coolingDown = false));

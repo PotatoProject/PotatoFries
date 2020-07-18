@@ -6,11 +6,14 @@ import 'package:potato_fries/app_native/resources.dart';
 import 'package:potato_fries/data/constants.dart';
 import 'package:potato_fries/data/debugging.dart';
 import 'package:potato_fries/utils/methods.dart';
+import 'package:effectsplugin/effectsplugin.dart';
 
 class AppInfoProvider extends ChangeNotifier {
   AppInfoProvider() {
     loadData();
   }
+
+  EFFECT_TYPE audioFxType = EFFECT_TYPE.NONE;
 
   int _pageIndex = 0;
   Color _accentDark = Colors.lightBlueAccent;
@@ -117,6 +120,8 @@ class AppInfoProvider extends ChangeNotifier {
   bool get flag3 => _flag3;
 
   bool get flag4 => _flag4 && isCompatible('3.1.7');
+
+  bool get audioFxSupported => audioFxType != EFFECT_TYPE.NONE;
 
   bool isCompatible(String version, {String max, bool strict = false}) =>
       (!strict && _debug.versionCheckDisabled) ||
@@ -233,6 +238,11 @@ class AppInfoProvider extends ChangeNotifier {
         type = "Community";
     }
     loadFlag4();
+    if (await FX.mDirac.isDiracSupported()) {
+      audioFxType = EFFECT_TYPE.DIRAC;
+    } else if (await FX.mMi.isMiSupported()) {
+      audioFxType = EFFECT_TYPE.MI;
+    }
     notifyListeners();
   }
 }

@@ -15,6 +15,9 @@ dependencies:
   android_flutter_settings:
     git:
       url: https://github.com/AgentFabulous/android_flutter_settings
+  effectsplugin:
+    git:
+      url: https://github.com/AgentFabulous/android_flutter_equalizer
   spicy_components:
     git:
       url: https://github.com/HrX03/SpicyUIComponents
@@ -24,6 +27,7 @@ dependencies:
   animations: any
   video_player: any
   package_info: any
+  flutter_xlider: any
 
 dev_dependencies:
   flutter_test:

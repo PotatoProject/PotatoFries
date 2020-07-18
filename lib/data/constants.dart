@@ -1,3 +1,4 @@
+import 'package:potato_fries/pages/audio_fx.dart';
 import 'package:potato_fries/pages/base_page.dart';
 import 'package:potato_fries/pages/buttons.dart';
 import 'package:potato_fries/pages/lock_screen.dart';
@@ -36,6 +37,7 @@ List<BasePage> pages = [
   StatusBar(),
   LockScreen(),
   Misc(),
+  AudioFx(),
 ];
 
 const List<String> shapesPackages = [
