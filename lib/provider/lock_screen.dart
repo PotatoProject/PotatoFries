@@ -19,7 +19,12 @@ class LockScreenProvider extends PageProvider {
     String valueStr =
         await AndroidFlutterSettings.getString(LS_CLOCK, SettingType.SECURE);
     Map value = valueStr == null ? null : json.decode(valueStr);
-    this.setValue(LS_CLOCK, getLSClockKey(value['clock']), mapSet: true);
+    this.setValue(
+        LS_CLOCK,
+        getLSClockKey(value == null
+            ? "com.android.keyguard.clock.DefaultClockController"
+            : value['clock']),
+        mapSet: true);
   }
 
   String getLSClockData() => this.getValue(LS_CLOCK);
