@@ -179,7 +179,10 @@ class AudioFxProvider extends ChangeNotifier {
       audioFxType = EFFECT_TYPE.MI;
       currentEffect = FX.mMi;
     }
-    if (currentEffect == null) return;
+    if (currentEffect == null) {
+      notifyListeners();
+      return;
+    }
     for (int i = 0; i < await currentEffect.getNumBands(); i++)
       bands[i] = await currentEffect.getLevel(i);
 
