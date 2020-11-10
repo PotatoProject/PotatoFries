@@ -44,3 +44,6 @@ flutter:
     - family:  CustomIcons
       fonts:
        - asset: fonts/CustomIcons.ttf
+
+dependency_overrides:
+  flutter_svg: ^0.18.0
