@@ -4,144 +4,49 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 import 'package:potato_fries/widgets/directory.dart';
 
 final Map<String, dynamic> qsData = {
-  'Colors': qsColors,
   'Quick settings tweaks': qstweaks,
 };
 
-final Map<String, dynamic> qsColors = {
-  'qs_panel_bg_use_fw': {
-    'title': 'Use framework values for QS',
-    'subtitle': 'Disable QS colors and use framework values',
-    'icon': Icons.settings_backup_restore,
-    'widget': WidgetType.SWITCH,
-    'setting_type': SettingType.SYSTEM,
-    'widget_data': {
-      'default': true,
-    },
-  },
-  'qs_tiles_bg_disco': {
-    'title': 'QS Tile Disco',
-    'subtitle': 'Make your QS Tiles colorful!',
-    'icon': MdiIcons.formatColorFill,
-    'widget': WidgetType.SWITCH,
-    'setting_type': SettingType.SYSTEM,
-    'widget_data': {
-      'default': false,
-    },
-    'dependencies': [
-      {
-        'name': 'qs_panel_bg_use_fw',
-        'setting_type': SettingType.SYSTEM,
-        'value': true,
-      },
-    ],
-    'version': '3.1.7',
-  },
-  'qs_panel_bg_rgb': {
-    'title': 'pubg fortnite cod rgb epic gamer qs mode',
-    'subtitle': 'hahayes',
-    'icon': Icons.lightbulb_outline,
-    'widget': WidgetType.SWITCH,
-    'setting_type': SettingType.SYSTEM,
-    'widget_data': {
-      'default': false,
-    },
-    'dependencies': [
-      {
-        'name': 'qs_panel_bg_use_fw',
-        'setting_type': SettingType.SYSTEM,
-        'value': false,
-      },
-    ],
-    'compat': {
-      'prop': 'persist.sys.theme.accent_disco',
-      'values': ['0', '1'],
-    },
-    'version': '3.1.7',
-  },
-  'qs_panel_bg_use_wall': {
-    'title': 'Use wallpaper colors',
-    'subtitle': 'Dynamically choose colors from the wallpaper',
-    'icon': Icons.colorize,
-    'widget': WidgetType.SWITCH,
-    'setting_type': SettingType.SYSTEM,
-    'widget_data': {
-      'default': false,
-    },
-    'dependencies': [
-      {
-        'name': 'qs_panel_bg_use_fw',
-        'setting_type': SettingType.SYSTEM,
-        'value': false,
-      },
-      {
-        'name': 'qs_panel_bg_rgb',
-        'setting_type': SettingType.SYSTEM,
-        'value': false,
-      },
-    ]
-  },
-  'qs_panel_bg_alpha': {
-    'title': 'QS Panel Opacity',
-    'widget': WidgetType.SLIDER,
-    'setting_type': SettingType.SYSTEM,
-    'widget_data': {
-      'default': 255,
-      'min': 100,
-      'max': 255,
-      'percentage': false,
-    },
-    'dependencies': [
-      {
-        'name': 'qs_panel_bg_use_fw',
-        'setting_type': SettingType.SYSTEM,
-        'value': false,
-      },
-    ],
-  },
-  'qs_panel_bg_color': {
-    'title': 'Pick QS background color',
-    'subtitle': 'Choose your favorite color!',
-    'widget': WidgetType.COLOR_PICKER,
-    'setting_type': SettingType.SYSTEM,
-    'widget_data': {
-      // TODO: Fix this in framework, do something smarter about this default
-      'default': Colors.transparent,
-      'lightness_min': 0.0,
-      'lightness_max': 0.6,
-      'unset_preview': true,
-    },
-    'dependencies': [
-      {
-        'name': 'qs_panel_bg_use_fw',
-        'setting_type': SettingType.SYSTEM,
-        'value': false,
-      },
-      {
-        'name': 'qs_panel_bg_use_wall',
-        'setting_type': SettingType.SYSTEM,
-        'value': false,
-      },
-      {
-        'name': 'qs_panel_bg_rgb',
-        'setting_type': SettingType.SYSTEM,
-        'value': false,
-      },
-    ],
-  },
-};
-
 final Map<String, dynamic> qstweaks = {
-  'qs_show_brightness_icon': {
-    'title': 'QS Auto brightness',
-    'subtitle': 'Show auto brightness icon on QS panel',
+  'status_bar_quick_qs_pulldown': {
+    'title': 'Quick QS pulldown',
+    'icon': Icons.add_road_outlined,
+    'widget': WidgetType.DROPDOWN,
+    'setting_type': SettingType.SECURE,
+'widget_data': {
+  'values': {
+    '0': 'Disabled',
+    '1': 'Pulldown statusbar from right side',
+    '2': 'Pulldown statusbar from left side',
+  },
+},
+    'version': '4.0.0',
+  },
+  'qs_show_auto_brightness': {
+    'title': 'Autobrightness icon',
+    'subtitle': 'Show auto brightness icon near the slider',
     'icon': Icons.brightness_6,
     'widget': WidgetType.SWITCH,
-    'setting_type': SettingType.SYSTEM,
+    'setting_type': SettingType.SECURE,
     'widget_data': {
       'default': true,
     },
-    'version': '3.2.0',
+    'version': '4.0.0',
+  },
+  'qs_show_brightness_slider': {
+    'title': 'Brightness slider',
+    'subtitle': 'Show a brightness slider in the quick settings panel',
+    'icon': Icons.brightness_6,
+    'widget': WidgetType.DROPDOWN,
+    'setting_type': SettingType.SECURE,
+    'widget_data': {
+      'values': {
+        '0': 'Never show',
+        '1': 'Show when QS panel is expanded',
+        '2': 'Show always',
+      },
+      'version': '4.0.0',
+    },
   },
   'qs_tile_title_visibility': {
     'title': 'Show title of QS tiles',
@@ -151,7 +56,7 @@ final Map<String, dynamic> qstweaks = {
     'widget_data': {
       'default': true,
     },
-    'version': '3.1.5',
+    'version': '4.0.0',
   },
   'qs_rows_portrait': {
     'title': 'Tiles rows on portrait',
@@ -163,7 +68,7 @@ final Map<String, dynamic> qstweaks = {
       'max': 5,
       'percentage': false,
     },
-    'version': '3.1.5',
+    'version': '4.0.0',
   },
   'qs_columns_portrait': {
     'title': 'Tiles columns on portrait',
@@ -175,7 +80,7 @@ final Map<String, dynamic> qstweaks = {
       'max': 7,
       'percentage': false,
     },
-    'version': '3.1.5',
+    'version': '4.0.0',
   },
   'qs_rows_landscape': {
     'title': 'Tiles rows on landscape',
@@ -187,7 +92,7 @@ final Map<String, dynamic> qstweaks = {
       'max': 5,
       'percentage': false,
     },
-    'version': '3.1.5',
+    'version': '4.0.0',
   },
   'qs_columns_landscape': {
     'title': 'Tiles columns on landscape',
@@ -199,6 +104,6 @@ final Map<String, dynamic> qstweaks = {
       'max': 9,
       'percentage': false,
     },
-    'version': '3.1.5',
+    'version': '4.0.0',
   },
 };
