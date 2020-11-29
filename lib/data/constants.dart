@@ -40,13 +40,6 @@ List<BasePage> pages = [
   AudioFx(),
 ];
 
-const List<String> shapesPackages = [
-  null,
-  'com.android.theme.icon.teardrop',
-  'com.android.theme.icon.roundedrect',
-  'com.android.theme.icon.squircle',
-];
-
 const List<String> shapesPackageLabels = [
   'Circle',
   'Teardrop',
