@@ -16,6 +16,7 @@ import io.flutter.plugins.GeneratedPluginRegistrant;
 
 public class MainActivity extends FlutterActivity {
     private Activity mActivity;
+    private ShapeOverlayProvider mShapeOverlayProvider;
 
     @Nullable
     @Override
@@ -25,20 +26,36 @@ public class MainActivity extends FlutterActivity {
 
     @Override
     public void configureFlutterEngine(@NonNull FlutterEngine flutterEngine) {
-        GeneratedPluginRegistrant.registerWith(flutterEngine);
+        if(mActivity == null) {
+            GeneratedPluginRegistrant.registerWith(flutterEngine);
+        }
         registerFlutterCallbacks(flutterEngine);
     }
 
     public void registerFlutterCallbacks(@NonNull FlutterEngine flutterEngine) {
         if (mActivity == null) mActivity = this;
+        mShapeOverlayProvider = new ShapeOverlayProvider(mActivity);
+
         new MethodChannel(flutterEngine.getDartExecutor(), "fries/resources").setMethodCallHandler(
                 (call, result) -> {
-                    if (call.method.equals("getColor")) {
-                        String pkg = call.argument("pkg");
-                        String resName = call.argument("resName");
-                        resultSuccess(result, getColor(pkg, resName));
-                    } else {
-                        result.notImplemented();
+                    switch (call.method) {
+                        case "getColor": {
+                            String pkg = call.argument("pkg");
+                            String resName = call.argument("resName");
+                            resultSuccess(result, getColor(pkg, resName));
+                            break;
+                        }
+                        case "getShapes": {
+                            resultSuccess(result, mShapeOverlayProvider.getInfo());
+                            break;
+                        }
+                        case "getShapeLabels": {
+                            resultSuccess(result, mShapeOverlayProvider.getLabels());
+                            break;
+                        }
+                        default: {
+                            result.notImplemented();
+                        }
                     }
                 }
         );
