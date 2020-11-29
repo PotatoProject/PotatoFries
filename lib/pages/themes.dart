@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:outline_material_icons/outline_material_icons.dart';
 import 'package:potato_fries/pages/base_page.dart';
-import 'package:potato_fries/provider/app_info.dart';
 import 'package:potato_fries/provider/page_provider_registry.dart';
 import 'package:potato_fries/ui/shaped_icon.dart';
 import 'package:potato_fries/widgets/page_parser.dart';
@@ -106,8 +105,7 @@ class Themes extends BasePage {
 
   Widget _pref(BuildContext context, IconData icon, Color color) {
     return ListTile(
-      leading: ShapedIcon(
-        type: Provider.of<AppInfoProvider>(context).getIconShapeIndex(),
+      leading: ShapedIcon.currentShape(
         iconSize: 40,
         child: Icon(
           icon,

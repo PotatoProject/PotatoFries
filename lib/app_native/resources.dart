@@ -9,6 +9,12 @@ class Resources {
         'resName': resName,
       });
 
+  static Future<Map<String, String>> getShapes() async =>
+      await _channel.invokeMapMethod<String, String>("getShapes");
+
+  static Future<Map<String, String>> getShapeLabels() async =>
+      await _channel.invokeMapMethod<String, String>("getShapeLabels");
+
   static Future<int> getAccentDark() async =>
       await getColor('android', 'accent_device_default_light');
 

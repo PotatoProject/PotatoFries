@@ -14,83 +14,75 @@ class _IconShapePickerState extends State<IconShapePicker> {
   @override
   Widget build(BuildContext context) {
     var _provider = Provider.of<AppInfoProvider>(context);
-    int curType = _provider.getIconShapeIndex();
+    MapEntry<String, String> curType = _provider.getIconShape();
+    final shapes = _provider.shapes;
+
     return SizeableListTile(
       title: 'Icon Shape',
       onTap: () {
         showModalBottomSheet(
-            context: context,
-            builder: (context) {
-              return Padding(
-                padding: const EdgeInsets.symmetric(vertical: 16.0),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 24.0),
-                      child: Text(
-                        'System icon Shape',
-                        style: Theme.of(context).textTheme.headline6,
-                      ),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: shapesPackageLabels.map((l) {
-                        return SizedBox(
-                          width: MediaQuery.of(context).size.width / 4,
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: <Widget>[
-                              GestureDetector(
-                                onTap: () {
-                                  Navigator.pop(context);
-                                  _provider.setIconShape(
-                                      shapesPackageLabels.indexOf(l));
-                                },
-                                child: ShapedIcon(
-                                  iconSize: 56,
-                                  type: shapesPackageLabels.indexOf(l),
-                                  isOutline:
-                                      curType != shapesPackageLabels.indexOf(l),
-                                ),
-                              ),
-                            ],
-                          ),
-                        );
-                      }).toList(),
-                    ),
-                    SizedBox(
-                      height: 24,
-                    ),
-                  ],
+          context: context,
+          builder: (context) {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.only(
+                    top: 24,
+                    left: 24,
+                    bottom: 24,
+                  ),
+                  child: Text(
+                    'System icon Shape',
+                    style: Theme.of(context).textTheme.headline6,
+                  ),
                 ),
-              );
-            });
+                GridView.builder(
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 4,
+                  ),
+                  padding: EdgeInsets.zero,
+                  itemBuilder: (context, index) {
+                    final MapEntry shapeInfo = MapEntry(
+                      shapes.keys.toList()[index],
+                      shapes.values.toList()[index],
+                    );
+
+                    return Center(
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.pop(context);
+                          _provider.setIconShape(index);
+                        },
+                        child: ShapedIcon(
+                          iconSize: 56,
+                          pathData: shapeInfo.value,
+                          isOutline: curType.key != shapeInfo.key,
+                        ),
+                      ),
+                    );
+                  },
+                  itemCount: shapes.length,
+                  shrinkWrap: true,
+                ),
+              ],
+            );
+          },
+        );
       },
-      icon: Stack(
-        alignment: AlignmentDirectional.centerEnd,
-        children: shapesPackageLabels.map((t) {
-          return AnimatedOpacity(
-            opacity: shapesPackageLabels.indexOf(t) == curType ? 1.0 : 0.0,
-            duration: Duration(milliseconds: 300),
-            curve: Curves.easeInOut,
-            child: ShapedIcon(
-              type: shapesPackageLabels.indexOf(t),
-              isOutline: true,
-            ),
-          );
-        }).toList(),
+      icon: ShapedIcon.currentShape(
+        isOutline: true,
       ),
-      subtitle: Stack(
-        alignment: AlignmentDirectional.centerStart,
-        children: shapesPackageLabels.map((t) {
-          return AnimatedOpacity(
-            opacity: shapesPackageLabels.indexOf(t) == curType ? 1 : 0.0,
-            duration: Duration(milliseconds: 300),
-            curve: Curves.easeInOut,
-            child: Text(t),
-          );
-        }).toList(),
+      subtitle: AnimatedSwitcher(
+        duration: Duration(milliseconds: 300),
+        child: Text(_provider.getShapeLabel()),
+        switchInCurve: Curves.easeInOut,
+        switchOutCurve: Curves.easeInOut,
+        transitionBuilder: (child, animation) => FadeTransition(
+          opacity: animation,
+          child: child,
+        ),
       ),
     );
   }
