@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6ec3e316_6b59d847",
+        "filename": "android/app/build.gradle",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2020-11-29T22:06:04Z",
+      "side": 1,
+      "message": "whitespace",
+      "revId": "1c2071f7e256ab0c37e2c8fd452161d7907a41ad",
+      "serverId": "8720d348-3d66-43e6-b480-1d69039ac554",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ea5d029_c1ddf508",
+        "filename": "lib/pages/themes.dart",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2020-11-29T22:06:04Z",
+      "side": 1,
+      "message": "Don\u0027t use relative imports",
+      "revId": "1c2071f7e256ab0c37e2c8fd452161d7907a41ad",
+      "serverId": "8720d348-3d66-43e6-b480-1d69039ac554",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "065d9897_562b25d2",
+        "filename": "lib/provider/app_info.dart",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2020-11-29T22:06:04Z",
+      "side": 1,
+      "message": "avoid relative imports",
+      "revId": "1c2071f7e256ab0c37e2c8fd452161d7907a41ad",
+      "serverId": "8720d348-3d66-43e6-b480-1d69039ac554",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d0ecc7e_d4438e95",
+        "filename": "lib/ui/shaped_icon.dart",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2020-11-29T22:06:04Z",
+      "side": 1,
+      "message": "Avoid relative imports",
+      "revId": "1c2071f7e256ab0c37e2c8fd452161d7907a41ad",
+      "serverId": "8720d348-3d66-43e6-b480-1d69039ac554",
+      "unresolved": true
+    }
+  ]
+}
