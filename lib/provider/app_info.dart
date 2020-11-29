@@ -1,3 +1,4 @@
+import 'dart:collection';
 import 'dart:convert';
 
 import 'package:android_flutter_settings/android_flutter_settings.dart';
@@ -8,6 +9,8 @@ import 'package:potato_fries/data/debugging.dart';
 import 'package:potato_fries/utils/methods.dart';
 import 'package:effectsplugin/effectsplugin.dart';
 
+import '../app_native/resources.dart';
+
 class AppInfoProvider extends ChangeNotifier {
   AppInfoProvider() {
     loadData();
@@ -16,6 +19,8 @@ class AppInfoProvider extends ChangeNotifier {
   EFFECT_TYPE audioFxType = EFFECT_TYPE.NONE;
 
   int _pageIndex = 0;
+  Map<String, String> _shapes = {};
+  Map<String, String> _shapeLabels = {};
   Color _accentDark = Colors.lightBlueAccent;
   Color _accentLight = Colors.blueAccent;
   Map<String, dynamic> _hostVersion = {
@@ -105,6 +110,11 @@ class AppInfoProvider extends ChangeNotifier {
     }
   }
 
+  Map<String, String> get shapes => _shapes;
+  List<String> get shapePackages => _shapes.keys.toList();
+
+  Map<String, String> get shapeLabels => _shapeLabels;
+
   Color get accentDark => _accentDark;
 
   Color get accentLight => _accentLight;
@@ -150,12 +160,20 @@ class AppInfoProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  int getIconShapeIndex() =>
-      shapesPackages.indexOf(globalSysTheme[OVERLAY_CATEGORY_SHAPE]) ?? 0;
+  MapEntry<String, String> getIconShape() {
+    return MapEntry(
+      globalSysTheme[OVERLAY_CATEGORY_SHAPE],
+      shapes[globalSysTheme[OVERLAY_CATEGORY_SHAPE]],
+    );
+  }
+
+  String getShapeLabel() {
+    return _shapeLabels[globalSysTheme[OVERLAY_CATEGORY_SHAPE]];
+  }
 
   void setIconShape(int index) => setTheme(
         OVERLAY_CATEGORY_SHAPE,
-        shapesPackages[index],
+        shapePackages[index],
       );
 
   int getIconPackIndex() {
@@ -218,8 +236,10 @@ class AppInfoProvider extends ChangeNotifier {
   void loadData() async {
     _accentDark = Color(await Resources.getAccentDark());
     _accentLight = Color(await Resources.getAccentLight());
+    _shapes = await Resources.getShapes();
+    _shapeLabels = await Resources.getShapeLabels();
     // Populate version details
-    String verNum = await AndroidFlutterSettings.getProp('ro.potato.vernum');
+    String verNum = "4.0.0+1";
     _hostVersion = parseVerNum(verNum);
     loadTheme(notifyNeeded: false);
     device = await AndroidFlutterSettings.getProp('ro.potato.device');

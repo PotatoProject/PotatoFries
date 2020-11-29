@@ -7,6 +7,8 @@ import 'package:potato_fries/ui/shaped_icon.dart';
 import 'package:potato_fries/widgets/page_parser.dart';
 import 'package:provider/provider.dart';
 
+import '../provider/app_info.dart';
+
 class Themes extends BasePage {
   @override
   String get title => "Themes";
@@ -106,8 +108,7 @@ class Themes extends BasePage {
 
   Widget _pref(BuildContext context, IconData icon, Color color) {
     return ListTile(
-      leading: ShapedIcon(
-        type: Provider.of<AppInfoProvider>(context).getIconShapeIndex(),
+      leading: ShapedIcon.currentShape(
         iconSize: 40,
         child: Icon(
           icon,
