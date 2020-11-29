@@ -189,13 +189,32 @@ class _QSTile extends StatefulWidget {
   __QSTileState createState() => __QSTileState();
 }
 
-class __QSTileState extends State<_QSTile> {
+class __QSTileState extends State<_QSTile> with SingleTickerProviderStateMixin {
+  AnimationController _ac;
   bool enabled;
 
   @override
   void initState() {
+    _ac = AnimationController(
+      vsync: this,
+      duration: Duration(milliseconds: 200),
+    );
     enabled = widget.enabled;
+    updateStatus(enabled);
     super.initState();
+  }
+
+  @override
+  void didUpdateWidget(_QSTile oldWidget) {
+    enabled = widget.enabled;
+    updateStatus(enabled);
+    super.didUpdateWidget(oldWidget);
+  }
+
+  void updateStatus(bool status) {
+    enabled = status;
+
+    _ac.animateTo(enabled ? 1 : 0);
   }
 
   @override
@@ -229,19 +248,27 @@ class __QSTileState extends State<_QSTile> {
       }
     }
 
+    final bgColor =
+        ColorTween(begin: disabledIconColor.withAlpha(30), end: tileColor);
+    final fgColor = ColorTween(begin: disabledIconColor, end: iconColor);
+
     return GestureDetector(
-      onTap: () => setState(() => enabled = !enabled),
-      child: Padding(
-        padding: EdgeInsets.all(8),
-        child: ShapedIcon(
-          type: Provider.of<AppInfoProvider>(context).getIconShapeIndex(),
-          color: enabled ? tileColor : disabledIconColor.withAlpha(30),
-          child: Icon(
-            widget.icon,
-            color: enabled ? iconColor : disabledIconColor,
-          ),
-          iconSize: 40,
-        ),
+      onTap: () => updateStatus(!enabled),
+      child: AnimatedBuilder(
+        animation: _ac,
+        builder: (context, _) {
+          return Padding(
+            padding: EdgeInsets.all(8),
+            child: ShapedIcon.currentShape(
+              color: bgColor.animate(_ac).value,
+              child: Icon(
+                widget.icon,
+                color: fgColor.animate(_ac).value,
+              ),
+              iconSize: 40,
+            ),
+          );
+        },
       ),
     );
   }
