@@ -1,6 +1,7 @@
 name: potato_fries
 description: Fries, with a bit of salt
 version: 1.2.4+19
+publish_to: none
 
 environment:
   sdk: ">=2.10.0 <3.0.0"
@@ -28,6 +29,7 @@ dependencies:
   video_player: any
   package_info: any
   flutter_xlider: any
+  path_drawing: any
 
 dev_dependencies:
   flutter_test:
