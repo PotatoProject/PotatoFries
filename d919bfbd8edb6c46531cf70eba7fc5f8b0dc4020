@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7045a76d_efecb43c",
+        "filename": "android/app/build.gradle",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2020-11-29T21:28:39Z",
+      "side": 1,
+      "message": "nice",
+      "revId": "d919bfbd8edb6c46531cf70eba7fc5f8b0dc4020",
+      "serverId": "8720d348-3d66-43e6-b480-1d69039ac554",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d55a79b_69733310",
+        "filename": "lib/pages/themes.dart",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2020-11-29T21:28:39Z",
+      "side": 1,
+      "message": "Don\u0027t use relative imports",
+      "revId": "d919bfbd8edb6c46531cf70eba7fc5f8b0dc4020",
+      "serverId": "8720d348-3d66-43e6-b480-1d69039ac554",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99728837_cc4be8ba",
+        "filename": "lib/provider/app_info.dart",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2020-11-29T21:28:39Z",
+      "side": 1,
+      "message": "Avoid relative imports",
+      "revId": "d919bfbd8edb6c46531cf70eba7fc5f8b0dc4020",
+      "serverId": "8720d348-3d66-43e6-b480-1d69039ac554",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65aa4f1f_3cdd5da7",
+        "filename": "lib/provider/app_info.dart",
+        "patchSetId": 1
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2020-11-29T21:28:39Z",
+      "side": 1,
+      "message": "can u dont\nalso, there are developer options to do this",
+      "revId": "d919bfbd8edb6c46531cf70eba7fc5f8b0dc4020",
+      "serverId": "8720d348-3d66-43e6-b480-1d69039ac554",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a308caa_a956782d",
+        "filename": "lib/ui/shaped_icon.dart",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2020-11-29T21:28:39Z",
+      "side": 1,
+      "message": "Avoid relative imports",
+      "revId": "d919bfbd8edb6c46531cf70eba7fc5f8b0dc4020",
+      "serverId": "8720d348-3d66-43e6-b480-1d69039ac554",
+      "unresolved": true
+    }
+  ]
+}
