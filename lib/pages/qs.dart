@@ -140,14 +140,13 @@ class QuickSettings extends BasePage {
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: <Widget>[
                                 _QSTile(
-                                    icon: MdiIcons.wifiStrength4,
-                                    enabled: true),
-                                _QSTile(icon: Icons.bluetooth),
-                                _QSTile(icon: Icons.swap_vert, enabled: true),
-                                _QSTile(icon: OMIcons.removeCircleOutline),
-                                _QSTile(icon: CustomIcons.flashlight_outline),
+                                    icon: "ic_wifi_signal_4", enabled: true),
+                                _QSTile(icon: "ic_qs_bluetooth"),
+                                _QSTile(icon: "ic_swap_vert", enabled: true),
+                                _QSTile(icon: "ic_qs_dnd"),
+                                _QSTile(icon: "ic_qs_flashlight"),
                                 _QSTile(
-                                  icon: CustomIcons.qs_rotate,
+                                  icon: "ic_qs_auto_rotate",
                                   enabled: true,
                                 ),
                               ],
@@ -177,7 +176,7 @@ class QuickSettings extends BasePage {
 }
 
 class _QSTile extends StatefulWidget {
-  final IconData icon;
+  final String icon;
   final bool enabled;
 
   _QSTile({
@@ -229,6 +228,7 @@ class __QSTileState extends State<_QSTile> with SingleTickerProviderStateMixin {
         ? Colors.white70
         : Colors.black87;
 
+    var appInfo = Provider.of<AppInfoProvider>(context);
     var provider = Provider.of<PageProvider>(context);
     String fwValsKey = settingsKey('qs_panel_bg_use_fw', SettingType.SYSTEM);
     String wallKey = settingsKey('qs_panel_bg_use_wall', SettingType.SYSTEM);
@@ -261,10 +261,18 @@ class __QSTileState extends State<_QSTile> with SingleTickerProviderStateMixin {
             padding: EdgeInsets.all(8),
             child: ShapedIcon.currentShape(
               color: bgColor.animate(_ac).value,
-              child: Icon(
-                widget.icon,
-                color: fgColor.animate(_ac).value,
-              ),
+              child: appInfo.getIconPackPreview() != null
+                  ? Padding(
+                      padding: EdgeInsets.all(8),
+                      child: Image.memory(
+                        appInfo.getIconPackPreview()[widget.icon],
+                        width: 24,
+                        height: 24,
+                        color: fgColor.animate(_ac).value,
+                        colorBlendMode: BlendMode.srcIn,
+                      ),
+                    )
+                  : Container(),
               iconSize: 40,
             ),
           );
