@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:typed_data';
 
 import 'package:android_flutter_settings/android_flutter_settings.dart';
 import 'package:flutter/material.dart';
@@ -18,6 +19,8 @@ class AppInfoProvider extends ChangeNotifier {
   int _pageIndex = 0;
   Map<String, String> _shapes = {};
   Map<String, String> _shapeLabels = {};
+  Map<String, Map<dynamic, dynamic>> _iconPreviews = {};
+  Map<String, String> _iconLabels = {};
   Color _accentDark = Colors.lightBlueAccent;
   Color _accentLight = Colors.blueAccent;
   Map<String, dynamic> _hostVersion = {
@@ -112,6 +115,11 @@ class AppInfoProvider extends ChangeNotifier {
 
   Map<String, String> get shapeLabels => _shapeLabels;
 
+  Map<String, Map<dynamic, dynamic>> get iconPreviews => _iconPreviews;
+  List<String> get iconPackages => _iconLabels.keys.toList();
+
+  Map<String, String> get iconLabels => _iconLabels;
+
   Color get accentDark => _accentDark;
 
   Color get accentLight => _accentLight;
@@ -173,23 +181,27 @@ class AppInfoProvider extends ChangeNotifier {
         shapePackages[index],
       );
 
-  int getIconPackIndex() {
-    List l = globalSysTheme[OVERLAY_CATEGORY_ICON_ANDROID]?.split('.');
-    if (l == null) return 0;
-    l.removeLast();
-    return iconPackPrefixes.indexOf(l.join('.')) ?? 0;
+  Map<dynamic, dynamic> getIconPackPreview() {
+    return _iconPreviews[globalSysTheme[OVERLAY_CATEGORY_ICON_ANDROID]];
+  }
+
+  String getIconPackLabel() {
+    return _iconLabels[globalSysTheme[OVERLAY_CATEGORY_ICON_ANDROID]];
   }
 
   void setIconPack(int index) {
     List packages;
     if (iconPackPrefixes[index] == null)
       packages = [null, null, null];
-    else
+    else {
+      final packageParts = iconPackages[index].split(".")..removeLast();
+      final sanifiedPackageName = packageParts.join(".");
       packages = [
-        iconPackPrefixes[index] + '.settings',
-        iconPackPrefixes[index] + '.systemui',
-        iconPackPrefixes[index] + '.android',
+        sanifiedPackageName + '.settings',
+        sanifiedPackageName + '.systemui',
+        sanifiedPackageName + '.android',
       ];
+    }
     setTheme(OVERLAY_CATEGORY_ICON_SETTINGS, packages[0]);
     setTheme(OVERLAY_CATEGORY_ICON_SYSUI, packages[1]);
     setTheme(OVERLAY_CATEGORY_ICON_ANDROID, packages[2]);
@@ -235,6 +247,8 @@ class AppInfoProvider extends ChangeNotifier {
     _accentLight = Color(await Resources.getAccentLight());
     _shapes = await Resources.getShapes();
     _shapeLabels = await Resources.getShapeLabels();
+    _iconPreviews = await Resources.getIconsWithPreviews();
+    _iconLabels = await Resources.getIconsWithLabels();
     // Populate version details
     String verNum = await AndroidFlutterSettings.getProp('ro.potato.vernum');
     _hostVersion = parseVerNum(verNum);
