@@ -1,17 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:potato_fries/data/constants.dart';
 import 'package:potato_fries/provider/app_info.dart';
 import 'package:potato_fries/ui/shaped_icon.dart';
 import 'package:potato_fries/ui/sizeable_list_tile.dart';
 import 'package:provider/provider.dart';
 
-class IconShapePicker extends StatefulWidget {
-  @override
-  _IconShapePickerState createState() => _IconShapePickerState();
-}
-
-class _IconShapePickerState extends State<IconShapePicker> {
-  @override
+class IconShapePicker extends StatelessWidget {
   Widget build(BuildContext context) {
     var _provider = Provider.of<AppInfoProvider>(context);
     MapEntry<String, String> curType = _provider.getIconShape();

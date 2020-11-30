@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:outline_material_icons/outline_material_icons.dart';
 import 'package:potato_fries/pages/base_page.dart';
+import 'package:potato_fries/provider/app_info.dart';
 import 'package:potato_fries/provider/page_provider_registry.dart';
 import 'package:potato_fries/ui/shaped_icon.dart';
 import 'package:potato_fries/widgets/page_parser.dart';
@@ -34,82 +35,97 @@ class Themes extends BasePage {
     );
   }
 
-  Widget _header(context) => Padding(
-        padding: EdgeInsets.only(
-          top: MediaQuery.of(context).padding.top,
-        ),
-        child: SizedBox(
-          height: (MediaQuery.of(context).size.width / 16) * 9,
-          width: MediaQuery.of(context).size.width,
-          child: Card(
-            color: Theme.of(context).brightness == Brightness.dark
-                ? Colors.black
-                : Colors.white,
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
-            margin: EdgeInsets.all(0),
-            child: ListView(
-              physics: BouncingScrollPhysics(),
-              padding: EdgeInsets.only(top: 6),
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.all(8),
-                  child: SizedBox(
-                    height: 56,
-                    child: Card(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(28),
-                      ),
-                      color: Theme.of(context).cardColor,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          Padding(
-                            padding: const EdgeInsets.only(left: 16.0),
-                            child: Icon(
-                              Icons.search,
-                              color: Theme.of(context).accentColor,
-                            ),
+  Widget _header(context) {
+    final appInfo = Provider.of<AppInfoProvider>(context);
+
+    return Padding(
+      padding: EdgeInsets.only(
+        top: MediaQuery.of(context).padding.top,
+      ),
+      child: SizedBox(
+        height: (MediaQuery.of(context).size.width / 16) * 9,
+        width: MediaQuery.of(context).size.width,
+        child: Card(
+          color: Theme.of(context).brightness == Brightness.dark
+              ? Colors.black
+              : Colors.white,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
+          margin: EdgeInsets.all(0),
+          child: ListView(
+            physics: BouncingScrollPhysics(),
+            padding: EdgeInsets.only(top: 6),
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.all(8),
+                child: SizedBox(
+                  height: 56,
+                  child: Card(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(28),
+                    ),
+                    color: Theme.of(context).cardColor,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.only(left: 16.0),
+                          child: Image.memory(
+                            appInfo.getIconPackPreview()["ic_search_24dp"],
+                            color: Theme.of(context).accentColor,
+                            colorBlendMode: BlendMode.srcIn,
+                            width: 24,
+                            height: 24,
                           ),
-                          Opacity(
-                            opacity: 0.65,
-                            child: Text('Search settings'),
+                        ),
+                        Opacity(
+                          opacity: 0.65,
+                          child: Text('Search settings'),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(
+                            top: 4,
+                            bottom: 4,
+                            right: 16,
                           ),
-                          Padding(
-                            padding: const EdgeInsets.only(
-                                top: 4.0, bottom: 4.0, right: 4.0),
-                            child: CircleAvatar(
-                              child: Icon(
-                                Icons.person,
-                                color: Theme.of(context).brightness ==
-                                        Brightness.dark
-                                    ? Colors.black
-                                    : Colors.white,
-                              ),
-                              backgroundColor: Theme.of(context).accentColor,
-                            ),
-                          )
-                        ],
-                      ),
+                          child: Image.memory(
+                            appInfo
+                                .getIconPackPreview()["ic_settings_multiuser"],
+                            color: Theme.of(context).accentColor,
+                            colorBlendMode: BlendMode.srcIn,
+                            width: 24,
+                            height: 24,
+                          ),
+                        )
+                      ],
                     ),
                   ),
                 ),
-                _pref(context, Icons.wifi, Colors.blue),
-                _pref(context, Icons.devices_other, Colors.green),
-                _pref(context, Icons.apps, Colors.orange),
-              ],
-            ),
+              ),
+              _pref(context, "ic_settings_wireless", Colors.blue),
+              _pref(context, "ic_devices_other", Colors.green),
+              _pref(context, "ic_apps", Colors.orange),
+            ],
           ),
         ),
-      );
+      ),
+    );
+  }
 
-  Widget _pref(BuildContext context, IconData icon, Color color) {
+  Widget _pref(BuildContext context, String icon, Color color) {
+    final appInfo = Provider.of<AppInfoProvider>(context);
+
     return ListTile(
       leading: ShapedIcon.currentShape(
         iconSize: 40,
-        child: Icon(
-          icon,
-          color: Colors.white,
+        child: Padding(
+          padding: EdgeInsets.all(8),
+          child: Image.memory(
+            appInfo.getIconPackPreview()[icon],
+            color: Theme.of(context).scaffoldBackgroundColor,
+            colorBlendMode: BlendMode.srcIn,
+            width: 24,
+            height: 24,
+          ),
         ),
         color: color,
       ),
