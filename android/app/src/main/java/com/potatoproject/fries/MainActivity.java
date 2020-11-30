@@ -17,6 +17,7 @@ import io.flutter.plugins.GeneratedPluginRegistrant;
 public class MainActivity extends FlutterActivity {
     private Activity mActivity;
     private ShapeOverlayProvider mShapeOverlayProvider;
+    private IconOverlayProvider mIconOverlayProvider;
 
     @Nullable
     @Override
@@ -35,6 +36,7 @@ public class MainActivity extends FlutterActivity {
     public void registerFlutterCallbacks(@NonNull FlutterEngine flutterEngine) {
         if (mActivity == null) mActivity = this;
         mShapeOverlayProvider = new ShapeOverlayProvider(mActivity);
+        mIconOverlayProvider = new IconOverlayProvider(mActivity);
 
         new MethodChannel(flutterEngine.getDartExecutor(), "fries/resources").setMethodCallHandler(
                 (call, result) -> {
@@ -51,6 +53,14 @@ public class MainActivity extends FlutterActivity {
                         }
                         case "getShapeLabels": {
                             resultSuccess(result, mShapeOverlayProvider.getLabels());
+                            break;
+                        }
+                        case "getIconsWithPreviews": {
+                            resultSuccess(result, mIconOverlayProvider.getIconsWithPreview());
+                            break;
+                        }
+                        case "getIconsWithLabels": {
+                            resultSuccess(result, mIconOverlayProvider.getIconsWithLabels());
                             break;
                         }
                         default: {

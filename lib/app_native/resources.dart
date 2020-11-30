@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:flutter/services.dart';
 
 class Resources {
@@ -14,6 +16,12 @@ class Resources {
 
   static Future<Map<String, String>> getShapeLabels() async =>
       await _channel.invokeMapMethod<String, String>("getShapeLabels");
+
+  static Future<Map<String, Uint8List>> getIconsWithPreviews() async =>
+      await _channel.invokeMapMethod<String, Uint8List>("getIconsWithPreviews");
+
+  static Future<Map<String, String>> getIconsWithLabels() async =>
+      await _channel.invokeMapMethod<String, String>("getIconsWithLabels");
 
   static Future<int> getAccentDark() async =>
       await getColor('android', 'accent_device_default_light');
