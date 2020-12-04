@@ -24,7 +24,7 @@ final Map<String, dynamic> statusbarbattery = {
       },
       'default': '0',
     },
-    'version': '3.1.7',
+    'version': '4.0.0',
   },
   'status_bar_show_battery_percent': {
     'title': 'Battery Percentage',
@@ -39,17 +39,6 @@ final Map<String, dynamic> statusbarbattery = {
       },
       'default': '0',
     },
-    'version': '3.1.7',
-  },
-  'qs_header_show_battery_percent':{
-    'title': 'QS battery percentage',
-    'subtitle': 'Show battery percentage in the QS header instead of estimate',
-    'icon': Icons.battery_std,
-    'widget':WidgetType.SWITCH,
-    'setting_type': SettingType.SYSTEM,
-    'widget_data': {
-      'default': true,
-    },
-    'version': '3.1.8',
+    'version': '4.0.0',
   },
 };
