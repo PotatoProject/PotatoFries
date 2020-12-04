@@ -20,11 +20,11 @@ final Map<String, dynamic> albumArt = {
     'subtitle': 'Show album art on lockscreen',
     'icon': Icons.image,
     'widget': WidgetType.SWITCH,
-    'setting_type': SettingType.SYSTEM,
+    'setting_type': SettingType.SECURE,
     'widget_data': {
       'default': true,
     },
-    'version': '3.1.1',
+    'version': '4.0.0',
   },
   'lockscreen_media_blur': {
     'title': 'Lockscreen blur level',
@@ -40,10 +40,10 @@ final Map<String, dynamic> albumArt = {
     'dependencies': [
       {
         'name': 'lockscreen_media_metadata',
-        'setting_type': SettingType.SYSTEM,
+        'setting_type': SettingType.SECURE,
         'value': true,
       },
     ],
-    'version': '3.1.1',
+    'version': '4.0.0',
   },
 };
