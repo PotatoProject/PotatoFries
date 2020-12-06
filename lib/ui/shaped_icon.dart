@@ -30,7 +30,6 @@ class ShapedIcon extends StatelessWidget {
     final appInfo = Provider.of<AppInfoProvider>(context);
     Color _color = color ?? Theme.of(context).accentColor;
     String _pathData = pathData ?? appInfo.getIconShape().value;
-    _pathData = _pathData?.replaceAll("MM", "M") ?? _pathData;
 
     return Container(
       height: iconSize,
@@ -77,7 +76,7 @@ class PathDataBorder extends OutlinedBorder {
 
   Path _getPath(Rect rect) {
     if (pathData == null) return Path();
-    Path path = parseSvgPathData(pathData);
+    Path path = parseSvgPathData(pathData.replaceAll("MM", "M"));
     final matrix4 = Matrix4.identity();
     final pathRect = path.getBounds();
     matrix4.scale(rect.width / pathRect.width, rect.height / pathRect.height);
