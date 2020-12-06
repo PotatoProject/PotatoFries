@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:typed_data';
 
 import 'package:android_flutter_settings/android_flutter_settings.dart';
 import 'package:flutter/material.dart';
@@ -243,8 +242,8 @@ class AppInfoProvider extends ChangeNotifier {
   bool isCompatCheckDisabled() => _debug.compatCheckDisabled;
 
   void loadData() async {
-    _accentDark = Color(await Resources.getAccentDark());
-    _accentLight = Color(await Resources.getAccentLight());
+    _accentDark = Color(await Resources.getAccentDark()).withOpacity(1);
+    _accentLight = Color(await Resources.getAccentLight()).withOpacity(1);
     _shapes = await Resources.getShapes();
     _shapeLabels = await Resources.getShapeLabels();
     _iconPreviews = await Resources.getIconsWithPreviews();

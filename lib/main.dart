@@ -31,11 +31,11 @@ class FriesRoot extends StatelessWidget {
           ),
           debugShowCheckedModeBanner: false,
           title: 'Fries',
-          theme: SpicyThemes.light(appInfoProvider.accentDark).copyWith(
+          theme: SpicyThemes.light(appInfoProvider.accentLight).copyWith(
             canvasColor: SpicyThemes.light(appInfoProvider.accentLight)
                 .scaffoldBackgroundColor,
           ),
-          darkTheme: SpicyThemes.dark(appInfoProvider.accentLight).copyWith(
+          darkTheme: SpicyThemes.dark(appInfoProvider.accentDark).copyWith(
             canvasColor: SpicyThemes.dark(appInfoProvider.accentLight)
                 .scaffoldBackgroundColor,
           ),
