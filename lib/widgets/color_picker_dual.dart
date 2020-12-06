@@ -2,8 +2,11 @@ import 'dart:math' as math;
 
 import 'package:android_flutter_settings/android_flutter_settings.dart';
 import 'package:flutter/material.dart';
+import 'package:potato_fries/provider/app_info.dart';
+import 'package:potato_fries/ui/shaped_icon.dart';
 import 'package:potato_fries/ui/sizeable_list_tile.dart';
 import 'package:potato_fries/utils/methods.dart';
+import 'package:provider/provider.dart';
 
 class ColorPickerDualTile extends StatefulWidget {
   final Function onChange;
@@ -54,34 +57,28 @@ class _ColorPickerDualTileState extends State<ColorPickerDualTile> {
 
   @override
   Widget build(BuildContext context) {
+    final appInfo = Provider.of<AppInfoProvider>(context);
+
     return SizeableListTile(
       title: widget.title,
       subtitle: Text(widget.subtitle),
-      icon: Row(
-        children: <Widget>[
-          Container(
-            height: 24,
-            width: 12,
-            decoration: BoxDecoration(
+      icon: Material(
+        shape: PathDataBorder(pathData: appInfo.getIconShape().value),
+        clipBehavior: Clip.antiAlias,
+        child: Row(
+          children: <Widget>[
+            Container(
+              height: 24,
+              width: 12,
               color: light ?? Colors.black,
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(12),
-                bottomLeft: Radius.circular(12),
-              ),
             ),
-          ),
-          Container(
-            height: 24,
-            width: 12,
-            decoration: BoxDecoration(
+            Container(
+              height: 24,
+              width: 12,
               color: dark ?? Colors.white,
-              borderRadius: BorderRadius.only(
-                topRight: Radius.circular(12),
-                bottomRight: Radius.circular(12),
-              ),
             ),
-          )
-        ],
+          ],
+        ),
       ),
       onTap: () => showColorPickerDual(
         context,

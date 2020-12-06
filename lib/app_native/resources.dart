@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 
+import 'package:android_flutter_settings/android_flutter_settings.dart';
 import 'package:flutter/services.dart';
 
 class Resources {
@@ -25,9 +26,19 @@ class Resources {
   static Future<Map<String, String>> getIconsWithLabels() async =>
       await _channel.invokeMapMethod<String, String>("getIconsWithLabels");
 
-  static Future<int> getAccentDark() async =>
-      await getColor('android', 'accent_device_default_light');
+  static Future<int> getAccentDark() async => int.parse(
+        await AndroidFlutterSettings.getString(
+          "accent_dark",
+          SettingType.SECURE,
+        ),
+        radix: 16,
+      );
 
-  static Future<int> getAccentLight() async =>
-      await getColor('android', 'accent_device_default_dark');
+  static Future<int> getAccentLight() async => int.parse(
+        await AndroidFlutterSettings.getString(
+          "accent_light",
+          SettingType.SECURE,
+        ),
+        radix: 16,
+      );
 }
