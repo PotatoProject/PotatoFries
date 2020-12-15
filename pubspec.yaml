@@ -3,7 +3,7 @@ description: Fries, with a bit of salt
 version: 1.2.4+19
 
 environment:
-  sdk: ">=2.1.0 <3.0.0"
+  sdk: ">=2.10.0 <3.0.0"
 
 dependencies:
   flutter:
