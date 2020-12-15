@@ -94,13 +94,15 @@ class MultiModeColorPickerTile extends StatelessWidget {
 class _TileContent extends StatefulWidget {
   final Color light;
   final Color dark;
+  final double tolerance;
   final void Function(Color light, Color dark) onApply;
 
   _TileContent({
     this.light,
     this.dark,
     this.onApply,
-  });
+    this.tolerance = 0.3,
+  }) : assert(tolerance >= 0.0 && tolerance <= 1.0);
 
   @override
   __TileContentState createState() => __TileContentState();
@@ -147,13 +149,13 @@ class __TileContentState extends State<_TileContent> {
                         final hslLight = HSLColor.fromColor(lightColor);
                         final hslDark = HSLColor.fromColor(darkColor);
 
-                        if (hslLight.lightness > 0.7) {
+                        if (hslLight.lightness > 1.0 - widget.tolerance) {
                           setState(() => isLightColorTooLight = true);
                         } else {
                           setState(() => isLightColorTooLight = false);
                         }
 
-                        if (hslDark.lightness < 0.3) {
+                        if (hslDark.lightness < widget.tolerance) {
                           setState(() => isDarkColorTooDark = true);
                         } else {
                           setState(() => isDarkColorTooDark = false);
@@ -184,9 +186,9 @@ class __TileContentState extends State<_TileContent> {
                   children: [
                     ToggleButtons(
                       children: [
-                        Icon(Icons.ac_unit),
-                        Icon(Icons.access_alarm),
-                        Icon(Icons.access_time),
+                        Text('RGB'),
+                        Text('HSL'),
+                        Text('HSV'),
                       ],
                       fillColor: Theme.of(context).accentColor,
                       selectedColor: Theme.of(context).cardColor,
