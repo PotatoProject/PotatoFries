@@ -101,7 +101,7 @@ class _TileContent extends StatefulWidget {
     this.light,
     this.dark,
     this.onApply,
-    this.tolerance = 0.3,
+    this.tolerance = 0.5,
   }) : assert(tolerance >= 0.0 && tolerance <= 1.0);
 
   @override
@@ -140,8 +140,8 @@ class __TileContentState extends State<_TileContent> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   SizedBox(
-                    height: 300,
                     child: MultiModeColorPicker(
+                      tolerance: widget.tolerance,
                       lightColor: widget.light,
                       darkColor: widget.dark,
                       mode: mode,

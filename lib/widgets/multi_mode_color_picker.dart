@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:potato_fries/provider/app_info.dart';
+import 'package:provider/provider.dart';
 
 class MultiModeColorPicker extends StatefulWidget {
   final Color lightColor;
   final Color darkColor;
   final PickerMode mode;
+  final double tolerance;
   final void Function(Color light, Color dark) onColorChanged;
 
   MultiModeColorPicker({
@@ -12,6 +15,7 @@ class MultiModeColorPicker extends StatefulWidget {
     @required this.darkColor,
     this.mode = PickerMode.RGB,
     this.onColorChanged,
+    @required this.tolerance,
   });
 
   @override
@@ -30,7 +34,7 @@ class _MultiModeColorPickerState extends State<MultiModeColorPicker> {
 
   @override
   void initState() {
-    _updateColor(widget.lightColor, widget.darkColor);
+    _updateColor(widget.lightColor, widget.darkColor, autoCalc: false);
     super.initState();
   }
 
@@ -46,7 +50,8 @@ class _MultiModeColorPickerState extends State<MultiModeColorPicker> {
     super.didUpdateWidget(old);
   }
 
-  void _updateColor(dynamic newLightColor, dynamic newDarkColor) {
+  void _updateColor(dynamic newLightColor, dynamic newDarkColor,
+      {bool autoCalc = true}) {
     switch (widget.mode) {
       case PickerMode.RGB:
         if (newLightColor is Color) {
@@ -96,8 +101,41 @@ class _MultiModeColorPickerState extends State<MultiModeColorPicker> {
         } else {
           darkColor = newDarkColor;
         }
-
         break;
+    }
+
+    if (autoCalc &&
+        Provider.of<AppInfoProvider>(context, listen: false).autoCalculateAccents) {
+      var cHSL;
+      var workingColor = editDarkColor ? darkColor : lightColor;
+      switch (workingColor.runtimeType) {
+        case HSVColor:
+          cHSL = HSLColor.fromColor(workingColor.toColor());
+          break;
+        case HSLColor:
+          cHSL = workingColor;
+          break;
+        default:
+          cHSL = HSLColor.fromColor(workingColor);
+          break;
+      }
+      workingColor = cHSL.withLightness(1 - cHSL.lightness);
+      switch (widget.mode) {
+        case PickerMode.RGB:
+          workingColor = workingColor.toColor();
+          break;
+        case PickerMode.HSV:
+          workingColor = HSVColor.fromColor(workingColor.toColor());
+          break;
+        case PickerMode.HSL:
+        default:
+          break;
+      }
+      if (!editDarkColor) {
+        darkColor = workingColor;
+      } else {
+        lightColor = workingColor;
+      }
     }
 
     _updateControllerText();
@@ -141,7 +179,7 @@ class _MultiModeColorPickerState extends State<MultiModeColorPicker> {
     }
 
     sliders = List.generate(
-      sliders.length + sliders.length - 1,
+      (2 * sliders.length) - 1,
       (index) {
         if (index % 2 == 0) {
           return sliders[index ~/ 2];
@@ -154,62 +192,97 @@ class _MultiModeColorPickerState extends State<MultiModeColorPicker> {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Expanded(
-          child: LayoutBuilder(
-            builder: (context, constraints) {
-              return Container(
-                width: constraints.maxWidth,
-                margin: EdgeInsets.all(8),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: _ColorDisplay(
-                        color: getLightColor(),
-                        controller: lightController,
-                        onChanged: (text) {
-                          if (text.length == 6) {
-                            Color newColor = Color(int.parse(text, radix: 16));
-                            _updateColor(newColor, darkColor);
-                            widget.onColorChanged
-                                ?.call(getLightColor(), getDarkColor());
-                            setState(() {});
-                          }
-                        },
-                        onPressed: () => setState(() => editDarkColor = false),
-                        selected: !editDarkColor,
-                      ),
-                    ),
-                    SizedBox(width: 8),
-                    Expanded(
-                      child: _ColorDisplay(
-                        color: getDarkColor(),
-                        controller: darkController,
-                        onChanged: (text) {
-                          if (text.length == 6) {
-                            Color newColor = Color(int.parse(text, radix: 16));
-                            _updateColor(lightColor, newColor);
-                            widget.onColorChanged
-                                ?.call(getLightColor(), getDarkColor());
-                            setState(() {});
-                          }
-                        },
-                        onPressed: () => setState(() => editDarkColor = true),
-                        selected: editDarkColor,
-                      ),
-                    ),
-                  ],
+        Container(
+          height: 100,
+          margin: EdgeInsets.only(left: 8, top: 8, right: 8),
+          child: Row(
+            children: [
+              Expanded(
+                child: _ColorDisplay(
+                  color: getLightColor(),
+                  controller: lightController,
+                  onChanged: (text) {
+                    if (text.length == 6) {
+                      Color newColor = Color(int.parse(text, radix: 16));
+                      _updateColor(newColor, darkColor);
+                      widget.onColorChanged
+                          ?.call(getLightColor(), getDarkColor());
+                      setState(() {});
+                    }
+                  },
+                  onPressed: () => setState(() => editDarkColor = false),
+                  selected: !editDarkColor,
+                  tolerance: widget.tolerance,
+                  isColorDark: false,
                 ),
-              );
-            },
+              ),
+              SizedBox(width: 8),
+              Expanded(
+                child: _ColorDisplay(
+                  color: getDarkColor(),
+                  controller: darkController,
+                  onChanged: (text) {
+                    if (text.length == 6) {
+                      Color newColor = Color(int.parse(text, radix: 16));
+                      _updateColor(lightColor, newColor);
+                      widget.onColorChanged
+                          ?.call(getLightColor(), getDarkColor());
+                      setState(() {});
+                    }
+                  },
+                  onPressed: () => setState(() => editDarkColor = true),
+                  selected: editDarkColor,
+                  tolerance: widget.tolerance,
+                  isColorDark: true,
+                ),
+              ),
+            ],
           ),
         ),
-        Expanded(
-          flex: 1,
+        Row(
+          children: [
+            Spacer(),
+            ActionChip(
+              label: Text("Light"),
+              backgroundColor: !editDarkColor
+                  ? Theme.of(context).chipTheme.backgroundColor
+                  : Theme.of(context).cardColor,
+              onPressed: () => setState(() => editDarkColor = false),
+            ),
+            Spacer(flex: 2),
+            ActionChip(
+              label: Text("Dark"),
+              backgroundColor: editDarkColor
+                  ? Theme.of(context).chipTheme.backgroundColor
+                  : Theme.of(context).cardColor,
+              onPressed: () => setState(() => editDarkColor = true),
+            ),
+            Spacer(),
+          ],
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text("Auto-magically calculate alt shades"),
+              Switch(
+                onChanged: (b) => setState(() =>
+                    Provider.of<AppInfoProvider>(context, listen: false)
+                        .autoCalculateAccents = b),
+                value:
+                    Provider.of<AppInfoProvider>(context).autoCalculateAccents,
+                activeColor: Theme.of(context).accentColor,
+              ),
+            ],
+          ),
+        ),
+        SizedBox(
+          height: 150,
           child: Column(
             children: [
               Spacer(),
               ...sliders,
-              Spacer(),
             ],
           ),
         ),
@@ -364,65 +437,141 @@ class _ColorDisplay extends StatelessWidget {
   final ValueChanged<String> onChanged;
   final VoidCallback onPressed;
   final bool selected;
+  final double tolerance;
+  final bool isColorDark;
+  final selectorDelta = 0.2;
 
   _ColorDisplay({
     @required this.color,
     @required this.controller,
     @required this.onChanged,
     @required this.onPressed,
+    @required this.tolerance,
     this.selected = false,
+    this.isColorDark = false,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: color,
-      elevation: 4,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(8),
-        side: BorderSide(
-          color: selected
-              ? color.computeLuminance() > 0.5
-                  ? Colors.black
-                  : Colors.white
-              : Colors.transparent,
-          width: 4,
-        ),
-      ),
-      clipBehavior: Clip.antiAlias,
-      child: InkWell(
-        onTap: onPressed,
-        child: Center(
-          child: IntrinsicWidth(
-            child: TextField(
-              textCapitalization: TextCapitalization.characters,
-              inputFormatters: [
-                FilteringTextInputFormatter.allow(
-                  RegExp("[0-9|A-F|a-f]"),
+    // var hslColor = HSLColor.fromColor(color);
+    return Stack(
+      children: [
+        Container(
+          decoration: BoxDecoration(
+            border: Border.all(
+              color:
+                  /*selected
+                      ? hslColor
+                          .withLightness(hslColor.lightness < selectorDelta
+                              ? hslColor.lightness - (hslColor.lightness) / 2
+                              : hslColor.lightness - selectorDelta)
+                          .toColor()
+                      : */
+                  Colors.transparent,
+              // color: selected
+              //     ? HSLColor.fromColor(color).lightness > 1 - tolerance
+              //         ? !isColorDark
+              //             ? Colors.red
+              //             : Colors.black
+              //         : isColorDark
+              //             ? Colors.red
+              //             : Colors.white
+              //     : Colors.transparent,
+              width: 4,
+            ),
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: Material(
+            color: color,
+            elevation: 4,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8),
+            ),
+            clipBehavior: Clip.antiAlias,
+            child: InkWell(
+              onTap: onPressed,
+              child: Center(
+                child: IntrinsicWidth(
+                  child: TextField(
+                    textCapitalization: TextCapitalization.characters,
+                    inputFormatters: [
+                      FilteringTextInputFormatter.allow(
+                        RegExp("[0-9|A-F|a-f]"),
+                      ),
+                      LengthLimitingTextInputFormatter(6),
+                    ],
+                    scrollPhysics: NeverScrollableScrollPhysics(),
+                    controller: controller,
+                    onChanged: onChanged,
+                    decoration: InputDecoration(
+                      isDense: true,
+                      enabledBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(
+                          color: (HSLColor.fromColor(color).lightness > 0.5
+                                  ? Colors.black
+                                  : Colors.white)
+                              .withOpacity(0.6),
+                        ),
+                      ),
+                      focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(
+                          color: (HSLColor.fromColor(color).lightness > 0.5
+                                  ? Colors.black
+                                  : Colors.white)
+                              .withOpacity(0.6),
+                        ),
+                      ),
+                      border: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.transparent),
+                      ),
+                      prefixText: "# ",
+                      prefixStyle: TextStyle(
+                        color: (HSLColor.fromColor(color).lightness > 0.5
+                                ? Colors.black
+                                : Colors.white)
+                            .withOpacity(0.6),
+                      ),
+                    ),
+                    style: TextStyle(
+                      color: HSLColor.fromColor(color).lightness > 0.5
+                          ? Colors.black
+                          : Colors.white,
+                    ),
+                  ),
                 ),
-                LengthLimitingTextInputFormatter(6),
-              ],
-              scrollPhysics: NeverScrollableScrollPhysics(),
-              controller: controller,
-              onChanged: onChanged,
-              decoration: InputDecoration(
-                border: InputBorder.none,
-                prefixText: "#",
-                prefixStyle: TextStyle(
-                  color: color.computeLuminance() > 0.5
-                      ? Colors.black
-                      : Colors.white,
-                ),
-              ),
-              style: TextStyle(
-                color: color.computeLuminance() > 0.5
-                    ? Colors.black
-                    : Colors.white,
               ),
             ),
           ),
         ),
-      ),
+        Positioned(
+          top: 0,
+          right: 0,
+          child: Visibility(
+            visible: isColorDark
+                ? HSLColor.fromColor(color).lightness < tolerance
+                    ? true
+                    : false
+                : HSLColor.fromColor(color).lightness > 1 - tolerance
+                    ? true
+                    : false,
+            // HSLColor.fromColor(color).lightness > 1 - tolerance
+            //     ? !isColorDark
+            //         ? true
+            //         : false
+            //     : isColorDark
+            //         ? true
+            //         : false,
+            child: Card(
+              color: Colors.white,
+              margin: EdgeInsets.all(0.0),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(16.0)),
+              ),
+              child: Icon(Icons.error, color: Colors.red),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
