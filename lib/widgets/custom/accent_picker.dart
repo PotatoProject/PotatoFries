@@ -147,7 +147,7 @@ class __TileContentState extends State<_TileContent> {
                         final hslLight = HSLColor.fromColor(lightColor);
                         final hslDark = HSLColor.fromColor(darkColor);
 
-                        if (hslLight.lightness > 0.6) {
+                        if (hslLight.lightness > 0.7) {
                           setState(() => isLightColorTooLight = true);
                         } else {
                           setState(() => isLightColorTooLight = false);
