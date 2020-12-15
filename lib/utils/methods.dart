@@ -186,12 +186,7 @@ bool isVersionValid(Map ver) => (ver != null &&
     (ver.containsKey('BUILD') && ver['BUILD'] is int));
 
 void reloadSystemElements() {
-  var reload = [
-    'com.android.settings',
-    'com.android.systemui',
-    'android',
-  ];
-  for (var r in reload) AndroidFlutterSettings.reloadAssets(r);
+  throw Exception("Reloading of assets from Fries is deprecated!\nPlease handle this in framework.");
 }
 
 void launchUrl(String url, {BuildContext context}) async {

@@ -115,19 +115,28 @@ class Themes extends BasePage {
     final appInfo = Provider.of<AppInfoProvider>(context);
 
     return ListTile(
-      leading: ShapedIcon.currentShape(
-        iconSize: 40,
-        child: Padding(
-          padding: EdgeInsets.all(8),
-          child: Image.memory(
-            appInfo.getIconPackPreview()[icon],
-            color: Theme.of(context).scaffoldBackgroundColor,
-            colorBlendMode: BlendMode.srcIn,
-            width: 24,
-            height: 24,
+      leading: SizedBox(
+        height: 40,
+        width: 40,
+        child: ShapedIcon.currentShape(
+          iconSize: 40,
+          child: Padding(
+            padding: EdgeInsets.all(8),
+            child: Container(
+              height: 24,
+              width: 24,
+              color: Colors.transparent,
+              child: Image.memory(
+                appInfo.getIconPackPreview()[icon],
+                color: Theme.of(context).scaffoldBackgroundColor,
+                colorBlendMode: BlendMode.srcIn,
+                width: 24,
+                height: 24,
+              ),
+            ),
           ),
+          color: color,
         ),
-        color: color,
       ),
       title: Container(
         height: 10,
