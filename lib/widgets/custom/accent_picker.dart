@@ -16,32 +16,18 @@ class AccentPicker extends StatelessWidget {
         lightnessDeltaCenter: 0.15,
         lightnessDeltaEnd: 0.6,
         onApply: (String newDark, String newLight) {
-          var settingImplVer = '3.1.1';
-          bool settingImpl =
-              Provider.of<AppInfoProvider>(context, listen: false)
-                  .isCompatible(settingImplVer, strict: true);
-          if (!settingImpl) {
-            AndroidFlutterSettings.setProp(
-              'persist.sys.theme.accent_dark',
-              newDark,
-            );
-            AndroidFlutterSettings.setProp(
-              'persist.sys.theme.accent_light',
-              newLight,
-            );
-          } else {
+          Future.delayed(Duration.zero, () {
             AndroidFlutterSettings.putString(
-              'sys_accent_light',
+              'accent_light',
               newLight,
               SettingType.SECURE,
             );
             AndroidFlutterSettings.putString(
-              'sys_accent_dark',
+              'accent_dark',
               newDark,
               SettingType.SECURE,
             );
-          }
-          reloadSystemElements();
+          });
           Provider.of<AppInfoProvider>(context, listen: false).accentDark =
               Color(int.parse('0xff' + newLight));
           Provider.of<AppInfoProvider>(context, listen: false).accentLight =

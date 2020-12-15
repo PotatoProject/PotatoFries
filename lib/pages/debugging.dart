@@ -758,29 +758,6 @@ class _OverlayControlState extends State<OverlayControl> {
               ],
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(top: 16.0),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                MaterialButton(
-                  onPressed: () {
-                    if (_formKeyTarget.currentState.validate()) {
-                      AndroidFlutterSettings.reloadAssets(
-                        _controllerTargetPkg.text,
-                      );
-                    }
-                  },
-                  color: Theme.of(context).accentColor,
-                  textColor: Theme.of(context).brightness == Brightness.dark
-                      ? Colors.black
-                      : Colors.white,
-                  child: Text('Asset Reload'),
-                ),
-              ],
-            ),
-          ),
         ],
       ),
       actions: <Widget>[
