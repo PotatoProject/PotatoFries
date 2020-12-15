@@ -7,6 +7,7 @@ import 'package:potato_fries/data/constants.dart';
 import 'package:potato_fries/data/debugging.dart';
 import 'package:potato_fries/utils/methods.dart';
 import 'package:effectsplugin/effectsplugin.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AppInfoProvider extends ChangeNotifier {
   AppInfoProvider() {
@@ -22,6 +23,7 @@ class AppInfoProvider extends ChangeNotifier {
   Map<String, String> _iconLabels = {};
   Color _accentDark = Colors.lightBlueAccent;
   Color _accentLight = Colors.blueAccent;
+  SharedPreferences _prefs;
   Map<String, dynamic> _hostVersion = {
     'MAJOR': 0,
     'MINOR': 0,
@@ -109,12 +111,23 @@ class AppInfoProvider extends ChangeNotifier {
     }
   }
 
+  bool _autoCalculateAccents = true;
+
+  bool get autoCalculateAccents => _autoCalculateAccents;
+
+  set autoCalculateAccents(bool autoCalculateAccents) {
+    _autoCalculateAccents = autoCalculateAccents;
+    _prefs.setBool("ACCENT_AUTO", autoCalculateAccents);
+  }
+
   Map<String, String> get shapes => _shapes;
+
   List<String> get shapePackages => _shapes.keys.toList();
 
   Map<String, String> get shapeLabels => _shapeLabels;
 
   Map<String, Map<dynamic, dynamic>> get iconPreviews => _iconPreviews;
+
   List<String> get iconPackages => _iconLabels.keys.toList();
 
   Map<String, String> get iconLabels => _iconLabels;
@@ -242,6 +255,8 @@ class AppInfoProvider extends ChangeNotifier {
   bool isCompatCheckDisabled() => _debug.compatCheckDisabled;
 
   void loadData() async {
+    _prefs = await SharedPreferences.getInstance();
+    _autoCalculateAccents = _prefs.getBool("ACCENT_AUTO") ?? true;
     _accentDark = Color(await Resources.getAccentDark()).withOpacity(1);
     _accentLight = Color(await Resources.getAccentLight()).withOpacity(1);
     _shapes = await Resources.getShapes();
