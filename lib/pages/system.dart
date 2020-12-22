@@ -5,15 +5,15 @@ import 'package:potato_fries/provider/page_provider_registry.dart';
 import 'package:potato_fries/widgets/page_parser.dart';
 import 'package:provider/provider.dart';
 
-class Buttons extends BasePage {
+class System extends BasePage {
   @override
-  String get title => "Gestures";
+  String get title => "System & Gestures";
 
   @override
-  IconData get icon => OMIcons.touchApp;
+  IconData get icon => OMIcons.settingsSystemDaydream;
 
   @override
-  String get providerKey => 'buttons_and_gestures';
+  String get providerKey => 'system';
 
   @override
   Widget build(BuildContext context) {

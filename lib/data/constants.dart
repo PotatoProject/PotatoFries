@@ -1,6 +1,6 @@
 import 'package:potato_fries/pages/audio_fx.dart';
 import 'package:potato_fries/pages/base_page.dart';
-import 'package:potato_fries/pages/buttons.dart';
+import 'package:potato_fries/pages/system.dart';
 import 'package:potato_fries/pages/lock_screen.dart';
 import 'package:potato_fries/pages/misc.dart';
 import 'package:potato_fries/pages/qs.dart';
@@ -32,11 +32,10 @@ const String OVERLAY_CATEGORY_ICON_THEME_PICKER =
 
 List<BasePage> pages = [
   QuickSettings(),
-  Buttons(),
+  System(),
   Themes(),
   StatusBar(),
   LockScreen(),
-  Misc(),
   AudioFx(),
 ];
 
