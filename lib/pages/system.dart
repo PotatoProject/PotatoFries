@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:outline_material_icons/outline_material_icons.dart';
 import 'package:potato_fries/pages/base_page.dart';
 import 'package:potato_fries/provider/page_provider_registry.dart';
 import 'package:potato_fries/widgets/page_parser.dart';
 import 'package:provider/provider.dart';
 
-class Buttons extends BasePage {
+class System extends BasePage {
   @override
-  String get title => "Gestures";
+  String get title => "System & Gestures";
 
   @override
-  IconData get icon => OMIcons.touchApp;
+  IconData get icon => Icons.android;
 
   @override
-  String get providerKey => 'buttons_and_gestures';
+  String get providerKey => 'system';
 
   @override
   Widget build(BuildContext context) {
