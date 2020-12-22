@@ -40,27 +40,6 @@ List<BasePage> pages = [
   AudioFx(),
 ];
 
-const List<String> shapesPackageLabels = [
-  'Circle',
-  'Teardrop',
-  'Rounded Rectangle',
-  'Squircle',
-];
-
-const List<String> iconPackPrefixes = [
-  null,
-  'com.android.theme.icon_pack.rounded',
-  'com.android.theme.icon_pack.filled',
-  'com.android.theme.icon_pack.circular',
-];
-
-const List<String> iconPackLabels = [
-  'Default',
-  'Rounded',
-  'Filled',
-  'Circular',
-];
-
 const Map<String, String> lockClocks = {
   'Default': 'com.android.keyguard.clock.DefaultClockController',
   'Bubble': 'com.android.keyguard.clock.BubbleClockController',
