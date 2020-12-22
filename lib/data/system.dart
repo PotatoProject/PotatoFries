@@ -1,5 +1,6 @@
 import 'package:android_flutter_settings/android_flutter_settings.dart';
 import 'package:flutter/material.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:outline_material_icons/outline_material_icons.dart';
 import 'package:potato_fries/widgets/directory.dart';
 
@@ -7,6 +8,7 @@ final Map<String, dynamic> system = {
   'System Buttons': sysButton,
   'System Gestures': systemGesture,
   'Network': network,
+  'Package Manager': packageManager,
 };
 
 final Map<String, dynamic> systemGesture = {
@@ -58,6 +60,20 @@ final Map<String, dynamic> network = {
     'setting_type': SettingType.SECURE,
     'widget_data': {
       'default': false,
+    },
+    'version': '4.0.0',
+  },
+};
+
+final Map<String, dynamic> packageManager = {
+  'allow_signature_fake': {
+    'title': 'Package signature spoofing',
+    'subtitle': 'Allow fake signatures (useful for microG)',
+    'icon': MdiIcons.incognito,
+    'widget': WidgetType.SWITCH,
+    'setting_type': SettingType.SECURE,
+    'widget_data': {
+      'default': true,
     },
     'version': '4.0.0',
   },
