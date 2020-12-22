@@ -5,7 +5,6 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 import 'package:potato_fries/data/constants.dart';
 import 'package:potato_fries/provider/lock_screen.dart';
 import 'package:potato_fries/provider/page_provider.dart';
-import 'package:potato_fries/provider/themes.dart';
 import 'package:potato_fries/ui/sizeable_list_tile.dart';
 import 'package:provider/provider.dart';
 

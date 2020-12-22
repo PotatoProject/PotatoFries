@@ -202,16 +202,16 @@ class AppInfoProvider extends ChangeNotifier {
   }
 
   void setIconPack(int index) {
-    List packages;
-    if (iconPackPrefixes[index] == null)
-      packages = [null, null, null];
-    else {
+    List<String> packages;
+    if (index >= iconPackages.length) {
+      throw Exception("Invalid iconPack index: $index!");
+    } else {
       final packageParts = iconPackages[index].split(".")..removeLast();
-      final sanifiedPackageName = packageParts.join(".");
+      final sanitizedPackageName = packageParts.join(".");
       packages = [
-        sanifiedPackageName + '.settings',
-        sanifiedPackageName + '.systemui',
-        sanifiedPackageName + '.android',
+        sanitizedPackageName + '.settings',
+        sanitizedPackageName + '.systemui',
+        sanitizedPackageName + '.android',
       ];
     }
     setTheme(OVERLAY_CATEGORY_ICON_SETTINGS, packages[0]);
