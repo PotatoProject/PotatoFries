@@ -5,7 +5,6 @@ import 'package:potato_fries/ui/custom_icons.dart';
 import 'package:potato_fries/widgets/page_parser.dart';
 import 'package:potato_fries/widgets/video_widget.dart';
 import 'package:provider/provider.dart';
-import 'package:video_player/video_player.dart';
 
 class StatusBar extends BasePage {
   @override
