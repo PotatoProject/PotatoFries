@@ -4,10 +4,66 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 import 'package:potato_fries/widgets/directory.dart';
 
 final Map<String, dynamic> statusBar = {
-  'Battery': statusbarbattery,
+  'Display Cutouts': displayCutouts,
+  'Battery': statusBarBattery,
 };
 
-final Map<String, dynamic> statusbarbattery = {
+final Map<String, dynamic> displayCutouts = {
+  'display_cutout_mode': {
+    'title': 'Cutout mode',
+    'icon': Icons.aspect_ratio,
+    'widget': WidgetType.DROPDOWN,
+    'setting_type': SettingType.SYSTEM,
+    'widget_data': {
+      'values': {
+        '0': 'Normal',
+        '1': 'Immerse',
+        '2': 'Hide',
+      },
+      'default': '0',
+    },
+    'compat': {
+      'prop': 'ro.potato.has_cutout',
+    },
+    'version': '4.0.0',
+  },
+  'stock_statusbar_in_hide': {
+    'title': 'Stock Statusbar in Hide',
+    'subtitle': 'Use default (usually smaller) statusbar height in hide',
+    'icon': MdiIcons.arrowUpDown,
+    'widget': WidgetType.SWITCH,
+    'setting_type': SettingType.SYSTEM,
+    'widget_data': {
+      'default': true,
+    },
+    'compat': {
+      'prop': 'ro.potato.has_cutout',
+    },
+    'dependencies': [
+      {
+        'name': 'display_cutout_mode',
+        'setting_type': SettingType.SYSTEM,
+        'value': '2',
+      },
+    ],
+    'version': '4.0.0',
+  },
+
+  'sysui_rounded_size': {
+    'title': 'Rounded corner radius',
+    'widget': WidgetType.SLIDER,
+    'setting_type': SettingType.SECURE,
+    'widget_data': {
+      'default': -1,
+      'min': 0,
+      'max': 50,
+      'percentage': false,
+    },
+    'version': '4.0.0',
+  },
+};
+
+final Map<String, dynamic> statusBarBattery = {
   'status_bar_battery_style': {
     'title': 'Battery Style',
     'icon': Icons.battery_full,
