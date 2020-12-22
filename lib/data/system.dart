@@ -9,6 +9,7 @@ final Map<String, dynamic> system = {
   'System Gestures': systemGesture,
   'Network': network,
   'Package Manager': packageManager,
+  'Notifications': notifications,
 };
 
 final Map<String, dynamic> systemGesture = {
@@ -74,6 +75,20 @@ final Map<String, dynamic> packageManager = {
     'setting_type': SettingType.SECURE,
     'widget_data': {
       'default': true,
+    },
+    'version': '4.0.0',
+  },
+};
+
+final Map<String, dynamic> notifications = {
+  'less_boring_heads_up': {
+    'title': 'Less boring heads up',
+    'subtitle': 'Only receive heads up from calling and messaging apps',
+    'icon': MdiIcons.viewQuilt,
+    'widget': WidgetType.SWITCH,
+    'setting_type': SettingType.SYSTEM,
+    'widget_data': {
+      'default': false,
     },
     'version': '4.0.0',
   },
