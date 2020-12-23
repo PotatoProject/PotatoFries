@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:potato_fries/widgets/directory.dart';
 import 'package:android_flutter_settings/android_flutter_settings.dart';
 
@@ -35,5 +36,19 @@ final Map<String, dynamic> theme = {
     },
     'version': '4.0.0',
     'cooldown': 1500,
+  },
+  'volume_panel_on_left': {
+    'title': 'Volume panel direction',
+    'icon': MdiIcons.arrowLeftRight,
+    'widget': WidgetType.DROPDOWN,
+    'setting_type': SettingType.SYSTEM,
+    'widget_data': {
+      'values': {
+        '1': 'Left',
+        '0': 'Right',
+      },
+      'default': '0',
+    },
+    'version': '4.0.0',
   },
 };
