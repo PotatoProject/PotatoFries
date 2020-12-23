@@ -74,7 +74,7 @@ final Map<String, dynamic> packageManager = {
     'widget': WidgetType.SWITCH,
     'setting_type': SettingType.SECURE,
     'widget_data': {
-      'default': true,
+      'default': false,
     },
     'version': '4.0.0',
   },
