@@ -18,7 +18,7 @@ final Map<String, dynamic> displayCutouts = {
       'values': {
         '0': 'Normal',
         '1': 'Immerse',
-        '2': 'Hide',
+        // '2': 'Hide',
       },
       'default': '0',
     },
@@ -27,27 +27,27 @@ final Map<String, dynamic> displayCutouts = {
     },
     'version': '4.0.0',
   },
-  'stock_statusbar_in_hide': {
-    'title': 'Stock Statusbar in Hide',
-    'subtitle': 'Use default (usually smaller) statusbar height in hide',
-    'icon': MdiIcons.arrowUpDown,
-    'widget': WidgetType.SWITCH,
-    'setting_type': SettingType.SYSTEM,
-    'widget_data': {
-      'default': true,
-    },
-    'compat': {
-      'prop': 'ro.potato.has_cutout',
-    },
-    'dependencies': [
-      {
-        'name': 'display_cutout_mode',
-        'setting_type': SettingType.SYSTEM,
-        'value': '2',
-      },
-    ],
-    'version': '4.0.0',
-  },
+  // 'stock_statusbar_in_hide': {
+  //   'title': 'Stock Statusbar in Hide',
+  //   'subtitle': 'Use default (usually smaller) statusbar height in hide',
+  //   'icon': MdiIcons.arrowUpDown,
+  //   'widget': WidgetType.SWITCH,
+  //   'setting_type': SettingType.SYSTEM,
+  //   'widget_data': {
+  //     'default': true,
+  //   },
+  //   'compat': {
+  //     'prop': 'ro.potato.has_cutout',
+  //   },
+  //   'dependencies': [
+  //     {
+  //       'name': 'display_cutout_mode',
+  //       'setting_type': SettingType.SYSTEM,
+  //       'value': '2',
+  //     },
+  //   ],
+  //   'version': '4.0.0',
+  // },
 
   'sysui_rounded_size': {
     'title': 'Rounded corner radius',
