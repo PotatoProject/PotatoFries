@@ -1,5 +1,6 @@
 import 'package:android_flutter_settings/android_flutter_settings.dart';
 import 'package:flutter/material.dart';
+import 'package:potato_fries/locales/locale_strings.g.dart';
 import 'package:potato_fries/pages/base_page.dart';
 import 'package:potato_fries/provider/app_info.dart';
 import 'package:potato_fries/provider/page_provider.dart';
@@ -12,7 +13,7 @@ import 'package:provider/provider.dart';
 
 class QuickSettings extends BasePage {
   @override
-  String get title => "Quick settings";
+  String get title => LocaleStrings.qs.title;
 
   @override
   IconData get icon => CustomIcons.quick_settings;
@@ -158,7 +159,7 @@ class QuickSettings extends BasePage {
                     padding: const EdgeInsets.all(8.0),
                     child: Center(
                       child: Text(
-                        'No notifications'.toUpperCase(),
+                        LocaleStrings.qs.headerNoNotifications.toUpperCase(),
                         style: TextStyle(color: Colors.white),
                       ),
                     ),

@@ -1,15 +1,16 @@
 import 'package:android_flutter_settings/android_flutter_settings.dart';
 import 'package:flutter/material.dart';
+import 'package:potato_fries/locales/locale_strings.g.dart';
 import 'package:potato_fries/widgets/directory.dart';
 
 final Map<String, dynamic> qsData = {
-  'Quick settings tweaks': qstweaks,
+  LocaleStrings.qs.tweaksTitle: qstweaks,
 };
 
 final Map<String, dynamic> qstweaks = {
   'qs_show_auto_brightness': {
-    'title': 'QS Auto brightness',
-    'subtitle': 'Show auto brightness icon on QS panel',
+    'title': LocaleStrings.qs.tweaksQsShowAutoBrightnessTitle,
+    'subtitle': LocaleStrings.qs.tweaksQsShowAutoBrightnessDesc,
     'icon': Icons.brightness_6,
     'widget': WidgetType.SWITCH,
     'setting_type': SettingType.SECURE,
@@ -19,23 +20,23 @@ final Map<String, dynamic> qstweaks = {
     'version': '4.0.0',
   },
   'qs_show_brightness_slider': {
-    'title': 'Brightness slider',
-    'subtitle': 'Show a brightness slider in the quick settings panel',
+    'title': LocaleStrings.qs.tweaksQsShowBrightnessSliderTitle,
+    'subtitle': LocaleStrings.qs.tweaksQsShowBrightnessSliderDesc,
     'widget': WidgetType.DROPDOWN,
     'setting_type': SettingType.SECURE,
     'widget_data': {
       'values': {
-        '0': 'Never show',
-        '1': 'Show when expanded',
-        '2': 'Show always',
+        '0': LocaleStrings.qs.tweaksQsShowBrightnessSliderV0,
+        '1': LocaleStrings.qs.tweaksQsShowBrightnessSliderV1,
+        '2': LocaleStrings.qs.tweaksQsShowBrightnessSliderV2,
       },
       'default': '1',
     },
     'version': '4.0.0',
   },
   'qs_tile_title_visibility': {
-    'title': 'Show title of QS tiles',
-    'subtitle': 'Hide or show title of QS tiles',
+    'title': LocaleStrings.qs.tweaksQsTileTitleVisibilityTitle,
+    'subtitle': LocaleStrings.qs.tweaksQsTileTitleVisibilityDesc,
     'widget': WidgetType.SWITCH,
     'setting_type': SettingType.SYSTEM,
     'widget_data': {
@@ -44,7 +45,7 @@ final Map<String, dynamic> qstweaks = {
     'version': '4.0.0',
   },
   'qs_rows_portrait': {
-    'title': 'Tiles rows on portrait',
+    'title': LocaleStrings.qs.tweaksQsRowsPortraitTitle,
     'widget': WidgetType.SLIDER,
     'setting_type': SettingType.SYSTEM,
     'widget_data': {
@@ -56,7 +57,7 @@ final Map<String, dynamic> qstweaks = {
     'version': '4.0.0',
   },
   'qs_columns_portrait': {
-    'title': 'Tiles columns on portrait',
+    'title': LocaleStrings.qs.tweaksQsColumnsPortraitTitle,
     'widget': WidgetType.SLIDER,
     'setting_type': SettingType.SYSTEM,
     'widget_data': {
@@ -68,7 +69,7 @@ final Map<String, dynamic> qstweaks = {
     'version': '4.0.0',
   },
   'qs_rows_landscape': {
-    'title': 'Tiles rows on landscape',
+    'title': LocaleStrings.qs.tweaksQsRowsLandscapeTitle,
     'widget': WidgetType.SLIDER,
     'setting_type': SettingType.SYSTEM,
     'widget_data': {
@@ -80,7 +81,7 @@ final Map<String, dynamic> qstweaks = {
     'version': '4.0.0',
   },
   'qs_columns_landscape': {
-    'title': 'Tiles columns on landscape',
+    'title': LocaleStrings.qs.tweaksQsColumnsLandscapeTitle,
     'widget': WidgetType.SLIDER,
     'setting_type': SettingType.SYSTEM,
     'widget_data': {

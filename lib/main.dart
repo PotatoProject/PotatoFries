@@ -1,5 +1,8 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:potato_fries/locales/generated_asset_loader.g.dart';
+import 'package:potato_fries/locales/locales.g.dart';
 import 'package:potato_fries/pages/home.dart';
 import 'package:potato_fries/provider/app_info.dart';
 import 'package:potato_fries/ui/scroll_behavior.dart';
@@ -8,7 +11,15 @@ import 'package:spicy_components/spicy_components.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(FriesRoot());
+  runApp(
+    EasyLocalization(
+      child: FriesRoot(),
+      supportedLocales: Locales.supported,
+      fallbackLocale: Locale("en", "US"),
+      assetLoader: GeneratedAssetLoader(),
+      path: "assets/locales",
+    ),
+  );
 }
 
 class FriesRoot extends StatelessWidget {
@@ -40,6 +51,9 @@ class FriesRoot extends StatelessWidget {
                 .scaffoldBackgroundColor,
           ),
           home: FriesHome(),
+          supportedLocales: context.supportedLocales,
+          localizationsDelegates: context.localizationDelegates,
+          locale: context.locale,
         );
       }),
     );

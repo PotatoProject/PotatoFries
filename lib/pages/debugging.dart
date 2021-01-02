@@ -78,7 +78,9 @@ class _DebuggingPageState extends State<DebuggingPage> {
                           builder: (context, snapshot) {
                             if (snapshot.data == null) return Container();
                             return Text(
-                              snapshot.data.version + '+' + snapshot.data.buildNumber,
+                              snapshot.data.version +
+                                  '+' +
+                                  snapshot.data.buildNumber,
                               style: TextStyle(
                                 color: Theme.of(context)
                                     .textTheme
@@ -89,14 +91,13 @@ class _DebuggingPageState extends State<DebuggingPage> {
                             );
                           },
                         ),
-
                         Visibility(
                           visible: DEBUG,
                           child: Text(
                             " (DEBUG)",
                             style: TextStyle(color: Colors.red),
                           ),
-                        )
+                        ),
                       ],
                     ),
                     Row(

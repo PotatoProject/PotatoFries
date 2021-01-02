@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:potato_fries/data/constants.dart';
+import 'package:potato_fries/locales/locale_strings.g.dart';
 import 'package:potato_fries/provider/app_info.dart';
 import 'package:potato_fries/ui/sizeable_list_tile.dart';
 import 'package:provider/provider.dart';
@@ -12,7 +13,7 @@ class IconPackPicker extends StatelessWidget {
     final selectedPack = appInfo.globalSysTheme[OVERLAY_CATEGORY_ICON_ANDROID];
 
     return SizeableListTile(
-      title: 'System icon pack',
+      title: LocaleStrings.themes.themesSystemIconPackTitle,
       onTap: () {
         showModalBottomSheet(
           context: context,
@@ -28,7 +29,7 @@ class IconPackPicker extends StatelessWidget {
                     bottom: 24,
                   ),
                   child: Text(
-                    'System icon pack',
+                    LocaleStrings.themes.themesSystemIconPackTitle,
                     style: Theme.of(context).textTheme.headline6,
                   ),
                 ),

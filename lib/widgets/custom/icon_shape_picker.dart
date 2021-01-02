@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:potato_fries/locales/locale_strings.g.dart';
 import 'package:potato_fries/provider/app_info.dart';
 import 'package:potato_fries/ui/shaped_icon.dart';
 import 'package:potato_fries/ui/sizeable_list_tile.dart';
@@ -11,7 +12,7 @@ class IconShapePicker extends StatelessWidget {
     final shapes = _provider.shapes;
 
     return SizeableListTile(
-      title: 'Icon Shape',
+      title: LocaleStrings.themes.themesSystemIconShapeTitle,
       onTap: () {
         showModalBottomSheet(
           context: context,
@@ -27,7 +28,7 @@ class IconShapePicker extends StatelessWidget {
                     bottom: 24,
                   ),
                   child: Text(
-                    'System icon Shape',
+                    LocaleStrings.themes.themesSystemIconShapeTitle,
                     style: Theme.of(context).textTheme.headline6,
                   ),
                 ),

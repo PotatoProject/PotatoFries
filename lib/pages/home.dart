@@ -27,8 +27,8 @@ class _FriesHomeState extends State<FriesHome> {
     var provider = Provider.of<AppInfoProvider>(context);
 
     List<BasePage> _pages = List.from(pages);
-    if (!provider.audioFxSupported)
-      _pages.removeWhere((element) => element.providerKey == 'audiofx');
+    //if (!provider.audioFxSupported)
+    //  _pages.removeWhere((element) => element.providerKey == 'audiofx');
 
     // ignore: non_constant_identifier_names
     var DEBUG = false;
@@ -70,7 +70,9 @@ class _FriesHomeState extends State<FriesHome> {
                     provider.setFlag4();
                     provider.flag2 = 0;
                   }
-                : provider.flag3 ? null : () => provider.flag2 = 0,
+                : provider.flag3
+                    ? null
+                    : () => provider.flag2 = 0,
             child: Builder(builder: (context) {
               var textColor;
               switch (provider.flag2) {

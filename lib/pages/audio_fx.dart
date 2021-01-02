@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_xlider/flutter_xlider.dart';
+import 'package:potato_fries/locales/locale_strings.g.dart';
 import 'package:potato_fries/pages/base_page.dart';
 import 'package:potato_fries/provider/audio_fx.dart';
 import 'package:potato_fries/widgets/settings_dropdown.dart';
@@ -10,7 +11,7 @@ import 'package:provider/provider.dart';
 
 class AudioFx extends BasePage {
   @override
-  String get title => "AudioFX";
+  String get title => LocaleStrings.audiofx.title;
 
   @override
   IconData get icon => Icons.audiotrack;
@@ -82,7 +83,9 @@ class AudioFx extends BasePage {
                       child: Row(
                         children: <Widget>[
                           Text(
-                            provider.enabled ? 'On' : 'Off',
+                            provider.enabled
+                                ? LocaleStrings.audiofx.statusOn
+                                : LocaleStrings.audiofx.statusOff,
                             style: TextStyle(color: Colors.white),
                           ),
                           Spacer(),
@@ -103,7 +106,7 @@ class AudioFx extends BasePage {
                     duration: Duration(milliseconds: 300),
                     curve: Curves.easeInOut,
                     child: SettingsDropdownTile(
-                      title: 'Audio Preset',
+                      title: LocaleStrings.audiofx.audioPresetTitle,
                       values: provider.profileMap,
                       getValue: () => provider.profile,
                       setValue: (v) => provider.setProfile(v),
@@ -120,14 +123,14 @@ class AudioFx extends BasePage {
                     duration: Duration(milliseconds: 300),
                     curve: Curves.easeInOut,
                     child: SettingsDropdownTile(
-                      title: 'Headset Profile',
+                      title: LocaleStrings.audiofx.headsetProfileTitle,
                       values: Map.fromIterable(
                         provider.headphones,
                         key: (v) => v,
                         value: (v) => v,
                       ),
                       getValue: () => (provider.headphones[provider.headset] ??
-                          'Default Mode'),
+                          LocaleStrings.audiofx.headsetProfileDefault),
                       setValue: (v) => provider.headset =
                           (provider.headphones.indexOf(v) ?? 0),
                       selectedColor: provider.profileColor ??

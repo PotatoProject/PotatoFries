@@ -3,6 +3,7 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:potato_fries/data/constants.dart';
+import 'package:potato_fries/locales/locale_strings.g.dart';
 import 'package:potato_fries/provider/lock_screen.dart';
 import 'package:potato_fries/provider/page_provider.dart';
 import 'package:potato_fries/ui/sizeable_list_tile.dart';
@@ -19,7 +20,7 @@ class _LockScreenClockPickerState extends State<LockScreenClockPicker> {
     var provider = Provider.of<PageProvider>(context) as LockScreenProvider;
     String curClock = provider.getLSClockData();
     return SizeableListTile(
-      title: 'Lock Screen Clock',
+      title: LocaleStrings.lockscreen.clocksLockScreenClockTitle,
       onTap: () {
         showModalBottomSheet(
             context: context,
@@ -31,7 +32,7 @@ class _LockScreenClockPickerState extends State<LockScreenClockPicker> {
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
                     Text(
-                      'Lock Screen Clock',
+                      LocaleStrings.lockscreen.clocksLockScreenClockTitle,
                       style: Theme.of(context).textTheme.headline6,
                     ),
                     SizedBox(
