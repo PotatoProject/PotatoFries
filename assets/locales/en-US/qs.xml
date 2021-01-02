@@ -1,0 +1,18 @@
+<resources>
+    <string name="title">Quick Settings</string>
+    <string name="header.no_notifications">No notifications</string>
+    <string name="tweaks.title">Quick settings tweaks</string>
+    <string name="tweaks.qs_show_auto_brightness.title">QS Auto brightness</string>
+    <string name="tweaks.qs_show_auto_brightness.desc">Show auto brightness icon on QS panel</string>
+    <string name="tweaks.qs_show_brightness_slider.title">Brightness slider</string>
+    <string name="tweaks.qs_show_brightness_slider.desc">Show a brightness slider in the quick settings panel</string>
+    <string name="tweaks.qs_show_brightness_slider.v_0">Never show</string>
+    <string name="tweaks.qs_show_brightness_slider.v_1">Show when expanded</string>
+    <string name="tweaks.qs_show_brightness_slider.v_2">Show always</string>
+    <string name="tweaks.qs_tile_title_visibility.title">Show title of QS tiles</string>
+    <string name="tweaks.qs_tile_title_visibility.desc">Hide or show title of QS tiles</string>
+    <string name="tweaks.qs_rows_portrait.title">Tiles rows on portrait</string>
+    <string name="tweaks.qs_columns_portrait.title">Tiles coilumns on portrait</string>
+    <string name="tweaks.qs_rows_landscape.title">Tiles rows on landscape</string>
+    <string name="tweaks.qs_columns_landscape.title">Tiles coilumns on landscape</string>
+</resources>

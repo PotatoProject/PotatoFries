@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:potato_fries/locales/locale_strings.g.dart';
 import 'package:potato_fries/provider/app_info.dart';
 import 'package:provider/provider.dart';
 
@@ -105,7 +106,8 @@ class _MultiModeColorPickerState extends State<MultiModeColorPicker> {
     }
 
     if (autoCalc &&
-        Provider.of<AppInfoProvider>(context, listen: false).autoCalculateAccents) {
+        Provider.of<AppInfoProvider>(context, listen: false)
+            .autoCalculateAccents) {
       var cHSL;
       var workingColor = editDarkColor ? darkColor : lightColor;
       switch (workingColor.runtimeType) {
@@ -243,7 +245,9 @@ class _MultiModeColorPickerState extends State<MultiModeColorPicker> {
           children: [
             Spacer(),
             ActionChip(
-              label: Text("Light"),
+              label: Text(
+                LocaleStrings.themes.themesSystemAccentLightColorTitle,
+              ),
               backgroundColor: !editDarkColor
                   ? Theme.of(context).chipTheme.backgroundColor
                   : Theme.of(context).cardColor,
@@ -251,7 +255,9 @@ class _MultiModeColorPickerState extends State<MultiModeColorPicker> {
             ),
             Spacer(flex: 2),
             ActionChip(
-              label: Text("Dark"),
+              label: Text(
+                LocaleStrings.themes.themesSystemAccentDarkColorTitle,
+              ),
               backgroundColor: editDarkColor
                   ? Theme.of(context).chipTheme.backgroundColor
                   : Theme.of(context).cardColor,
@@ -265,7 +271,7 @@ class _MultiModeColorPickerState extends State<MultiModeColorPicker> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text("Auto-magically calculate alt shades"),
+              Text(LocaleStrings.themes.themesSystemAccentCalculateShadesLabel),
               Switch(
                 onChanged: (b) => setState(() =>
                     Provider.of<AppInfoProvider>(context, listen: false)

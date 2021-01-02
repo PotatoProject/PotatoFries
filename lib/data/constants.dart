@@ -1,3 +1,4 @@
+import 'package:potato_fries/locales/locale_strings.g.dart';
 import 'package:potato_fries/pages/audio_fx.dart';
 import 'package:potato_fries/pages/base_page.dart';
 import 'package:potato_fries/pages/system.dart';
@@ -38,15 +39,23 @@ List<BasePage> pages = [
   AudioFx(),
 ];
 
-const Map<String, String> lockClocks = {
-  'Default': 'com.android.keyguard.clock.DefaultClockController',
-  'Bubble': 'com.android.keyguard.clock.BubbleClockController',
-  'Analog': 'com.android.keyguard.clock.AnalogClockController',
-  'Type': 'com.android.keyguard.clock.TypeClockController',
-  'Bold': 'com.android.keyguard.clock.DefaultBoldClockController',
-  'Sammy': 'com.android.keyguard.clock.SamsungClockController',
-  'Sammy Bold': 'com.android.keyguard.clock.SamsungBoldClockController',
-  'SFUNY': 'com.android.keyguard.clock.SfunyClockController',
+final Map<String, String> lockClocks = {
+  LocaleStrings.lockscreen.clocksLockScreenClockVDefault:
+      'com.android.keyguard.clock.DefaultClockController',
+  LocaleStrings.lockscreen.clocksLockScreenClockVBubble:
+      'com.android.keyguard.clock.BubbleClockController',
+  LocaleStrings.lockscreen.clocksLockScreenClockVAnalog:
+      'com.android.keyguard.clock.AnalogClockController',
+  LocaleStrings.lockscreen.clocksLockScreenClockVType:
+      'com.android.keyguard.clock.TypeClockController',
+  LocaleStrings.lockscreen.clocksLockScreenClockVBold:
+      'com.android.keyguard.clock.DefaultBoldClockController',
+  LocaleStrings.lockscreen.clocksLockScreenClockVSammy:
+      'com.android.keyguard.clock.SamsungClockController',
+  LocaleStrings.lockscreen.clocksLockScreenClockVSammybold:
+      'com.android.keyguard.clock.SamsungBoldClockController',
+  LocaleStrings.lockscreen.clocksLockScreenClockVSfuny:
+      'com.android.keyguard.clock.SfunyClockController',
 };
 
 const typeHeader = "It's";

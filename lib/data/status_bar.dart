@@ -1,24 +1,25 @@
 import 'package:android_flutter_settings/android_flutter_settings.dart';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:potato_fries/locales/locale_strings.g.dart';
 import 'package:potato_fries/widgets/directory.dart';
 
 final Map<String, dynamic> statusBar = {
-  'Display Cutouts': displayCutouts,
-  'Battery': statusBarBattery,
+  LocaleStrings.statusbar.cutoutsTitle: displayCutouts,
+  LocaleStrings.statusbar.batteryTitle: statusBarBattery,
 };
 
 final Map<String, dynamic> displayCutouts = {
   'display_cutout_mode': {
-    'title': 'Cutout mode',
+    'title': LocaleStrings.statusbar.cutoutsDisplayCutoutModeTitle,
     'icon': Icons.aspect_ratio,
     'widget': WidgetType.DROPDOWN,
     'setting_type': SettingType.SYSTEM,
     'widget_data': {
       'values': {
-        '0': 'Normal',
-        '1': 'Immerse',
-        // '2': 'Hide',
+        '0': LocaleStrings.statusbar.cutoutsDisplayCutoutModeV0,
+        '1': LocaleStrings.statusbar.cutoutsDisplayCutoutModeV1,
+        // '2': LocaleStrings.statusbar.cutoutsDisplayCutoutModeV2,
       },
       'default': '0',
     },
@@ -50,7 +51,7 @@ final Map<String, dynamic> displayCutouts = {
   // },
 
   'sysui_rounded_size': {
-    'title': 'Rounded corner radius',
+    'title': LocaleStrings.statusbar.cutoutsSysuiRoundedSizeTitle,
     'widget': WidgetType.SLIDER,
     'setting_type': SettingType.SECURE,
     'widget_data': {
@@ -65,43 +66,43 @@ final Map<String, dynamic> displayCutouts = {
 
 final Map<String, dynamic> statusBarBattery = {
   'status_bar_battery_style': {
-    'title': 'Battery Style',
+    'title': LocaleStrings.statusbar.batteryStatusBarBatteryStyleTitle,
     'icon': Icons.battery_full,
     'widget': WidgetType.DROPDOWN,
     'setting_type': SettingType.SYSTEM,
     'widget_data': {
       'values': {
-        '0': 'Portrait',
-        '1': 'Circle',
-        '2': 'Dotted Circle',
-        '3': 'Solid Circle',
-        '4': 'Text',
-        '5': 'Hidden',
+        '0': LocaleStrings.statusbar.batteryStatusBarBatteryStyleV0,
+        '1': LocaleStrings.statusbar.batteryStatusBarBatteryStyleV1,
+        '2': LocaleStrings.statusbar.batteryStatusBarBatteryStyleV2,
+        '3': LocaleStrings.statusbar.batteryStatusBarBatteryStyleV3,
+        '4': LocaleStrings.statusbar.batteryStatusBarBatteryStyleV4,
+        '5': LocaleStrings.statusbar.batteryStatusBarBatteryStyleV5,
       },
       'default': '0',
     },
     'version': '4.0.0',
   },
   'status_bar_show_battery_percent': {
-    'title': 'Battery Percentage',
+    'title': LocaleStrings.statusbar.batteryStatusBarShowBatteryPercentTitle,
     'icon': MdiIcons.percent,
     'widget': WidgetType.DROPDOWN,
     'setting_type': SettingType.SYSTEM,
     'widget_data': {
       'values': {
-        '0': 'Hidden',
-        '1': 'Inside the icon',
-        '2': 'Next to the icon',
+        '0': LocaleStrings.statusbar.batteryStatusBarShowBatteryPercentV0,
+        '1': LocaleStrings.statusbar.batteryStatusBarShowBatteryPercentV1,
+        '2': LocaleStrings.statusbar.batteryStatusBarShowBatteryPercentV2,
       },
       'default': '0',
     },
     'version': '4.0.0',
   },
-  'qs_header_show_battery_percent':{
-    'title': 'QS battery percentage',
-    'subtitle': 'Show battery percentage in the QS header instead of estimate',
+  'qs_header_show_battery_percent': {
+    'title': LocaleStrings.statusbar.batteryQsHeaderShowBatteryPercentTitle,
+    'subtitle': LocaleStrings.statusbar.batteryQsHeaderShowBatteryPercentDesc,
     'icon': Icons.battery_std,
-    'widget':WidgetType.SWITCH,
+    'widget': WidgetType.SWITCH,
     'setting_type': SettingType.SYSTEM,
     'widget_data': {
       'default': true,

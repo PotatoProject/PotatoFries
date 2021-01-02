@@ -30,6 +30,8 @@ dependencies:
   package_info: any
   flutter_xlider: any
   path_drawing: any
+  easy_localization: ^2.3.4-nullsafety.0
+  recase: any
 
 dev_dependencies:
   flutter_test:

@@ -1,0 +1,8 @@
+<resources>
+    <string name="title">AudioFX</string>
+    <string name="status.on">On</string>
+    <string name="status.off">Off</string>
+    <string name="audio_preset.title">Audio preset</string>
+    <string name="headset_profile.title">Headset profile</string>
+    <string name="headset_profile.default">Default mode</string>
+</resources>

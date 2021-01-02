@@ -1,0 +1,20 @@
+<resources>
+    <string name="title">System & Gestures</string>
+    <string name="buttons.title">Buttons</string>
+    <string name="buttons.volume_button_music_control.title">Volume buttons to skip tracks</string>
+    <string name="buttons.volume_button_music_control.desc">Long press volume buttons to forward/backward track</string>
+    <string name="gestures.title">Gestures</string>
+    <string name="gestures.double_tap_sleep_lockscreen.title">Double tap to sleep on lockscreen</string>
+    <string name="gestures.double_tap_sleep_lockscreen.desc">Turn off screen by double tapping empty space on lockscreen</string>
+    <string name="gestures.pulse_on_new_tracks.title">Ambient music tracks</string>
+    <string name="gestures.pulse_on_new_tracks.desc">Show Ambient Display when a new music track is played</string>
+    <string name="network.title">Network</string>
+    <string name="network.tethering_allow_vpn_upstreams.title">Allow clients to use VPNs</string>
+    <string name="network.tethering_allow_vpn_upstreams.desc">Permit hotspot/tethering clients to use this device's VPN connection</string>
+    <string name="packagemanager.title">Package manager</string>
+    <string name="packagemanager.allow_signature_fake.title">Package signature spoofing</string>
+    <string name="packagemanager.allow_signature_fake.desc">Allow fake signatures (useful for microG)</string>
+    <string name="notifications.title">Notifications</string>
+    <string name="notifications.less_boring_heads_up.title">Less boring heads up</string>
+    <string name="notifications.less_boring_heads_up.desc">Only receive heads up from calling and messaging apps</string>
+</resources>

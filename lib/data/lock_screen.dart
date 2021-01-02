@@ -1,10 +1,11 @@
 import 'package:android_flutter_settings/android_flutter_settings.dart';
 import 'package:flutter/material.dart';
+import 'package:potato_fries/locales/locale_strings.g.dart';
 import 'package:potato_fries/widgets/directory.dart';
 
 final Map<String, dynamic> lockScreen = {
-  'Clocks': clocks,
-  'Album art': albumArt,
+  LocaleStrings.lockscreen.clocksTitle: clocks,
+  LocaleStrings.lockscreen.albumartTitle: albumArt,
 };
 
 final Map<String, dynamic> clocks = {
@@ -16,8 +17,8 @@ final Map<String, dynamic> clocks = {
 
 final Map<String, dynamic> albumArt = {
   'lockscreen_media_metadata': {
-    'title': 'Lockscreen media art',
-    'subtitle': 'Show album art on lockscreen',
+    'title': LocaleStrings.lockscreen.albumartLockscreenMediaMetadataTitle,
+    'subtitle': LocaleStrings.lockscreen.albumartLockscreenMediaMetadataDesc,
     'icon': Icons.image,
     'widget': WidgetType.SWITCH,
     'setting_type': SettingType.SECURE,
@@ -27,8 +28,8 @@ final Map<String, dynamic> albumArt = {
     'version': '4.0.0',
   },
   'lockscreen_media_blur': {
-    'title': 'Lockscreen blur level',
-    'subtitle': 'Configure blur intensity of lockscreen media art',
+    'title': LocaleStrings.lockscreen.albumartLockscreenMediaBlurTitle,
+    'subtitle': LocaleStrings.lockscreen.albumartLockscreenMediaBlurDesc,
     'widget': WidgetType.SLIDER,
     'setting_type': SettingType.SYSTEM,
     'widget_data': {

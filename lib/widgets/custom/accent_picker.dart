@@ -1,5 +1,6 @@
 import 'package:android_flutter_settings/android_flutter_settings.dart';
 import 'package:flutter/material.dart';
+import 'package:potato_fries/locales/locale_strings.g.dart';
 import 'package:potato_fries/provider/app_info.dart';
 import 'package:potato_fries/ui/shaped_icon.dart';
 import 'package:potato_fries/ui/sizeable_list_tile.dart';
@@ -9,8 +10,8 @@ import 'package:provider/provider.dart';
 class AccentPicker extends StatelessWidget {
   @override
   Widget build(BuildContext context) => MultiModeColorPickerTile(
-        title: 'Accent color',
-        subtitle: 'Pick your favourite color!',
+        title: LocaleStrings.themes.themesSystemAccentTitle,
+        subtitle: LocaleStrings.themes.themesSystemAccentDesc,
         onApply: (Color newLight, Color newDark) {
           final stringLight = newLight.value.toRadixString(16).substring(2, 8);
           final stringDark = newDark.value.toRadixString(16).substring(2, 8);
@@ -207,7 +208,10 @@ class __TileContentState extends State<_TileContent> {
                     TextButton(
                       child: Padding(
                         padding: EdgeInsets.symmetric(horizontal: 8),
-                        child: Text("Cancel".toUpperCase()),
+                        child: Text(
+                          LocaleStrings.themes.themesSystemAccentCancel
+                              .toUpperCase(),
+                        ),
                       ),
                       onPressed: () => Navigator.pop(context),
                     ),
@@ -215,7 +219,10 @@ class __TileContentState extends State<_TileContent> {
                     TextButton(
                       child: Padding(
                         padding: EdgeInsets.symmetric(horizontal: 8),
-                        child: Text("Confirm".toUpperCase()),
+                        child: Text(
+                          LocaleStrings.themes.themesSystemAccentConfirm
+                              .toUpperCase(),
+                        ),
                       ),
                       onPressed: !(isLightColorTooLight ||
                               isLightColorTooDark ||
@@ -238,11 +245,11 @@ class __TileContentState extends State<_TileContent> {
 
   String get lightLabel {
     if (isLightColorTooDark) {
-      return "Light color is too dark";
+      return LocaleStrings.themes.themesSystemAccentLightColorDarkWarning;
     }
 
     if (isLightColorTooLight) {
-      return "Light color is too light";
+      return LocaleStrings.themes.themesSystemAccentLightColorLightWarning;
     }
 
     return "";
@@ -250,11 +257,11 @@ class __TileContentState extends State<_TileContent> {
 
   String get darkLabel {
     if (isDarkColorTooDark) {
-      return "Dark color is too dark";
+      return LocaleStrings.themes.themesSystemAccentDarkColorDarkWarning;
     }
 
     if (isDarkColorTooLight) {
-      return "Dark color is too light";
+      return LocaleStrings.themes.themesSystemAccentDarkColorLightWarning;
     }
 
     return "";
