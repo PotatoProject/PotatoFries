@@ -243,11 +243,13 @@ class _DebuggingPageState extends State<DebuggingPage> {
           ],
         ),
       ),
-      bottomNavigationBar: ControlledAnimation(
-        playback: discoEnabled ? Playback.LOOP : Playback.PAUSE,
+      bottomNavigationBar: CustomAnimation(
+        control: discoEnabled
+            ? CustomAnimationControl.LOOP
+            : CustomAnimationControl.STOP,
         tween: Tween<double>(begin: 0, end: 360),
         duration: Duration(seconds: 5),
-        builder: (context, anim) {
+        builder: (context, _, anim) {
           HSLColor rainbow = HSLColor.fromAHSL(
             1.0,
             anim,

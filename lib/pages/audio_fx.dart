@@ -338,8 +338,8 @@ class _GraphPainter extends CustomPainter {
 
     Point min = Point((double.maxFinite), (double.maxFinite));
     Point max = Point((-double.maxFinite), (-double.maxFinite));
-    List<double> differencesX = List<double>();
-    List<double> differencesY = List<double>();
+    List<double> differencesX = [];
+    List<double> differencesY = [];
     double avgX = 0;
     double avgY = 0;
     for (int i = 0; i < dataPoints.length; i++) {
@@ -365,7 +365,7 @@ class _GraphPainter extends CustomPainter {
     avgY = avgY == 0 ? 1 : avgY;
 
     // Normalize data points
-    List<Point> normalizedPoints = List();
+    List<Point> normalizedPoints = [];
     for (int i = 0; i < dataPoints.length; i++) {
       if (max.y != min.y)
         normalizedPoints
@@ -381,7 +381,7 @@ class _GraphPainter extends CustomPainter {
         : size.height / ((max.y - min.y) / avgY);
 
     Point lastPoint;
-    List<Offset> circles = List();
+    List<Offset> circles = [];
 
     for (int i = 0; i < dataPoints.length; i++) {
       double posX = (normalizedPoints[i].x * sizeIntervalX) / avgX;

@@ -186,7 +186,8 @@ bool isVersionValid(Map ver) => (ver != null &&
     (ver.containsKey('BUILD') && ver['BUILD'] is int));
 
 void reloadSystemElements() {
-  throw Exception("Reloading of assets from Fries is deprecated!\nPlease handle this in framework.");
+  throw Exception(
+      "Reloading of assets from Fries is deprecated!\nPlease handle this in framework.");
 }
 
 void launchUrl(String url, {BuildContext context}) async {
@@ -194,7 +195,7 @@ void launchUrl(String url, {BuildContext context}) async {
     await launch(url);
   else {
     if (context != null) {
-      Scaffold.of(context).showSnackBar(
+      ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('Unable to open $url!'),
         ),
