@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:potato_fries/data/app.dart';
+import 'package:potato_fries/data/models.dart';
 import 'package:potato_fries/provider/app_info.dart';
 import 'package:potato_fries/provider/page_provider.dart';
 import 'package:potato_fries/ui/smart_icon.dart';
 import 'package:potato_fries/utils/methods.dart';
 import 'package:potato_fries/utils/obj_gen.dart';
 import 'package:potato_fries/widgets/activity.dart';
-import 'package:potato_fries/widgets/color_picker.dart';
-import 'package:potato_fries/widgets/directory.dart';
 import 'package:potato_fries/widgets/settings_dropdown.dart';
 import 'package:potato_fries/widgets/settings_slider.dart';
 import 'package:potato_fries/widgets/settings_switch.dart';
@@ -31,27 +30,12 @@ class PageParser extends StatelessWidget {
           itemBuilder: (context, cindex) {
             List<Widget> children = [];
             String key = appData[dataKey].keys.elementAt(cindex);
-            Map<String, dynamic> workingMap = appData[dataKey][key];
+            List<Preference> workingMap = appData[dataKey][key];
             var provider = Provider.of<PageProvider>(context);
             var appInfoProvider = Provider.of<AppInfoProvider>(context);
 
-            bool emptySection = true;
-            for (String _key in workingMap.keys) {
-              var _value = workingMap[_key];
-              if ((_value['version'] == null ||
-                      appInfoProvider.isCompatible(_value['version'],
-                          max: _value['version_max'])) &&
-                  (appInfoProvider.isCompatCheckDisabled() ||
-                      _value['compat'] == null ||
-                      (provider.getValue(settingsKey(
-                            _key + '~COMPAT',
-                            _value['setting_type'],
-                          )) ??
-                          false))) {
-                emptySection = false;
-              }
-            }
-            if (emptySection) return Container();
+            if (workingMap.isEmpty) return Container();
+
             children.add(
               Padding(
                 padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
@@ -66,25 +50,36 @@ class PageParser extends StatelessWidget {
                 ),
               ),
             );
-            List<Widget> gen = List.generate(
-              workingMap.keys.length,
-              (index) {
-                var _key = workingMap.keys.elementAt(index);
-                var _value = workingMap[_key];
-                bool enabled = true;
-                if (_value['dependencies'] != null) {
-                  for (Map m in _value['dependencies']) {
-                    var sKey = settingsKey(m['name'], m['setting_type']);
+
+            List<Widget> gen = [];
+            for (Preference _value in workingMap) {
+              bool enabled = true;
+              bool skip = false;
+              if (_value.dependencies.isNotEmpty) {
+                for (Dependency d in _value.dependencies) {
+                  if (d is SettingDependency) {
+                    var sKey = settingsKey(d.name, d.type);
                     var sVal = provider.getValue(sKey);
                     if (sVal != null) {
-                      enabled = enabled &&
-                          (m['values'] != null
-                              ? (m['values'] as List).contains(sVal)
-                              : sVal == m['value']);
+                      enabled = sVal == d.value;
                     }
+                  } else if (d is PropDependency) {
+                    var pVal =
+                        provider.getValue("SYSTEM:" + d.name + "~COMPAT");
+                    if (d.value != pVal) skip = true;
                   }
                 }
-                return AnimatedOpacity(
+              }
+
+              if (_value.minVersion != null &&
+                  !appInfoProvider.isCompatible(_value.minVersion)) {
+                skip = true;
+              }
+
+              if (skip) continue;
+
+              gen.add(
+                AnimatedOpacity(
                   opacity: enabled ? 1.0 : 0.5,
                   duration: Duration(milliseconds: 300),
                   curve: Curves.easeInOut,
@@ -92,173 +87,108 @@ class PageParser extends StatelessWidget {
                     ignoring: !enabled,
                     child: Builder(
                       builder: (context) {
-                        if ((_value['version'] != null &&
-                                !appInfoProvider.isCompatible(_value['version'],
-                                    max: _value['version_max'])) ||
-                            (!appInfoProvider.isCompatCheckDisabled() &&
-                                _value['compat'] != null &&
-                                !(provider.getValue(settingsKey(
-                                      _key + '~COMPAT',
-                                      _value['setting_type'],
-                                    )) ??
-                                    false))) {
-                          return Container();
+                        if (_value is SettingPreference) {
+                          switch (_value.valueType) {
+                            case SettingValueType.STRING:
+                              final options = _value.options as DropdownOptions;
+                              return SettingsDropdownTile(
+                                title: _value.title,
+                                subtitle: _value.description,
+                                icon: SmartIcon(_value.icon),
+                                setValue: (val) {
+                                  provider.setValue(
+                                    settingsKey(
+                                      _value.setting,
+                                      _value.type,
+                                    ),
+                                    val,
+                                  );
+                                },
+                                getValue: () {
+                                  return provider.getValue(
+                                    settingsKey(
+                                      _value.setting,
+                                      _value.type,
+                                    ),
+                                  );
+                                },
+                                values: options.values,
+                                defaultValue: options.defaultValue,
+                              );
+                            case SettingValueType.BOOLEAN:
+                              final options = _value.options as SwitchOptions;
+                              return SettingsSwitchTile(
+                                title: _value.title,
+                                subtitle: _value.description,
+                                icon: SmartIcon(_value.icon),
+                                setValue: (val) {
+                                  provider.setValue(
+                                    settingsKey(
+                                      _value.setting,
+                                      _value.type,
+                                    ),
+                                    val,
+                                  );
+                                },
+                                defaultValue: options.defaultValue,
+                                getValue: () {
+                                  return provider.getValue(
+                                    settingsKey(
+                                      _value.setting,
+                                      _value.type,
+                                    ),
+                                  );
+                                },
+                              );
+                            case SettingValueType.INT:
+                              final options = _value.options as SliderOptions;
+                              return SettingsSliderTile(
+                                title: _value.title,
+                                min: options.min.toDouble(),
+                                max: options.max.toDouble(),
+                                percentage: options.percentage,
+                                setValue: (val) {
+                                  provider.setValue(
+                                    settingsKey(
+                                      _value.setting,
+                                      _value.type,
+                                    ),
+                                    val,
+                                  );
+                                },
+                                defaultValue: options.defaultValue.toDouble(),
+                                getValue: () {
+                                  return provider.getValue(
+                                    settingsKey(
+                                      _value.setting,
+                                      _value.type,
+                                    ),
+                                  );
+                                },
+                              );
+                          }
                         }
-                        switch (_value['widget']) {
-                          case WidgetType.SWITCH:
-                            return SettingsSwitchTile(
-                              title: _value['title'],
-                              subtitle: _value['subtitle'],
-                              icon: SmartIcon(_value['icon']),
-                              cooldown: _value['cooldown'] as int,
-                              setValue: (val) {
-                                provider.setValue(
-                                  settingsKey(
-                                    _key,
-                                    _value['setting_type'],
-                                  ),
-                                  val,
-                                );
-                              },
-                              defaultValue: _value.containsKey('widget_data') &&
-                                      _value['widget_data']
-                                          .containsKey('default')
-                                  ? (_value['widget_data']['default'] as bool)
-                                  : false,
-                              getValue: () {
-                                return provider.getValue(
-                                  settingsKey(
-                                    _key,
-                                    _value['setting_type'],
-                                  ),
-                                );
-                              },
-                            );
-                          case WidgetType.SLIDER:
-                            return SettingsSliderTile(
-                              title: _value['title'],
-                              min: (_value['widget_data']['min'] as int)
-                                      ?.toDouble() ??
-                                  0.0,
-                              max: (_value['widget_data']['max'] as int)
-                                      ?.toDouble() ??
-                                  0.0,
-                              percentage: _value['widget_data']['percentage'],
-                              setValue: (val) {
-                                provider.setValue(
-                                  settingsKey(
-                                    _key,
-                                    _value['setting_type'],
-                                  ),
-                                  val,
-                                );
-                              },
-                              defaultValue: _value.containsKey('widget_data') &&
-                                      _value['widget_data']
-                                          .containsKey('default')
-                                  ? (_value['widget_data']['default'] as int)
-                                          ?.toDouble() ??
-                                      0.0
-                                  : (_value['widget_data']['min'] as int)
-                                          ?.toDouble() ??
-                                      0.0,
-                              getValue: () {
-                                return provider.getValue(
-                                  settingsKey(
-                                    _key,
-                                    _value['setting_type'],
-                                  ),
-                                );
-                              },
-                            );
-                          case WidgetType.COLOR_PICKER:
-                            return ColorPickerTile(
-                              title: _value['title'],
-                              subtitle: _value['subtitle'],
-                              onApply: (Color color) {
-                                provider.setValue(
-                                  settingsKey(
-                                    _key,
-                                    _value['setting_type'],
-                                  ),
-                                  color.value,
-                                );
-                              },
-                              lightnessMin: _value['widget_data']
-                                  ['lightness_min'],
-                              lightnessMax: _value['widget_data']
-                                  ['lightness_max'],
-                              getColor: () {
-                                var value = provider.getValue(
-                                  settingsKey(
-                                    _key,
-                                    _value['setting_type'],
-                                  ),
-                                );
-                                if (value == null) return value;
-                                return Color(value);
-                              },
-                              defaultColor: _value.containsKey('widget_data') &&
-                                      _value['widget_data']
-                                          .containsKey('default')
-                                  ? (_value['widget_data']['default'] as Color)
-                                  : Colors.transparent,
-                              showUnsetPreview: _value['widget_data']
-                                      ['unset_preview'] ??
-                                  false,
-                            );
-                          case WidgetType.CUSTOM:
-                            return ObjectGen.fromString(_value['setting_type']);
-                          case WidgetType.DROPDOWN:
-                            return SettingsDropdownTile(
-                              title: _value['title'],
-                              subtitle: _value['subtitle'],
-                              icon: SmartIcon(_value['icon']),
-                              cooldown: _value['cooldown'] as int,
-                              setValue: (val) {
-                                provider.setValue(
-                                  settingsKey(
-                                    _key,
-                                    _value['setting_type'],
-                                  ),
-                                  val,
-                                );
-                              },
-                              getValue: () {
-                                return provider.getValue(
-                                  settingsKey(
-                                    _key,
-                                    _value['setting_type'],
-                                  ),
-                                );
-                              },
-                              values: _value['widget_data']['values'],
-                              defaultValue: _value.containsKey('widget_data') &&
-                                      _value['widget_data']
-                                          .containsKey('default')
-                                  ? (_value['widget_data']['default'])
-                                  : null,
-                            );
-                          case WidgetType.ACTIVITY:
-                            return ActivityTile(
-                              title: _value['title'],
-                              subtitle: _value['subtitle'],
-                              icon: SmartIcon(_value['icon']),
-                              cls: _value['class'],
-                              pkg: _value['package'],
-                            );
-                          default:
-                            return ListTile(
-                              title: Text(_value['title'] ?? 'Bruh.'),
-                              subtitle: Text('bro wat'),
-                            );
+                        if (_value is ActivityPreference) {
+                          return ActivityTile(
+                            title: _value.title,
+                            subtitle: _value.description,
+                            icon: SmartIcon(_value.icon),
+                            cls: _value.cls,
+                            pkg: _value.pkg,
+                          );
                         }
+                        if (_value is CustomPreference) {
+                          return ObjectGen.fromString(_value.id);
+                        }
+                        return Container();
                       },
                     ),
                   ),
-                );
-              },
-            );
+                ),
+              );
+            }
+            if (gen.isEmpty) return Container();
+
             children.addAll(gen);
             return Column(
               mainAxisSize: MainAxisSize.min,

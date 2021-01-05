@@ -1,8 +1,8 @@
 import 'package:android_flutter_settings/android_flutter_settings.dart';
 import 'package:flutter/foundation.dart';
 import 'package:potato_fries/data/app.dart';
+import 'package:potato_fries/data/models.dart';
 import 'package:potato_fries/utils/methods.dart';
-import 'package:potato_fries/widgets/directory.dart';
 
 class PageProvider extends ChangeNotifier {
   final String providerKey;
@@ -50,79 +50,83 @@ class PageProvider extends ChangeNotifier {
 
   void loadData() async {
     for (String categoryKey in appData[this.providerKey].keys) {
-      Map curMap = appData[this.providerKey][categoryKey];
-      for (String key in curMap.keys) {
-        if (curMap[key]['dependencies'] != null) {
-          for (int i = 0; i < curMap[key]['dependencies'].length; i++) {
-            var depObj = curMap[key]['dependencies'][i];
-            var sKey = settingsKey(
-              depObj['name'],
-              depObj['setting_type'],
-            );
-            if (getValue(sKey) == null) {
-              dynamic getNative() async {
-                if (depObj['value'] is bool)
-                  return await AndroidFlutterSettings.getBool(
-                    depObj['name'],
-                    depObj['setting_type'],
-                  );
-                else if (depObj['value'] is double || depObj['value'] is int)
-                  return await AndroidFlutterSettings.getInt(
-                    depObj['name'],
-                    depObj['setting_type'],
-                  );
-                else
-                  return await AndroidFlutterSettings.getString(
-                    depObj['name'],
-                    depObj['setting_type'],
-                  );
-              }
+      List<Preference> curMap = appData[this.providerKey][categoryKey];
+      for (Preference pref in curMap) {
+        if (pref.dependencies.isNotEmpty) {
+          for (int i = 0; i < pref.dependencies.length; i++) {
+            final depObj = pref.dependencies[i];
+            if (depObj is PropDependency) {
+              var val = await checkCompat(depObj);
+              setValue(
+                settingsKey("${depObj.name}~COMPAT", SettingType.SYSTEM),
+                val,
+                mapSet: true,
+              );
+              if (!val) continue;
+            } else if (depObj is SettingDependency) {
+              var sKey = settingsKey(
+                depObj.name,
+                depObj.type,
+              );
+              if (getValue(sKey) == null) {
+                dynamic getNative() async {
+                  switch (depObj.valType) {
+                    case SettingValueType.BOOLEAN:
+                      return await AndroidFlutterSettings.getBool(
+                        depObj.name,
+                        depObj.type,
+                      );
+                    case SettingValueType.INT:
+                      return await AndroidFlutterSettings.getInt(
+                        depObj.name,
+                        depObj.type,
+                      );
+                    case SettingValueType.STRING:
+                      return await AndroidFlutterSettings.getString(
+                        depObj.name,
+                        depObj.type,
+                      );
+                  }
+                }
 
-              setValue(sKey, await getNative(), mapSet: true);
+                setValue(sKey, await getNative(), mapSet: true);
+              }
             }
           }
         }
-        if (curMap[key]['compat'] != null) {
-          var val = await checkCompat(curMap[key]['compat']);
-          setValue(
-            settingsKey("$key~COMPAT", curMap[key]['setting_type']),
-            val,
-            mapSet: true,
-          );
-          if (!val) continue;
-        }
-        switch (curMap[key]['widget']) {
-          case WidgetType.SWITCH:
-            setValue(
-              settingsKey(key, curMap[key]['setting_type']),
-              await AndroidFlutterSettings.getBool(
-                key,
-                curMap[key]['setting_type'],
-              ),
-              mapSet: true,
-            );
-            break;
-          case WidgetType.SLIDER:
-          case WidgetType.COLOR_PICKER:
-            setValue(
-              settingsKey(key, curMap[key]['setting_type']),
-              await AndroidFlutterSettings.getInt(
-                key,
-                curMap[key]['setting_type'],
-              ),
-              mapSet: true,
-            );
-            break;
-          case WidgetType.DROPDOWN:
-            setValue(
-              settingsKey(key, curMap[key]['setting_type']),
-              await AndroidFlutterSettings.getString(
-                key,
-                curMap[key]['setting_type'],
-              ),
-              mapSet: true,
-            );
-            break;
+        if (pref is SettingPreference) {
+          switch (pref.valueType) {
+            case SettingValueType.BOOLEAN:
+              setValue(
+                settingsKey(pref.setting, pref.type),
+                await AndroidFlutterSettings.getBool(
+                  pref.setting,
+                  pref.type,
+                ),
+                mapSet: true,
+              );
+              break;
+            case SettingValueType.INT:
+              setValue(
+                settingsKey(pref.setting, pref.type),
+                await AndroidFlutterSettings.getInt(
+                  pref.setting,
+                  pref.type,
+                ),
+                mapSet: true,
+              );
+              break;
+            case SettingValueType.STRING:
+              setValue(
+                settingsKey(pref.setting, pref.type),
+                await AndroidFlutterSettings.getString(
+                  pref.setting,
+                  pref.type,
+                ),
+                mapSet: true,
+              );
+              break;
+          }
         }
       }
     }
