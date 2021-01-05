@@ -3,7 +3,7 @@ import 'package:flutter_svg/avd.dart';
 import 'package:flutter_svg/svg.dart';
 
 class SmartIcon extends StatelessWidget {
-  final dynamic iconData;
+  final SmartIconData iconData;
   final double size;
   final Color color;
 
@@ -18,36 +18,64 @@ class SmartIcon extends StatelessWidget {
     var _color = color ?? Theme.of(context).brightness == Brightness.light
         ? Colors.black
         : Colors.white;
-    if (iconData is IconData) {
-      return Icon(
-        iconData,
-        size: size,
-        color: _color,
+
+    if (iconData == null) {
+      return SizedBox.fromSize(
+        size: Size.square(size ?? 24),
       );
-    } else if (iconData is String) {
-      if ((iconData as String).endsWith("svg")) {
+    }
+
+    switch (iconData.type) {
+      case SmartIconType.SVG:
         return SvgPicture.asset(
-          iconData,
+          iconData.data,
           height: size ?? 24,
           width: size ?? 24,
           color: _color,
         );
-      } else if ((iconData as String).endsWith("xml")) {
+      case SmartIconType.ANDROID_VECTOR:
         return SizedBox.fromSize(
           size: Size.square(size ?? 24),
           child: AvdPicture.asset(
-            iconData,
+            iconData.data,
             color: _color,
           ),
         );
-      } else
-        throw TypeError();
-    } else if (iconData == null) {
-      return SizedBox.fromSize(
-        size: Size.square(size ?? 24),
-      );
-    } else {
-      throw TypeError();
+      case SmartIconType.ICON_DATA:
+      default:
+        return Icon(
+          iconData.data,
+          size: size,
+          color: _color,
+        );
     }
   }
+}
+
+class SmartIconData {
+  dynamic data;
+  SmartIconType type;
+
+  SmartIconData.iconData(
+    IconData data,
+  )   : this.data = data,
+        this.type = SmartIconType.ICON_DATA;
+
+  SmartIconData.svg(
+    String data,
+  )   : assert(data.endsWith("svg")),
+        this.data = data,
+        this.type = SmartIconType.SVG;
+
+  SmartIconData.androidVector(
+    String data,
+  )   : assert(data.endsWith("xml")),
+        this.data = data,
+        this.type = SmartIconType.ANDROID_VECTOR;
+}
+
+enum SmartIconType {
+  ICON_DATA,
+  SVG,
+  ANDROID_VECTOR,
 }

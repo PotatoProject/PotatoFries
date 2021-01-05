@@ -5,8 +5,6 @@ import 'package:potato_fries/widgets/custom/icon_shape_picker.dart';
 import 'package:potato_fries/widgets/custom/lock_screen_clock_picker.dart';
 
 enum WidgetType {
-  COLOR_PICKER,
-  COLOR_PICKER_DUAL,
   CUSTOM,
   DROPDOWN,
   SLIDER,

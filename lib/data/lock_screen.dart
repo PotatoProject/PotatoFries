@@ -1,50 +1,45 @@
 import 'package:android_flutter_settings/android_flutter_settings.dart';
 import 'package:flutter/material.dart';
+import 'package:potato_fries/data/models.dart';
 import 'package:potato_fries/locales/locale_strings.g.dart';
-import 'package:potato_fries/widgets/directory.dart';
+import 'package:potato_fries/ui/smart_icon.dart';
 
 final Map<String, dynamic> lockScreen = {
   LocaleStrings.lockscreen.clocksTitle: clocks,
   LocaleStrings.lockscreen.albumartTitle: albumArt,
 };
 
-final Map<String, dynamic> clocks = {
-  'lock_screen_clock': {
-    'widget': WidgetType.CUSTOM,
-    'setting_type': 'LockScreenClockPicker',
-  },
-};
+final List<Preference> clocks = [
+  CustomPreference(id: 'LockScreenClockPicker'),
+];
 
-final Map<String, dynamic> albumArt = {
-  'lockscreen_media_metadata': {
-    'title': LocaleStrings.lockscreen.albumartLockscreenMediaMetadataTitle,
-    'subtitle': LocaleStrings.lockscreen.albumartLockscreenMediaMetadataDesc,
-    'icon': Icons.image,
-    'widget': WidgetType.SWITCH,
-    'setting_type': SettingType.SECURE,
-    'widget_data': {
-      'default': true,
-    },
-    'version': '4.0.0',
-  },
-  'lockscreen_media_blur': {
-    'title': LocaleStrings.lockscreen.albumartLockscreenMediaBlurTitle,
-    'subtitle': LocaleStrings.lockscreen.albumartLockscreenMediaBlurDesc,
-    'widget': WidgetType.SLIDER,
-    'setting_type': SettingType.SYSTEM,
-    'widget_data': {
-      'default': 25,
-      'min': 0,
-      'max': 25,
-      'percentage': false,
-    },
-    'dependencies': [
-      {
-        'name': 'lockscreen_media_metadata',
-        'setting_type': SettingType.SECURE,
-        'value': true,
-      },
+final List<Preference> albumArt = [
+  SettingPreference.withSwitch(
+    title: LocaleStrings.lockscreen.albumartLockscreenMediaMetadataTitle,
+    description: LocaleStrings.lockscreen.albumartLockscreenMediaMetadataDesc,
+    icon: SmartIconData.iconData(Icons.image),
+    setting: 'lockscreen_media_metadata',
+    type: SettingType.SECURE,
+    options: SwitchOptions(
+      defaultValue: true,
+    ),
+    minVersion: '4.0.0',
+  ),
+  SettingPreference.withSlider(
+    title: LocaleStrings.lockscreen.albumartLockscreenMediaBlurTitle,
+    setting: 'lockscreen_media_blur',
+    type: SettingType.SYSTEM,
+    options: SliderOptions(
+      max: 25,
+      defaultValue: 25,
+    ),
+    dependencies: [
+      SettingDependency.boolean(
+        name: 'lockscreen_media_metadata',
+        type: SettingType.SECURE,
+        value: true,
+      ),
     ],
-    'version': '4.0.0',
-  },
-};
+    minVersion: '4.0.0',
+  ),
+];
