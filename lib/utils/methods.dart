@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:potato_fries/data/models.dart';
 import 'package:potato_fries/pages/base_page.dart';
 import 'package:potato_fries/provider/app_info.dart';
-import 'package:potato_fries/widgets/color_picker.dart';
-import 'package:potato_fries/widgets/color_picker_dual.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 String settingsKey(String setting, SettingType type) =>
@@ -51,57 +49,6 @@ void showNavigationSheet({
           },
         ),
       ),
-    ),
-  );
-}
-
-void showColorPicker(
-  BuildContext context, {
-  Function onApply,
-  Function onChange,
-  double lightnessMin = 0,
-  double lightnessMax = 1,
-  Color defaultColor,
-}) {
-  showModalBottomSheet(
-    context: context,
-    isScrollControlled: true,
-    builder: (context) => ColorPicker(
-      onApply: onApply,
-      lightnessMin: lightnessMin,
-      lightnessMax: lightnessMax,
-      defaultColor: defaultColor,
-    ),
-  );
-}
-
-void showColorPickerDual(
-  BuildContext context, {
-  bool lightnessLocked = false,
-  double lightnessDeltaCenter = 0,
-  double lightnessDeltaEnd = 0,
-  double lightnessMin = 0,
-  double lightnessMax = 1,
-  Function onApply,
-  Function onChange,
-  Color defaultDark,
-  Color defaultLight,
-  Color defaultColor,
-  bool hasDiscoSetting = false,
-}) {
-  showModalBottomSheet(
-    context: context,
-    isScrollControlled: true,
-    builder: (context) => ColorPickerDual(
-      lightnessLocked: lightnessLocked,
-      lightnessDeltaCenter: lightnessDeltaCenter,
-      lightnessDeltaEnd: lightnessDeltaEnd,
-      onApply: onApply,
-      onChange: onChange,
-      defaultDark: defaultDark,
-      defaultLight: defaultLight,
-      defaultColor: defaultColor,
-      hasDiscoSetting: hasDiscoSetting,
     ),
   );
 }

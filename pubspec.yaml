@@ -22,7 +22,6 @@ dependencies:
   spicy_components:
     git:
       url: https://github.com/HrX03/SpicyUIComponents
-  outline_material_icons: any
   material_design_icons_flutter: any
   provider: any
   animations: any
@@ -42,12 +41,6 @@ flutter:
   assets:
     - assets/
   fonts:
-    - family:  Logo
-      fonts:
-        - asset: fonts/Logo.ttf
     - family:  CustomIcons
       fonts:
        - asset: fonts/CustomIcons.ttf
-
-dependency_overrides:
-  flutter_svg: ^0.18.0

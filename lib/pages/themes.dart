@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:outline_material_icons/outline_material_icons.dart';
 import 'package:potato_fries/locales/locale_strings.g.dart';
 import 'package:potato_fries/pages/base_page.dart';
 import 'package:potato_fries/provider/app_info.dart';
@@ -13,7 +12,7 @@ class Themes extends BasePage {
   String get title => LocaleStrings.themes.title;
 
   @override
-  IconData get icon => OMIcons.colorLens;
+  IconData get icon => Icons.color_lens;
 
   @override
   String get providerKey => 'themes';

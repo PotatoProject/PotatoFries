@@ -5,7 +5,6 @@ import 'package:potato_fries/locales/generated_asset_loader.g.dart';
 import 'package:potato_fries/locales/locales.g.dart';
 import 'package:potato_fries/pages/home.dart';
 import 'package:potato_fries/provider/app_info.dart';
-import 'package:potato_fries/ui/scroll_behavior.dart';
 import 'package:provider/provider.dart';
 import 'package:spicy_components/spicy_components.dart';
 
@@ -36,10 +35,6 @@ class FriesRoot extends StatelessWidget {
       child: Builder(builder: (context) {
         var appInfoProvider = Provider.of<AppInfoProvider>(context);
         return MaterialApp(
-          builder: (context, child) => ScrollConfiguration(
-            behavior: NoGlowScrollBehavior(),
-            child: child,
-          ),
           debugShowCheckedModeBanner: false,
           title: 'Fries',
           theme: SpicyThemes.light(appInfoProvider.accentLight).copyWith(

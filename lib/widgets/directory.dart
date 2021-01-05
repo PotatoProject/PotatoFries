@@ -4,14 +4,6 @@ import 'package:potato_fries/widgets/custom/icon_pack_picker.dart';
 import 'package:potato_fries/widgets/custom/icon_shape_picker.dart';
 import 'package:potato_fries/widgets/custom/lock_screen_clock_picker.dart';
 
-enum WidgetType {
-  CUSTOM,
-  DROPDOWN,
-  SLIDER,
-  SWITCH,
-  ACTIVITY,
-}
-
 void registerCustomWidgets() {
   ObjectGen.register<AccentPicker>(() => AccentPicker());
   ObjectGen.register<IconPackPicker>(() => IconPackPicker());

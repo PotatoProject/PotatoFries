@@ -1,6 +1,5 @@
 import 'package:android_flutter_settings/android_flutter_settings.dart';
 import 'package:flutter/material.dart';
-import 'package:outline_material_icons/outline_material_icons.dart';
 import 'package:package_info/package_info.dart';
 import 'package:potato_fries/app_native/utils.dart';
 import 'package:potato_fries/provider/app_info.dart';
@@ -155,7 +154,7 @@ class _DebuggingPageState extends State<DebuggingPage> {
                   header("Version and compatibility"),
                   SizeableListTile(
                     title: "Disable version checking",
-                    icon: Icon(OMIcons.trackChanges),
+                    icon: Icon(Icons.track_changes_outlined),
                     subtitle: Text("Disable all non-strict version checks"),
                     trailing: SettingsSwitch(
                       setValue: (v) =>
@@ -167,7 +166,7 @@ class _DebuggingPageState extends State<DebuggingPage> {
                   ),
                   SizeableListTile(
                     title: "Disable compatibility checking",
-                    icon: Icon(OMIcons.developerBoard),
+                    icon: Icon(Icons.developer_board_outlined),
                     subtitle: Text("Disable all feature compatibility checks"),
                     trailing: SettingsSwitch(
                       setValue: (v) =>
@@ -179,7 +178,7 @@ class _DebuggingPageState extends State<DebuggingPage> {
                   ),
                   SizeableListTile(
                     title: "Spoof version",
-                    icon: Icon(OMIcons.flashOn),
+                    icon: Icon(Icons.flash_on_outlined),
                     subtitle: Text(appInfoProvider.getVersionOverride() == null
                         ? 'Set a fake vernum'
                         : 'Fake version: ' +
@@ -200,7 +199,7 @@ class _DebuggingPageState extends State<DebuggingPage> {
                   header("Activity"),
                   SizeableListTile(
                     title: "Launch Activity",
-                    icon: Icon(OMIcons.launch),
+                    icon: Icon(Icons.launch_outlined),
                     subtitle: Text('Start any activity'),
                     onTap: () => showDialog(
                       context: context,
@@ -218,7 +217,7 @@ class _DebuggingPageState extends State<DebuggingPage> {
                   header("Settings and overlays"),
                   SizeableListTile(
                     title: "Write or read settings",
-                    icon: Icon(OMIcons.settings),
+                    icon: Icon(Icons.settings_outlined),
                     subtitle:
                         Text('Write or read any System/Secure/Global settings'),
                     onTap: () => showDialog(
@@ -228,7 +227,7 @@ class _DebuggingPageState extends State<DebuggingPage> {
                   ),
                   SizeableListTile(
                     title: "Overlay Controller",
-                    icon: Icon(OMIcons.layers),
+                    icon: Icon(Icons.layers_outlined),
                     subtitle: Text(
                       'Enable/disable any overlay, trigger asset reload for a package',
                     ),
