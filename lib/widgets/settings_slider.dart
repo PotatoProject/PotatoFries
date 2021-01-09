@@ -22,62 +22,42 @@ class _SettingsSliderTileState extends State<SettingsSliderTile> {
     final _provider = context.watch<PageProvider>();
     final pref = widget.pref;
     final options = widget.pref.options as SliderOptions;
-    var _defaultValue = options.defaultValue.toDouble();
-    bool hasReset = false;
-    bool isCurrentDefault = false;
-    if (_defaultValue != null && _defaultValue == -1) {
-      _defaultValue = options.min.toDouble();
-      hasReset = true;
-      isCurrentDefault = (_provider.getValue(pref.setting)?.toDouble() ??
-              options.defaultValue ??
-              options.min) ==
-          -1;
-    }
 
-    double value = _provider.getValue(pref.setting)?.toDouble() ??
-        _defaultValue ??
-        options.min;
-    if (value < options.min || value > options.max)
-      value = options.min.toDouble();
+    int value = _provider.getValue(pref.setting) ?? options.defaultValue;
+    final isCurrentlyDefault = value == -1;
+
+    value = value.clamp(options.min, options.max);
+
     return SizeableListTile(
       title: pref.title,
-      icon: Container(
-        width: 24,
-        alignment: Alignment.center,
-        child: isCurrentDefault
-            ? FittedBox(
-                fit: BoxFit.scaleDown,
-                child: Text('DEF'),
-              )
-            : Text((options.percentage
-                    ? (value / options.max) * 100
-                    : value.toInt())
-                .toInt()
-                .toString()),
+      icon: SizedBox.fromSize(
+        size: Size.square(24),
+        child: Center(
+          child: isCurrentlyDefault
+              ? FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: Text('DEF'),
+                )
+              : Text(
+                  (options.percentage ? (value / options.max) * 100 : value)
+                      .toInt()
+                      .toString(),
+                ),
+        ),
       ),
-      subtitle: Row(
-        children: <Widget>[
-          Expanded(
-            child: SettingsSlider(
-              value: value,
-              min: options.min.toDouble(),
-              max: options.max.toDouble(),
-              onChanged: (v) {
-                _provider.setValue(pref.setting, v);
-              },
-            ),
-          ),
-          Visibility(
-            visible: hasReset,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0),
-              child: IconButton(
-                onPressed: () => _provider.setValue(pref.setting, -1),
-                icon: Icon(Icons.settings_backup_restore),
-              ),
-            ),
-          ),
-        ],
+      subtitle: SettingsSlider(
+        value: value.toDouble(),
+        min: options.min.toDouble(),
+        max: options.max.toDouble(),
+        onChanged: (v) {
+          _provider.setValue(pref.setting, v.toInt());
+        },
+      ),
+      trailing: IconButton(
+        icon: Icon(Icons.settings_backup_restore),
+        onPressed: !isCurrentlyDefault
+            ? () => _provider.setValue(pref.setting, options.defaultValue)
+            : null,
       ),
     );
   }
@@ -85,14 +65,12 @@ class _SettingsSliderTileState extends State<SettingsSliderTile> {
 
 class SettingsSlider extends StatelessWidget {
   final double value;
-  final bool enabled;
   final double min;
   final double max;
   final ValueChanged<double> onChanged;
 
   SettingsSlider({
     @required this.value,
-    this.enabled = true,
     this.min = 0,
     this.max = 0,
     this.onChanged,
@@ -111,7 +89,7 @@ class SettingsSlider extends StatelessWidget {
         divisions: max.toInt() - 1,
         activeColor: Theme.of(context).accentColor,
         inactiveColor: Theme.of(context).accentColor.withOpacity(0.25),
-        onChanged: enabled ? onChanged : null,
+        onChanged: onChanged,
       ),
     );
   }

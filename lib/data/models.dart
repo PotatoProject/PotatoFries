@@ -95,7 +95,7 @@ class CustomPreference extends Preference {
 abstract class Options<T> {
   final T defaultValue;
 
-  Options._(this.defaultValue);
+  Options._(this.defaultValue) : assert(defaultValue != null);
 
   Map<String, dynamic> toJsonInternal() {
     return {
