@@ -17,49 +17,47 @@ class Preference {
 class SettingPreference extends Preference {
   final String title;
   final String description;
-  final String setting;
-  final SettingType type;
-  final SettingValueType valueType;
+  final SettingKey setting;
   final SmartIconData icon;
   final Options options;
 
   SettingPreference.withSwitch({
     @required this.title,
     this.description,
-    @required this.setting,
-    this.type = SettingType.SYSTEM,
+    @required String setting,
+    SettingType type = SettingType.SYSTEM,
     this.icon,
     @required SwitchOptions options,
     String minVersion,
     List<Dependency> dependencies = const [],
   })  : this.options = options,
-        this.valueType = SettingValueType.BOOLEAN,
+        this.setting = SettingKey<bool>(setting, type),
         super._(minVersion, dependencies);
 
   SettingPreference.withSlider({
     @required this.title,
-    @required this.setting,
-    this.type = SettingType.SYSTEM,
+    @required String setting,
+    SettingType type = SettingType.SYSTEM,
     @required SliderOptions options,
     String minVersion,
     List<Dependency> dependencies = const [],
   })  : this.options = options,
         this.description = null,
         this.icon = null,
-        this.valueType = SettingValueType.INT,
+        this.setting = SettingKey<int>(setting, type),
         super._(minVersion, dependencies);
 
   SettingPreference.withDropdown({
     @required this.title,
-    @required this.setting,
-    this.type = SettingType.SYSTEM,
+    @required String setting,
+    SettingType type = SettingType.SYSTEM,
     this.icon,
     @required DropdownOptions options,
     String minVersion,
     List<Dependency> dependencies = const [],
   })  : this.options = options,
         this.description = null,
-        this.valueType = SettingValueType.STRING,
+        this.setting = SettingKey<String>(setting, type),
         super._(minVersion, dependencies);
 }
 
@@ -153,23 +151,20 @@ class DropdownOptions extends Options<String> {
 }
 
 @immutable
-class Dependency {
-  final String name;
+class Dependency<T extends BaseKey> {
+  final T key;
   final dynamic _value;
 
   get value => _value;
 
-  Dependency(this.name, this._value);
+  Dependency(this.key, this._value);
 }
 
 @immutable
-class SettingDependency extends Dependency {
-  final SettingType type;
-  final SettingValueType valType;
-
+class SettingDependency extends Dependency<SettingKey> {
   @override
   get value {
-    switch (valType) {
+    switch (key.valueType) {
       case SettingValueType.STRING:
         return _value as String;
       case SettingValueType.INT:
@@ -181,36 +176,27 @@ class SettingDependency extends Dependency {
 
   SettingDependency.string({
     @required String name,
-    @required this.type,
+    SettingType type = SettingType.SYSTEM,
     @required String value,
-  })  : this.valType = SettingValueType.STRING,
-        super(name, value);
+  }) : super(SettingKey<String>(name, type), value);
 
   SettingDependency.int({
     @required String name,
-    @required this.type,
+    SettingType type = SettingType.SYSTEM,
     @required int value,
-  })  : this.valType = SettingValueType.INT,
-        super(name, value);
+  }) : super(SettingKey<int>(name, type), value);
 
   SettingDependency.boolean({
     @required String name,
-    @required this.type,
+    SettingType type = SettingType.SYSTEM,
     @required bool value,
-  })  : this.valType = SettingValueType.BOOLEAN,
-        super(name, value);
+  }) : super(SettingKey<bool>(name, type), value);
 }
 
 @immutable
-class PropDependency extends Dependency {
+class PropDependency extends Dependency<PropKey> {
   PropDependency({
     @required String name,
     @required bool value,
-  }) : super(name, value);
-}
-
-enum SettingValueType {
-  STRING,
-  INT,
-  BOOLEAN,
+  }) : super(PropKey(name), value);
 }

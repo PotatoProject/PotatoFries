@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:potato_fries/locales/locale_strings.g.dart';
 import 'package:potato_fries/pages/base_page.dart';
 import 'package:potato_fries/provider/app_info.dart';
-import 'package:potato_fries/provider/page_provider_registry.dart';
 import 'package:potato_fries/ui/shaped_icon.dart';
 import 'package:potato_fries/widgets/page_parser.dart';
 import 'package:provider/provider.dart';
@@ -19,19 +18,14 @@ class Themes extends BasePage {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider.value(
-      value: PageProviderRegistry.getProvider(providerKey),
-      child: Builder(
-        builder: (providerContext) => Column(
-          children: <Widget>[
-            _header(providerContext),
-            PageParser(
-              dataKey: providerKey,
-              useTopPadding: false,
-            ),
-          ],
+    return Column(
+      children: <Widget>[
+        _header(context),
+        PageParser(
+          dataKey: providerKey,
+          useTopPadding: false,
         ),
-      ),
+      ],
     );
   }
 

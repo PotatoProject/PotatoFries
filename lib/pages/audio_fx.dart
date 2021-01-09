@@ -105,11 +105,11 @@ class AudioFx extends BasePage {
                     opacity: provider.enabled ? 1.0 : 0.3,
                     duration: Duration(milliseconds: 300),
                     curve: Curves.easeInOut,
-                    child: SettingsDropdownTile(
+                    child: DropdownTile(
                       title: LocaleStrings.audiofx.audioPresetTitle,
                       values: provider.profileMap,
-                      getValue: () => provider.profile,
-                      setValue: (v) => provider.setProfile(v),
+                      value: provider.profile,
+                      onValueChanged: (v) => provider.setProfile(v),
                       selectedColor: provider.profileColor ??
                           Theme.of(context).accentColor,
                       icon: Icon(Icons.equalizer),
@@ -122,16 +122,16 @@ class AudioFx extends BasePage {
                     opacity: provider.enabled ? 1.0 : 0.3,
                     duration: Duration(milliseconds: 300),
                     curve: Curves.easeInOut,
-                    child: SettingsDropdownTile(
+                    child: DropdownTile(
                       title: LocaleStrings.audiofx.headsetProfileTitle,
                       values: Map.fromIterable(
                         provider.headphones,
                         key: (v) => v,
                         value: (v) => v,
                       ),
-                      getValue: () => (provider.headphones[provider.headset] ??
-                          LocaleStrings.audiofx.headsetProfileDefault),
-                      setValue: (v) => provider.headset =
+                      value: provider.headphones[provider.headset] ??
+                          LocaleStrings.audiofx.headsetProfileDefault,
+                      onValueChanged: (v) => provider.headset =
                           (provider.headphones.indexOf(v) ?? 0),
                       selectedColor: provider.profileColor ??
                           Theme.of(context).accentColor,

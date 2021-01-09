@@ -1,49 +1,81 @@
 import 'package:flutter/material.dart';
+import 'package:potato_fries/data/models.dart';
+import 'package:potato_fries/provider/page_provider.dart';
 import 'package:potato_fries/ui/sizeable_list_tile.dart';
+import 'package:potato_fries/ui/smart_icon.dart';
+import 'package:provider/provider.dart';
 
 class SettingsDropdownTile extends StatefulWidget {
-  final String title;
-  final String subtitle;
-  final String footer;
-  final Widget icon;
   final bool enabled;
-  final Function setValue;
-  final Function getValue;
-  final Map values;
-  final String defaultValue;
+  final SettingPreference pref;
   final int cooldown;
-  final Color selectedColor;
 
   SettingsDropdownTile({
-    @required this.title,
-    this.subtitle,
-    this.footer,
-    this.icon,
+    @required this.pref,
     this.enabled = true,
-    @required this.setValue,
-    @required this.getValue,
-    this.values,
-    this.defaultValue,
     this.cooldown,
-    this.selectedColor,
-  })  : assert(title != null),
-        assert(setValue != null),
-        assert(getValue != null),
-        assert(values != null),
-        assert(defaultValue == null ||
-            (defaultValue != null && values.containsKey(defaultValue)));
+  }) : assert(pref != null);
 
   @override
   _SettingsDropdownTileState createState() => _SettingsDropdownTileState();
 }
 
 class _SettingsDropdownTileState extends State<SettingsDropdownTile> {
-  String value = '';
   bool coolingDown = false;
 
   @override
   Widget build(BuildContext context) {
-    value = widget.getValue() ?? widget.defaultValue ?? widget.values[0];
+    final _provider = context.watch<PageProvider>();
+    final pref = widget.pref;
+    final options = widget.pref.options as DropdownOptions;
+
+    return DropdownTile(
+      title: pref.title,
+      description: pref.description,
+      icon: SmartIcon(pref.icon),
+      values: options.values,
+      value: _provider.getValue(pref.setting),
+      onValueChanged: (value) => _provider.setValue(pref.setting, value),
+      defaultValue: options.defaultValue,
+    );
+  }
+}
+
+class DropdownTile extends StatefulWidget {
+  final String title;
+  final String description;
+  final Widget icon;
+  final Map<String, String> values;
+  final String value;
+  final ValueChanged<String> onValueChanged;
+  final String defaultValue;
+  final int cooldown;
+  final Color selectedColor;
+
+  DropdownTile({
+    @required this.title,
+    this.description,
+    this.icon,
+    @required this.values,
+    @required this.value,
+    this.onValueChanged,
+    this.defaultValue,
+    this.cooldown,
+    this.selectedColor,
+  });
+
+  @override
+  _DropdownTileState createState() => _DropdownTileState();
+}
+
+class _DropdownTileState extends State<DropdownTile> {
+  bool coolingDown = false;
+
+  @override
+  Widget build(BuildContext context) {
+    final value =
+        widget.value ?? widget.defaultValue ?? widget.values.values.first;
+
     return AnimatedOpacity(
       opacity: coolingDown ? 0.5 : 1,
       duration: Duration(milliseconds: 300),
@@ -57,6 +89,7 @@ class _SettingsDropdownTileState extends State<SettingsDropdownTile> {
               color: Theme.of(context).textTheme.headline6.color.withAlpha(160),
             ),
           ),
+          selectedColor: widget.selectedColor,
           icon: widget.icon,
           onTap: () async {
             var result = await showModalBottomSheet(
@@ -71,7 +104,6 @@ class _SettingsDropdownTileState extends State<SettingsDropdownTile> {
                     bool selected = widget.values.values.toList()[index] ==
                         widget.values[value];
                     return SizeableListTile(
-                      selectedColor: widget.selectedColor,
                       title: widget.values.values.toList()[index],
                       icon: selected ? Icon(Icons.check) : null,
                       selected: selected,
@@ -86,7 +118,7 @@ class _SettingsDropdownTileState extends State<SettingsDropdownTile> {
             );
 
             if (result != null) {
-              widget.setValue(result);
+              widget.onValueChanged(result);
               if (widget.cooldown != null) {
                 setState(() => coolingDown = true);
                 Future.delayed(Duration(milliseconds: widget.cooldown),

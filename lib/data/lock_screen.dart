@@ -4,7 +4,7 @@ import 'package:potato_fries/data/models.dart';
 import 'package:potato_fries/locales/locale_strings.g.dart';
 import 'package:potato_fries/ui/smart_icon.dart';
 
-final Map<String, dynamic> lockScreen = {
+final Map<String, List<Preference>> lockScreen = {
   LocaleStrings.lockscreen.clocksTitle: clocks,
   LocaleStrings.lockscreen.albumartTitle: albumArt,
 };

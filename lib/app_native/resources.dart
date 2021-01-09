@@ -26,8 +26,7 @@ class Resources {
 
   static Future<int> getAccentSetting(String setting) async {
     var colorString = await AndroidFlutterSettings.getString(
-      setting,
-      SettingType.SECURE,
+      SettingKey(setting, SettingType.SECURE),
     );
     if (colorString == null || colorString.isEmpty) {
       return null;

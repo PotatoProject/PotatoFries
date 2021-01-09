@@ -1,135 +1,197 @@
+import 'dart:convert';
+
 import 'package:android_flutter_settings/android_flutter_settings.dart';
 import 'package:flutter/foundation.dart';
 import 'package:potato_fries/data/app.dart';
+import 'package:potato_fries/data/constants.dart';
 import 'package:potato_fries/data/models.dart';
 import 'package:potato_fries/utils/methods.dart';
 
 class PageProvider extends ChangeNotifier {
-  final String providerKey;
+  static final SettingKey lsClockKey = SettingKey<String>(
+    "lock_screen_custom_clock_face",
+    SettingType.SECURE,
+  );
+  Set<String> warmedUpPages = {};
 
-  PageProvider(this.providerKey) {
+  PageProvider() {
     loadData();
   }
 
-  Map<String, dynamic> _data = Map();
+  Map<BaseKey, dynamic> _data = {};
 
-  set data(Map<String, dynamic> value) {
+  set data(Map<BaseKey, Notifier> value) {
     _data = value;
     notifyListeners();
   }
 
-  Map<String, dynamic> get data => _data;
+  Map<BaseKey, dynamic> get data => _data;
 
-  dynamic getValue(String key) => _data[key];
+  dynamic getValue(BaseKey key) => _data[key];
 
-  void setValue(String key, dynamic value, {bool mapSet = false}) async {
-    if (!mapSet) {
-      if (value is int || value is double) {
-        await AndroidFlutterSettings.putInt(
-          key.split(':')[1],
-          value.toInt(),
-          sType2Enum(key.split(':')[0]),
-        );
-      } else if (value is bool) {
-        await AndroidFlutterSettings.putBool(
-          key.split(':')[1],
-          value,
-          sType2Enum(key.split(':')[0]),
-        );
-      } else if (value is String) {
-        await AndroidFlutterSettings.putString(
-          key.split(':')[1],
-          value,
-          sType2Enum(key.split(':')[0]),
-        );
+  void setValue(BaseKey key, dynamic value) async {
+    final item = _data[key];
+
+    if (item != null) {
+      if (key is SettingKey) {
+        if (value != null) {
+          switch (key.valueType) {
+            case SettingValueType.BOOLEAN:
+              await AndroidFlutterSettings.putBool(
+                key,
+                value,
+              );
+              break;
+            case SettingValueType.INT:
+              await AndroidFlutterSettings.putInt(
+                key,
+                value.toInt(),
+              );
+              break;
+            case SettingValueType.STRING:
+              await AndroidFlutterSettings.putString(
+                key,
+                value,
+              );
+              break;
+          }
+        }
+      } else if (item is PropKey) {
+        if (value != null) {
+          await AndroidFlutterSettings.setProp(
+            key,
+            value,
+          );
+        }
       }
     }
+
     _data[key] = value;
     notifyListeners();
   }
 
-  void loadData() async {
-    for (String categoryKey in appData[this.providerKey].keys) {
-      List<Preference> curMap = appData[this.providerKey][categoryKey];
-      for (Preference pref in curMap) {
-        if (pref.dependencies.isNotEmpty) {
-          for (int i = 0; i < pref.dependencies.length; i++) {
-            final depObj = pref.dependencies[i];
-            if (depObj is PropDependency) {
-              var val = await checkCompat(depObj);
-              setValue(
-                settingsKey("${depObj.name}~COMPAT", SettingType.SYSTEM),
-                val,
-                mapSet: true,
-              );
-              if (!val) continue;
-            } else if (depObj is SettingDependency) {
-              var sKey = settingsKey(
-                depObj.name,
-                depObj.type,
-              );
-              if (getValue(sKey) == null) {
-                dynamic getNative() async {
-                  switch (depObj.valType) {
-                    case SettingValueType.BOOLEAN:
-                      return await AndroidFlutterSettings.getBool(
-                        depObj.name,
-                        depObj.type,
-                      );
-                    case SettingValueType.INT:
-                      return await AndroidFlutterSettings.getInt(
-                        depObj.name,
-                        depObj.type,
-                      );
-                    case SettingValueType.STRING:
-                      return await AndroidFlutterSettings.getString(
-                        depObj.name,
-                        depObj.type,
-                      );
-                  }
-                }
+  Future<void> loadLSClockData() async {
+    String valueStr = await AndroidFlutterSettings.getString(lsClockKey);
+    Map value = valueStr == null ? null : json.decode(valueStr);
+    this.setValue(
+      lsClockKey,
+      getLSClockKey(value == null
+          ? "com.android.keyguard.clock.DefaultClockController"
+          : value['clock']),
+    );
+  }
 
-                setValue(sKey, await getNative(), mapSet: true);
+  String getLSClockData() => getValue(lsClockKey);
+
+  void setLSClockData(String data) async {
+    Map<String, String> value = {
+      'clock': lockClocks[data] ?? lockClocks[lockClocks.keys.toList()[0]],
+    };
+    await AndroidFlutterSettings.putString(
+      lsClockKey,
+      json.encode(value),
+    );
+    setValue(
+      lsClockKey,
+      getLSClockKey(value['clock']),
+    );
+  }
+
+  String getLSClockValue(String key) =>
+      lockClocks[key] ?? lockClocks[lockClocks.keys.first];
+
+  String getLSClockKey(String value) =>
+      lockClocks.keys.firstWhere((key) => lockClocks[key] == value,
+          orElse: () => lockClocks.keys.first);
+
+  void loadData() async {
+    await loadLSClockData();
+    notifyListeners();
+  }
+
+  void warmupPage(String pageId) async {
+    dynamic getNative(SettingKey key) async {
+      switch (key.valueType) {
+        case SettingValueType.BOOLEAN:
+          return await AndroidFlutterSettings.getBool(key);
+        case SettingValueType.INT:
+          return await AndroidFlutterSettings.getInt(key);
+        case SettingValueType.STRING:
+          return await AndroidFlutterSettings.getString(key);
+      }
+    }
+
+    if (!warmedUpPages.contains(pageId)) {
+      for (String categoryKey in appData[pageId].keys) {
+        List<Preference> curMap = appData[pageId][categoryKey];
+        for (Preference pref in curMap) {
+          if (pref.dependencies.isNotEmpty) {
+            for (int i = 0; i < pref.dependencies.length; i++) {
+              final depObj = pref.dependencies[i];
+              if (depObj is PropDependency) {
+                var val = await checkCompat(depObj);
+                setValue(
+                  PropKey(depObj.key.name),
+                  val,
+                );
+                if (!val) continue;
+              } else if (depObj is SettingDependency) {
+                var sKey = depObj.key;
+                if (getValue(sKey) == null) {
+                  setValue(
+                    sKey,
+                    await getNative(sKey),
+                  );
+                }
               }
             }
           }
-        }
-        if (pref is SettingPreference) {
-          switch (pref.valueType) {
-            case SettingValueType.BOOLEAN:
-              setValue(
-                settingsKey(pref.setting, pref.type),
-                await AndroidFlutterSettings.getBool(
-                  pref.setting,
-                  pref.type,
-                ),
-                mapSet: true,
-              );
-              break;
-            case SettingValueType.INT:
-              setValue(
-                settingsKey(pref.setting, pref.type),
-                await AndroidFlutterSettings.getInt(
-                  pref.setting,
-                  pref.type,
-                ),
-                mapSet: true,
-              );
-              break;
-            case SettingValueType.STRING:
-              setValue(
-                settingsKey(pref.setting, pref.type),
-                await AndroidFlutterSettings.getString(
-                  pref.setting,
-                  pref.type,
-                ),
-                mapSet: true,
-              );
-              break;
+          if (pref is SettingPreference) {
+            setValue(
+              pref.setting,
+              await getNative(pref.setting),
+            );
           }
         }
       }
+      warmedUpPages.add(pageId);
+      notifyListeners();
     }
-    notifyListeners();
   }
+}
+
+class Notifier<T, K extends BaseKey> {
+  T value;
+  final K key;
+
+  Notifier._(this.key, this.value);
+}
+
+class PropNotifier extends Notifier<String, PropKey> {
+  PropNotifier({
+    @required PropKey key,
+    String value,
+  }) : super._(key, value);
+}
+
+class SettingNotifier extends Notifier<dynamic, SettingKey> {
+  SettingNotifier({
+    @required SettingKey key,
+    dynamic value,
+  }) : super._(key, value);
+
+  SettingNotifier.boolean({
+    @required SettingKey<bool> key,
+    bool value,
+  }) : super._(key, value);
+
+  SettingNotifier.int({
+    @required SettingKey<int> key,
+    int value,
+  }) : super._(key, value);
+
+  SettingNotifier.string({
+    @required SettingKey<String> key,
+    String value,
+  }) : super._(key, value);
 }

@@ -5,7 +5,7 @@ import 'package:potato_fries/data/models.dart';
 import 'package:potato_fries/locales/locale_strings.g.dart';
 import 'package:potato_fries/ui/smart_icon.dart';
 
-final Map<String, dynamic> system = {
+final Map<String, List<Preference>> system = {
   LocaleStrings.system.buttonsTitle: sysButton,
   LocaleStrings.system.gesturesTitle: systemGesture,
   LocaleStrings.system.networkTitle: network,

@@ -5,6 +5,7 @@ import 'package:potato_fries/locales/generated_asset_loader.g.dart';
 import 'package:potato_fries/locales/locales.g.dart';
 import 'package:potato_fries/pages/home.dart';
 import 'package:potato_fries/provider/app_info.dart';
+import 'package:potato_fries/provider/page_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:spicy_components/spicy_components.dart';
 
@@ -22,17 +23,19 @@ void main() {
 }
 
 class FriesRoot extends StatelessWidget {
-  final AppInfoProvider provider = AppInfoProvider();
-
   @override
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
-    return ChangeNotifierProvider.value(
-      value: provider,
-      child: Builder(builder: (context) {
+
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => AppInfoProvider()),
+        ChangeNotifierProvider(create: (context) => PageProvider()),
+      ],
+      builder: (context, _) {
         var appInfoProvider = Provider.of<AppInfoProvider>(context);
         return MaterialApp(
           debugShowCheckedModeBanner: false,
@@ -50,7 +53,7 @@ class FriesRoot extends StatelessWidget {
           localizationsDelegates: context.localizationDelegates,
           locale: context.locale,
         );
-      }),
+      },
     );
   }
 }

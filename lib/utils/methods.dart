@@ -109,9 +109,9 @@ bool isVersionCompatible(
   return ret;
 }
 
-Future<bool> checkCompat(PropDependency prop) async {
-  String propData = await AndroidFlutterSettings.getProp(prop.name);
-  return propData == prop.value;
+Future<bool> checkCompat(PropDependency dep) async {
+  String propData = await AndroidFlutterSettings.getProp(dep.key);
+  return propData == dep.value;
 }
 
 bool isNumber(String item) => '0123456789'.split('').contains(item);
