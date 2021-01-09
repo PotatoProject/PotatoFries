@@ -57,7 +57,7 @@ Map<String, dynamic> parseVerNum(String vernum) {
   var exp = RegExp(
       r"^((([0-9]+)\.([0-9]+)\.([0-9]+)(?:-([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?)(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?)$");
   if (!exp.hasMatch(vernum)) return null;
-  Map<String, dynamic> ret = Map();
+  Map<String, dynamic> ret = {};
   String build;
   String version;
   if (vernum.contains('+')) {
