@@ -1,10 +1,10 @@
+import 'package:android_flutter_settings/android_flutter_settings.dart';
 import 'package:flutter/material.dart';
 import 'package:potato_fries/data/app.dart';
 import 'package:potato_fries/data/models.dart';
 import 'package:potato_fries/provider/app_info.dart';
 import 'package:potato_fries/provider/page_provider.dart';
 import 'package:potato_fries/ui/smart_icon.dart';
-import 'package:potato_fries/utils/methods.dart';
 import 'package:potato_fries/utils/obj_gen.dart';
 import 'package:potato_fries/widgets/activity.dart';
 import 'package:potato_fries/widgets/settings_dropdown.dart';
@@ -33,6 +33,7 @@ class PageParser extends StatelessWidget {
             List<Preference> workingMap = appData[dataKey][key];
             var provider = Provider.of<PageProvider>(context);
             var appInfoProvider = Provider.of<AppInfoProvider>(context);
+            provider.warmupPage(dataKey);
 
             if (workingMap.isEmpty) return Container();
 
@@ -55,17 +56,16 @@ class PageParser extends StatelessWidget {
             for (Preference _value in workingMap) {
               bool enabled = true;
               bool skip = false;
+
               if (_value.dependencies.isNotEmpty) {
                 for (Dependency d in _value.dependencies) {
                   if (d is SettingDependency) {
-                    var sKey = settingsKey(d.name, d.type);
-                    var sVal = provider.getValue(sKey);
+                    var sVal = provider.getValue(d.key);
                     if (sVal != null) {
-                      enabled = sVal == d.value;
+                      enabled = enabled && (sVal == d.value);
                     }
                   } else if (d is PropDependency) {
-                    var pVal =
-                        provider.getValue("SYSTEM:" + d.name + "~COMPAT");
+                    var pVal = provider.getValue(d.key);
                     if (d.value != pVal) skip = true;
                   }
                 }
@@ -88,84 +88,13 @@ class PageParser extends StatelessWidget {
                     child: Builder(
                       builder: (context) {
                         if (_value is SettingPreference) {
-                          switch (_value.valueType) {
+                          switch (_value.setting.valueType) {
                             case SettingValueType.STRING:
-                              final options = _value.options as DropdownOptions;
-                              return SettingsDropdownTile(
-                                title: _value.title,
-                                subtitle: _value.description,
-                                icon: SmartIcon(_value.icon),
-                                setValue: (val) {
-                                  provider.setValue(
-                                    settingsKey(
-                                      _value.setting,
-                                      _value.type,
-                                    ),
-                                    val,
-                                  );
-                                },
-                                getValue: () {
-                                  return provider.getValue(
-                                    settingsKey(
-                                      _value.setting,
-                                      _value.type,
-                                    ),
-                                  );
-                                },
-                                values: options.values,
-                                defaultValue: options.defaultValue,
-                              );
+                              return SettingsDropdownTile(pref: _value);
                             case SettingValueType.BOOLEAN:
-                              final options = _value.options as SwitchOptions;
-                              return SettingsSwitchTile(
-                                title: _value.title,
-                                subtitle: _value.description,
-                                icon: SmartIcon(_value.icon),
-                                setValue: (val) {
-                                  provider.setValue(
-                                    settingsKey(
-                                      _value.setting,
-                                      _value.type,
-                                    ),
-                                    val,
-                                  );
-                                },
-                                defaultValue: options.defaultValue,
-                                getValue: () {
-                                  return provider.getValue(
-                                    settingsKey(
-                                      _value.setting,
-                                      _value.type,
-                                    ),
-                                  );
-                                },
-                              );
+                              return SettingsSwitchTile(pref: _value);
                             case SettingValueType.INT:
-                              final options = _value.options as SliderOptions;
-                              return SettingsSliderTile(
-                                title: _value.title,
-                                min: options.min.toDouble(),
-                                max: options.max.toDouble(),
-                                percentage: options.percentage,
-                                setValue: (val) {
-                                  provider.setValue(
-                                    settingsKey(
-                                      _value.setting,
-                                      _value.type,
-                                    ),
-                                    val,
-                                  );
-                                },
-                                defaultValue: options.defaultValue.toDouble(),
-                                getValue: () {
-                                  return provider.getValue(
-                                    settingsKey(
-                                      _value.setting,
-                                      _value.type,
-                                    ),
-                                  );
-                                },
-                              );
+                              return SettingsSliderTile(pref: _value);
                           }
                         }
                         if (_value is ActivityPreference) {
@@ -187,9 +116,10 @@ class PageParser extends StatelessWidget {
                 ),
               );
             }
-            if (gen.isEmpty) return Container();
 
+            if (gen.isEmpty) return Container();
             children.addAll(gen);
+
             return Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,

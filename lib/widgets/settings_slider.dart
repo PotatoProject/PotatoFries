@@ -1,61 +1,46 @@
 import 'package:flutter/material.dart';
+import 'package:potato_fries/data/models.dart';
+import 'package:potato_fries/provider/page_provider.dart';
 import 'package:potato_fries/ui/custom_track_shape.dart';
 import 'package:potato_fries/ui/sizeable_list_tile.dart';
+import 'package:provider/provider.dart';
 
 class SettingsSliderTile extends StatefulWidget {
-  final String title;
-  final String footer;
-  final bool enabled;
-  final double min;
-  final double max;
-  final bool percentage;
-  final PercentageMode percentageMode;
-  final Function setValue;
-  final Function getValue;
-  final double defaultValue;
+  final SettingPreference pref;
 
   SettingsSliderTile({
-    @required this.title,
-    this.footer,
-    this.enabled = true,
-    this.min = 0,
-    this.max = 0,
-    this.percentage = false,
-    this.percentageMode = PercentageMode.ABSOLUTE,
-    @required this.setValue,
-    @required this.getValue,
-    this.defaultValue,
-  })  : assert(title != null),
-        assert(percentage != null),
-        assert(percentageMode != null),
-        assert(setValue != null),
-        assert(getValue != null);
+    @required this.pref,
+  }) : assert(pref != null);
 
   @override
   _SettingsSliderTileState createState() => _SettingsSliderTileState();
 }
 
 class _SettingsSliderTileState extends State<SettingsSliderTile> {
-  double value = 0;
-
   @override
   Widget build(BuildContext context) {
-    var _defaultValue = widget.defaultValue;
+    final _provider = context.watch<PageProvider>();
+    final pref = widget.pref;
+    final options = widget.pref.options as SliderOptions;
+    var _defaultValue = options.defaultValue.toDouble();
     bool hasReset = false;
     bool isCurrentDefault = false;
     if (_defaultValue != null && _defaultValue == -1) {
-      _defaultValue = widget.min;
+      _defaultValue = options.min.toDouble();
       hasReset = true;
-      isCurrentDefault = (widget.getValue()?.toDouble() ??
-              widget.defaultValue ??
-              widget.min) ==
+      isCurrentDefault = (_provider.getValue(pref.setting)?.toDouble() ??
+              options.defaultValue ??
+              options.min) ==
           -1;
     }
 
-    value = widget.getValue()?.toDouble() ?? _defaultValue ?? widget.min;
-    if (value < widget.min || value > widget.max) value = widget.min;
+    double value = _provider.getValue(pref.setting)?.toDouble() ??
+        _defaultValue ??
+        options.min;
+    if (value < options.min || value > options.max)
+      value = options.min.toDouble();
     return SizeableListTile(
-      title: widget.title,
+      title: pref.title,
       icon: Container(
         width: 24,
         alignment: Alignment.center,
@@ -64,11 +49,8 @@ class _SettingsSliderTileState extends State<SettingsSliderTile> {
                 fit: BoxFit.scaleDown,
                 child: Text('DEF'),
               )
-            : Text((widget.percentage
-                    ? widget.percentageMode == PercentageMode.ABSOLUTE
-                        ? (value / widget.max) * 100
-                        : ((value - widget.min) / (widget.max - widget.min)) *
-                            100
+            : Text((options.percentage
+                    ? (value / options.max) * 100
                     : value.toInt())
                 .toInt()
                 .toString()),
@@ -78,12 +60,10 @@ class _SettingsSliderTileState extends State<SettingsSliderTile> {
           Expanded(
             child: SettingsSlider(
               value: value,
-              enabled: widget.enabled,
-              min: widget.min,
-              max: widget.max,
+              min: options.min.toDouble(),
+              max: options.max.toDouble(),
               onChanged: (v) {
-                setState(() => value = v);
-                widget.setValue(v);
+                _provider.setValue(pref.setting, v);
               },
             ),
           ),
@@ -92,14 +72,13 @@ class _SettingsSliderTileState extends State<SettingsSliderTile> {
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8.0),
               child: IconButton(
-                onPressed: () => widget.setValue(-1),
+                onPressed: () => _provider.setValue(pref.setting, -1),
                 icon: Icon(Icons.settings_backup_restore),
               ),
             ),
           ),
         ],
       ),
-      footer: widget.footer,
     );
   }
 }
@@ -137,5 +116,3 @@ class SettingsSlider extends StatelessWidget {
     );
   }
 }
-
-enum PercentageMode { RELATIVE, ABSOLUTE }

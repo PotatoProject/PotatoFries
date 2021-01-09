@@ -5,7 +5,7 @@ import 'package:potato_fries/data/models.dart';
 import 'package:potato_fries/locales/locale_strings.g.dart';
 import 'package:potato_fries/ui/smart_icon.dart';
 
-final Map<String, dynamic> statusBar = {
+final Map<String, List<Preference>> statusBar = {
   LocaleStrings.statusbar.cutoutsTitle: displayCutouts,
   LocaleStrings.statusbar.batteryTitle: statusBarBattery,
 };

@@ -1,77 +1,63 @@
+import 'package:android_flutter_settings/android_flutter_settings.dart';
 import 'package:flutter/material.dart';
+import 'package:potato_fries/data/models.dart';
+import 'package:potato_fries/provider/page_provider.dart';
 import 'package:potato_fries/ui/sizeable_list_tile.dart';
+import 'package:potato_fries/ui/smart_icon.dart';
+import 'package:provider/provider.dart';
 
 class SettingsSwitchTile extends StatefulWidget {
-  final String title;
-  final String subtitle;
-  final String footer;
-  final Widget icon;
+  final SettingPreference pref;
   final bool enabled;
-  final Function setValue;
-  final Function getValue;
-  final bool defaultValue;
   final int cooldown;
 
   SettingsSwitchTile({
-    @required this.title,
-    this.subtitle,
-    this.footer,
-    this.icon,
+    @required this.pref,
     this.enabled = true,
-    @required this.setValue,
-    @required this.getValue,
-    this.defaultValue,
     this.cooldown,
-  })  : assert(title != null),
-        assert(setValue != null),
-        assert(getValue != null);
+  }) : assert(pref != null);
 
   @override
   _SettingsSwitchTileState createState() => _SettingsSwitchTileState();
 }
 
 class _SettingsSwitchTileState extends State<SettingsSwitchTile> {
-  bool value = false;
   bool coolingDown = false;
 
   @override
   Widget build(BuildContext context) {
-    value = widget.getValue() ?? widget.defaultValue ?? false;
+    final _provider = context.watch<PageProvider>();
+    final pref = widget.pref;
+    final options = widget.pref.options as SwitchOptions;
+    final value = _provider.getValue(pref.setting) ?? options.defaultValue;
+
     return AnimatedOpacity(
       opacity: coolingDown ? 0.5 : 1.0,
       duration: Duration(milliseconds: 300),
       child: IgnorePointer(
         ignoring: coolingDown,
         child: SizeableListTile(
-          title: widget.title,
-          icon: widget.icon,
-          subtitle: widget.subtitle == null ? null : Text(widget.subtitle),
-          footer: widget.footer,
+          title: pref.title,
+          icon: SmartIcon(pref.icon),
+          subtitle: pref.description == null ? null : Text(pref.description),
           trailing: SettingsSwitch(
             enabled: widget.enabled,
-            setValue: (v) {
-              setState(() => value = v);
-              widget.setValue(value);
-              if (widget.cooldown != null) {
-                setState(() => coolingDown = true);
-                Future.delayed(Duration(milliseconds: widget.cooldown),
-                    () => setState(() => coolingDown = false));
-              }
-            },
+            setValue: (v) => _setValue(_provider, pref.setting, v),
             value: value,
           ),
-          onTap: () {
-            setState(() => value = !value);
-            widget.setValue(value);
-            if (widget.cooldown != null) {
-              setState(() => coolingDown = true);
-              Future.delayed(Duration(milliseconds: widget.cooldown),
-                  () => setState(() => coolingDown = false));
-            }
-          },
+          onTap: () => _setValue(_provider, pref.setting, !value),
         ),
       ),
     );
+  }
+
+  void _setValue(PageProvider provider, SettingKey setting, bool newValue) {
+    provider.setValue(setting, newValue);
+    if (widget.cooldown != null) {
+      setState(() => coolingDown = true);
+      Future.delayed(Duration(milliseconds: widget.cooldown),
+          () => setState(() => coolingDown = false));
+    }
   }
 }
 

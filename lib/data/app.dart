@@ -4,7 +4,9 @@ import 'package:potato_fries/data/qs.dart';
 import 'package:potato_fries/data/status_bar.dart';
 import 'package:potato_fries/data/themes.dart';
 
-final Map<String, dynamic> appData = {
+import 'models.dart';
+
+final Map<String, Map<String, List<Preference>>> appData = {
   'qs': qsData,
   'system': system,
   'themes': themeData,

@@ -5,7 +5,7 @@ import 'package:potato_fries/locales/locale_strings.g.dart';
 import 'package:potato_fries/ui/smart_icon.dart';
 import 'package:android_flutter_settings/android_flutter_settings.dart';
 
-final Map<String, dynamic> themeData = {
+final Map<String, List<Preference>> themeData = {
   'Themes': theme,
 };
 

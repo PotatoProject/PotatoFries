@@ -26,7 +26,7 @@ class _DebuggingPageState extends State<DebuggingPage> {
   }
 
   void updateDisco() async {
-    var propData = await AndroidFlutterSettings.getProp(discoProp);
+    var propData = await AndroidFlutterSettings.getProp(PropKey(discoProp));
     discoEnabled = propData != null && propData != "";
     setState(() {});
   }
@@ -214,7 +214,7 @@ class _DebuggingPageState extends State<DebuggingPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  header("Settings and overlays"),
+                  header("Settings"),
                   SizeableListTile(
                     title: "Write or read settings",
                     icon: Icon(Icons.settings_outlined),
@@ -223,17 +223,6 @@ class _DebuggingPageState extends State<DebuggingPage> {
                     onTap: () => showDialog(
                       context: context,
                       builder: (context) => SettingsControl(),
-                    ),
-                  ),
-                  SizeableListTile(
-                    title: "Overlay Controller",
-                    icon: Icon(Icons.layers_outlined),
-                    subtitle: Text(
-                      'Enable/disable any overlay, trigger asset reload for a package',
-                    ),
-                    onTap: () => showDialog(
-                      context: context,
-                      builder: (context) => OverlayControl(),
                     ),
                   ),
                 ],
@@ -540,8 +529,7 @@ class _SettingsControlState extends State<SettingsControl> {
                     onPressed: () async {
                       if (_formKeyRead.currentState.validate()) {
                         readResult = await AndroidFlutterSettings.getString(
-                          _controllerRead.text,
-                          typeRead,
+                          SettingKey(_controllerRead.text, typeRead),
                         );
                         setState(() {});
                       }
@@ -626,12 +614,11 @@ class _SettingsControlState extends State<SettingsControl> {
                     onPressed: () async {
                       if (_formKeyWrite.currentState.validate()) {
                         await AndroidFlutterSettings.putString(
-                            _controllerWriteSetting.text,
-                            _controllerWriteData.text,
-                            typeWrite);
+                          SettingKey(_controllerWriteSetting.text, typeWrite),
+                          _controllerWriteData.text,
+                        );
                         writeResult = await AndroidFlutterSettings.getString(
-                          _controllerWriteSetting.text,
-                          typeWrite,
+                          SettingKey(_controllerWriteSetting.text, typeWrite),
                         );
                         setState(() {});
                       }
@@ -650,114 +637,6 @@ class _SettingsControlState extends State<SettingsControl> {
             child: Padding(
               padding: const EdgeInsets.only(top: 8.0),
               child: Text('Write: $writeResult'),
-            ),
-          ),
-        ],
-      ),
-      actions: <Widget>[
-        FlatButton(
-          onPressed: () => Navigator.of(context).pop(),
-          child: Text('Close'),
-        ),
-      ],
-    );
-  }
-}
-
-class OverlayControl extends StatefulWidget {
-  @override
-  _OverlayControlState createState() => _OverlayControlState();
-}
-
-class _OverlayControlState extends State<OverlayControl> {
-  final _formKeyOverlay = GlobalKey<FormState>();
-  final _formKeyTarget = GlobalKey<FormState>();
-
-  final TextEditingController _controllerOverlayPkg = TextEditingController();
-  final TextEditingController _controllerTargetPkg = TextEditingController();
-
-  @override
-  Widget build(BuildContext context) {
-    return AlertDialog(
-      contentPadding: const EdgeInsets.fromLTRB(24.0, 20.0, 24.0, 0),
-      title: Text('Overlay controller'),
-      content: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          Text(
-            "Overlay",
-            style: TextStyle(color: Theme.of(context).accentColor),
-          ),
-          Form(
-            key: _formKeyOverlay,
-            child: Column(
-              children: <Widget>[
-                TextFormField(
-                  controller: _controllerOverlayPkg,
-                  decoration: InputDecoration(hintText: 'Overlay package name'),
-                  validator: (value) {
-                    if (value != null && value.isNotEmpty)
-                      return null;
-                    else
-                      return "This cannot be empty!";
-                  },
-                ),
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 16.0),
-            child: Row(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                MaterialButton(
-                  onPressed: () {
-                    if (_formKeyOverlay.currentState.validate()) {
-                      AndroidFlutterSettings.overlaySetEnabled(
-                          _controllerOverlayPkg.text, true);
-                    }
-                  },
-                  color: Colors.green,
-                  textColor: Colors.white,
-                  child: Text('Enable'),
-                ),
-                SizedBox(width: 16),
-                MaterialButton(
-                  onPressed: () {
-                    if (_formKeyOverlay.currentState.validate()) {
-                      AndroidFlutterSettings.overlaySetEnabled(
-                          _controllerOverlayPkg.text, false);
-                    }
-                  },
-                  color: Colors.red,
-                  textColor: Colors.white,
-                  child: Text('Disable'),
-                ),
-              ],
-            ),
-          ),
-          SizedBox(height: 16),
-          Text(
-            "Package",
-            style: TextStyle(color: Theme.of(context).accentColor),
-          ),
-          Form(
-            key: _formKeyTarget,
-            child: Column(
-              children: <Widget>[
-                TextFormField(
-                  controller: _controllerTargetPkg,
-                  decoration: InputDecoration(hintText: 'Target package name'),
-                  validator: (value) {
-                    if (value != null && value.isNotEmpty)
-                      return null;
-                    else
-                      return "This cannot be empty!";
-                  },
-                ),
-              ],
             ),
           ),
         ],

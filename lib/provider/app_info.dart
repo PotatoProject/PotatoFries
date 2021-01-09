@@ -93,7 +93,7 @@ class AppInfoProvider extends ChangeNotifier {
     if (_flag2 == 3 && !_flag4) {
       _flag4 = isCompatible('3.1.7');
       if (_flag4) {
-        await AndroidFlutterSettings.setProp(
+        await AndroidFlutterSettings.setPropByName(
           'persist.sys.theme.accent_disco',
           '0',
         );
@@ -104,7 +104,7 @@ class AppInfoProvider extends ChangeNotifier {
 
   loadFlag4() async {
     if (isCompatible('3.1.7')) {
-      var _disco = await AndroidFlutterSettings.getProp(
+      var _disco = await AndroidFlutterSettings.getPropByName(
               'persist.sys.theme.accent_disco') ??
           "";
       _flag4 = _disco != "";
@@ -156,8 +156,10 @@ class AppInfoProvider extends ChangeNotifier {
 
   void loadTheme({bool notifyNeeded = true}) async {
     String theme = await AndroidFlutterSettings.getString(
-          'theme_customization_overlay_packages',
-          SettingType.SECURE,
+          SettingKey(
+            'theme_customization_overlay_packages',
+            SettingType.SECURE,
+          ),
         ) ??
         '{}';
     globalSysTheme = jsonDecode(theme);
@@ -170,9 +172,11 @@ class AppInfoProvider extends ChangeNotifier {
     else
       globalSysTheme[key] = value;
     await AndroidFlutterSettings.putString(
-      'theme_customization_overlay_packages',
+      SettingKey(
+        'theme_customization_overlay_packages',
+        SettingType.SECURE,
+      ),
       jsonEncode(globalSysTheme),
-      SettingType.SECURE,
     );
     notifyListeners();
   }
@@ -266,15 +270,17 @@ class AppInfoProvider extends ChangeNotifier {
     _iconPreviews = await Resources.getIconsWithPreviews();
     _iconLabels = await Resources.getIconsWithLabels();
     // Populate version details
-    String verNum = await AndroidFlutterSettings.getProp('ro.potato.vernum');
+    String verNum =
+        await AndroidFlutterSettings.getPropByName('ro.potato.vernum');
     _hostVersion = parseVerNum(verNum);
     loadTheme(notifyNeeded: false);
-    device = await AndroidFlutterSettings.getProp('ro.potato.device');
-    model = await AndroidFlutterSettings.getProp('ro.product.model');
-    exactBuild = await AndroidFlutterSettings.getProp('ro.potato.version');
-    dish = await AndroidFlutterSettings.getProp('ro.potato.dish');
-    switch (
-        await AndroidFlutterSettings.getProp('ro.potato.branding.version')) {
+    device = await AndroidFlutterSettings.getPropByName('ro.potato.device');
+    model = await AndroidFlutterSettings.getPropByName('ro.product.model');
+    exactBuild =
+        await AndroidFlutterSettings.getPropByName('ro.potato.version');
+    dish = await AndroidFlutterSettings.getPropByName('ro.potato.dish');
+    switch (await AndroidFlutterSettings.getPropByName(
+        'ro.potato.branding.version')) {
       case "Official":
         type = "Official";
         break;

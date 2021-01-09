@@ -1,7 +1,8 @@
+import 'package:android_flutter_settings/android_flutter_settings.dart';
 import 'package:flutter/material.dart';
 import 'package:potato_fries/locales/locale_strings.g.dart';
 import 'package:potato_fries/pages/base_page.dart';
-import 'package:potato_fries/provider/page_provider_registry.dart';
+import 'package:potato_fries/provider/page_provider.dart';
 import 'package:potato_fries/ui/custom_icons.dart';
 import 'package:potato_fries/widgets/page_parser.dart';
 import 'package:potato_fries/widgets/video_widget.dart';
@@ -19,25 +20,19 @@ class StatusBar extends BasePage {
 
   @override
   Widget build(BuildContext context) {
-    var _provider = PageProviderRegistry.getProvider(providerKey);
+    var _provider = Provider.of<PageProvider>(context);
 
-    return ChangeNotifierProvider.value(
-      value: PageProviderRegistry.getProvider(providerKey),
-      child: Builder(
-        builder: (providerContext) {
-          bool hasCutout =
-              _provider.getValue('SYSTEM:display_cutout_mode~COMPAT') ?? false;
-          return Column(
-            children: <Widget>[
-              hasCutout ? _header(context) : Container(),
-              PageParser(
-                dataKey: providerKey,
-                useTopPadding: !hasCutout,
-              ),
-            ],
-          );
-        },
-      ),
+    bool hasCutout =
+        _provider.getValue(PropKey('display_cutout_mode')) ?? false;
+
+    return Column(
+      children: <Widget>[
+        hasCutout ? _header(context) : Container(),
+        PageParser(
+          dataKey: providerKey,
+          useTopPadding: !hasCutout,
+        ),
+      ],
     );
   }
 

@@ -4,10 +4,8 @@ import 'package:potato_fries/locales/locale_strings.g.dart';
 import 'package:potato_fries/pages/base_page.dart';
 import 'package:potato_fries/provider/app_info.dart';
 import 'package:potato_fries/provider/page_provider.dart';
-import 'package:potato_fries/provider/page_provider_registry.dart';
 import 'package:potato_fries/ui/custom_icons.dart';
 import 'package:potato_fries/ui/shaped_icon.dart';
-import 'package:potato_fries/utils/methods.dart';
 import 'package:potato_fries/widgets/page_parser.dart';
 import 'package:provider/provider.dart';
 
@@ -23,27 +21,23 @@ class QuickSettings extends BasePage {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider.value(
-      value: PageProviderRegistry.getProvider(providerKey),
-      child: Builder(
-        builder: (providerContext) => Column(
-          children: <Widget>[
-            _header(providerContext),
-            PageParser(
-              dataKey: providerKey,
-              useTopPadding: false,
-            ),
-          ],
+    return Column(
+      children: <Widget>[
+        _header(context),
+        PageParser(
+          dataKey: providerKey,
+          useTopPadding: false,
         ),
-      ),
+      ],
     );
   }
 
   Widget _header(context) {
-    String fwValsKey = settingsKey('qs_panel_bg_use_fw', SettingType.SYSTEM);
-    String wallKey = settingsKey('qs_panel_bg_use_wall', SettingType.SYSTEM);
-    String colorKey = settingsKey('qs_panel_bg_color', SettingType.SYSTEM);
-    String alphaKey = settingsKey('qs_panel_bg_alpha', SettingType.SYSTEM);
+    final fwValsKey = SettingKey('qs_panel_bg_use_fw', SettingType.SYSTEM);
+    final wallKey = SettingKey('qs_panel_bg_use_wall', SettingType.SYSTEM);
+    final colorKey = SettingKey('qs_panel_bg_color', SettingType.SYSTEM);
+    final alphaKey = SettingKey('qs_panel_bg_alpha', SettingType.SYSTEM);
+
     return Padding(
       padding: EdgeInsets.only(
         top: MediaQuery.of(context).padding.top,
@@ -229,9 +223,9 @@ class __QSTileState extends State<_QSTile> with SingleTickerProviderStateMixin {
 
     var appInfo = Provider.of<AppInfoProvider>(context);
     var provider = Provider.of<PageProvider>(context);
-    String fwValsKey = settingsKey('qs_panel_bg_use_fw', SettingType.SYSTEM);
-    String wallKey = settingsKey('qs_panel_bg_use_wall', SettingType.SYSTEM);
-    String colorKey = settingsKey('qs_panel_bg_color', SettingType.SYSTEM);
+    final fwValsKey = SettingKey('qs_panel_bg_use_fw', SettingType.SYSTEM);
+    final wallKey = SettingKey('qs_panel_bg_use_wall', SettingType.SYSTEM);
+    final colorKey = SettingKey('qs_panel_bg_color', SettingType.SYSTEM);
     if (!(provider.getValue(fwValsKey) ?? true)) {
       if (provider.getValue(wallKey) ?? false) {
         iconColor = Color(-12044500);

@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:potato_fries/data/constants.dart';
 import 'package:potato_fries/locales/locale_strings.g.dart';
-import 'package:potato_fries/provider/lock_screen.dart';
 import 'package:potato_fries/provider/page_provider.dart';
 import 'package:potato_fries/ui/sizeable_list_tile.dart';
 import 'package:provider/provider.dart';
@@ -17,7 +16,7 @@ class LockScreenClockPicker extends StatefulWidget {
 class _LockScreenClockPickerState extends State<LockScreenClockPicker> {
   @override
   Widget build(BuildContext context) {
-    var provider = Provider.of<PageProvider>(context) as LockScreenProvider;
+    var provider = Provider.of<PageProvider>(context);
     String curClock = provider.getLSClockData();
     return SizeableListTile(
       title: LocaleStrings.lockscreen.clocksLockScreenClockTitle,
@@ -61,7 +60,7 @@ class _LockScreenClockPickerState extends State<LockScreenClockPicker> {
 }
 
 class ClockOptions extends StatelessWidget {
-  final LockScreenProvider provider;
+  final PageProvider provider;
 
   ClockOptions(this.provider);
 
@@ -71,7 +70,7 @@ class ClockOptions extends StatelessWidget {
       value: provider,
       child: Builder(
         builder: (context) {
-          var provider = Provider.of<LockScreenProvider>(context);
+          var provider = Provider.of<PageProvider>(context);
           String curClock = provider.getLSClockData();
           return Wrap(
             spacing: 16.0,
@@ -135,7 +134,7 @@ class ClockPreviewWrapper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var provider = Provider.of<LockScreenProvider>(context);
+    var provider = Provider.of<PageProvider>(context);
     return Container(
       width: MediaQuery.of(context).size.width / 4,
       child: Column(

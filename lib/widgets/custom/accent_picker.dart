@@ -17,14 +17,12 @@ class AccentPicker extends StatelessWidget {
           final stringDark = newDark.value.toRadixString(16).substring(2, 8);
           Future.delayed(Duration.zero, () {
             AndroidFlutterSettings.putString(
-              'accent_light',
+              SettingKey('accent_light', SettingType.SECURE),
               stringLight,
-              SettingType.SECURE,
             );
             AndroidFlutterSettings.putString(
-              'accent_dark',
+              SettingKey('accent_dark', SettingType.SECURE),
               stringDark,
-              SettingType.SECURE,
             );
           });
 
