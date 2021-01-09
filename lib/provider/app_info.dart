@@ -30,7 +30,7 @@ class AppInfoProvider extends ChangeNotifier {
     'PATCH': '0',
     'BUILD': 0,
   };
-  var _debug = DEBUG();
+  var _debug = Debug();
   String device;
   String model;
   String exactBuild;
@@ -42,7 +42,7 @@ class AppInfoProvider extends ChangeNotifier {
   bool _flag3 = false;
   bool _flag4 = false;
 
-  Map globalSysTheme = Map();
+  Map<String, String> globalSysTheme = {};
 
   set pageIndex(int val) {
     _pageIndex = val;
@@ -59,13 +59,13 @@ class AppInfoProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  setFlag1() {
+  void setFlag1() {
     _flag1 = !_flag1;
     if (!_flag1) _resetFlags();
     notifyListeners();
   }
 
-  _resetFlags() {
+  void _resetFlags() {
     _flag1 = false;
     _flag2 = 0;
     _flag3 = false;
@@ -82,14 +82,14 @@ class AppInfoProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  setFlag3() {
+  void setFlag3() {
     if (!_flag3) {
       _flag3 = true;
       notifyListeners();
     }
   }
 
-  setFlag4() async {
+  void setFlag4() async {
     if (_flag2 == 3 && !_flag4) {
       _flag4 = isCompatible('3.1.7');
       if (_flag4) {
@@ -102,7 +102,7 @@ class AppInfoProvider extends ChangeNotifier {
     }
   }
 
-  loadFlag4() async {
+  void loadFlag4() async {
     if (isCompatible('3.1.7')) {
       var _disco = await AndroidFlutterSettings.getPropByName(
               'persist.sys.theme.accent_disco') ??

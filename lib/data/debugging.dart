@@ -1,11 +1,12 @@
 import 'package:potato_fries/utils/methods.dart';
 
-class DEBUG {
+class Debug {
   bool versionCheckDisabled = false;
   bool compatCheckDisabled = false;
-  Map _versionSpoof;
+  Map<String, dynamic> _versionSpoof;
 
-  set versionSpoof(Map val) => _versionSpoof = val;
+  set versionSpoof(Map<String, dynamic> val) => _versionSpoof = val;
 
-  Map get versionSpoof => isVersionValid(_versionSpoof) ? _versionSpoof : null;
+  Map<String, dynamic> get versionSpoof =>
+      isVersionValid(_versionSpoof) ? _versionSpoof : null;
 }
