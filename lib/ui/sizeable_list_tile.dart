@@ -38,54 +38,77 @@ class SizeableListTile extends StatelessWidget {
 
     var _selectedColor = selectedColor ?? Theme.of(context).accentColor;
 
-    return InkWell(
-      child: Container(
-        padding: EdgeInsets.symmetric(
-          horizontal: 16,
-          vertical: 8,
-        ),
-        height: height,
-        width: width,
-        color: backgroundColor,
-        child: Row(
-          children: <Widget>[
-            Container(
-              margin: EdgeInsets.fromLTRB(8, 8, 16, 8),
-              child: IconTheme(
-                child: icon ?? Container(width: 24),
-                data: IconThemeData(
-                  color: selected ? _selectedColor : _elementsColor,
+    return Material(
+      type: MaterialType.transparency,
+      child: InkWell(
+        child: Container(
+          padding: EdgeInsets.symmetric(
+            horizontal: 16,
+            vertical: 8,
+          ),
+          height: height,
+          width: width,
+          color: backgroundColor,
+          child: Row(
+            children: <Widget>[
+              Container(
+                margin: EdgeInsets.fromLTRB(8, 8, 16, 8),
+                child: IconTheme(
+                  child: icon ?? Container(width: 24),
+                  data: IconThemeData(
+                    color: selected ? _selectedColor : _elementsColor,
+                  ),
                 ),
               ),
-            ),
-            Expanded(
-              child: Padding(
-                padding: EdgeInsets.fromLTRB(8, 12, 0, 12),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    title is String
-                        ? Text(
-                            title,
-                            style: TextStyle(
-                              letterSpacing: 0.3,
-                              fontSize: 16,
-                              color: selected ? _selectedColor : _elementsColor,
-                            ),
-                          )
-                        : title,
-                    Visibility(
-                        visible: subtitle != null,
+              Expanded(
+                child: Padding(
+                  padding: EdgeInsets.fromLTRB(8, 12, 0, 12),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      title is String
+                          ? Text(
+                              title,
+                              style: TextStyle(
+                                letterSpacing: 0.3,
+                                fontSize: 16,
+                                color:
+                                    selected ? _selectedColor : _elementsColor,
+                              ),
+                            )
+                          : title,
+                      Visibility(
+                          visible: subtitle != null,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Divider(
+                                height: 4,
+                                color: Colors.transparent,
+                              ),
+                              DefaultTextStyle(
+                                child: subtitle ?? Container(),
+                                style: TextStyle(
+                                  color: selected
+                                      ? _selectedColor.withAlpha(160)
+                                      : _elementsColor.withAlpha(160),
+                                  fontSize: 13,
+                                ),
+                              ),
+                            ],
+                          )),
+                      Visibility(
+                        visible: footer != null,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Divider(
-                              height: 4,
+                              height: 10,
                               color: Colors.transparent,
                             ),
-                            DefaultTextStyle(
-                              child: subtitle ?? Container(),
+                            Text(
+                              footer ?? "",
                               style: TextStyle(
                                 color: selected
                                     ? _selectedColor.withAlpha(160)
@@ -94,41 +117,22 @@ class SizeableListTile extends StatelessWidget {
                               ),
                             ),
                           ],
-                        )),
-                    Visibility(
-                      visible: footer != null,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Divider(
-                            height: 10,
-                            color: Colors.transparent,
-                          ),
-                          Text(
-                            footer ?? "",
-                            style: TextStyle(
-                              color: selected
-                                  ? _selectedColor.withAlpha(160)
-                                  : _elementsColor.withAlpha(160),
-                              fontSize: 13,
-                            ),
-                          ),
-                        ],
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
-            ),
-            Container(
-              margin:
-                  trailing == null ? null : EdgeInsets.fromLTRB(16, 8, 8, 8),
-              child: trailing ?? Container(),
-            ),
-          ],
+              Container(
+                margin:
+                    trailing == null ? null : EdgeInsets.fromLTRB(16, 8, 8, 8),
+                child: trailing ?? Container(),
+              ),
+            ],
+          ),
         ),
+        onTap: onTap,
       ),
-      onTap: onTap,
     );
   }
 }
