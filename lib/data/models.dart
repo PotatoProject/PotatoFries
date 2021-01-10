@@ -1,8 +1,8 @@
 import 'package:android_flutter_settings/android_flutter_settings.dart';
 import 'package:flutter/material.dart';
 import 'package:potato_fries/ui/smart_icon.dart';
-import 'package:potato_fries/utils/obj_gen.dart';
-import 'package:potato_fries/widgets/activity.dart';
+import 'package:potato_fries/utils/custom_widget_registry.dart';
+import 'package:potato_fries/widgets/activity_tile.dart';
 import 'package:potato_fries/widgets/settings_dropdown.dart';
 import 'package:potato_fries/widgets/settings_slider.dart';
 import 'package:potato_fries/widgets/settings_switch.dart';
@@ -178,7 +178,7 @@ class CustomPreference extends Preference {
 
   @override
   Widget toWidget(BuildContext context) {
-    return ObjectGen.fromString(id);
+    return CustomWidgetRegistry.fromString(id);
   }
 }
 

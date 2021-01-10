@@ -1,12 +1,12 @@
 import 'package:animations/animations.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:potato_fries/utils/utils.dart';
 import 'package:potato_fries/data/constants.dart';
 import 'package:potato_fries/pages/base_page.dart';
 import 'package:potato_fries/pages/debugging.dart';
 import 'package:potato_fries/provider/app_info.dart';
-import 'package:potato_fries/utils/methods.dart';
-import 'package:potato_fries/widgets/directory.dart';
 import 'package:provider/provider.dart';
 import 'package:spicy_components/spicy_components.dart';
 
@@ -17,12 +17,6 @@ class FriesHome extends StatefulWidget {
 
 class _FriesHomeState extends State<FriesHome> {
   @override
-  void initState() {
-    registerCustomWidgets();
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     var provider = Provider.of<AppInfoProvider>(context);
 
@@ -30,33 +24,33 @@ class _FriesHomeState extends State<FriesHome> {
     if (!provider.audioFxSupported)
       _pages.removeWhere((element) => element.providerKey == 'audiofx');
 
-    // ignore: non_constant_identifier_names
-    var DEBUG = false;
-    assert(DEBUG = true);
     return Scaffold(
       bottomNavigationBar: SpicyBottomBar(
         leftItems: [
           GestureDetector(
-            onLongPress: (provider.flag1 && provider.flag2 == 5) || DEBUG
-                ? provider.flag3 || DEBUG
-                    ? () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => DebuggingPage(),
-                          ),
-                        )
-                    : () => provider.setFlag3()
+            onLongPress: (provider.flag1 && provider.flag2 == 5) || kDebugMode
+                ? () {
+                    if (provider.flag3 || kDebugMode) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => DebuggingPage(),
+                        ),
+                      );
+                    } else {
+                      provider.setFlag3();
+                    }
+                  }
                 : null,
             child: IconButton(
               icon: (provider.flag1 && provider.flag2 == 5 && provider.flag3) ||
-                      DEBUG
+                      kDebugMode
                   ? Icon(Icons.bug_report)
                   : Icon(Icons.menu),
-              padding: EdgeInsets.all(0),
-              onPressed: () => showNavigationSheet(
+              padding: EdgeInsets.zero,
+              onPressed: () => Utils.showNavigationSheet(
                 context: context,
-                provider: provider,
-                items: _pages,
+                pages: _pages,
                 onTap: (index) {
                   provider.pageIndex = index;
                 },
@@ -108,7 +102,7 @@ class _FriesHomeState extends State<FriesHome> {
                     : MdiIcons.accountGroupOutline,
               ),
               padding: EdgeInsets.all(0),
-              onPressed: () => launchUrl(
+              onPressed: () => Utils.launchUrl(
                 'https://potatoproject.co/#team',
                 context: context,
               ),

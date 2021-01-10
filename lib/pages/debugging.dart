@@ -1,7 +1,7 @@
 import 'package:android_flutter_settings/android_flutter_settings.dart';
 import 'package:flutter/material.dart';
 import 'package:package_info/package_info.dart';
-import 'package:potato_fries/app_native/utils.dart';
+import 'package:potato_fries/utils/utils.dart';
 import 'package:potato_fries/data/models.dart';
 import 'package:potato_fries/provider/app_info.dart';
 import 'package:potato_fries/ui/sizeable_list_tile.dart';

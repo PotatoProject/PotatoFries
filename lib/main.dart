@@ -6,11 +6,20 @@ import 'package:potato_fries/locales/locales.g.dart';
 import 'package:potato_fries/pages/home.dart';
 import 'package:potato_fries/provider/app_info.dart';
 import 'package:potato_fries/provider/page_provider.dart';
+import 'package:potato_fries/utils/custom_widget_registry.dart';
+import 'package:potato_fries/widgets/custom/accent_picker.dart';
+import 'package:potato_fries/widgets/custom/icon_pack_picker.dart';
+import 'package:potato_fries/widgets/custom/icon_shape_picker.dart';
+import 'package:potato_fries/widgets/custom/lock_screen_clock_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:spicy_components/spicy_components.dart';
 
 void main() {
-  WidgetsFlutterBinding.ensureInitialized();
+  CustomWidgetRegistry.register(AccentPicker());
+  CustomWidgetRegistry.register(IconPackPicker());
+  CustomWidgetRegistry.register(IconShapePicker());
+  CustomWidgetRegistry.register(LockScreenClockPicker());
+
   runApp(
     EasyLocalization(
       child: FriesRoot(),

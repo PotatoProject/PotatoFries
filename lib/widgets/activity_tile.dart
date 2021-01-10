@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:potato_fries/app_native/utils.dart';
+import 'package:potato_fries/utils/utils.dart';
 import 'package:potato_fries/ui/sizeable_list_tile.dart';
 
 class ActivityTile extends StatelessWidget {

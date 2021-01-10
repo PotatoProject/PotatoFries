@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:android_flutter_settings/android_flutter_settings.dart';
 import 'package:flutter/material.dart';
-import 'package:potato_fries/app_native/resources.dart';
+import 'package:potato_fries/utils/resources.dart';
 import 'package:potato_fries/data/constants.dart';
 import 'package:potato_fries/data/debugging.dart';
 import 'package:potato_fries/data/models.dart';
