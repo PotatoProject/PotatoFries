@@ -1,3 +1,4 @@
+import 'package:potato_fries/data/models.dart';
 import 'package:potato_fries/locales/locale_strings.g.dart';
 import 'package:potato_fries/pages/audio_fx.dart';
 import 'package:potato_fries/pages/base_page.dart';
@@ -136,3 +137,5 @@ const List<String> typeMinute = [
   "Fifty\nEight",
   "Fifty\nNine",
 ];
+
+const BuildVersion threeDotOneDotSeven = const BuildVersion(3, 1, 7);
