@@ -252,7 +252,7 @@ class SettingDependency extends Dependency<SettingKey> {
 class PropDependency extends Dependency<PropKey> {
   PropDependency({
     @required String name,
-    @required bool value,
+    @required String value,
   }) : super(PropKey(name), value);
 }
 

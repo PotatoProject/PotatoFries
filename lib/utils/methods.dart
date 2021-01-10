@@ -1,6 +1,4 @@
-import 'package:android_flutter_settings/android_flutter_settings.dart';
 import 'package:flutter/material.dart';
-import 'package:potato_fries/data/models.dart';
 import 'package:potato_fries/pages/base_page.dart';
 import 'package:potato_fries/provider/app_info.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -42,11 +40,6 @@ void showNavigationSheet({
       ),
     ),
   );
-}
-
-Future<bool> checkCompat(PropDependency dep) async {
-  String propData = await AndroidFlutterSettings.getProp(dep.key);
-  return propData == dep.value;
 }
 
 void launchUrl(String url, {BuildContext context}) async {

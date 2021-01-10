@@ -27,7 +27,7 @@ final List<Preference> displayCutouts = [
     dependencies: [
       PropDependency(
         name: 'ro.potato.has_cutout',
-        value: true,
+        value: 'true',
       ),
     ],
     minVersion: '4.0.0',

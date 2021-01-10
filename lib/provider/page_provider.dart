@@ -5,7 +5,6 @@ import 'package:flutter/foundation.dart';
 import 'package:potato_fries/data/app.dart';
 import 'package:potato_fries/data/constants.dart';
 import 'package:potato_fries/data/models.dart';
-import 'package:potato_fries/utils/methods.dart';
 
 class PageProvider extends ChangeNotifier {
   static final SettingKey lsClockKey = SettingKey<String>(
@@ -129,12 +128,10 @@ class PageProvider extends ChangeNotifier {
             for (int i = 0; i < pref.dependencies.length; i++) {
               final depObj = pref.dependencies[i];
               if (depObj is PropDependency) {
-                var val = await checkCompat(depObj);
                 setValue(
                   PropKey(depObj.key.name),
-                  val,
+                  await AndroidFlutterSettings.getProp(depObj.key),
                 );
-                if (!val) continue;
               } else if (depObj is SettingDependency) {
                 var sKey = depObj.key;
                 if (getValue(sKey) == null) {

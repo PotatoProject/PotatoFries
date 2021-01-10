@@ -65,8 +65,10 @@ class PageParser extends StatelessWidget {
                       enabled = enabled && (sVal == d.value);
                     }
                   } else if (d is PropDependency) {
-                    var pVal = provider.getValue(d.key);
-                    if (d.value != pVal) skip = true;
+                    if (!appInfoProvider.isCompatCheckDisabled()) {
+                      var pVal = provider.getValue(d.key);
+                      if (d.value != pVal) skip = true;
+                    }
                   }
                 }
               }

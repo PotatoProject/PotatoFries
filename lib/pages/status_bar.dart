@@ -2,6 +2,7 @@ import 'package:android_flutter_settings/android_flutter_settings.dart';
 import 'package:flutter/material.dart';
 import 'package:potato_fries/locales/locale_strings.g.dart';
 import 'package:potato_fries/pages/base_page.dart';
+import 'package:potato_fries/provider/app_info.dart';
 import 'package:potato_fries/provider/page_provider.dart';
 import 'package:potato_fries/ui/custom_icons.dart';
 import 'package:potato_fries/widgets/page_parser.dart';
@@ -20,10 +21,12 @@ class StatusBar extends BasePage {
 
   @override
   Widget build(BuildContext context) {
+    var _appInfo = Provider.of<AppInfoProvider>(context);
     var _provider = Provider.of<PageProvider>(context);
 
-    bool hasCutout =
-        _provider.getValue(PropKey('display_cutout_mode')) ?? false;
+    final hasCutout = !_appInfo.isCompatCheckDisabled()
+        ? _provider.getValue(PropKey('display_cutout_mode')) ?? false
+        : true;
 
     return Column(
       children: <Widget>[
