@@ -6,10 +6,10 @@ import 'package:potato_fries/data/themes.dart';
 
 import 'models.dart';
 
-final Map<String, Map<String, List<Preference>>> appData = {
-  'qs': qsData,
-  'system': system,
-  'themes': themeData,
-  'status_bar': statusBar,
-  'lock_screen': lockScreen,
-};
+final Pages appData = Pages([
+  qs,
+  system,
+  themes,
+  statusBar,
+  lockScreen,
+]);

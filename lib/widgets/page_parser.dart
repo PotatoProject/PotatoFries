@@ -19,22 +19,23 @@ class PageParser extends StatelessWidget {
         bottom: 8,
       ),
       shrinkWrap: true,
-      itemCount: appData[dataKey].keys.length,
+      itemCount: appData[dataKey].categories.length,
       itemBuilder: (context, cindex) {
         List<Widget> children = [];
-        String key = appData[dataKey].keys.elementAt(cindex);
-        List<Preference> workingMap = appData[dataKey][key];
+        final _category = appData[dataKey].categories[cindex];
+        final _categoryTitle = _category.title;
+        final _prefs = _category.preferences;
         var provider = Provider.of<PageProvider>(context);
         var appInfoProvider = Provider.of<AppInfoProvider>(context);
         provider.warmupPage(dataKey);
 
-        if (workingMap.isEmpty) return Container();
+        if (_prefs.isEmpty) return Container();
 
         children.add(
           Padding(
             padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
             child: Text(
-              key.toUpperCase(),
+              _categoryTitle.toUpperCase(),
               style: TextStyle(
                 color: Theme.of(context).accentColor,
                 fontWeight: FontWeight.bold,
@@ -46,22 +47,20 @@ class PageParser extends StatelessWidget {
         );
 
         List<Widget> gen = [];
-        for (Preference _pref in workingMap) {
+        for (Preference _pref in _prefs) {
           bool enabled = true;
           bool skip = false;
 
-          if (_pref.dependencies.isNotEmpty) {
-            for (Dependency d in _pref.dependencies) {
-              if (d is SettingDependency) {
-                var sVal = provider.getValue(d.key);
-                if (sVal != null) {
-                  enabled = enabled && (sVal == d.value);
-                }
-              } else if (d is PropDependency) {
-                if (!appInfoProvider.isCompatCheckDisabled()) {
-                  var pVal = provider.getValue(d.key);
-                  if (d.value != pVal) skip = true;
-                }
+          for (Dependency d in _pref.dependencies) {
+            if (d is SettingDependency) {
+              var sVal = provider.getValue(d.key);
+              if (sVal != null) {
+                enabled = enabled && (sVal == d.value);
+              }
+            } else if (d is PropDependency) {
+              if (!appInfoProvider.isCompatCheckDisabled()) {
+                var pVal = provider.getValue(d.key);
+                if (d.value != pVal) skip = true;
               }
             }
           }

@@ -5,13 +5,16 @@ import 'package:potato_fries/data/models.dart';
 import 'package:potato_fries/locales/locale_strings.g.dart';
 import 'package:potato_fries/ui/smart_icon.dart';
 
-final Map<String, List<Preference>> system = {
-  LocaleStrings.system.buttonsTitle: sysButton,
-  LocaleStrings.system.gesturesTitle: systemGesture,
-  LocaleStrings.system.networkTitle: network,
-  LocaleStrings.system.packagemanagerTitle: packageManager,
-  LocaleStrings.system.notificationsTitle: notifications,
-};
+final PageData system = PageData(
+  key: 'system',
+  categories: [
+    PageCategoryData(LocaleStrings.system.buttonsTitle, sysButton),
+    PageCategoryData(LocaleStrings.system.gesturesTitle, systemGesture),
+    PageCategoryData(LocaleStrings.system.networkTitle, network),
+    PageCategoryData(LocaleStrings.system.packagemanagerTitle, packageManager),
+    PageCategoryData(LocaleStrings.system.notificationsTitle, notifications),
+  ],
+);
 
 final List<Preference> sysButton = [
   SettingPreference.withSwitch(

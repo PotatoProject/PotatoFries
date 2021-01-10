@@ -4,10 +4,13 @@ import 'package:potato_fries/data/models.dart';
 import 'package:potato_fries/locales/locale_strings.g.dart';
 import 'package:potato_fries/ui/smart_icon.dart';
 
-final Map<String, List<Preference>> lockScreen = {
-  LocaleStrings.lockscreen.clocksTitle: clocks,
-  LocaleStrings.lockscreen.albumartTitle: albumArt,
-};
+final PageData lockScreen = PageData(
+  key: 'lock_screen',
+  categories: [
+    PageCategoryData(LocaleStrings.lockscreen.clocksTitle, clocks),
+    PageCategoryData(LocaleStrings.lockscreen.albumartTitle, albumArt),
+  ],
+);
 
 final List<Preference> clocks = [
   CustomPreference(id: 'LockScreenClockPicker'),

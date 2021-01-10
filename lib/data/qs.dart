@@ -4,9 +4,12 @@ import 'package:potato_fries/data/models.dart';
 import 'package:potato_fries/locales/locale_strings.g.dart';
 import 'package:potato_fries/ui/smart_icon.dart';
 
-final Map<String, List<Preference>> qsData = {
-  LocaleStrings.qs.tweaksTitle: qsTweaks,
-};
+final PageData qs = PageData(
+  key: 'qs',
+  categories: [
+    PageCategoryData(LocaleStrings.qs.tweaksTitle, qsTweaks),
+  ],
+);
 
 final List<Preference> qsTweaks = [
   SettingPreference.withSwitch(

@@ -121,9 +121,8 @@ class PageProvider extends ChangeNotifier {
     }
 
     if (!warmedUpPages.contains(pageId)) {
-      for (String categoryKey in appData[pageId].keys) {
-        List<Preference> curMap = appData[pageId][categoryKey];
-        for (Preference pref in curMap) {
+      for (PageCategoryData category in appData[pageId].categories) {
+        for (Preference pref in category.preferences) {
           if (pref.dependencies.isNotEmpty) {
             for (int i = 0; i < pref.dependencies.length; i++) {
               final depObj = pref.dependencies[i];

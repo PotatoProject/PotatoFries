@@ -5,10 +5,13 @@ import 'package:potato_fries/data/models.dart';
 import 'package:potato_fries/locales/locale_strings.g.dart';
 import 'package:potato_fries/ui/smart_icon.dart';
 
-final Map<String, List<Preference>> statusBar = {
-  LocaleStrings.statusbar.cutoutsTitle: displayCutouts,
-  LocaleStrings.statusbar.batteryTitle: statusBarBattery,
-};
+final PageData statusBar = PageData(
+  key: 'status_bar',
+  categories: [
+    PageCategoryData(LocaleStrings.statusbar.cutoutsTitle, displayCutouts),
+    PageCategoryData(LocaleStrings.statusbar.batteryTitle, statusBarBattery),
+  ],
+);
 
 final List<Preference> displayCutouts = [
   SettingPreference.withDropdown(

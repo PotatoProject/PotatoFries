@@ -394,3 +394,39 @@ class VersionConstraint {
     return minSupported && maxSupported;
   }
 }
+
+@immutable
+class Pages {
+  final List<PageData> pages;
+
+  const Pages(this.pages);
+
+  PageData operator [](String key) {
+    return pages.firstWhere(
+      (p) => p.key == key,
+      orElse: () => null,
+    );
+  }
+}
+
+@immutable
+class PageData {
+  final String key;
+  final List<PageCategoryData> categories;
+
+  const PageData({
+    @required this.key,
+    @required this.categories,
+  });
+}
+
+@immutable
+class PageCategoryData {
+  final String title;
+  final List<Preference> preferences;
+
+  const PageCategoryData(
+    this.title,
+    this.preferences,
+  );
+}

@@ -5,9 +5,12 @@ import 'package:potato_fries/locales/locale_strings.g.dart';
 import 'package:potato_fries/ui/smart_icon.dart';
 import 'package:android_flutter_settings/android_flutter_settings.dart';
 
-final Map<String, List<Preference>> themeData = {
-  'Themes': theme,
-};
+final PageData themes = PageData(
+  key: 'themes',
+  categories: [
+    PageCategoryData(LocaleStrings.themes.themesTitle, theme),
+  ],
+);
 
 final List<Preference> theme = [
   CustomPreference(id: 'AccentPicker'),
