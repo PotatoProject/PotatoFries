@@ -53,12 +53,12 @@ class PageParser extends StatelessWidget {
             );
 
             List<Widget> gen = [];
-            for (Preference _value in workingMap) {
+            for (Preference _pref in workingMap) {
               bool enabled = true;
               bool skip = false;
 
-              if (_value.dependencies.isNotEmpty) {
-                for (Dependency d in _value.dependencies) {
+              if (_pref.dependencies.isNotEmpty) {
+                for (Dependency d in _pref.dependencies) {
                   if (d is SettingDependency) {
                     var sVal = provider.getValue(d.key);
                     if (sVal != null) {
@@ -71,8 +71,9 @@ class PageParser extends StatelessWidget {
                 }
               }
 
-              if (_value.minVersion != null &&
-                  !appInfoProvider.isCompatible(_value.minVersion)) {
+              if (!appInfoProvider.isVersionCheckDisabled() &&
+                  !_pref.versionConstraint
+                      .isConstrained(appInfoProvider.hostVersion)) {
                 skip = true;
               }
 
@@ -87,27 +88,27 @@ class PageParser extends StatelessWidget {
                     ignoring: !enabled,
                     child: Builder(
                       builder: (context) {
-                        if (_value is SettingPreference) {
-                          switch (_value.setting.valueType) {
+                        if (_pref is SettingPreference) {
+                          switch (_pref.setting.valueType) {
                             case SettingValueType.STRING:
-                              return SettingsDropdownTile(pref: _value);
+                              return SettingsDropdownTile(pref: _pref);
                             case SettingValueType.BOOLEAN:
-                              return SettingsSwitchTile(pref: _value);
+                              return SettingsSwitchTile(pref: _pref);
                             case SettingValueType.INT:
-                              return SettingsSliderTile(pref: _value);
+                              return SettingsSliderTile(pref: _pref);
                           }
                         }
-                        if (_value is ActivityPreference) {
+                        if (_pref is ActivityPreference) {
                           return ActivityTile(
-                            title: _value.title,
-                            subtitle: _value.description,
-                            icon: SmartIcon(_value.icon),
-                            cls: _value.cls,
-                            pkg: _value.pkg,
+                            title: _pref.title,
+                            subtitle: _pref.description,
+                            icon: SmartIcon(_pref.icon),
+                            cls: _pref.cls,
+                            pkg: _pref.pkg,
                           );
                         }
-                        if (_value is CustomPreference) {
-                          return ObjectGen.fromString(_value.id);
+                        if (_pref is CustomPreference) {
+                          return ObjectGen.fromString(_pref.id);
                         }
                         return Container();
                       },

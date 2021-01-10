@@ -2,9 +2,9 @@ import 'package:android_flutter_settings/android_flutter_settings.dart';
 import 'package:flutter/material.dart';
 import 'package:package_info/package_info.dart';
 import 'package:potato_fries/app_native/utils.dart';
+import 'package:potato_fries/data/models.dart';
 import 'package:potato_fries/provider/app_info.dart';
 import 'package:potato_fries/ui/sizeable_list_tile.dart';
-import 'package:potato_fries/utils/methods.dart';
 import 'package:potato_fries/widgets/settings_switch.dart';
 import 'package:provider/provider.dart';
 import 'package:simple_animations/simple_animations.dart';
@@ -34,8 +34,7 @@ class _DebuggingPageState extends State<DebuggingPage> {
   @override
   Widget build(BuildContext context) {
     var appInfoProvider = Provider.of<AppInfoProvider>(context);
-    var verNum =
-        verNumString(appInfoProvider.hostVersion) ?? "Invalid Version!";
+    var verNum = appInfoProvider.hostVersion.toString() ?? "Invalid Version!";
     // ignore: non_constant_identifier_names
     var DEBUG = false;
     assert(DEBUG = true);
@@ -182,7 +181,7 @@ class _DebuggingPageState extends State<DebuggingPage> {
                     subtitle: Text(appInfoProvider.getVersionOverride() == null
                         ? 'Set a fake vernum'
                         : 'Fake version: ' +
-                            verNumString(appInfoProvider.getVersionOverride())),
+                            appInfoProvider.getVersionOverride().toString()),
                     onTap: () => showDialog(
                       context: context,
                       builder: (context) => VersionChanger(),
@@ -350,11 +349,17 @@ class _VersionChangerState extends State<VersionChanger> {
           Form(
             key: _formKey,
             child: TextFormField(
-                controller: _controller,
-                decoration: InputDecoration(hintText: 'Version'),
-                validator: (value) => isVersionValid(parseVerNum(value))
-                    ? null
-                    : "Invalid version!"),
+              controller: _controller,
+              decoration: InputDecoration(hintText: 'Version'),
+              validator: (value) {
+                try {
+                  BuildVersion.parse(value);
+                  return null;
+                } on ArgumentError {
+                  return "Invalid version!";
+                }
+              },
+            ),
           ),
         ],
       ),
@@ -375,7 +380,7 @@ class _VersionChangerState extends State<VersionChanger> {
           onPressed: () {
             if (_formKey.currentState.validate()) {
               Provider.of<AppInfoProvider>(context, listen: false)
-                  .setVersionOverride(parseVerNum(_controller.text));
+                  .setVersionOverride(BuildVersion.parse(_controller.text));
               Navigator.of(context).pop();
             }
           },

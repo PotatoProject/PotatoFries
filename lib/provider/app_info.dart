@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:potato_fries/app_native/resources.dart';
 import 'package:potato_fries/data/constants.dart';
 import 'package:potato_fries/data/debugging.dart';
-import 'package:potato_fries/utils/methods.dart';
+import 'package:potato_fries/data/models.dart';
 import 'package:effectsplugin/effectsplugin.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -15,6 +15,7 @@ class AppInfoProvider extends ChangeNotifier {
   }
 
   EFFECT_TYPE audioFxType = EFFECT_TYPE.NONE;
+  final _debug = Debug();
 
   int _pageIndex = 0;
   Map<String, String> _shapes = {};
@@ -24,13 +25,7 @@ class AppInfoProvider extends ChangeNotifier {
   Color _accentDark = Colors.lightBlueAccent;
   Color _accentLight = Colors.blueAccent;
   SharedPreferences _prefs;
-  Map<String, dynamic> _hostVersion = {
-    'MAJOR': 0,
-    'MINOR': 0,
-    'PATCH': '0',
-    'BUILD': 0,
-  };
-  var _debug = Debug();
+  BuildVersion _hostVersion = BuildVersion.empty;
   String device;
   String model;
   String exactBuild;
@@ -42,7 +37,7 @@ class AppInfoProvider extends ChangeNotifier {
   bool _flag3 = false;
   bool _flag4 = false;
 
-  Map<String, String> globalSysTheme = {};
+  Map<String, dynamic> globalSysTheme = {};
 
   set pageIndex(int val) {
     _pageIndex = val;
@@ -91,7 +86,7 @@ class AppInfoProvider extends ChangeNotifier {
 
   void setFlag4() async {
     if (_flag2 == 3 && !_flag4) {
-      _flag4 = isCompatible('3.1.7');
+      _flag4 = isCompatible(threeDotOneDotSeven);
       if (_flag4) {
         await AndroidFlutterSettings.setPropByName(
           'persist.sys.theme.accent_disco',
@@ -103,7 +98,7 @@ class AppInfoProvider extends ChangeNotifier {
   }
 
   void loadFlag4() async {
-    if (isCompatible('3.1.7')) {
+    if (isCompatible(threeDotOneDotSeven)) {
       var _disco = await AndroidFlutterSettings.getPropByName(
               'persist.sys.theme.accent_disco') ??
           "";
@@ -138,7 +133,7 @@ class AppInfoProvider extends ChangeNotifier {
 
   int get pageIndex => _pageIndex;
 
-  Map get hostVersion => _debug.versionSpoof ?? _hostVersion;
+  BuildVersion get hostVersion => _debug.versionSpoof ?? _hostVersion;
 
   bool get flag1 => _flag1;
 
@@ -146,13 +141,16 @@ class AppInfoProvider extends ChangeNotifier {
 
   bool get flag3 => _flag3;
 
-  bool get flag4 => _flag4 && isCompatible('3.1.7');
+  bool get flag4 => _flag4 && isCompatible(threeDotOneDotSeven);
 
   bool get audioFxSupported => audioFxType != EFFECT_TYPE.NONE;
 
-  bool isCompatible(String version, {String max, bool strict = false}) =>
-      (!strict && _debug.versionCheckDisabled) ||
-      isVersionCompatible(version, hostVersion, max: max);
+  bool isCompatible(BuildVersion version, {BuildVersion max}) =>
+      (_debug.versionCheckDisabled) ||
+      VersionConstraint(
+        min: hostVersion,
+        max: max ?? BuildVersion.empty,
+      ).isConstrained(version);
 
   void loadTheme({bool notifyNeeded = true}) async {
     String theme = await AndroidFlutterSettings.getString(
@@ -225,24 +223,23 @@ class AppInfoProvider extends ChangeNotifier {
     setTheme(OVERLAY_CATEGORY_ICON_ANDROID, packages[2]);
   }
 
-  // App Debug API
-  String setVersionOverride(Map newVer) {
-    if (newVer != null &&
-        newVer.containsKey('PATCH') &&
-        (newVer['PATCH'] is int)) newVer['PATCH'] = newVer['PATCH'].toString();
+  // App _debug API
+  String setVersionOverride(BuildVersion newVer) {
     String ret;
-    if (!isVersionValid(newVer)) {
+
+    if (newVer != null) {
+      _debug.versionSpoof = newVer;
+    } else {
       _debug.versionSpoof = null;
       ret = "Invalid version! Disabling override.";
-    } else {
-      _debug.versionSpoof = newVer;
     }
+
     loadFlag4();
     notifyListeners();
     return ret;
   }
 
-  Map getVersionOverride() => _debug.versionSpoof;
+  BuildVersion getVersionOverride() => _debug.versionSpoof;
 
   void setVersionCheckDisabled(bool disable) {
     _debug.versionCheckDisabled = disable;
@@ -272,7 +269,7 @@ class AppInfoProvider extends ChangeNotifier {
     // Populate version details
     String verNum =
         await AndroidFlutterSettings.getPropByName('ro.potato.vernum');
-    _hostVersion = parseVerNum(verNum);
+    _hostVersion = BuildVersion.parse(verNum);
     loadTheme(notifyNeeded: false);
     device = await AndroidFlutterSettings.getPropByName('ro.potato.device');
     model = await AndroidFlutterSettings.getPropByName('ro.product.model');
