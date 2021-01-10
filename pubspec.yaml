@@ -9,28 +9,24 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  flutter_svg: any
+  flutter_svg: ^0.20.0-nullsafety.3
   shared_preferences: any
-  url_launcher: any
-  simple_animations: any
+  url_launcher: 6.0.0-nullsafety.1
   android_flutter_settings:
     git:
       url: https://github.com/AgentFabulous/android_flutter_settings
   effectsplugin:
     git:
       url: https://github.com/AgentFabulous/android_flutter_equalizer
-  spicy_components:
-    git:
-      url: https://github.com/HrX03/SpicyUIComponents
   material_design_icons_flutter: any
-  provider: any
+  provider: ^5.0.0-nullsafety.2
   animations: any
-  video_player: any
+  video_player: ^2.0.0-nullsafety.4
   package_info: any
   flutter_xlider: any
-  path_drawing: any
+  path_drawing: ^0.5.0-nullsafety.0
   easy_localization: ^2.3.4-nullsafety.0
-  recase: any
+  recase: ^4.0.0-nullsafety.0
 
 dev_dependencies:
   flutter_test:

@@ -29,48 +29,48 @@ class _VideoWidgetState extends State<VideoWidget> {
       padding: EdgeInsets.only(
         top: MediaQuery.of(context).padding.top,
       ),
-      child: _controller.value.initialized
+      child: _controller.value.isInitialized
           ? Stack(
-        alignment: Alignment.center,
-        children: [
-          AspectRatio(
-            aspectRatio: _controller.value.aspectRatio,
-            child: VideoPlayer(_controller),
-          ),
-          Positioned(
-            left: 0,
-            right: 0,
-            bottom: 0,
-            top: 0,
-            child: InkWell(
-              onTap: () => setState(() {
-                _isPlaying = !_isPlaying;
-                _isPlaying ? _controller.play() : _controller.pause();
-              }),
-              child: AnimatedOpacity(
-                curve: Curves.easeInOut,
-                duration: Duration(milliseconds: 300),
-                opacity: _isPlaying ? 0.0 : 1.0,
-                child: Container(
-                  color: Colors.black87,
-                  child: Icon(
-                    Icons.play_circle_filled,
-                    color: Colors.white,
+              alignment: Alignment.center,
+              children: [
+                AspectRatio(
+                  aspectRatio: _controller.value.aspectRatio,
+                  child: VideoPlayer(_controller),
+                ),
+                Positioned(
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  top: 0,
+                  child: InkWell(
+                    onTap: () => setState(() {
+                      _isPlaying = !_isPlaying;
+                      _isPlaying ? _controller.play() : _controller.pause();
+                    }),
+                    child: AnimatedOpacity(
+                      curve: Curves.easeInOut,
+                      duration: Duration(milliseconds: 300),
+                      opacity: _isPlaying ? 0.0 : 1.0,
+                      child: Container(
+                        color: Colors.black87,
+                        child: Icon(
+                          Icons.play_circle_filled,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
                   ),
                 ),
+              ],
+            )
+          : SizedBox(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.width * 9 / 16,
+              child: Container(
+                color: Colors.black87,
+                child: Center(child: CircularProgressIndicator()),
               ),
             ),
-          ),
-        ],
-      )
-          : SizedBox(
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.width * 9 / 16,
-        child: Container(
-          color: Colors.black87,
-          child: Center(child: CircularProgressIndicator()),
-        ),
-      ),
     );
   }
 
