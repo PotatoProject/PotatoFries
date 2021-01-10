@@ -1,9 +1,14 @@
 import 'package:android_flutter_settings/android_flutter_settings.dart';
 import 'package:flutter/material.dart';
 import 'package:potato_fries/ui/smart_icon.dart';
+import 'package:potato_fries/utils/obj_gen.dart';
+import 'package:potato_fries/widgets/activity.dart';
+import 'package:potato_fries/widgets/settings_dropdown.dart';
+import 'package:potato_fries/widgets/settings_slider.dart';
+import 'package:potato_fries/widgets/settings_switch.dart';
 
 @immutable
-class Preference {
+abstract class Preference {
   final VersionConstraint versionConstraint;
   final List<Dependency> dependencies;
 
@@ -11,6 +16,8 @@ class Preference {
     this.versionConstraint,
     this.dependencies,
   );
+
+  Widget toWidget(BuildContext context);
 }
 
 @immutable
@@ -47,6 +54,7 @@ class SettingPreference extends Preference {
 
   SettingPreference.withSlider({
     @required this.title,
+    this.description,
     @required String setting,
     SettingType type = SettingType.SYSTEM,
     @required SliderOptions options,
@@ -54,7 +62,6 @@ class SettingPreference extends Preference {
     String maxVersion,
     List<Dependency> dependencies = const [],
   })  : this.options = options,
-        this.description = null,
         this.icon = null,
         this.setting = SettingKey<int>(setting, type),
         super._(
@@ -71,6 +78,7 @@ class SettingPreference extends Preference {
 
   SettingPreference.withDropdown({
     @required this.title,
+    this.description,
     @required String setting,
     SettingType type = SettingType.SYSTEM,
     this.icon,
@@ -79,7 +87,6 @@ class SettingPreference extends Preference {
     String maxVersion,
     List<Dependency> dependencies = const [],
   })  : this.options = options,
-        this.description = null,
         this.setting = SettingKey<String>(setting, type),
         super._(
           VersionConstraint(
@@ -92,6 +99,19 @@ class SettingPreference extends Preference {
           ),
           dependencies,
         );
+
+  @override
+  Widget toWidget(BuildContext context) {
+    switch (setting.valueType) {
+      case SettingValueType.BOOLEAN:
+        return SettingsSwitchTile(pref: this);
+      case SettingValueType.INT:
+        return SettingsSliderTile(pref: this);
+      case SettingValueType.STRING:
+      default:
+        return SettingsDropdownTile(pref: this);
+    }
+  }
 }
 
 @immutable
@@ -122,6 +142,17 @@ class ActivityPreference extends Preference {
           ),
           dependencies,
         );
+
+  @override
+  Widget toWidget(BuildContext context) {
+    return ActivityTile(
+      title: title,
+      subtitle: description,
+      icon: SmartIcon(icon),
+      cls: cls,
+      pkg: pkg,
+    );
+  }
 }
 
 @immutable
@@ -144,6 +175,11 @@ class CustomPreference extends Preference {
           ),
           dependencies,
         );
+
+  @override
+  Widget toWidget(BuildContext context) {
+    return ObjectGen.fromString(id);
+  }
 }
 
 @immutable

@@ -5,7 +5,6 @@ import 'package:potato_fries/pages/base_page.dart';
 import 'package:potato_fries/provider/app_info.dart';
 import 'package:potato_fries/provider/page_provider.dart';
 import 'package:potato_fries/ui/custom_icons.dart';
-import 'package:potato_fries/widgets/page_parser.dart';
 import 'package:potato_fries/widgets/video_widget.dart';
 import 'package:provider/provider.dart';
 
@@ -20,7 +19,7 @@ class StatusBar extends BasePage {
   String get providerKey => "status_bar";
 
   @override
-  Widget build(BuildContext context) {
+  Widget buildHeader(context) {
     var _appInfo = Provider.of<AppInfoProvider>(context);
     var _provider = Provider.of<PageProvider>(context);
 
@@ -28,21 +27,13 @@ class StatusBar extends BasePage {
         ? _provider.getValue(PropKey('display_cutout_mode')) ?? false
         : true;
 
-    return Column(
-      children: <Widget>[
-        hasCutout ? _header(context) : Container(),
-        PageParser(
-          dataKey: providerKey,
-          useTopPadding: !hasCutout,
-        ),
-      ],
-    );
-  }
-
-  Widget _header(context) {
-    return SizedBox(
-      width: MediaQuery.of(context).size.width,
-      child: VideoWidget(asset: 'assets/cutout_modes.mp4'),
-    );
+    if (hasCutout) {
+      return SizedBox(
+        width: MediaQuery.of(context).size.width,
+        child: VideoWidget(asset: 'assets/cutout_modes.mp4'),
+      );
+    } else {
+      return null;
+    }
   }
 }

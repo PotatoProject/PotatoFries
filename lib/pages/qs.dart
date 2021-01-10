@@ -6,7 +6,6 @@ import 'package:potato_fries/provider/app_info.dart';
 import 'package:potato_fries/provider/page_provider.dart';
 import 'package:potato_fries/ui/custom_icons.dart';
 import 'package:potato_fries/ui/shaped_icon.dart';
-import 'package:potato_fries/widgets/page_parser.dart';
 import 'package:provider/provider.dart';
 
 class QuickSettings extends BasePage {
@@ -20,19 +19,7 @@ class QuickSettings extends BasePage {
   String get providerKey => "qs";
 
   @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        _header(context),
-        PageParser(
-          dataKey: providerKey,
-          useTopPadding: false,
-        ),
-      ],
-    );
-  }
-
-  Widget _header(context) {
+  Widget buildHeader(context) {
     final fwValsKey = SettingKey('qs_panel_bg_use_fw', SettingType.SYSTEM);
     final wallKey = SettingKey('qs_panel_bg_use_wall', SettingType.SYSTEM);
     final colorKey = SettingKey('qs_panel_bg_color', SettingType.SYSTEM);
