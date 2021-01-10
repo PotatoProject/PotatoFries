@@ -26,12 +26,11 @@ class Themes extends BasePage {
       child: SizedBox(
         height: (MediaQuery.of(context).size.width / 16) * 9,
         width: MediaQuery.of(context).size.width,
-        child: Card(
+        child: Material(
           color: Theme.of(context).brightness == Brightness.dark
               ? Colors.black
               : Colors.white,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
-          margin: EdgeInsets.all(0),
+          elevation: 0,
           child: ListView(
             physics: BouncingScrollPhysics(),
             padding: EdgeInsets.only(top: 6),

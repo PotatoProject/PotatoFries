@@ -9,9 +9,14 @@ abstract class BasePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final _header = buildHeader(context);
+
     return Column(
       children: [
         _header ?? Container(),
+        Divider(
+          height: 1.5,
+          thickness: 1.5,
+        ),
         Expanded(
           child: PageParser(
             dataKey: providerKey,

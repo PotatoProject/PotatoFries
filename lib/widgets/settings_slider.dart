@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:potato_fries/data/models.dart';
 import 'package:potato_fries/provider/page_provider.dart';
-import 'package:potato_fries/ui/custom_track_shape.dart';
 import 'package:potato_fries/ui/sizeable_list_tile.dart';
 import 'package:provider/provider.dart';
 
@@ -24,7 +23,8 @@ class _SettingsSliderTileState extends State<SettingsSliderTile> {
     final options = widget.pref.options as SliderOptions;
 
     int value = _provider.getValue(pref.setting) ?? options.defaultValue;
-    final isCurrentlyDefault = value == -1;
+    final showDefaultText = value == -1;
+    final isCurrentlyDefault = value == options.defaultValue;
 
     value = value.clamp(options.min, options.max);
 
@@ -33,7 +33,7 @@ class _SettingsSliderTileState extends State<SettingsSliderTile> {
       icon: SizedBox.fromSize(
         size: Size.square(24),
         child: Center(
-          child: isCurrentlyDefault
+          child: showDefaultText
               ? FittedBox(
                   fit: BoxFit.scaleDown,
                   child: Text('DEF'),
@@ -45,10 +45,11 @@ class _SettingsSliderTileState extends State<SettingsSliderTile> {
                 ),
         ),
       ),
-      subtitle: SettingsSlider(
+      subtitle: Slider(
         value: value.toDouble(),
         min: options.min.toDouble(),
         max: options.max.toDouble(),
+        divisions: options.max.toInt() - 1,
         onChanged: (v) {
           _provider.setValue(pref.setting, v.toInt());
         },
@@ -58,38 +59,6 @@ class _SettingsSliderTileState extends State<SettingsSliderTile> {
         onPressed: !isCurrentlyDefault
             ? () => _provider.setValue(pref.setting, options.defaultValue)
             : null,
-      ),
-    );
-  }
-}
-
-class SettingsSlider extends StatelessWidget {
-  final double value;
-  final double min;
-  final double max;
-  final ValueChanged<double> onChanged;
-
-  SettingsSlider({
-    @required this.value,
-    this.min = 0,
-    this.max = 0,
-    this.onChanged,
-  }) : assert(value != null);
-
-  @override
-  Widget build(BuildContext context) {
-    return SliderTheme(
-      data: SliderThemeData(
-        trackShape: CustomTrackShape(),
-      ),
-      child: Slider(
-        min: min,
-        max: max,
-        value: value,
-        divisions: max.toInt() - 1,
-        activeColor: Theme.of(context).accentColor,
-        inactiveColor: Theme.of(context).accentColor.withOpacity(0.25),
-        onChanged: onChanged,
       ),
     );
   }

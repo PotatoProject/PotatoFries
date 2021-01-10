@@ -16,7 +16,6 @@ class PageParser extends StatelessWidget {
     return ListView.builder(
       padding: EdgeInsets.only(
         top: useTopPadding ? MediaQuery.of(context).padding.top : 8,
-        bottom: 8,
       ),
       shrinkWrap: true,
       itemCount: appData[dataKey].categories.length,

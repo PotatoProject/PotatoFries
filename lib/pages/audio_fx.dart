@@ -6,7 +6,6 @@ import 'package:potato_fries/locales/locale_strings.g.dart';
 import 'package:potato_fries/pages/base_page.dart';
 import 'package:potato_fries/provider/audio_fx.dart';
 import 'package:potato_fries/widgets/settings_dropdown.dart';
-import 'package:potato_fries/widgets/settings_switch.dart';
 import 'package:provider/provider.dart';
 
 class AudioFx extends BasePage {
@@ -89,8 +88,8 @@ class AudioFx extends BasePage {
                             style: TextStyle(color: Colors.white),
                           ),
                           Spacer(),
-                          SettingsSwitch(
-                            setValue: (v) => provider.enabled = v,
+                          Switch(
+                            onChanged: (v) => provider.enabled = v,
                             value: provider.enabled,
                             activeColor: Colors.white,
                           ),

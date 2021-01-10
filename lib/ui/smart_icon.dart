@@ -15,9 +15,7 @@ class SmartIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var _color = color ?? Theme.of(context).brightness == Brightness.light
-        ? Colors.black
-        : Colors.white;
+    var _color = Theme.of(context).iconTheme.color;
 
     if (iconData == null) {
       return SizedBox.fromSize(

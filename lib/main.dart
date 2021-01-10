@@ -6,13 +6,13 @@ import 'package:potato_fries/locales/locales.g.dart';
 import 'package:potato_fries/pages/home.dart';
 import 'package:potato_fries/provider/app_info.dart';
 import 'package:potato_fries/provider/page_provider.dart';
+import 'package:potato_fries/ui/themes.dart';
 import 'package:potato_fries/utils/custom_widget_registry.dart';
 import 'package:potato_fries/widgets/custom/accent_picker.dart';
 import 'package:potato_fries/widgets/custom/icon_pack_picker.dart';
 import 'package:potato_fries/widgets/custom/icon_shape_picker.dart';
 import 'package:potato_fries/widgets/custom/lock_screen_clock_picker.dart';
 import 'package:provider/provider.dart';
-import 'package:spicy_components/spicy_components.dart';
 
 void main() {
   CustomWidgetRegistry.register(AccentPicker());
@@ -45,22 +45,36 @@ class FriesRoot extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => PageProvider()),
       ],
       builder: (context, _) {
-        var appInfoProvider = Provider.of<AppInfoProvider>(context);
+        final appInfo = Provider.of<AppInfoProvider>(context);
+        final themes = Themes(appInfo.accentLight, appInfo.accentDark);
+
         return MaterialApp(
           debugShowCheckedModeBanner: false,
           title: 'Fries',
-          theme: SpicyThemes.light(appInfoProvider.accentLight).copyWith(
-            canvasColor: SpicyThemes.light(appInfoProvider.accentLight)
-                .scaffoldBackgroundColor,
-          ),
-          darkTheme: SpicyThemes.dark(appInfoProvider.accentDark).copyWith(
-            canvasColor: SpicyThemes.dark(appInfoProvider.accentLight)
-                .scaffoldBackgroundColor,
-          ),
+          theme: themes.light,
+          darkTheme: themes.dark,
           home: FriesHome(),
           supportedLocales: context.supportedLocales,
           localizationsDelegates: context.localizationDelegates,
           locale: context.locale,
+          builder: (context, child) {
+            SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+              statusBarColor: Colors.transparent,
+              statusBarIconBrightness:
+                  Theme.of(context).brightness == Brightness.dark
+                      ? Brightness.light
+                      : Brightness.dark,
+              systemNavigationBarColor:
+                  Theme.of(context).brightness == Brightness.dark
+                      ? Colors.black
+                      : Colors.white,
+              systemNavigationBarIconBrightness:
+                  Theme.of(context).brightness == Brightness.dark
+                      ? Brightness.light
+                      : Brightness.dark,
+            ));
+            return child;
+          },
         );
       },
     );

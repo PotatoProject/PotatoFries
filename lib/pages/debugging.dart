@@ -1,14 +1,12 @@
 import 'package:android_flutter_settings/android_flutter_settings.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:package_info/package_info.dart';
 import 'package:potato_fries/utils/utils.dart';
 import 'package:potato_fries/data/models.dart';
 import 'package:potato_fries/provider/app_info.dart';
 import 'package:potato_fries/ui/sizeable_list_tile.dart';
-import 'package:potato_fries/widgets/settings_switch.dart';
 import 'package:provider/provider.dart';
-import 'package:simple_animations/simple_animations.dart';
-import 'package:spicy_components/spicy_components.dart';
 
 class DebuggingPage extends StatefulWidget {
   @override
@@ -34,10 +32,7 @@ class _DebuggingPageState extends State<DebuggingPage> {
   @override
   Widget build(BuildContext context) {
     var appInfoProvider = Provider.of<AppInfoProvider>(context);
-    var verNum = appInfoProvider.hostVersion.toString() ?? "Invalid Version!";
-    // ignore: non_constant_identifier_names
-    var DEBUG = false;
-    assert(DEBUG = true);
+    var verNum = appInfoProvider.hostVersion?.toString() ?? "Invalid Version!";
     return Scaffold(
       body: SingleChildScrollView(
         padding: EdgeInsets.only(
@@ -90,7 +85,7 @@ class _DebuggingPageState extends State<DebuggingPage> {
                           },
                         ),
                         Visibility(
-                          visible: DEBUG,
+                          visible: kDebugMode,
                           child: Text(
                             " (DEBUG)",
                             style: TextStyle(color: Colors.red),
@@ -155,8 +150,8 @@ class _DebuggingPageState extends State<DebuggingPage> {
                     title: "Disable version checking",
                     icon: Icon(Icons.track_changes_outlined),
                     subtitle: Text("Disable all non-strict version checks"),
-                    trailing: SettingsSwitch(
-                      setValue: (v) =>
+                    trailing: Switch(
+                      onChanged: (v) =>
                           appInfoProvider.setVersionCheckDisabled(v),
                       value: appInfoProvider.isVersionCheckDisabled(),
                     ),
@@ -167,8 +162,8 @@ class _DebuggingPageState extends State<DebuggingPage> {
                     title: "Disable compatibility checking",
                     icon: Icon(Icons.developer_board_outlined),
                     subtitle: Text("Disable all feature compatibility checks"),
-                    trailing: SettingsSwitch(
-                      setValue: (v) =>
+                    trailing: Switch(
+                      onChanged: (v) =>
                           appInfoProvider.setCompatCheckDisabled(v),
                       value: appInfoProvider.isCompatCheckDisabled(),
                     ),
@@ -230,53 +225,34 @@ class _DebuggingPageState extends State<DebuggingPage> {
           ],
         ),
       ),
-      bottomNavigationBar: CustomAnimation(
-        control: discoEnabled
-            ? CustomAnimationControl.LOOP
-            : CustomAnimationControl.STOP,
-        tween: Tween<double>(begin: 0, end: 360),
-        duration: Duration(seconds: 5),
-        builder: (context, _, anim) {
-          HSLColor rainbow = HSLColor.fromAHSL(
-            1.0,
-            anim,
-            1,
-            0.5,
-          );
-          Color textColor = rainbow.toColor().computeLuminance() > 0.5
-              ? Colors.black
-              : Colors.white;
-
-          return SpicyBottomBar(
-            bgColor: discoEnabled
-                ? rainbow.toColor()
-                : Theme.of(context).accentColor,
-            leftItems: [
-              IconButton(
+      bottomNavigationBar: Material(
+        color: Theme.of(context).canvasColor,
+        elevation: 0,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Divider(
+              height: 1.5,
+              thickness: 1.5,
+            ),
+            ListTile(
+              leading: IconButton(
                 icon: Icon(Icons.arrow_back),
-                color: discoEnabled
-                    ? textColor.withOpacity(0.7)
-                    : Theme.of(context).brightness == Brightness.dark
-                        ? Colors.black
-                        : Colors.white,
+                color: Theme.of(context).iconTheme.color,
                 padding: EdgeInsets.all(0),
                 onPressed: () => Navigator.pop(context),
               ),
-              Text(
+              title: Text(
                 'Debug menu',
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w500,
-                  color: discoEnabled
-                      ? textColor.withOpacity(0.7)
-                      : Theme.of(context).brightness == Brightness.dark
-                          ? Colors.black
-                          : Colors.white,
+                  color: Theme.of(context).iconTheme.color,
                 ),
               ),
-            ],
-          );
-        },
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -364,11 +340,11 @@ class _VersionChangerState extends State<VersionChanger> {
         ],
       ),
       actions: <Widget>[
-        FlatButton(
+        TextButton(
           onPressed: () => Navigator.of(context).pop(),
           child: Text('Cancel'),
         ),
-        FlatButton(
+        TextButton(
           onPressed: () {
             Provider.of<AppInfoProvider>(context, listen: false)
                 .setVersionOverride(null);
@@ -376,7 +352,7 @@ class _VersionChangerState extends State<VersionChanger> {
           },
           child: Text('Reset'),
         ),
-        FlatButton(
+        TextButton(
           onPressed: () {
             if (_formKey.currentState.validate()) {
               Provider.of<AppInfoProvider>(context, listen: false)
@@ -439,11 +415,11 @@ class _ActivityLaunchState extends State<ActivityLaunch> {
         ],
       ),
       actions: <Widget>[
-        FlatButton(
+        TextButton(
           onPressed: () => Navigator.of(context).pop(),
           child: Text('Cancel'),
         ),
-        FlatButton(
+        TextButton(
           onPressed: () {
             if (_formKey.currentState.validate()) {
               Utils.startActivity(
@@ -528,8 +504,7 @@ class _SettingsControlState extends State<SettingsControl> {
                 ),
                 Padding(
                   padding: const EdgeInsets.only(left: 16.0),
-                  child: MaterialButton(
-                    minWidth: 80,
+                  child: ElevatedButton(
                     child: Text("Read"),
                     onPressed: () async {
                       if (_formKeyRead.currentState.validate()) {
@@ -539,10 +514,6 @@ class _SettingsControlState extends State<SettingsControl> {
                         setState(() {});
                       }
                     },
-                    color: Theme.of(context).accentColor,
-                    textColor: Theme.of(context).brightness == Brightness.dark
-                        ? Colors.black
-                        : Colors.white,
                   ),
                 ),
               ],
@@ -612,9 +583,7 @@ class _SettingsControlState extends State<SettingsControl> {
                 ),
                 Padding(
                   padding: const EdgeInsets.only(left: 16.0),
-                  child: MaterialButton(
-                    height: 80,
-                    minWidth: 80,
+                  child: ElevatedButton(
                     child: Text("Write"),
                     onPressed: () async {
                       if (_formKeyWrite.currentState.validate()) {
@@ -628,10 +597,6 @@ class _SettingsControlState extends State<SettingsControl> {
                         setState(() {});
                       }
                     },
-                    color: Theme.of(context).accentColor,
-                    textColor: Theme.of(context).brightness == Brightness.dark
-                        ? Colors.black
-                        : Colors.white,
                   ),
                 ),
               ],
@@ -647,7 +612,7 @@ class _SettingsControlState extends State<SettingsControl> {
         ],
       ),
       actions: <Widget>[
-        FlatButton(
+        TextButton(
           onPressed: () => Navigator.of(context).pop(),
           child: Text('Close'),
         ),

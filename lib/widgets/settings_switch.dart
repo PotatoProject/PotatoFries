@@ -7,11 +7,9 @@ import 'package:provider/provider.dart';
 
 class SettingsSwitchTile extends StatefulWidget {
   final SettingPreference pref;
-  final bool enabled;
 
   SettingsSwitchTile({
     @required this.pref,
-    this.enabled = true,
   }) : assert(pref != null);
 
   @override
@@ -30,37 +28,11 @@ class _SettingsSwitchTileState extends State<SettingsSwitchTile> {
       title: pref.title,
       icon: SmartIcon(pref.icon),
       subtitle: pref.description == null ? null : Text(pref.description),
-      trailing: SettingsSwitch(
-        enabled: widget.enabled,
-        setValue: (v) => _provider.setValue(pref.setting, v),
+      trailing: Switch(
+        onChanged: (v) => _provider.setValue(pref.setting, v),
         value: value,
       ),
       onTap: () => _provider.setValue(pref.setting, !value),
-    );
-  }
-}
-
-class SettingsSwitch extends StatelessWidget {
-  final bool enabled;
-  final Function setValue;
-  final bool value;
-  final Color activeColor;
-
-  SettingsSwitch({
-    this.enabled = true,
-    @required this.setValue,
-    @required this.value,
-    this.activeColor,
-  })  : assert(setValue != null),
-        assert(value != null);
-
-  @override
-  Widget build(BuildContext context) {
-    final activeColor = this.activeColor ?? Theme.of(context).accentColor;
-    return Switch(
-      activeColor: activeColor,
-      value: value,
-      onChanged: enabled ? (b) => setValue(b) : null,
     );
   }
 }
