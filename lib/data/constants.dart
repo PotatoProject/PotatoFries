@@ -1,3 +1,5 @@
+import 'package:path/path.dart' as p;
+import 'package:path_provider/path_provider.dart';
 import 'package:potato_fries/data/models.dart';
 import 'package:potato_fries/locales/locale_strings.g.dart';
 import 'package:potato_fries/pages/audio_fx.dart';
@@ -41,22 +43,22 @@ List<BasePage> pages = [
 ];
 
 final Map<String, String> lockClocks = {
-  LocaleStrings.lockscreen.clocksLockScreenClockVDefault:
-      'com.android.keyguard.clock.DefaultClockController',
-  LocaleStrings.lockscreen.clocksLockScreenClockVBubble:
-      'com.android.keyguard.clock.BubbleClockController',
-  LocaleStrings.lockscreen.clocksLockScreenClockVAnalog:
-      'com.android.keyguard.clock.AnalogClockController',
-  LocaleStrings.lockscreen.clocksLockScreenClockVType:
-      'com.android.keyguard.clock.TypeClockController',
-  LocaleStrings.lockscreen.clocksLockScreenClockVBold:
-      'com.android.keyguard.clock.DefaultBoldClockController',
-  LocaleStrings.lockscreen.clocksLockScreenClockVSammy:
-      'com.android.keyguard.clock.SamsungClockController',
-  LocaleStrings.lockscreen.clocksLockScreenClockVSammybold:
-      'com.android.keyguard.clock.SamsungBoldClockController',
-  LocaleStrings.lockscreen.clocksLockScreenClockVSfuny:
-      'com.android.keyguard.clock.SfunyClockController',
+  'com.android.keyguard.clock.DefaultClockController':
+      LocaleStrings.lockscreen.clocksLockScreenClockVDefault,
+  'com.android.keyguard.clock.BubbleClockController':
+      LocaleStrings.lockscreen.clocksLockScreenClockVBubble,
+  'com.android.keyguard.clock.AnalogClockController':
+      LocaleStrings.lockscreen.clocksLockScreenClockVAnalog,
+  'com.android.keyguard.clock.TypeClockController':
+      LocaleStrings.lockscreen.clocksLockScreenClockVType,
+  'com.android.keyguard.clock.DefaultBoldClockController':
+      LocaleStrings.lockscreen.clocksLockScreenClockVBold,
+  'com.android.keyguard.clock.SamsungClockController':
+      LocaleStrings.lockscreen.clocksLockScreenClockVSammy,
+  'com.android.keyguard.clock.SamsungBoldClockController':
+      LocaleStrings.lockscreen.clocksLockScreenClockVSammybold,
+  'com.android.keyguard.clock.SfunyClockController':
+      LocaleStrings.lockscreen.clocksLockScreenClockVSfuny,
 };
 
 const typeHeader = "It's";
@@ -139,3 +141,8 @@ const List<String> typeMinute = [
 ];
 
 const BuildVersion threeDotOneDotSeven = const BuildVersion(3, 1, 7);
+
+Future<String> get settingsJsonPath async => p.join(
+      (await getApplicationSupportDirectory()).path,
+      "settings.json",
+    );

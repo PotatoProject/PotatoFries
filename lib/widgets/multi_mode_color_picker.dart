@@ -105,9 +105,7 @@ class _MultiModeColorPickerState extends State<MultiModeColorPicker> {
         break;
     }
 
-    if (autoCalc &&
-        Provider.of<AppInfoProvider>(context, listen: false)
-            .autoCalculateAccents) {
+    if (autoCalc && context.read<AppInfoProvider>().autoCalculateAccents) {
       var cHSL;
       var workingColor = editDarkColor ? darkColor : lightColor;
       switch (workingColor.runtimeType) {
@@ -274,10 +272,8 @@ class _MultiModeColorPickerState extends State<MultiModeColorPicker> {
               Text(LocaleStrings.themes.themesSystemAccentCalculateShadesLabel),
               Switch(
                 onChanged: (b) => setState(() =>
-                    Provider.of<AppInfoProvider>(context, listen: false)
-                        .autoCalculateAccents = b),
-                value:
-                    Provider.of<AppInfoProvider>(context).autoCalculateAccents,
+                    context.read<AppInfoProvider>().autoCalculateAccents = b),
+                value: context.watch<AppInfoProvider>().autoCalculateAccents,
                 activeColor: Theme.of(context).accentColor,
               ),
             ],

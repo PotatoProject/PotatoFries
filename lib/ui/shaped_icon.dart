@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:path_drawing/path_drawing.dart';
 import 'package:potato_fries/provider/app_info.dart';
+import 'package:potato_fries/provider/page_provider.dart';
 import 'package:provider/provider.dart';
 
 class ShapedIcon extends StatelessWidget {
@@ -27,14 +28,16 @@ class ShapedIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final appInfo = Provider.of<AppInfoProvider>(context);
+    final appInfo = context.watch<AppInfoProvider>();
+    final provider = context.watch<PageProvider>();
     Color _color = color ?? Theme.of(context).accentColor;
-    String _pathData = pathData ?? appInfo.getIconShape().value;
+    String _pathData = pathData ?? provider.getIconShape(appInfo.shapes).value;
 
     return Container(
       height: iconSize,
       width: iconSize,
       child: child,
+      clipBehavior: Clip.antiAlias,
       decoration: ShapeDecoration(
         shape: !isOutline
             ? PathDataBorder(pathData: _pathData)

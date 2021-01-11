@@ -24,9 +24,8 @@ class PageParser extends StatelessWidget {
         final _category = appData[dataKey].categories[cindex];
         final _categoryTitle = _category.title;
         final _prefs = _category.preferences;
-        var provider = Provider.of<PageProvider>(context);
-        var appInfoProvider = Provider.of<AppInfoProvider>(context);
-        provider.warmupPage(dataKey);
+        var provider = context.watch<PageProvider>();
+        var appInfoProvider = context.watch<AppInfoProvider>();
 
         if (_prefs.isEmpty) return Container();
 

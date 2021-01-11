@@ -1,3 +1,4 @@
+import 'package:android_flutter_settings/android_flutter_settings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:potato_fries/pages/base_page.dart';
@@ -11,6 +12,27 @@ class Utils {
   static Future<void> startActivity({String pkg, String cls}) async =>
       await _channel.invokeMethod('startActivity', {'pkg': pkg, 'cls': cls});
 
+  static Future<T> showBottomSheet<T>({
+    BuildContext context,
+    WidgetBuilder builder,
+  }) {
+    return showModalBottomSheet<T>(
+      context: context,
+      builder: (context) {
+        return Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            SizedBox(
+              height: 8,
+            ),
+            builder(context),
+          ],
+        );
+      },
+      isScrollControlled: true,
+    );
+  }
+
   static void showNavigationSheet({
     BuildContext context,
     List<BasePage> pages,
@@ -18,9 +40,8 @@ class Utils {
   }) {
     final provider = context.read<AppInfoProvider>();
 
-    showModalBottomSheet(
+    Utils.showBottomSheet(
       context: context,
-      isScrollControlled: false,
       builder: (context) => Column(
         mainAxisSize: MainAxisSize.min,
         children: List.generate(
@@ -63,5 +84,56 @@ class Utils {
         );
       }
     }
+  }
+
+  static SettingKey stringToSettingKey(String string) {
+    try {
+      final stringList = string.split(":");
+      final name = stringList[2];
+      final type = stringToSettingType(stringList[0]);
+      final valueType = stringList[1];
+
+      switch (valueType.toUpperCase()) {
+        case 'BOOLEAN':
+          return SettingKey<bool>(name, type);
+        case 'INT':
+          return SettingKey<int>(name, type);
+        case 'STRING':
+        default:
+          return SettingKey<String>(name, type);
+      }
+    } on RangeError {
+      throw ArgumentError.value(string);
+    }
+  }
+
+  static SettingType stringToSettingType(String string) {
+    switch (string.toUpperCase()) {
+      case 'SYSTEM':
+        return SettingType.SYSTEM;
+      case 'SECURE':
+        return SettingType.SECURE;
+      case 'GLOBAL':
+      default:
+        return SettingType.GLOBAL;
+    }
+  }
+}
+
+extension SettingKeyStringDumper on SettingKey {
+  String toJsonString() {
+    return "${type.toValueString()}:${valueType.toValueString()}:$name";
+  }
+}
+
+extension SettingTypeToValue on SettingType {
+  String toValueString() {
+    return this.toString().split(".").last.toUpperCase();
+  }
+}
+
+extension SettingValueTypeToValue on SettingValueType {
+  String toValueString() {
+    return this.toString().split(".").last.toUpperCase();
   }
 }

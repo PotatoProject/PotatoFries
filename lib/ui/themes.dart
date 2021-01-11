@@ -37,6 +37,13 @@ class Themes {
             ),
           ),
         ),
+        popupMenuTheme: PopupMenuThemeData(
+          color: Colors.white,
+          elevation: 4,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(6),
+          ),
+        ),
       );
 
   ThemeData get dark => ThemeData.dark().copyWith(
@@ -62,6 +69,13 @@ class Themes {
               topLeft: Radius.circular(8),
               topRight: Radius.circular(8),
             ),
+          ),
+        ),
+        popupMenuTheme: PopupMenuThemeData(
+          color: Color(0xFF212121),
+          elevation: 4,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(6),
           ),
         ),
       );

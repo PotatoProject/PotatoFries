@@ -1,20 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:potato_fries/locales/locale_strings.g.dart';
 import 'package:potato_fries/provider/app_info.dart';
+import 'package:potato_fries/provider/page_provider.dart';
 import 'package:potato_fries/ui/shaped_icon.dart';
 import 'package:potato_fries/ui/sizeable_list_tile.dart';
+import 'package:potato_fries/utils/utils.dart';
 import 'package:provider/provider.dart';
 
 class IconShapePicker extends StatelessWidget {
   Widget build(BuildContext context) {
-    var _provider = Provider.of<AppInfoProvider>(context);
-    MapEntry<String, String> curType = _provider.getIconShape();
-    final shapes = _provider.shapes;
+    var _appInfo = context.watch<AppInfoProvider>();
+    var _provider = context.watch<PageProvider>();
+    final shapes = _appInfo.shapes;
+    MapEntry<String, String> curType = _provider.getIconShape(shapes);
 
     return SizeableListTile(
       title: LocaleStrings.themes.themesSystemIconShapeTitle,
       onTap: () {
-        showModalBottomSheet(
+        Utils.showBottomSheet(
           context: context,
           builder: (context) {
             return Column(
@@ -47,7 +50,7 @@ class IconShapePicker extends StatelessWidget {
                       child: GestureDetector(
                         onTap: () {
                           Navigator.pop(context);
-                          _provider.setIconShape(index);
+                          _provider.setIconShape(shapeInfo.key);
                         },
                         child: ShapedIcon(
                           iconSize: 56,
@@ -70,7 +73,7 @@ class IconShapePicker extends StatelessWidget {
       ),
       subtitle: AnimatedSwitcher(
         duration: Duration(milliseconds: 300),
-        child: Text(_provider.getShapeLabel()),
+        child: Text(_provider.getIconShapeLabel(_appInfo.shapeLabels)),
         switchInCurve: Curves.easeInOut,
         switchOutCurve: Curves.easeInOut,
         transitionBuilder: (child, animation) => FadeTransition(

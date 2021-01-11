@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:android_flutter_settings/android_flutter_settings.dart';
 import 'package:flutter/material.dart';
 import 'package:potato_fries/utils/resources.dart';
@@ -22,8 +20,6 @@ class AppInfoProvider extends ChangeNotifier {
   Map<String, String> _shapeLabels = {};
   Map<String, Map<dynamic, dynamic>> _iconPreviews = {};
   Map<String, String> _iconLabels = {};
-  Color _accentDark = Colors.lightBlueAccent;
-  Color _accentLight = Colors.blueAccent;
   SharedPreferences _prefs;
   BuildVersion _hostVersion = BuildVersion.empty;
   String device;
@@ -41,16 +37,6 @@ class AppInfoProvider extends ChangeNotifier {
 
   set pageIndex(int val) {
     _pageIndex = val;
-    notifyListeners();
-  }
-
-  set accentDark(Color val) {
-    _accentDark = val;
-    notifyListeners();
-  }
-
-  set accentLight(Color val) {
-    _accentLight = val;
     notifyListeners();
   }
 
@@ -127,10 +113,6 @@ class AppInfoProvider extends ChangeNotifier {
 
   Map<String, String> get iconLabels => _iconLabels;
 
-  Color get accentDark => _accentDark;
-
-  Color get accentLight => _accentLight;
-
   int get pageIndex => _pageIndex;
 
   BuildVersion get hostVersion => _debug.versionSpoof ?? _hostVersion;
@@ -151,77 +133,6 @@ class AppInfoProvider extends ChangeNotifier {
         min: hostVersion,
         max: max ?? BuildVersion.empty,
       ).isConstrained(version);
-
-  void loadTheme({bool notifyNeeded = true}) async {
-    String theme = await AndroidFlutterSettings.getString(
-          SettingKey(
-            'theme_customization_overlay_packages',
-            SettingType.SECURE,
-          ),
-        ) ??
-        '{}';
-    globalSysTheme = jsonDecode(theme);
-    if (notifyNeeded) notifyListeners();
-  }
-
-  void setTheme(String key, String value) async {
-    if (value == null)
-      globalSysTheme.remove(key);
-    else
-      globalSysTheme[key] = value;
-    await AndroidFlutterSettings.putString(
-      SettingKey(
-        'theme_customization_overlay_packages',
-        SettingType.SECURE,
-      ),
-      jsonEncode(globalSysTheme),
-    );
-    notifyListeners();
-  }
-
-  MapEntry<String, String> getIconShape() {
-    return MapEntry(
-      globalSysTheme[OVERLAY_CATEGORY_SHAPE],
-      shapes[globalSysTheme[OVERLAY_CATEGORY_SHAPE]],
-    );
-  }
-
-  String getShapeLabel() {
-    return _shapeLabels[globalSysTheme[OVERLAY_CATEGORY_SHAPE]];
-  }
-
-  void setIconShape(int index) => setTheme(
-        OVERLAY_CATEGORY_SHAPE,
-        shapePackages[index],
-      );
-
-  Map<dynamic, dynamic> getIconPackPreview() {
-    return _iconPreviews[globalSysTheme[OVERLAY_CATEGORY_ICON_ANDROID]];
-  }
-
-  String getIconPackLabel() {
-    return _iconLabels[globalSysTheme[OVERLAY_CATEGORY_ICON_ANDROID]];
-  }
-
-  void setIconPack(int index) {
-    List<String> packages = [null, null, null];
-    if (index >= iconPackages.length) {
-      throw Exception("Invalid iconPack index: $index!");
-    } else {
-      if (index > 0) {
-        final packageParts = iconPackages[index].split(".")..removeLast();
-        final sanitizedPackageName = packageParts.join(".");
-        packages = [
-          sanitizedPackageName + '.settings',
-          sanitizedPackageName + '.systemui',
-          sanitizedPackageName + '.android',
-        ];
-      }
-    }
-    setTheme(OVERLAY_CATEGORY_ICON_SETTINGS, packages[0]);
-    setTheme(OVERLAY_CATEGORY_ICON_SYSUI, packages[1]);
-    setTheme(OVERLAY_CATEGORY_ICON_ANDROID, packages[2]);
-  }
 
   // App _debug API
   String setVersionOverride(BuildVersion newVer) {
@@ -260,8 +171,6 @@ class AppInfoProvider extends ChangeNotifier {
   void loadData() async {
     _prefs = await SharedPreferences.getInstance();
     _autoCalculateAccents = _prefs.getBool("ACCENT_AUTO") ?? true;
-    _accentDark = Color(await Resources.getAccentDark()).withOpacity(1);
-    _accentLight = Color(await Resources.getAccentLight()).withOpacity(1);
     _shapes = await Resources.getShapes();
     _shapeLabels = await Resources.getShapeLabels();
     _iconPreviews = await Resources.getIconsWithPreviews();
@@ -270,7 +179,6 @@ class AppInfoProvider extends ChangeNotifier {
     String verNum =
         await AndroidFlutterSettings.getPropByName('ro.potato.vernum');
     _hostVersion = BuildVersion.parse(verNum);
-    loadTheme(notifyNeeded: false);
     device = await AndroidFlutterSettings.getPropByName('ro.potato.device');
     model = await AndroidFlutterSettings.getPropByName('ro.product.model');
     exactBuild =

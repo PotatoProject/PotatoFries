@@ -97,7 +97,7 @@ class QuickSettings extends BasePage {
                                   ? Colors.black
                                   : Colors.white;
                           double opacity = 1.0;
-                          var provider = Provider.of<PageProvider>(context);
+                          var provider = context.watch<PageProvider>();
                           if (!(provider.getValue(fwValsKey) ?? true)) {
                             opacity =
                                 (provider.getValue(alphaKey) ?? 255) / 255;
@@ -208,8 +208,8 @@ class __QSTileState extends State<_QSTile> with SingleTickerProviderStateMixin {
         ? Colors.white70
         : Colors.black87;
 
-    var appInfo = Provider.of<AppInfoProvider>(context);
-    var provider = Provider.of<PageProvider>(context);
+    var appInfo = context.watch<AppInfoProvider>();
+    var provider = context.watch<PageProvider>();
     final fwValsKey = SettingKey('qs_panel_bg_use_fw', SettingType.SYSTEM);
     final wallKey = SettingKey('qs_panel_bg_use_wall', SettingType.SYSTEM);
     final colorKey = SettingKey('qs_panel_bg_color', SettingType.SYSTEM);
@@ -241,11 +241,12 @@ class __QSTileState extends State<_QSTile> with SingleTickerProviderStateMixin {
             padding: EdgeInsets.all(8),
             child: ShapedIcon.currentShape(
               color: bgColor.animate(_ac).value,
-              child: appInfo.getIconPackPreview() != null
+              child: provider.getIconPackPreview(appInfo.iconPreviews) != null
                   ? Padding(
                       padding: EdgeInsets.all(8),
                       child: Image.memory(
-                        appInfo.getIconPackPreview()[widget.icon],
+                        provider.getIconPackPreview(
+                            appInfo.iconPreviews)[widget.icon],
                         width: 24,
                         height: 24,
                         color: fgColor.animate(_ac).value,

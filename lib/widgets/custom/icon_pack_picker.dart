@@ -2,20 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:potato_fries/data/constants.dart';
 import 'package:potato_fries/locales/locale_strings.g.dart';
 import 'package:potato_fries/provider/app_info.dart';
+import 'package:potato_fries/provider/page_provider.dart';
 import 'package:potato_fries/ui/sizeable_list_tile.dart';
+import 'package:potato_fries/utils/utils.dart';
 import 'package:provider/provider.dart';
 
 class IconPackPicker extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final appInfo = Provider.of<AppInfoProvider>(context);
+    final appInfo = context.watch<AppInfoProvider>();
+    final provider = context.watch<PageProvider>();
     final icons = appInfo.iconPreviews;
-    final selectedPack = appInfo.globalSysTheme[OVERLAY_CATEGORY_ICON_ANDROID];
+    final selectedPack = provider.globalTheme[OVERLAY_CATEGORY_ICON_ANDROID];
 
     return SizeableListTile(
       title: LocaleStrings.themes.themesSystemIconPackTitle,
       onTap: () {
-        showModalBottomSheet(
+        Utils.showBottomSheet(
           context: context,
           builder: (context) {
             return Column(
@@ -49,7 +52,7 @@ class IconPackPicker extends StatelessWidget {
                       child: GestureDetector(
                         onTap: () {
                           Navigator.pop(context);
-                          appInfo.setIconPack(index);
+                          provider.setIconPack(iconInfo.key);
                         },
                         child: Image.memory(
                           iconInfo.value,
@@ -72,17 +75,15 @@ class IconPackPicker extends StatelessWidget {
         );
       },
       icon: Image.memory(
-        appInfo.getIconPackPreview()["ic_wifi_signal_3"],
+        provider.getIconPackPreview(icons)["ic_wifi_signal_3"],
         width: 24,
         height: 24,
-        color: Theme.of(context).brightness == Brightness.light
-            ? Colors.black
-            : Colors.white,
+        color: Theme.of(context).iconTheme.color,
         colorBlendMode: BlendMode.srcIn,
       ),
       subtitle: AnimatedSwitcher(
         duration: Duration(milliseconds: 300),
-        child: Text(appInfo.getIconPackLabel()),
+        child: Text(provider.getIconPackLabel(appInfo.iconLabels)),
         switchInCurve: Curves.easeInOut,
         switchOutCurve: Curves.easeInOut,
         transitionBuilder: (child, animation) => FadeTransition(

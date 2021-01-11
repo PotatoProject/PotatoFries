@@ -1,25 +1,19 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:android_flutter_settings/android_flutter_settings.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:potato_fries/data/app.dart';
 import 'package:potato_fries/data/constants.dart';
 import 'package:potato_fries/data/models.dart';
+import 'package:potato_fries/utils/custom_widget_registry.dart';
+import 'package:potato_fries/utils/utils.dart';
 
 class PageProvider extends ChangeNotifier {
-  static final SettingKey lsClockKey = SettingKey<String>(
-    "lock_screen_custom_clock_face",
-    SettingType.SECURE,
-  );
-  Set<String> warmedUpPages = {};
-
-  PageProvider() {
-    loadData();
-  }
-
   Map<BaseKey, dynamic> _data = {};
 
-  set data(Map<BaseKey, Notifier> value) {
+  set data(Map<BaseKey, dynamic> value) {
     _data = value;
     notifyListeners();
   }
@@ -67,127 +61,230 @@ class PageProvider extends ChangeNotifier {
 
     _data[key] = value;
     notifyListeners();
+    dumpToFile(await settingsJsonPath);
   }
 
-  Future<void> loadLSClockData() async {
-    String valueStr = await AndroidFlutterSettings.getString(lsClockKey);
-    Map value = valueStr == null ? null : json.decode(valueStr);
-    this.setValue(
-      lsClockKey,
-      getLSClockKey(value == null
-          ? "com.android.keyguard.clock.DefaultClockController"
-          : value['clock']),
-    );
-  }
+  void warmupPages() async {
+    final fileLoaded = await loadFromFile(await settingsJsonPath);
 
-  String getLSClockData() => getValue(lsClockKey);
+    if (fileLoaded) notifyListeners();
 
-  void setLSClockData(String data) async {
-    Map<String, String> value = {
-      'clock': lockClocks[data] ?? lockClocks[lockClocks.keys.toList()[0]],
-    };
-    await AndroidFlutterSettings.putString(
-      lsClockKey,
-      json.encode(value),
-    );
-    setValue(
-      lsClockKey,
-      getLSClockKey(value['clock']),
-    );
-  }
-
-  String getLSClockValue(String key) =>
-      lockClocks[key] ?? lockClocks[lockClocks.keys.first];
-
-  String getLSClockKey(String value) =>
-      lockClocks.keys.firstWhere((key) => lockClocks[key] == value,
-          orElse: () => lockClocks.keys.first);
-
-  void loadData() async {
-    await loadLSClockData();
-    notifyListeners();
-  }
-
-  void warmupPage(String pageId) async {
-    dynamic getNative(SettingKey key) async {
-      switch (key.valueType) {
-        case SettingValueType.BOOLEAN:
-          return await AndroidFlutterSettings.getBool(key);
-        case SettingValueType.INT:
-          return await AndroidFlutterSettings.getInt(key);
-        case SettingValueType.STRING:
-          return await AndroidFlutterSettings.getString(key);
-      }
+    for (CustomWidget cw in CustomWidgetRegistry.registry) {
+      cw.settings.forEach((setting, defaultValue) async {
+        setValue(
+          setting,
+          await _getNative(setting) ?? defaultValue,
+        );
+      });
     }
 
-    if (!warmedUpPages.contains(pageId)) {
-      for (PageCategoryData category in appData[pageId].categories) {
+    notifyListeners();
+
+    for (PageData page in appData.pages) {
+      for (PageCategoryData category in page.categories) {
         for (Preference pref in category.preferences) {
-          if (pref.dependencies.isNotEmpty) {
-            for (int i = 0; i < pref.dependencies.length; i++) {
-              final depObj = pref.dependencies[i];
-              if (depObj is PropDependency) {
-                setValue(
-                  PropKey(depObj.key.name),
-                  await AndroidFlutterSettings.getProp(depObj.key),
-                );
-              } else if (depObj is SettingDependency) {
-                var sKey = depObj.key;
-                if (getValue(sKey) == null) {
-                  setValue(
-                    sKey,
-                    await getNative(sKey),
-                  );
-                }
-              }
+          for (int i = 0; i < pref.dependencies.length; i++) {
+            final depObj = pref.dependencies[i];
+            if (depObj is PropDependency) {
+              setValue(
+                depObj.key,
+                await AndroidFlutterSettings.getProp(depObj.key),
+              );
+            } else if (depObj is SettingDependency) {
+              setValue(
+                depObj.key,
+                await _getNative(depObj.key),
+              );
             }
           }
+
           if (pref is SettingPreference) {
             setValue(
               pref.setting,
-              await getNative(pref.setting),
+              await _getNative(pref.setting) ?? pref.options.defaultValue,
             );
           }
         }
       }
-      warmedUpPages.add(pageId);
+
       notifyListeners();
     }
   }
-}
 
-class Notifier<T, K extends BaseKey> {
-  T value;
-  final K key;
+  dynamic _getNative(SettingKey key) async {
+    switch (key.valueType) {
+      case SettingValueType.BOOLEAN:
+        return await AndroidFlutterSettings.getBool(key);
+      case SettingValueType.INT:
+        return await AndroidFlutterSettings.getInt(key);
+      case SettingValueType.STRING:
+        return await AndroidFlutterSettings.getString(key);
+    }
+  }
 
-  Notifier._(this.key, this.value);
-}
+  int get accentLight => _getAccent('accent_light', Colors.blueAccent.value);
 
-class PropNotifier extends Notifier<String, PropKey> {
-  PropNotifier({
-    @required PropKey key,
-    String value,
-  }) : super._(key, value);
-}
+  int get accentDark => _getAccent('accent_dark', Colors.lightBlueAccent.value);
 
-class SettingNotifier extends Notifier<dynamic, SettingKey> {
-  SettingNotifier({
-    @required SettingKey key,
-    dynamic value,
-  }) : super._(key, value);
+  int _getAccent(String name, int defaultValue) {
+    final currentValue = getValue(SettingKey<String>(name, SettingType.SECURE));
 
-  SettingNotifier.boolean({
-    @required SettingKey<bool> key,
-    bool value,
-  }) : super._(key, value);
+    if (currentValue != null) {
+      return int.tryParse(currentValue, radix: 16);
+    } else {
+      return defaultValue;
+    }
+  }
 
-  SettingNotifier.int({
-    @required SettingKey<int> key,
-    int value,
-  }) : super._(key, value);
+  set accentLightString(String newColor) =>
+      _setAccent('accent_light', newColor);
 
-  SettingNotifier.string({
-    @required SettingKey<String> key,
-    String value,
-  }) : super._(key, value);
+  set accentDarkString(String newColor) => _setAccent('accent_dark', newColor);
+
+  void _setAccent(String name, String newColor) {
+    setValue(
+      SettingKey<String>(name, SettingType.SECURE),
+      newColor,
+    );
+  }
+
+  Map<String, dynamic> get globalTheme {
+    final stringMap = getValue(SettingKey<String>(
+      'theme_customization_overlay_packages',
+      SettingType.SECURE,
+    ));
+
+    return json.decode(stringMap ?? "{}");
+  }
+
+  void setGlobalThemeValue(String category, String value) {
+    final globalThemeCopy = Map.from(globalTheme);
+
+    if (value != null) {
+      globalThemeCopy[category] = value;
+    } else {
+      globalThemeCopy.remove(category);
+    }
+
+    setValue(
+      SettingKey<String>(
+        'theme_customization_overlay_packages',
+        SettingType.SECURE,
+      ),
+      json.encode(globalThemeCopy),
+    );
+  }
+
+  MapEntry<String, String> getIconShape(Map<String, String> shapes) {
+    final currentShape = globalTheme[OVERLAY_CATEGORY_SHAPE];
+
+    return MapEntry(currentShape, shapes[currentShape]);
+  }
+
+  void setIconShape(String shapePackage) =>
+      setGlobalThemeValue(OVERLAY_CATEGORY_SHAPE, shapePackage);
+
+  String getIconShapeLabel(Map<String, String> shapeLabels) {
+    final currentShape = globalTheme[OVERLAY_CATEGORY_SHAPE];
+
+    return shapeLabels[currentShape];
+  }
+
+  Map<dynamic, dynamic> getIconPackPreview(
+      Map<String, Map<dynamic, dynamic>> iconPreviews) {
+    return iconPreviews[globalTheme[OVERLAY_CATEGORY_ICON_ANDROID]];
+  }
+
+  String getIconPackLabel(Map<String, String> iconLabels) {
+    return iconLabels[globalTheme[OVERLAY_CATEGORY_ICON_ANDROID]];
+  }
+
+  void setIconPack(String package) {
+    List<String> packages = [null, null, null];
+    if (package != null) {
+      final packageParts = package.split(".")..removeLast();
+      final sanitizedPackageName = packageParts.join(".");
+      packages = [
+        sanitizedPackageName + '.settings',
+        sanitizedPackageName + '.systemui',
+        sanitizedPackageName + '.android',
+      ];
+    }
+    setGlobalThemeValue(OVERLAY_CATEGORY_ICON_SETTINGS, packages[0]);
+    setGlobalThemeValue(OVERLAY_CATEGORY_ICON_SYSUI, packages[1]);
+    setGlobalThemeValue(OVERLAY_CATEGORY_ICON_ANDROID, packages[2]);
+  }
+
+  String getLsClockPackage() {
+    final value = getValue(
+      SettingKey<String>(
+        "lock_screen_custom_clock_face",
+        SettingType.SECURE,
+      ),
+    );
+
+    bool parsed = true;
+    Map<String, dynamic> map = {};
+
+    try {
+      map = json.decode(value);
+    } catch (e) {
+      parsed = false;
+    }
+
+    return value != null
+        ? parsed
+            ? map["clock"]
+            : value
+        : lockClocks.keys.first;
+  }
+
+  String getLsClockLabel() {
+    return lockClocks[getLsClockPackage()];
+  }
+
+  void setLsClockPackage(String package) async {
+    final map = {'clock': package ?? lockClocks.keys.first};
+
+    setValue(
+      SettingKey<String>(
+        "lock_screen_custom_clock_face",
+        SettingType.SECURE,
+      ),
+      json.encode(map),
+    );
+  }
+
+  Future<bool> loadFromFile(String path) async {
+    final file = File(path);
+    if (await file.exists()) {
+      final fileContent = await file.readAsString();
+      Map<String, dynamic> jsonMap = json.decode(fileContent);
+
+      jsonMap.forEach((key, value) {
+        final settingKey = Utils.stringToSettingKey(key);
+        setValue(settingKey, value);
+      });
+
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  Future<void> dumpToFile(String path) async {
+    Map<String, dynamic> stringMap = {};
+    _data.forEach((key, value) {
+      if (key is SettingKey) {
+        stringMap.addAll({
+          key.toJsonString(): value,
+        });
+      }
+    });
+
+    File file = File(path);
+
+    if (!(await file.exists())) file = await file.create();
+    await file.writeAsString(json.encode(stringMap));
+  }
 }

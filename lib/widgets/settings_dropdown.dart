@@ -3,6 +3,7 @@ import 'package:potato_fries/data/models.dart';
 import 'package:potato_fries/provider/page_provider.dart';
 import 'package:potato_fries/ui/sizeable_list_tile.dart';
 import 'package:potato_fries/ui/smart_icon.dart';
+import 'package:potato_fries/utils/utils.dart';
 import 'package:provider/provider.dart';
 
 class SettingsDropdownTile extends StatefulWidget {
@@ -79,9 +80,8 @@ class _DropdownTileState extends State<DropdownTile> {
       selectedColor: widget.selectedColor,
       icon: widget.icon,
       onTap: () async {
-        var result = await showModalBottomSheet(
+        var result = await Utils.showBottomSheet(
           context: context,
-          isScrollControlled: false,
           builder: (context) => ListView(
             shrinkWrap: true,
             physics: ClampingScrollPhysics(),

@@ -1,12 +1,19 @@
 import 'dart:math' as math;
 
+import 'package:android_flutter_settings/android_flutter_settings.dart';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:potato_fries/data/constants.dart';
 import 'package:potato_fries/locales/locale_strings.g.dart';
 import 'package:potato_fries/provider/page_provider.dart';
 import 'package:potato_fries/ui/sizeable_list_tile.dart';
+import 'package:potato_fries/utils/utils.dart';
 import 'package:provider/provider.dart';
+
+final SettingKey _lsClockKey = SettingKey<String>(
+  "lock_screen_custom_clock_face",
+  SettingType.SECURE,
+);
 
 class LockScreenClockPicker extends StatefulWidget {
   @override
@@ -16,44 +23,62 @@ class LockScreenClockPicker extends StatefulWidget {
 class _LockScreenClockPickerState extends State<LockScreenClockPicker> {
   @override
   Widget build(BuildContext context) {
-    var provider = Provider.of<PageProvider>(context);
-    String curClock = provider.getLSClockData();
+    var provider = context.watch<PageProvider>();
+    final curClock = provider.getLsClockPackage();
+
     return SizeableListTile(
       title: LocaleStrings.lockscreen.clocksLockScreenClockTitle,
       onTap: () {
-        showModalBottomSheet(
-            context: context,
-            isScrollControlled: true,
-            builder: (context) {
-              return Padding(
-                padding: const EdgeInsets.symmetric(vertical: 16.0),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    Text(
+        Utils.showBottomSheet(
+          context: context,
+          builder: (context) {
+            return IntrinsicWidth(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      top: 24,
+                      left: 24,
+                      bottom: 32,
+                    ),
+                    child: Text(
                       LocaleStrings.lockscreen.clocksLockScreenClockTitle,
                       style: Theme.of(context).textTheme.headline6,
                     ),
-                    SizedBox(
-                      height: 24,
-                    ),
-                    ClockOptions(provider),
-                  ],
-                ),
-              );
-            });
+                  ),
+                  Align(
+                    alignment: Alignment.center,
+                    child: ClockOptions(provider),
+                  ),
+                ],
+              ),
+            );
+          },
+        );
       },
-      icon: Icon(MdiIcons.lockClock),
-      subtitle: Stack(
-        alignment: AlignmentDirectional.centerStart,
-        children: lockClocks.keys.map((t) {
-          return AnimatedOpacity(
-            opacity: t == curClock ? 1 : 0,
-            duration: Duration(milliseconds: 300),
-            curve: Curves.easeInOut,
-            child: Text(t),
+      icon: Icon(
+        MdiIcons.lockClock,
+        color: Theme.of(context).iconTheme.color,
+      ),
+      subtitle: AnimatedSwitcher(
+        duration: Duration(milliseconds: 300),
+        switchInCurve: Curves.easeOut,
+        switchOutCurve: Curves.easeOut,
+        child: Text(
+          provider.getLsClockLabel(),
+          key: ValueKey(curClock),
+        ),
+        layoutBuilder: (currentChild, previousChildren) {
+          return Stack(
+            children: [
+              ...previousChildren,
+              if (currentChild != null) currentChild,
+            ],
+            alignment: AlignmentDirectional.centerStart,
           );
-        }).toList(),
+        },
       ),
     );
   }
@@ -64,62 +89,34 @@ class ClockOptions extends StatelessWidget {
 
   ClockOptions(this.provider);
 
+  static final List<Widget> _previews = [
+    DefaultClockPreview(),
+    BubbleClockPreview(),
+    AnalogClockPreview(),
+    TypeClockPreview(),
+    DefaultBoldClockPreview(),
+    SamsungClockPreview(),
+    SamsungBoldClockPreview(),
+    SfunyClockPreview(),
+  ];
+
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider.value(
-      value: provider,
-      child: Builder(
-        builder: (context) {
-          var provider = Provider.of<PageProvider>(context);
-          String curClock = provider.getLSClockData();
-          return Wrap(
-            spacing: 16.0,
-            runSpacing: 8.0,
-            alignment: WrapAlignment.center,
-            children: <Widget>[
-              ClockPreviewWrapper(
-                child: DefaultClockPreview(),
-                title: lockClocks.keys.toList()[0],
-                enabled: curClock == lockClocks.keys.toList()[0],
-              ),
-              ClockPreviewWrapper(
-                child: BubbleClockPreview(),
-                title: lockClocks.keys.toList()[1],
-                enabled: curClock == lockClocks.keys.toList()[1],
-              ),
-              ClockPreviewWrapper(
-                child: AnalogClockPreview(),
-                title: lockClocks.keys.toList()[2],
-                enabled: curClock == lockClocks.keys.toList()[2],
-              ),
-              ClockPreviewWrapper(
-                child: TypeClockPreview(),
-                title: lockClocks.keys.toList()[3],
-                enabled: curClock == lockClocks.keys.toList()[3],
-              ),
-              ClockPreviewWrapper(
-                child: DefaultBoldClockPreview(),
-                title: lockClocks.keys.toList()[4],
-                enabled: curClock == lockClocks.keys.toList()[4],
-              ),
-              ClockPreviewWrapper(
-                child: SamsungClockPreview(),
-                title: lockClocks.keys.toList()[5],
-                enabled: curClock == lockClocks.keys.toList()[5],
-              ),
-              ClockPreviewWrapper(
-                child: SamsungBoldClockPreview(),
-                title: lockClocks.keys.toList()[6],
-                enabled: curClock == lockClocks.keys.toList()[6],
-              ),
-              ClockPreviewWrapper(
-                child: SfunyClockPreview(),
-                title: lockClocks.keys.toList()[7],
-                enabled: curClock == lockClocks.keys.toList()[7],
-              ),
-            ],
-          );
-        },
+    final provider = context.watch<PageProvider>();
+    final curClock = provider.getValue(_lsClockKey);
+
+    return Wrap(
+      spacing: 16.0,
+      runSpacing: 8.0,
+      alignment: WrapAlignment.center,
+      children: List.generate(
+        lockClocks.length,
+        (index) => ClockPreviewWrapper(
+          child: _previews[index],
+          title: lockClocks.values.toList()[index],
+          value: lockClocks.keys.toList()[index],
+          enabled: curClock == lockClocks.keys.toList()[index],
+        ),
       ),
     );
   }
@@ -129,18 +126,20 @@ class ClockPreviewWrapper extends StatelessWidget {
   final Widget child;
   final bool enabled;
   final String title;
+  final String value;
 
-  ClockPreviewWrapper({this.title, this.child, this.enabled = false});
+  ClockPreviewWrapper(
+      {this.title, this.value, this.child, this.enabled = false});
 
   @override
   Widget build(BuildContext context) {
-    var provider = Provider.of<PageProvider>(context);
+    var provider = context.watch<PageProvider>();
     return Container(
       width: MediaQuery.of(context).size.width / 4,
       child: Column(
         children: <Widget>[
           GestureDetector(
-            onTap: () => provider.setLSClockData(title),
+            onTap: () => provider.setValue(_lsClockKey, value),
             child: Container(
               width: 100,
               height: 100,
@@ -177,7 +176,7 @@ class ClockPreviewWrapper extends StatelessWidget {
                     : null,
               ),
               backgroundColor: enabled ? Theme.of(context).accentColor : null,
-              onPressed: () => provider.setLSClockData(title),
+              onPressed: () => provider.setLsClockPackage(value),
             ),
           ),
         ],

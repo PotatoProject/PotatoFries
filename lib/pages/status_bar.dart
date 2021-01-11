@@ -20,8 +20,8 @@ class StatusBar extends BasePage {
 
   @override
   Widget buildHeader(context) {
-    var _appInfo = Provider.of<AppInfoProvider>(context);
-    var _provider = Provider.of<PageProvider>(context);
+    var _appInfo = context.watch<AppInfoProvider>();
+    var _provider = context.watch<PageProvider>();
 
     final hasCutout = !_appInfo.isCompatCheckDisabled()
         ? _provider.getValue(PropKey('display_cutout_mode')) ?? false

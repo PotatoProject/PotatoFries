@@ -31,7 +31,7 @@ class AudioFx extends BasePage {
         ),
         child: Builder(
           builder: (context) {
-            final provider = Provider.of<AudioFxProvider>(context);
+            final provider = context.watch<AudioFxProvider>();
 
             return Column(
               mainAxisSize: MainAxisSize.min,
@@ -238,7 +238,7 @@ class AudioFxSliders extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Row(
-        children: getSliders(Provider.of<AudioFxProvider>(context), context),
+        children: getSliders(context.watch<AudioFxProvider>(), context),
       );
 }
 

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:potato_fries/locales/locale_strings.g.dart';
 import 'package:potato_fries/pages/base_page.dart';
 import 'package:potato_fries/provider/app_info.dart';
+import 'package:potato_fries/provider/page_provider.dart';
 import 'package:potato_fries/ui/shaped_icon.dart';
 import 'package:provider/provider.dart';
 
@@ -17,7 +18,8 @@ class Themes extends BasePage {
 
   @override
   Widget buildHeader(context) {
-    final appInfo = Provider.of<AppInfoProvider>(context);
+    final provider = context.watch<PageProvider>();
+    final appInfo = context.watch<AppInfoProvider>();
 
     return Padding(
       padding: EdgeInsets.only(
@@ -36,48 +38,58 @@ class Themes extends BasePage {
             padding: EdgeInsets.only(top: 6),
             children: <Widget>[
               Padding(
-                padding: const EdgeInsets.all(8),
+                padding: EdgeInsets.all(8),
                 child: SizedBox(
                   height: 56,
                   child: Card(
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(28),
+                      borderRadius: BorderRadius.circular(8),
                     ),
-                    color: Theme.of(context).cardColor,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.only(left: 16.0),
-                          child: Image.memory(
-                            appInfo.getIconPackPreview()["ic_search_24dp"],
-                            color: Theme.of(context).accentColor,
-                            colorBlendMode: BlendMode.srcIn,
-                            width: 24,
-                            height: 24,
+                    color: Theme.of(context).scaffoldBackgroundColor,
+                    elevation: 4,
+                    clipBehavior: Clip.antiAlias,
+                    child: InkWell(
+                      onTap: () {},
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.only(left: 16.0),
+                            child: Image.memory(
+                              provider.getIconPackPreview(
+                                  appInfo.iconPreviews)["ic_search_24dp"],
+                              color: Theme.of(context).accentColor,
+                              colorBlendMode: BlendMode.srcIn,
+                              width: 24,
+                              height: 24,
+                            ),
                           ),
-                        ),
-                        Opacity(
-                          opacity: 0.65,
-                          child:
-                              Text(LocaleStrings.themes.headerSearchSettings),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(
-                            top: 4,
-                            bottom: 4,
-                            right: 16,
+                          Opacity(
+                            opacity: 0.65,
+                            child: Text(
+                              LocaleStrings.themes.headerSearchSettings,
+                              style: TextStyle(
+                                fontSize: 14,
+                              ),
+                            ),
                           ),
-                          child: Image.memory(
-                            appInfo
-                                .getIconPackPreview()["ic_settings_multiuser"],
-                            color: Theme.of(context).accentColor,
-                            colorBlendMode: BlendMode.srcIn,
-                            width: 24,
-                            height: 24,
+                          Padding(
+                            padding: const EdgeInsets.only(
+                              top: 4,
+                              bottom: 4,
+                              right: 16,
+                            ),
+                            child: Image.memory(
+                              provider.getIconPackPreview(appInfo.iconPreviews)[
+                                  "ic_settings_multiuser"],
+                              color: Theme.of(context).accentColor,
+                              colorBlendMode: BlendMode.srcIn,
+                              width: 24,
+                              height: 24,
+                            ),
                           ),
-                        )
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -93,7 +105,8 @@ class Themes extends BasePage {
   }
 
   Widget _pref(BuildContext context, String icon, Color color) {
-    final appInfo = Provider.of<AppInfoProvider>(context);
+    final provider = context.watch<PageProvider>();
+    final appInfo = context.watch<AppInfoProvider>();
 
     return ListTile(
       leading: SizedBox(
@@ -108,7 +121,7 @@ class Themes extends BasePage {
               width: 24,
               color: Colors.transparent,
               child: Image.memory(
-                appInfo.getIconPackPreview()[icon],
+                provider.getIconPackPreview(appInfo.iconPreviews)[icon],
                 color: Theme.of(context).scaffoldBackgroundColor,
                 colorBlendMode: BlendMode.srcIn,
                 width: 24,

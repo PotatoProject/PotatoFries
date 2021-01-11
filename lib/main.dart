@@ -1,3 +1,4 @@
+import 'package:android_flutter_settings/android_flutter_settings.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -15,10 +16,46 @@ import 'package:potato_fries/widgets/custom/lock_screen_clock_picker.dart';
 import 'package:provider/provider.dart';
 
 void main() {
-  CustomWidgetRegistry.register(AccentPicker());
-  CustomWidgetRegistry.register(IconPackPicker());
-  CustomWidgetRegistry.register(IconShapePicker());
-  CustomWidgetRegistry.register(LockScreenClockPicker());
+  CustomWidgetRegistry.register(CustomWidget(
+    AccentPicker(),
+    {
+      SettingKey<String>(
+        'accent_dark',
+        SettingType.SECURE,
+      ): Colors.lightBlueAccent,
+      SettingKey<String>(
+        'accent_light',
+        SettingType.SECURE,
+      ): Colors.blueAccent,
+    },
+  ));
+  CustomWidgetRegistry.register(CustomWidget(
+    IconPackPicker(),
+    {
+      SettingKey<String>(
+        'theme_customization_overlay_packages',
+        SettingType.SECURE,
+      ): "{}",
+    },
+  ));
+  CustomWidgetRegistry.register(CustomWidget(
+    IconShapePicker(),
+    {
+      SettingKey<String>(
+        'theme_customization_overlay_packages',
+        SettingType.SECURE,
+      ): "{}",
+    },
+  ));
+  CustomWidgetRegistry.register(CustomWidget(
+    LockScreenClockPicker(),
+    {
+      SettingKey<String>(
+        "lock_screen_custom_clock_face",
+        SettingType.SECURE,
+      ): 'com.android.keyguard.clock.DefaultClockController',
+    },
+  ));
 
   runApp(
     EasyLocalization(
@@ -45,8 +82,10 @@ class FriesRoot extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => PageProvider()),
       ],
       builder: (context, _) {
-        final appInfo = Provider.of<AppInfoProvider>(context);
-        final themes = Themes(appInfo.accentLight, appInfo.accentDark);
+        final provider = context.watch<PageProvider>();
+        final accentLight = Color(provider.accentLight).withOpacity(1);
+        final accentDark = Color(provider.accentDark).withOpacity(1);
+        final themes = Themes(accentLight, accentDark);
 
         return MaterialApp(
           debugShowCheckedModeBanner: false,

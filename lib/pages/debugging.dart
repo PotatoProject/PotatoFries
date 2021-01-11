@@ -31,7 +31,7 @@ class _DebuggingPageState extends State<DebuggingPage> {
 
   @override
   Widget build(BuildContext context) {
-    var appInfoProvider = Provider.of<AppInfoProvider>(context);
+    var appInfoProvider = context.watch<AppInfoProvider>();
     var verNum = appInfoProvider.hostVersion?.toString() ?? "Invalid Version!";
     return Scaffold(
       body: SingleChildScrollView(
@@ -346,8 +346,7 @@ class _VersionChangerState extends State<VersionChanger> {
         ),
         TextButton(
           onPressed: () {
-            Provider.of<AppInfoProvider>(context, listen: false)
-                .setVersionOverride(null);
+            context.read<AppInfoProvider>().setVersionOverride(null);
             Navigator.of(context).pop();
           },
           child: Text('Reset'),
@@ -355,7 +354,8 @@ class _VersionChangerState extends State<VersionChanger> {
         TextButton(
           onPressed: () {
             if (_formKey.currentState.validate()) {
-              Provider.of<AppInfoProvider>(context, listen: false)
+              context
+                  .read<AppInfoProvider>()
                   .setVersionOverride(BuildVersion.parse(_controller.text));
               Navigator.of(context).pop();
             }
