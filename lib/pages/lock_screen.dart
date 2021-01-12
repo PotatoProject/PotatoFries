@@ -8,7 +8,7 @@ class LockScreen extends BasePage {
   String get title => LocaleStrings.lockscreen.title;
 
   @override
-  IconData get icon => CustomIcons.screen_lock_portrait;
+  IconData get icon => CustomIcons.lock_screen;
 
   @override
   String get providerKey => "lock_screen";

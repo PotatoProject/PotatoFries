@@ -22,14 +22,12 @@ import 'package:flutter/widgets.dart';
 class CustomIcons {
   CustomIcons._();
 
-  static const _kFontFam = 'CustomIcons';
+  static const _fontFam = 'CustomIcons';
 
-  static const IconData screen_lock_portrait =
-      IconData(0xe800, fontFamily: _kFontFam);
-  static const IconData flashlight_outline =
-      IconData(0xe801, fontFamily: _kFontFam);
-  static const IconData status_bar = IconData(0xe802, fontFamily: _kFontFam);
-  static const IconData quick_settings =
-      IconData(0xe803, fontFamily: _kFontFam);
-  static const IconData qs_rotate = IconData(0xe804, fontFamily: _kFontFam);
+  static const IconData quick_settings = IconData(0xe800, fontFamily: _fontFam);
+  static const IconData lock_screen = IconData(0xe801, fontFamily: _fontFam);
+  static const IconData fries = IconData(0xe802, fontFamily: _fontFam);
+  static const IconData notch = IconData(0xe803, fontFamily: _fontFam);
+  static const IconData status_bar = IconData(0xe804, fontFamily: _fontFam);
+  static const IconData potatoproject = IconData(0xe805, fontFamily: _fontFam);
 }

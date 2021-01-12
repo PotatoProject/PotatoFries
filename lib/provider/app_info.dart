@@ -1,4 +1,5 @@
 import 'package:android_flutter_settings/android_flutter_settings.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:potato_fries/utils/resources.dart';
 import 'package:potato_fries/data/constants.dart';
@@ -126,6 +127,15 @@ class AppInfoProvider extends ChangeNotifier {
   bool get flag4 => _flag4 && isCompatible(threeDotOneDotSeven);
 
   bool get audioFxSupported => audioFxType != EFFECT_TYPE.NONE;
+
+  bool get debugPhase1 => _flag1;
+
+  bool get debugPhase2 => _flag2 == 5;
+
+  bool get debugPhase3 => _flag3;
+
+  bool get debugEnabled =>
+      (debugPhase1 && debugPhase2 && debugPhase3) || kDebugMode;
 
   bool isCompatible(BuildVersion version, {BuildVersion max}) =>
       (_debug.versionCheckDisabled) ||
