@@ -1,8 +1,8 @@
 import 'package:android_flutter_settings/android_flutter_settings.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:package_info/package_info.dart';
 import 'package:potato_fries/utils/resources.dart';
-import 'package:potato_fries/data/constants.dart';
 import 'package:potato_fries/data/debugging.dart';
 import 'package:potato_fries/data/models.dart';
 import 'package:effectsplugin/effectsplugin.dart';
@@ -16,6 +16,7 @@ class AppInfoProvider extends ChangeNotifier {
   EFFECT_TYPE audioFxType = EFFECT_TYPE.NONE;
   final _debug = Debug();
 
+  PackageInfo _packageInfo;
   int _pageIndex = 0;
   Map<String, String> _shapes = {};
   Map<String, String> _shapeLabels = {};
@@ -29,10 +30,7 @@ class AppInfoProvider extends ChangeNotifier {
   String dish;
   String type;
 
-  bool _flag1 = false;
-  int _flag2 = 0;
-  bool _flag3 = false;
-  bool _flag4 = false;
+  int _debugFlagTap = 0;
 
   Map<String, dynamic> globalSysTheme = {};
 
@@ -41,56 +39,10 @@ class AppInfoProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void setFlag1() {
-    _flag1 = !_flag1;
-    if (!_flag1) _resetFlags();
+  set debugFlagTap(int val) {
+    _debugFlagTap = val.clamp(0, 10);
+
     notifyListeners();
-  }
-
-  void _resetFlags() {
-    _flag1 = false;
-    _flag2 = 0;
-    _flag3 = false;
-    // flag4 controls disco settings. Do not reset!
-  }
-
-  set flag2(int val) {
-    _flag2 = val;
-    if (!_flag1) {
-      _flag2 = 0;
-      return;
-    }
-    if (val == 0 || val > 5) _resetFlags();
-    notifyListeners();
-  }
-
-  void setFlag3() {
-    if (!_flag3) {
-      _flag3 = true;
-      notifyListeners();
-    }
-  }
-
-  void setFlag4() async {
-    if (_flag2 == 3 && !_flag4) {
-      _flag4 = isCompatible(threeDotOneDotSeven);
-      if (_flag4) {
-        await AndroidFlutterSettings.setPropByName(
-          'persist.sys.theme.accent_disco',
-          '0',
-        );
-        notifyListeners();
-      }
-    }
-  }
-
-  void loadFlag4() async {
-    if (isCompatible(threeDotOneDotSeven)) {
-      var _disco = await AndroidFlutterSettings.getPropByName(
-              'persist.sys.theme.accent_disco') ??
-          "";
-      _flag4 = _disco != "";
-    }
   }
 
   bool _autoCalculateAccents = true;
@@ -101,6 +53,8 @@ class AppInfoProvider extends ChangeNotifier {
     _autoCalculateAccents = autoCalculateAccents;
     _prefs.setBool("ACCENT_AUTO", autoCalculateAccents);
   }
+
+  PackageInfo get packageInfo => _packageInfo;
 
   Map<String, String> get shapes => _shapes;
 
@@ -118,24 +72,11 @@ class AppInfoProvider extends ChangeNotifier {
 
   BuildVersion get hostVersion => _debug.versionSpoof ?? _hostVersion;
 
-  bool get flag1 => _flag1;
-
-  int get flag2 => _flag2;
-
-  bool get flag3 => _flag3;
-
-  bool get flag4 => _flag4 && isCompatible(threeDotOneDotSeven);
+  int get debugFlagTap => _debugFlagTap;
 
   bool get audioFxSupported => audioFxType != EFFECT_TYPE.NONE;
 
-  bool get debugPhase1 => _flag1;
-
-  bool get debugPhase2 => _flag2 == 5;
-
-  bool get debugPhase3 => _flag3;
-
-  bool get debugEnabled =>
-      (debugPhase1 && debugPhase2 && debugPhase3) || kDebugMode;
+  bool get debugEnabled => _debugFlagTap == 10;
 
   bool isCompatible(BuildVersion version, {BuildVersion max}) =>
       (_debug.versionCheckDisabled) ||
@@ -155,7 +96,6 @@ class AppInfoProvider extends ChangeNotifier {
       ret = "Invalid version! Disabling override.";
     }
 
-    loadFlag4();
     notifyListeners();
     return ret;
   }
@@ -164,7 +104,6 @@ class AppInfoProvider extends ChangeNotifier {
 
   void setVersionCheckDisabled(bool disable) {
     _debug.versionCheckDisabled = disable;
-    loadFlag4();
     notifyListeners();
   }
 
@@ -172,7 +111,6 @@ class AppInfoProvider extends ChangeNotifier {
 
   void setCompatCheckDisabled(bool disable) {
     _debug.compatCheckDisabled = disable;
-    loadFlag4();
     notifyListeners();
   }
 
@@ -205,12 +143,12 @@ class AppInfoProvider extends ChangeNotifier {
       default:
         type = "Community";
     }
-    loadFlag4();
     if (await FX.mDirac.isDiracSupported()) {
       audioFxType = EFFECT_TYPE.DIRAC;
     } else if (await FX.mMi.isMiSupported()) {
       audioFxType = EFFECT_TYPE.MI;
     }
+    _packageInfo = await PackageInfo.fromPlatform();
     notifyListeners();
   }
 }

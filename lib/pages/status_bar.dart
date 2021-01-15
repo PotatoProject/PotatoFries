@@ -4,7 +4,6 @@ import 'package:potato_fries/locales/locale_strings.g.dart';
 import 'package:potato_fries/pages/base_page.dart';
 import 'package:potato_fries/provider/app_info.dart';
 import 'package:potato_fries/provider/page_provider.dart';
-import 'package:potato_fries/ui/custom_icons.dart';
 import 'package:potato_fries/widgets/video_widget.dart';
 import 'package:provider/provider.dart';
 
@@ -13,7 +12,7 @@ class StatusBar extends BasePage {
   String get title => LocaleStrings.statusbar.title;
 
   @override
-  IconData get icon => CustomIcons.status_bar;
+  IconData get icon => Icons.wifi;
 
   @override
   String get providerKey => "status_bar";

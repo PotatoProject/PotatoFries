@@ -33,22 +33,21 @@ class ShapedIcon extends StatelessWidget {
     Color _color = color ?? Theme.of(context).accentColor;
     String _pathData = pathData ?? provider.getIconShape(appInfo.shapes).value;
 
-    return Container(
-      height: iconSize,
-      width: iconSize,
-      child: child,
-      clipBehavior: Clip.antiAlias,
-      decoration: ShapeDecoration(
+    return SizedBox.fromSize(
+      size: Size.square(iconSize),
+      child: Material(
+        color: isOutline ? null : _color,
+        child: child,
+        clipBehavior: Clip.antiAlias,
         shape: !isOutline
             ? PathDataBorder(pathData: _pathData)
             : PathDataBorder(
                 pathData: _pathData,
                 side: BorderSide(
                   color: _color,
-                  width: iconSize / 12,
+                  width: iconSize / 6,
                 ),
               ),
-        color: isOutline ? null : _color,
       ),
     );
   }
@@ -117,63 +116,5 @@ class PathDataBorder extends OutlinedBorder {
       pathData: pathData ?? this.pathData,
       side: side ?? this.side,
     );
-  }
-}
-
-// stolen from https://gist.github.com/slightfoot/e35e8d5877371417e9803143e2501b0a
-class SquircleBorder extends ShapeBorder {
-  final BorderSide side;
-  final double superRadius;
-
-  const SquircleBorder({
-    this.side: BorderSide.none,
-    this.superRadius: 5.0,
-  })  : assert(side != null),
-        assert(superRadius != null);
-
-  @override
-  EdgeInsetsGeometry get dimensions => EdgeInsets.all(side.width);
-
-  @override
-  ShapeBorder scale(double t) {
-    return new SquircleBorder(
-      side: side.scale(t),
-      superRadius: superRadius * t,
-    );
-  }
-
-  @override
-  Path getInnerPath(Rect rect, {TextDirection textDirection}) {
-    return _squirclePath(rect.deflate(side.width), superRadius);
-  }
-
-  @override
-  Path getOuterPath(Rect rect, {TextDirection textDirection}) {
-    return _squirclePath(rect, superRadius);
-  }
-
-  static Path _squirclePath(Rect rect, double superRadius) {
-    final c = rect.center;
-    final dx = c.dx * (1.0 / superRadius);
-    final dy = c.dy * (1.0 / superRadius);
-    return new Path()
-      ..moveTo(c.dx, 0.0)
-      ..relativeCubicTo(c.dx - dx, 0.0, c.dx, dy, c.dx, c.dy)
-      ..relativeCubicTo(0.0, c.dy - dy, -dx, c.dy, -c.dx, c.dy)
-      ..relativeCubicTo(-(c.dx - dx), 0.0, -c.dx, -dy, -c.dx, -c.dy)
-      ..relativeCubicTo(0.0, -(c.dy - dy), dx, -c.dy, c.dx, -c.dy)
-      ..close();
-  }
-
-  @override
-  void paint(Canvas canvas, Rect rect, {TextDirection textDirection}) {
-    switch (side.style) {
-      case BorderStyle.none:
-        break;
-      case BorderStyle.solid:
-        var path = getOuterPath(rect.deflate(side.width / 2.0),
-            textDirection: textDirection);
-        canvas.drawPath(path, side.toPaint());
-    }
   }
 }

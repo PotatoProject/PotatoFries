@@ -1,19 +1,35 @@
 import 'package:android_flutter_settings/android_flutter_settings.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:package_info/package_info.dart';
+import 'package:potato_fries/pages/base_page.dart';
 import 'package:potato_fries/utils/utils.dart';
 import 'package:potato_fries/data/models.dart';
 import 'package:potato_fries/provider/app_info.dart';
 import 'package:potato_fries/ui/sizeable_list_tile.dart';
 import 'package:provider/provider.dart';
 
-class DebuggingPage extends StatefulWidget {
+class DebuggingPage extends BasePage {
   @override
-  _DebuggingPageState createState() => _DebuggingPageState();
+  IconData get icon => MdiIcons.androidDebugBridge;
+
+  @override
+  String get providerKey => null;
+
+  @override
+  String get title => "Debugging";
+
+  @override
+  Widget build(BuildContext context) => _DebuggingPageWidget();
 }
 
-class _DebuggingPageState extends State<DebuggingPage> {
+class _DebuggingPageWidget extends StatefulWidget {
+  @override
+  _DebuggingPageWidgetState createState() => _DebuggingPageWidgetState();
+}
+
+class _DebuggingPageWidgetState extends State<_DebuggingPageWidget> {
   bool discoEnabled = false;
   final discoProp = 'persist.sys.theme.accent_disco';
 
@@ -33,80 +49,44 @@ class _DebuggingPageState extends State<DebuggingPage> {
   Widget build(BuildContext context) {
     var appInfoProvider = context.watch<AppInfoProvider>();
     var verNum = appInfoProvider.hostVersion?.toString() ?? "Invalid Version!";
-    return Scaffold(
-      body: SingleChildScrollView(
-        padding: EdgeInsets.only(
-            top: MediaQuery.of(context).padding.top + 8, left: 16, right: 16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            header("Build Info"),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8.0),
-              child: DefaultTextStyle(
-                style: TextStyle(
-                  color: Theme.of(context)
-                      .textTheme
-                      .headline6
-                      .color
-                      .withOpacity(0.7),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+    return ListView(
+      padding: EdgeInsets.only(
+        top: MediaQuery.of(context).padding.top + 8,
+        left: 16,
+        right: 16,
+      ),
+      children: <Widget>[
+        header("Build Info"),
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 8.0),
+          child: DefaultTextStyle(
+            style: TextStyle(
+              color:
+                  Theme.of(context).textTheme.headline6.color.withOpacity(0.7),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Row(
                   children: <Widget>[
-                    Row(
-                      children: <Widget>[
-                        Text(
-                          "Fries build: ",
-                          style: TextStyle(
-                            color: Theme.of(context)
-                                .textTheme
-                                .headline6
-                                .color
-                                .withOpacity(0.9),
-                          ),
-                        ),
-                        FutureBuilder<PackageInfo>(
-                          future: PackageInfo.fromPlatform(),
-                          builder: (context, snapshot) {
-                            if (snapshot.data == null) return Container();
-                            return Text(
-                              snapshot.data.version +
-                                  '+' +
-                                  snapshot.data.buildNumber,
-                              style: TextStyle(
-                                color: Theme.of(context)
-                                    .textTheme
-                                    .headline6
-                                    .color
-                                    .withOpacity(0.7),
-                              ),
-                            );
-                          },
-                        ),
-                        Visibility(
-                          visible: kDebugMode,
-                          child: Text(
-                            " (DEBUG)",
-                            style: TextStyle(color: Colors.red),
-                          ),
-                        ),
-                      ],
+                    Text(
+                      "Fries build: ",
+                      style: TextStyle(
+                        color: Theme.of(context)
+                            .textTheme
+                            .headline6
+                            .color
+                            .withOpacity(0.9),
+                      ),
                     ),
-                    Row(
-                      children: <Widget>[
-                        Text(
-                          "Version number: ",
-                          style: TextStyle(
-                            color: Theme.of(context)
-                                .textTheme
-                                .headline6
-                                .color
-                                .withOpacity(0.9),
-                          ),
-                        ),
-                        Text(
-                          verNum,
+                    FutureBuilder<PackageInfo>(
+                      future: PackageInfo.fromPlatform(),
+                      builder: (context, snapshot) {
+                        if (snapshot.data == null) return Container();
+                        return Text(
+                          snapshot.data.version +
+                              '+' +
+                              snapshot.data.buildNumber,
                           style: TextStyle(
                             color: Theme.of(context)
                                 .textTheme
@@ -114,163 +94,157 @@ class _DebuggingPageState extends State<DebuggingPage> {
                                 .color
                                 .withOpacity(0.7),
                           ),
-                        ),
-                        Visibility(
-                          visible: appInfoProvider.getVersionOverride() != null,
-                          child: Text(
-                            " (FAKE)",
-                            style: TextStyle(color: Colors.red),
-                          ),
-                        )
-                      ],
+                        );
+                      },
                     ),
-                    buildInfoRow(
-                      "Build type: ",
-                      "${appInfoProvider.dish} - ${appInfoProvider.type}",
-                    ),
-                    buildInfoRow(
-                      "Device info: ",
-                      "${appInfoProvider.model} (${appInfoProvider.device})",
-                    ),
-                    buildInfoRow(
-                      "Build name: ",
-                      appInfoProvider.exactBuild,
+                    Visibility(
+                      visible: kDebugMode,
+                      child: Text(
+                        " (DEBUG)",
+                        style: TextStyle(color: Colors.red),
+                      ),
                     ),
                   ],
                 ),
-              ),
+                Row(
+                  children: <Widget>[
+                    Text(
+                      "Version number: ",
+                      style: TextStyle(
+                        color: Theme.of(context)
+                            .textTheme
+                            .headline6
+                            .color
+                            .withOpacity(0.9),
+                      ),
+                    ),
+                    Text(
+                      verNum,
+                      style: TextStyle(
+                        color: Theme.of(context)
+                            .textTheme
+                            .headline6
+                            .color
+                            .withOpacity(0.7),
+                      ),
+                    ),
+                    Visibility(
+                      visible: appInfoProvider.getVersionOverride() != null,
+                      child: Text(
+                        " (FAKE)",
+                        style: TextStyle(color: Colors.red),
+                      ),
+                    )
+                  ],
+                ),
+                buildInfoRow(
+                  "Build type: ",
+                  "${appInfoProvider.dish} - ${appInfoProvider.type}",
+                ),
+                buildInfoRow(
+                  "Device info: ",
+                  "${appInfoProvider.model} (${appInfoProvider.device})",
+                ),
+                buildInfoRow(
+                  "Build name: ",
+                  appInfoProvider.exactBuild,
+                ),
+              ],
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  header("Version and compatibility"),
-                  SizeableListTile(
-                    title: "Disable version checking",
-                    icon: Icon(Icons.track_changes_outlined),
-                    subtitle: Text("Disable all non-strict version checks"),
-                    trailing: Switch(
-                      onChanged: (v) =>
-                          appInfoProvider.setVersionCheckDisabled(v),
-                      value: appInfoProvider.isVersionCheckDisabled(),
-                    ),
-                    onTap: () => appInfoProvider.setVersionCheckDisabled(
-                        !appInfoProvider.isVersionCheckDisabled()),
-                  ),
-                  SizeableListTile(
-                    title: "Disable compatibility checking",
-                    icon: Icon(Icons.developer_board_outlined),
-                    subtitle: Text("Disable all feature compatibility checks"),
-                    trailing: Switch(
-                      onChanged: (v) =>
-                          appInfoProvider.setCompatCheckDisabled(v),
-                      value: appInfoProvider.isCompatCheckDisabled(),
-                    ),
-                    onTap: () => appInfoProvider.setCompatCheckDisabled(
-                        !appInfoProvider.isCompatCheckDisabled()),
-                  ),
-                  SizeableListTile(
-                    title: "Spoof version",
-                    icon: Icon(Icons.flash_on_outlined),
-                    subtitle: Text(appInfoProvider.getVersionOverride() == null
-                        ? 'Set a fake vernum'
-                        : 'Fake version: ' +
-                            appInfoProvider.getVersionOverride().toString()),
-                    onTap: () => showDialog(
-                      context: context,
-                      builder: (context) => VersionChanger(),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  header("Activity"),
-                  SizeableListTile(
-                    title: "Launch Activity",
-                    icon: Icon(Icons.launch_outlined),
-                    subtitle: Text('Start any activity'),
-                    onTap: () => showDialog(
-                      context: context,
-                      builder: (context) => ActivityLaunch(),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  header("Settings"),
-                  SizeableListTile(
-                    title: "Write or read settings",
-                    icon: Icon(Icons.settings_outlined),
-                    subtitle:
-                        Text('Write or read any System/Secure/Global settings'),
-                    onTap: () => showDialog(
-                      context: context,
-                      builder: (context) => SettingsControl(),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
+          ),
         ),
-      ),
-      bottomNavigationBar: Material(
-        color: Theme.of(context).canvasColor,
-        elevation: 0,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Divider(
-              height: 1.5,
-              thickness: 1.5,
-            ),
-            ListTile(
-              leading: IconButton(
-                icon: Icon(Icons.arrow_back),
-                color: Theme.of(context).iconTheme.color,
-                padding: EdgeInsets.all(0),
-                onPressed: () => Navigator.pop(context),
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              header("Version and compatibility"),
+              SizeableListTile(
+                title: "Disable version checking",
+                icon: Icon(Icons.track_changes_outlined),
+                subtitle: Text("Disable all non-strict version checks"),
+                trailing: Switch(
+                  onChanged: (v) => appInfoProvider.setVersionCheckDisabled(v),
+                  value: appInfoProvider.isVersionCheckDisabled(),
+                ),
+                onTap: () => appInfoProvider.setVersionCheckDisabled(
+                    !appInfoProvider.isVersionCheckDisabled()),
               ),
-              title: Text(
-                'Debug menu',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w500,
-                  color: Theme.of(context).iconTheme.color,
+              SizeableListTile(
+                title: "Disable compatibility checking",
+                icon: Icon(Icons.developer_board_outlined),
+                subtitle: Text("Disable all feature compatibility checks"),
+                trailing: Switch(
+                  onChanged: (v) => appInfoProvider.setCompatCheckDisabled(v),
+                  value: appInfoProvider.isCompatCheckDisabled(),
+                ),
+                onTap: () => appInfoProvider.setCompatCheckDisabled(
+                    !appInfoProvider.isCompatCheckDisabled()),
+              ),
+              SizeableListTile(
+                title: "Spoof version",
+                icon: Icon(Icons.flash_on_outlined),
+                subtitle: Text(appInfoProvider.getVersionOverride() == null
+                    ? 'Set a fake vernum'
+                    : 'Fake version: ' +
+                        appInfoProvider.getVersionOverride().toString()),
+                onTap: () => showDialog(
+                  context: context,
+                  builder: (context) => VersionChanger(),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
-      ),
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              header("Activity"),
+              SizeableListTile(
+                title: "Launch Activity",
+                icon: Icon(Icons.launch_outlined),
+                subtitle: Text('Start any activity'),
+                onTap: () => showDialog(
+                  context: context,
+                  builder: (context) => ActivityLaunch(),
+                ),
+              ),
+            ],
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              header("Settings"),
+              SizeableListTile(
+                title: "Write or read settings",
+                icon: Icon(Icons.settings_outlined),
+                subtitle:
+                    Text('Write or read any System/Secure/Global settings'),
+                onTap: () => showDialog(
+                  context: context,
+                  builder: (context) => SettingsControl(),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 
-  Widget header(String text) => Builder(
-        builder: (context) {
-          TextStyle heading = TextStyle(
-            color: Theme.of(context).accentColor,
-            fontWeight: FontWeight.bold,
-            fontSize: 12,
-            letterSpacing: 2,
-          );
-
-          return Text(
-            text.toUpperCase(),
-            style: heading,
-          );
-        },
+  Widget header(String text) => Text(
+        text.toUpperCase(),
+        style: TextStyle(
+          color: Theme.of(context).accentColor,
+          fontWeight: FontWeight.bold,
+          fontSize: 12,
+          letterSpacing: 2,
+        ),
       );
 
   Widget buildInfoRow(String title, String content) => Builder(

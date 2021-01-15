@@ -112,6 +112,7 @@ class FriesRoot extends StatelessWidget {
                       ? Brightness.light
                       : Brightness.dark,
             ));
+
             return child;
           },
         );
