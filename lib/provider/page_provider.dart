@@ -130,7 +130,11 @@ class PageProvider extends ChangeNotifier {
     final currentValue = getValue(SettingKey<String>(name, SettingType.SECURE));
 
     if (currentValue != null) {
-      return int.tryParse(currentValue, radix: 16);
+      if (currentValue is int) {
+        return currentValue;
+      } else {
+        return int.tryParse(currentValue, radix: 16);
+      }
     } else {
       return defaultValue;
     }

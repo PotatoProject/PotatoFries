@@ -22,11 +22,11 @@ void main() {
       SettingKey<String>(
         'accent_dark',
         SettingType.SECURE,
-      ): Colors.lightBlueAccent,
+      ): Colors.lightBlueAccent.value,
       SettingKey<String>(
         'accent_light',
         SettingType.SECURE,
-      ): Colors.blueAccent,
+      ): Colors.blueAccent.value,
     },
   ));
   CustomWidgetRegistry.register(CustomWidget(
