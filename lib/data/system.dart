@@ -10,6 +10,7 @@ final PageData system = PageData(
   categories: [
     PageCategoryData(LocaleStrings.system.buttonsTitle, sysButton),
     PageCategoryData(LocaleStrings.system.gesturesTitle, systemGesture),
+    PageCategoryData(LocaleStrings.system.navigationTitle, navigation),
     PageCategoryData(LocaleStrings.system.networkTitle, network),
     PageCategoryData(LocaleStrings.system.packagemanagerTitle, packageManager),
     PageCategoryData(LocaleStrings.system.notificationsTitle, notifications),
@@ -50,6 +51,47 @@ final List<Preference> systemGesture = [
     type: SettingType.SYSTEM,
     options: SwitchOptions(
       defaultValue: false,
+    ),
+    minVersion: '4.0.0',
+  ),
+];
+
+final List<Preference> navigation = [
+  SettingPreference.withSwitch(
+    setting: 'sysui_nav_bar_hint',
+    title: LocaleStrings.system.navigationPillHintTitle,
+    description: LocaleStrings.system.navigationPillHintDesc,
+    type: SettingType.SECURE,
+    options: SwitchOptions(
+      defaultValue: true,
+    ),
+    minVersion: '4.0.0',
+  ),
+  SettingPreference.withSlider(
+    setting: 'navigation_handle_width',
+    title: LocaleStrings.system.navigationPillSizeTitle,
+    type: SettingType.SYSTEM,
+    options: SliderOptions(
+      defaultValue: 10,
+      min: 10,
+      max: 20,
+    ),
+    dependencies: [
+      SettingDependency.boolean(
+        name: 'sysui_nav_bar_hint',
+        type: SettingType.SECURE,
+        value: true,
+      ),
+    ],
+    minVersion: '4.0.0',
+  ),
+  SettingPreference.withSwitch(
+    setting: 'sysui_nav_bar_inverse',
+    title: LocaleStrings.system.navigationNavigationInverseTitle,
+    description: LocaleStrings.system.navigationNavigationInverseDesc,
+    type: SettingType.SECURE,
+    options: SwitchOptions(
+      defaultValue: true,
     ),
     minVersion: '4.0.0',
   ),
