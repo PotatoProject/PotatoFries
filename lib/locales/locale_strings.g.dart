@@ -90,6 +90,8 @@ class _$SystemLocaleStrings {
   final String gesturesTitle = "system.gestures.title".tr();
   final String gesturesDoubleTapSleepLockscreenTitle = "system.gestures.double_tap_sleep_lockscreen.title".tr();
   final String gesturesDoubleTapSleepLockscreenDesc = "system.gestures.double_tap_sleep_lockscreen.desc".tr();
+  final String gesturesThreeFingerSwipeScreenshotTitle = "system.gestures.three_finger_gesture.title".tr();
+  final String gesturesThreeFingerSwipeScreenshotDesc = "system.gestures.three_finger_gesture.desc".tr();
   final String gesturesPulseOnNewTracksTitle = "system.gestures.pulse_on_new_tracks.title".tr();
   final String gesturesPulseOnNewTracksDesc = "system.gestures.pulse_on_new_tracks.desc".tr();
   final String navigationTitle = "system.navigation.title".tr();
