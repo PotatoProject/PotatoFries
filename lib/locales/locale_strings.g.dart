@@ -80,6 +80,9 @@ class _$StatusbarLocaleStrings {
   final String batteryStatusBarShowBatteryPercentV2 = "statusbar.battery.status_bar_show_battery_percent.v_2".tr();
   final String batteryQsHeaderShowBatteryPercentTitle = "statusbar.battery.qs_header_show_battery_percent.title".tr();
   final String batteryQsHeaderShowBatteryPercentDesc = "statusbar.battery.qs_header_show_battery_percent.desc".tr();
+  final String iconsTitle = "statusbar.icons.title".tr();
+  final String iconsShowFourgIconTitle = "statusbar.icons.show_fourg_icon.title".tr();
+  final String iconsShowFourgIconDesc = "statusbar.icons.show_fourg_icon.desc".tr();
 }
 
 class _$SystemLocaleStrings {
