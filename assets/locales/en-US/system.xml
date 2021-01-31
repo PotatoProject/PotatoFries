@@ -8,6 +8,12 @@
     <string name="gestures.double_tap_sleep_lockscreen.desc">Turn off screen by double tapping empty space on lockscreen</string>
     <string name="gestures.pulse_on_new_tracks.title">Ambient music tracks</string>
     <string name="gestures.pulse_on_new_tracks.desc">Show Ambient Display when a new music track is played</string>
+    <string name="navigation.title">Navigation</string>
+    <string name="navigation.sysui_nav_bar_hint.title">Show gestural pill</string>
+    <string name="navigation.sysui_nav_bar_hint.desc">Toggle the navigation handle/pill</string>
+    <string name="navigation.navigation_handle_width.title">Navigation handle length</string>
+    <string name="navigation.sysui_nav_bar_inverse.title">Swap navigation buttons</string>
+    <string name="navigation.sysui_nav_bar_inverse.desc">Swap navigation buttons when using 3 button layout</string>
     <string name="network.title">Network</string>
     <string name="network.tethering_allow_vpn_upstreams.title">Allow clients to use VPNs</string>
     <string name="network.tethering_allow_vpn_upstreams.desc">Permit hotspot/tethering clients to use this device's VPN connection</string>
