@@ -71,6 +71,8 @@ class _$StatusbarLocaleStrings {
   final String iconsShowFourgIconDesc = "statusbar.icons.show_fourg_icon.desc".tr();
   final String iconsShowVolteIconTitle = "statusbar.icons.show_volte_icon.title".tr();
   final String iconsShowVolteIconDesc = "statusbar.icons.show_volte_icon.desc".tr();
+  final String iconsRoamingIndicatorIconTitle = "statusbar.icons.roaming_indicator_icon.title".tr();
+  final String iconsRoamingIndicatorIconDesc = "statusbar.icons.roaming_indicator_icon.desc".tr();
   final String batteryTitle = "statusbar.battery.title".tr();
   final String batteryStatusBarBatteryStyleTitle = "statusbar.battery.status_bar_battery_style.title".tr();
   final String batteryStatusBarBatteryStyleV0 = "statusbar.battery.status_bar_battery_style.v_0".tr();
