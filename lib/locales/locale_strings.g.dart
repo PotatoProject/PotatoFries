@@ -66,6 +66,11 @@ class _$StatusbarLocaleStrings {
   final String cutoutsDisplayCutoutModeV1 = "statusbar.cutouts.display_cutout_mode.v_1".tr();
   final String cutoutsDisplayCutoutModeV2 = "statusbar.cutouts.display_cutout_mode.v_2".tr();
   final String cutoutsSysuiRoundedSizeTitle = "statusbar.cutouts.sysui_rounded_size.title".tr();
+  final String iconsTitle = "statusbar.icons.title".tr();
+  final String iconsShowFourgIconTitle = "statusbar.icons.show_fourg_icon.title".tr();
+  final String iconsShowFourgIconDesc = "statusbar.icons.show_fourg_icon.desc".tr();
+  final String iconsShowVolteIconTitle = "statusbar.icons.show_volte_icon.title".tr();
+  final String iconsShowVolteIconDesc = "statusbar.icons.show_volte_icon.desc".tr();
   final String batteryTitle = "statusbar.battery.title".tr();
   final String batteryStatusBarBatteryStyleTitle = "statusbar.battery.status_bar_battery_style.title".tr();
   final String batteryStatusBarBatteryStyleV0 = "statusbar.battery.status_bar_battery_style.v_0".tr();
@@ -80,9 +85,6 @@ class _$StatusbarLocaleStrings {
   final String batteryStatusBarShowBatteryPercentV2 = "statusbar.battery.status_bar_show_battery_percent.v_2".tr();
   final String batteryQsHeaderShowBatteryPercentTitle = "statusbar.battery.qs_header_show_battery_percent.title".tr();
   final String batteryQsHeaderShowBatteryPercentDesc = "statusbar.battery.qs_header_show_battery_percent.desc".tr();
-  final String iconsTitle = "statusbar.icons.title".tr();
-  final String iconsShowFourgIconTitle = "statusbar.icons.show_fourg_icon.title".tr();
-  final String iconsShowFourgIconDesc = "statusbar.icons.show_fourg_icon.desc".tr();
 }
 
 class _$SystemLocaleStrings {

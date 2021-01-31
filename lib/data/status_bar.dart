@@ -79,6 +79,17 @@ final List<Preference> statusBarIcons = [
     ),
     minVersion: '4.0.2',
   ),
+  SettingPreference.withSwitch(
+    setting: 'show_volte_icon',
+    title: LocaleStrings.statusbar.iconsShowVolteIconTitle,
+    description: LocaleStrings.statusbar.iconsShowVolteIconDesc,
+    icon: SmartIconData.iconData(Icons.hd),
+    type: SettingType.SYSTEM,
+    options: SwitchOptions(
+      defaultValue: true,
+    ),
+    minVersion: '4.0.2',
+  ),
 ];
 
 final List<Preference> statusBarBattery = [
