@@ -89,6 +89,8 @@ class _$LocaleEnUS extends _$LocaleBase {
     "system.gestures.title": "Gestures",
     "system.gestures.double_tap_sleep_lockscreen.title": "Double tap to sleep on lockscreen",
     "system.gestures.double_tap_sleep_lockscreen.desc": "Turn off screen by double tapping empty space on lockscreen",
+    "system.gestures.three_finger_gesture.title": "Three finger screenshot",
+    "system.gestures.three_finger_gesture.desc": "Swipe down with three fingers to screenshot",
     "system.gestures.pulse_on_new_tracks.title": "Ambient music tracks",
     "system.gestures.pulse_on_new_tracks.desc": "Show Ambient Display when a new music track is played",
     "system.navigation.title": "Navigation",
