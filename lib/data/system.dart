@@ -44,6 +44,17 @@ final List<Preference> systemGesture = [
     minVersion: '4.0.0',
   ),
   SettingPreference.withSwitch(
+    setting: 'three_finger_gesture',
+    title: LocaleStrings.system.gesturesThreeFingerSwipeScreenshotTitle,
+    description: LocaleStrings.system.gesturesThreeFingerSwipeScreenshotDesc,
+    icon: SmartIconData.iconData(Icons.camera),
+    type: SettingType.SYSTEM,
+    options: SwitchOptions(
+      defaultValue: false,
+    ),
+    minVersion: '4.0.2',
+  ),
+  SettingPreference.withSwitch(
     setting: 'pulse_on_new_tracks',
     title: LocaleStrings.system.gesturesPulseOnNewTracksTitle,
     description: LocaleStrings.system.gesturesPulseOnNewTracksDesc,
