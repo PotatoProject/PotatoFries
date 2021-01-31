@@ -108,6 +108,8 @@ class _$LocaleEnUS extends _$LocaleBase {
     "system.navigation.navigation_handle_width.title": "Navigation handle length",
     "system.navigation.sysui_nav_bar_inverse.title": "Swap navigation buttons",
     "system.navigation.sysui_nav_bar_inverse.desc": "Swap navigation buttons when using 3 button layout",
+    "system.navigation.systemui_tuner_navbar.title": "Navigation bar tuner",
+    "system.navigation.systemui_tuner_navbar.desc": "Swap navigation bar layout",
     "system.network.title": "Network",
     "system.network.tethering_allow_vpn_upstreams.title": "Allow clients to use VPNs",
     "system.network.tethering_allow_vpn_upstreams.desc": "Permit hotspot/tethering clients to use this device's VPN connection",

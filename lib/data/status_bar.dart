@@ -154,7 +154,5 @@ final List<Preference> statusBarBattery = [
     ),
     minVersion: '4.0.0',
   ),
-
-  ActivityPreference(title: LocaleStrings.statusbar.batteryQsHeaderShowBatteryPercentTitle, cls: "com.android.systemui.tuner.NavBarActivity" , pkg: "com.android.systemui"),
 ];
 

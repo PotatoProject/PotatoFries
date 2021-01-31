@@ -109,6 +109,8 @@ class _$SystemLocaleStrings {
   final String navigationNavigationHandleWidthTitle = "system.navigation.navigation_handle_width.title".tr();
   final String navigationSysuiNavBarInverseTitle = "system.navigation.sysui_nav_bar_inverse.title".tr();
   final String navigationSysuiNavBarInverseDesc = "system.navigation.sysui_nav_bar_inverse.desc".tr();
+  final String navigationSystemuiTunerNavbarTitle = "system.navigation.systemui_tuner_navbar.title".tr();
+  final String navigationSystemuiTunerNavbarDesc = "system.navigation.systemui_tuner_navbar.desc".tr();
   final String networkTitle = "system.network.title".tr();
   final String networkTetheringAllowVpnUpstreamsTitle = "system.network.tethering_allow_vpn_upstreams.title".tr();
   final String networkTetheringAllowVpnUpstreamsDesc = "system.network.tethering_allow_vpn_upstreams.desc".tr();
