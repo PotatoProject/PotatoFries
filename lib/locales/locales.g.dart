@@ -75,6 +75,8 @@ class _$LocaleEnUS extends _$LocaleBase {
     "statusbar.icons.show_volte_icon.desc": "Display HD icon in status bar for VoLTE",
     "statusbar.icons.roaming_indicator_icon.title": "Roaming icon",
     "statusbar.icons.roaming_indicator_icon.desc": "Display roaming icon in status bar",
+    "statusbar.icons.systemui_tuner_statusbar.title": "System statusbar icons",
+    "statusbar.icons.systemui_tuner_statusbar.desc": "Disable/Enable system icons from statusbar",
     "statusbar.battery.title": "Battery",
     "statusbar.battery.status_bar_battery_style.title": "Battery Style",
     "statusbar.battery.status_bar_battery_style.v_0": "Portrait",

@@ -100,6 +100,13 @@ final List<Preference> statusBarIcons = [
     ),
     minVersion: '4.0.2',
   ),
+  ActivityPreference(
+    title: LocaleStrings.statusbar.iconsSystemuiTunerStatusbarTitle,
+    description: LocaleStrings.statusbar.iconsSystemuiTunerStatusbarDesc,
+    cls: "com.android.systemui.tuner.StatusbarItemsActivity",
+    pkg: "com.android.systemui",
+    minVersion: '4.0.2',
+  ), // ActivityPreference
 ];
 
 final List<Preference> statusBarBattery = [
@@ -147,5 +154,7 @@ final List<Preference> statusBarBattery = [
     ),
     minVersion: '4.0.0',
   ),
+
+  ActivityPreference(title: LocaleStrings.statusbar.batteryQsHeaderShowBatteryPercentTitle, cls: "com.android.systemui.tuner.NavBarActivity" , pkg: "com.android.systemui"),
 ];
 
