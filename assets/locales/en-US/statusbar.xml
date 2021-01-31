@@ -6,6 +6,9 @@
     <string name="cutouts.display_cutout_mode.v_1">Immerse</string>
     <string name="cutouts.display_cutout_mode.v_2">Hide</string>
     <string name="cutouts.sysui_rounded_size.title">Rounded corner radius</string>
+    <string name="icons.title">StatusBar Icons</string>
+    <string name="icons.show_fourg_icon.title">4G icon</string>
+    <string name="icons.show_fourg_icon.desc">Display 4G icon in status bar instead LTE</string>
     <string name="battery.title">Battery</string>
     <string name="battery.status_bar_battery_style.title">Battery Style</string>
     <string name="battery.status_bar_battery_style.v_0">Portrait</string>

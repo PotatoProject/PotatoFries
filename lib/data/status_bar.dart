@@ -10,6 +10,7 @@ final PageData statusBar = PageData(
   key: 'status_bar',
   categories: [
     PageCategoryData(LocaleStrings.statusbar.cutoutsTitle, displayCutouts),
+    PageCategoryData(LocaleStrings.statusbar.iconsTitle, statusBarIcons),
     PageCategoryData(LocaleStrings.statusbar.batteryTitle, statusBarBattery),
   ],
 );
@@ -66,6 +67,20 @@ final List<Preference> displayCutouts = [
   ),
 ];
 
+final List<Preference> statusBarIcons = [
+  SettingPreference.withSwitch(
+    setting: 'show_fourg_icon',
+    title: LocaleStrings.statusbar.iconsShowFourgIconTitle,
+    description: LocaleStrings.statusbar.iconsShowFourgIconDesc,
+    icon: SmartIconData.iconData(Icons.signal_cellular_4_bar),
+    type: SettingType.SYSTEM,
+    options: SwitchOptions(
+      defaultValue: false,
+    ),
+    minVersion: '4.0.2',
+  ),
+];
+
 final List<Preference> statusBarBattery = [
   SettingPreference.withDropdown(
     setting: 'status_bar_battery_style',
@@ -112,3 +127,4 @@ final List<Preference> statusBarBattery = [
     minVersion: '4.0.0',
   ),
 ];
+
