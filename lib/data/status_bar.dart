@@ -90,6 +90,16 @@ final List<Preference> statusBarIcons = [
     ),
     minVersion: '4.0.2',
   ),
+  SettingPreference.withSwitch(
+    setting: 'roaming_indicator_icon',
+    title: LocaleStrings.statusbar.iconsRoamingIndicatorIconTitle,
+    description: LocaleStrings.statusbar.iconsRoamingIndicatorIconDesc,
+    type: SettingType.SYSTEM,
+    options: SwitchOptions(
+      defaultValue: true,
+    ),
+    minVersion: '4.0.2',
+  ),
 ];
 
 final List<Preference> statusBarBattery = [
