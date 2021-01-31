@@ -16,6 +16,8 @@
     <string name="navigation.navigation_handle_width.title">Navigation handle length</string>
     <string name="navigation.sysui_nav_bar_inverse.title">Swap navigation buttons</string>
     <string name="navigation.sysui_nav_bar_inverse.desc">Swap navigation buttons when using 3 button layout</string>
+    <string name="navigation.systemui_tuner_navbar.title">Navigation bar tuner</string>
+    <string name="navigation.systemui_tuner_navbar.desc">Swap navigation bar layout</string>
     <string name="network.title">Network</string>
     <string name="network.tethering_allow_vpn_upstreams.title">Allow clients to use VPNs</string>
     <string name="network.tethering_allow_vpn_upstreams.desc">Permit hotspot/tethering clients to use this device's VPN connection</string>
