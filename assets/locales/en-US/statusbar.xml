@@ -20,4 +20,7 @@
     <string name="battery.status_bar_show_battery_percent.v_2">Next to the icon</string>
     <string name="battery.qs_header_show_battery_percent.title">QS battery percentage</string>
     <string name="battery.qs_header_show_battery_percent.desc">Show battery percentage in the QS header instead of estimate</string>
+    <string name="icons.title">StatusBar Icons</string>
+    <string name="icons.show_fourg_icon.title">4G icon</string>
+    <string name="icons.show_fourg_icon.desc">Display 4G icon in status bar instead LTE</string>
 </resources>
