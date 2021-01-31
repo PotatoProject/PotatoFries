@@ -92,6 +92,12 @@ class _$SystemLocaleStrings {
   final String gesturesDoubleTapSleepLockscreenDesc = "system.gestures.double_tap_sleep_lockscreen.desc".tr();
   final String gesturesPulseOnNewTracksTitle = "system.gestures.pulse_on_new_tracks.title".tr();
   final String gesturesPulseOnNewTracksDesc = "system.gestures.pulse_on_new_tracks.desc".tr();
+  final String navigationTitle = "system.navigation.title".tr();
+  final String navigationPillHintTitle = "system.navigation.sysui_nav_bar_hint.title".tr();
+  final String navigationPillHintDesc = "system.navigation.sysui_nav_bar_hint.desc".tr();
+  final String navigationPillSizeTitle = "system.navigation.navigation_handle_width.title".tr();
+  final String navigationNavigationInverseTitle = "system.navigation.sysui_nav_bar_inverse.title".tr();
+  final String navigationNavigationInverseDesc = "system.navigation.sysui_nav_bar_inverse.desc".tr();
   final String networkTitle = "system.network.title".tr();
   final String networkTetheringAllowVpnUpstreamsTitle = "system.network.tethering_allow_vpn_upstreams.title".tr();
   final String networkTetheringAllowVpnUpstreamsDesc = "system.network.tethering_allow_vpn_upstreams.desc".tr();
