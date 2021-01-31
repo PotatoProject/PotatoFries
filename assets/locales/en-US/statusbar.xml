@@ -11,6 +11,8 @@
     <string name="icons.show_fourg_icon.desc">Display 4G icon in status bar instead LTE</string>
     <string name="icons.show_volte_icon.title">VoLTE icon</string>
     <string name="icons.show_volte_icon.desc">Display HD icon in status bar for VoLTE</string>
+    <string name="icons.roaming_indicator_icon.title">Roaming icon</string>
+    <string name="icons.roaming_indicator_icon.desc">Display roaming icon in status bar</string>
     <string name="battery.title">Battery</string>
     <string name="battery.status_bar_battery_style.title">Battery Style</string>
     <string name="battery.status_bar_battery_style.v_0">Portrait</string>
