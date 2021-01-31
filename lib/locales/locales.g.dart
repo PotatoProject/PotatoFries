@@ -71,6 +71,8 @@ class _$LocaleEnUS extends _$LocaleBase {
     "statusbar.icons.title": "StatusBar Icons",
     "statusbar.icons.show_fourg_icon.title": "4G icon",
     "statusbar.icons.show_fourg_icon.desc": "Display 4G icon in status bar instead LTE",
+    "statusbar.icons.show_volte_icon.title": "VoLTE icon",
+    "statusbar.icons.show_volte_icon.desc": "Display HD icon in status bar for VoLTE",
     "statusbar.battery.title": "Battery",
     "statusbar.battery.status_bar_battery_style.title": "Battery Style",
     "statusbar.battery.status_bar_battery_style.v_0": "Portrait",
