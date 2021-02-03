@@ -12,7 +12,7 @@
     <string name="tweaks.qs_tile_title_visibility.title">Show title of QS tiles</string>
     <string name="tweaks.qs_tile_title_visibility.desc">Hide or show title of QS tiles</string>
     <string name="tweaks.qs_rows_portrait.title">Tiles rows on portrait</string>
-    <string name="tweaks.qs_columns_portrait.title">Tiles coilumns on portrait</string>
+    <string name="tweaks.qs_columns_portrait.title">Tiles columns on portrait</string>
     <string name="tweaks.qs_rows_landscape.title">Tiles rows on landscape</string>
-    <string name="tweaks.qs_columns_landscape.title">Tiles coilumns on landscape</string>
+    <string name="tweaks.qs_columns_landscape.title">Tiles columns on landscape</string>
 </resources>
