@@ -37,6 +37,9 @@ class _$LockscreenLocaleStrings {
   final String albumartLockscreenMediaMetadataDesc = "lockscreen.albumart.lockscreen_media_metadata.desc".tr();
   final String albumartLockscreenMediaBlurTitle = "lockscreen.albumart.lockscreen_media_blur.title".tr();
   final String albumartLockscreenMediaBlurDesc = "lockscreen.albumart.lockscreen_media_blur.desc".tr();
+  final String tunerTitle = "lockscreen.tuner.title".tr();
+  final String tunerSystemuiTunerLockscreenTitle = "lockscreen.tuner.systemui_tuner_lockscreen.title".tr();
+  final String tunerSystemuiTunerLockscreenDesc = "lockscreen.tuner.systemui_tuner_lockscreen.desc".tr();
 }
 
 class _$QsLocaleStrings {
