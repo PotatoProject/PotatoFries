@@ -31,13 +31,13 @@
 /build/
 
 # Android related
+**/key.jks
 **/android/**/gradle-wrapper.jar
 **/android/.gradle
 **/android/captures/
 **/android/gradlew
 **/android/gradlew.bat
 **/android/key.properties
-**/android/libs
 **/android/local.properties
 **/android/app/key.jks
 **/android/**/GeneratedPluginRegistrant.java
