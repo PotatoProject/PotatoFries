@@ -106,6 +106,8 @@ class _$SystemLocaleStrings {
   final String buttonsTitle = "system.buttons.title".tr();
   final String buttonsVolumeButtonMusicControlTitle = "system.buttons.volume_button_music_control.title".tr();
   final String buttonsVolumeButtonMusicControlDesc = "system.buttons.volume_button_music_control.desc".tr();
+  final String buttonsAdvancedRebootTitle = "system.buttons.advanced_reboot.title".tr();
+  final String buttonsAdvancedRebootDesc = "system.buttons.advanced_reboot.desc".tr();
   final String gesturesTitle = "system.gestures.title".tr();
   final String gesturesDoubleTapSleepLockscreenTitle = "system.gestures.double_tap_sleep_lockscreen.title".tr();
   final String gesturesDoubleTapSleepLockscreenDesc = "system.gestures.double_tap_sleep_lockscreen.desc".tr();
