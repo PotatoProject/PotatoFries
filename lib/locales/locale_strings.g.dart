@@ -4,11 +4,11 @@ class LocaleStrings {
   LocaleStrings._();
 
   static _$AudiofxLocaleStrings get audiofx => _$AudiofxLocaleStrings();
-  static _$LockscreenLocaleStrings get lockscreen => _$LockscreenLocaleStrings();
-  static _$QsLocaleStrings get qs => _$QsLocaleStrings();
   static _$StatusbarLocaleStrings get statusbar => _$StatusbarLocaleStrings();
-  static _$SystemLocaleStrings get system => _$SystemLocaleStrings();
+  static _$QsLocaleStrings get qs => _$QsLocaleStrings();
   static _$ThemesLocaleStrings get themes => _$ThemesLocaleStrings();
+  static _$SystemLocaleStrings get system => _$SystemLocaleStrings();
+  static _$LockscreenLocaleStrings get lockscreen => _$LockscreenLocaleStrings();
 }
 
 class _$AudiofxLocaleStrings {
@@ -20,47 +20,6 @@ class _$AudiofxLocaleStrings {
   final String headsetProfileDefault = "audiofx.headset_profile.default".tr();
 }
 
-class _$LockscreenLocaleStrings {
-  final String title = "lockscreen.title".tr();
-  final String clocksTitle = "lockscreen.clocks.title".tr();
-  final String clocksLockScreenClockTitle = "lockscreen.clocks.lock_screen_clock.title".tr();
-  final String clocksLockScreenClockVDefault = "lockscreen.clocks.lock_screen_clock.v_default".tr();
-  final String clocksLockScreenClockVBubble = "lockscreen.clocks.lock_screen_clock.v_bubble".tr();
-  final String clocksLockScreenClockVAnalog = "lockscreen.clocks.lock_screen_clock.v_analog".tr();
-  final String clocksLockScreenClockVType = "lockscreen.clocks.lock_screen_clock.v_type".tr();
-  final String clocksLockScreenClockVBold = "lockscreen.clocks.lock_screen_clock.v_bold".tr();
-  final String clocksLockScreenClockVSammy = "lockscreen.clocks.lock_screen_clock.v_sammy".tr();
-  final String clocksLockScreenClockVSammybold = "lockscreen.clocks.lock_screen_clock.v_sammybold".tr();
-  final String clocksLockScreenClockVSfuny = "lockscreen.clocks.lock_screen_clock.v_sfuny".tr();
-  final String albumartTitle = "lockscreen.albumart.title".tr();
-  final String albumartLockscreenMediaMetadataTitle = "lockscreen.albumart.lockscreen_media_metadata.title".tr();
-  final String albumartLockscreenMediaMetadataDesc = "lockscreen.albumart.lockscreen_media_metadata.desc".tr();
-  final String albumartLockscreenMediaBlurTitle = "lockscreen.albumart.lockscreen_media_blur.title".tr();
-  final String albumartLockscreenMediaBlurDesc = "lockscreen.albumart.lockscreen_media_blur.desc".tr();
-  final String tunerTitle = "lockscreen.tuner.title".tr();
-  final String tunerSystemuiTunerLockscreenTitle = "lockscreen.tuner.systemui_tuner_lockscreen.title".tr();
-  final String tunerSystemuiTunerLockscreenDesc = "lockscreen.tuner.systemui_tuner_lockscreen.desc".tr();
-}
-
-class _$QsLocaleStrings {
-  final String title = "qs.title".tr();
-  final String headerNoNotifications = "qs.header.no_notifications".tr();
-  final String tweaksTitle = "qs.tweaks.title".tr();
-  final String tweaksQsShowAutoBrightnessTitle = "qs.tweaks.qs_show_auto_brightness.title".tr();
-  final String tweaksQsShowAutoBrightnessDesc = "qs.tweaks.qs_show_auto_brightness.desc".tr();
-  final String tweaksQsShowBrightnessSliderTitle = "qs.tweaks.qs_show_brightness_slider.title".tr();
-  final String tweaksQsShowBrightnessSliderDesc = "qs.tweaks.qs_show_brightness_slider.desc".tr();
-  final String tweaksQsShowBrightnessSliderV0 = "qs.tweaks.qs_show_brightness_slider.v_0".tr();
-  final String tweaksQsShowBrightnessSliderV1 = "qs.tweaks.qs_show_brightness_slider.v_1".tr();
-  final String tweaksQsShowBrightnessSliderV2 = "qs.tweaks.qs_show_brightness_slider.v_2".tr();
-  final String tweaksQsTileTitleVisibilityTitle = "qs.tweaks.qs_tile_title_visibility.title".tr();
-  final String tweaksQsTileTitleVisibilityDesc = "qs.tweaks.qs_tile_title_visibility.desc".tr();
-  final String tweaksQsRowsPortraitTitle = "qs.tweaks.qs_rows_portrait.title".tr();
-  final String tweaksQsColumnsPortraitTitle = "qs.tweaks.qs_columns_portrait.title".tr();
-  final String tweaksQsRowsLandscapeTitle = "qs.tweaks.qs_rows_landscape.title".tr();
-  final String tweaksQsColumnsLandscapeTitle = "qs.tweaks.qs_columns_landscape.title".tr();
-}
-
 class _$StatusbarLocaleStrings {
   final String title = "statusbar.title".tr();
   final String cutoutsTitle = "statusbar.cutouts.title".tr();
@@ -68,6 +27,8 @@ class _$StatusbarLocaleStrings {
   final String cutoutsDisplayCutoutModeV0 = "statusbar.cutouts.display_cutout_mode.v_0".tr();
   final String cutoutsDisplayCutoutModeV1 = "statusbar.cutouts.display_cutout_mode.v_1".tr();
   final String cutoutsDisplayCutoutModeV2 = "statusbar.cutouts.display_cutout_mode.v_2".tr();
+  final String cutoutsStockStatusbarInHideTitle = "statusbar.cutouts.stock_statusbar_in_hide.title".tr();
+  final String cutoutsStockStatusbarInHideDesc = "statusbar.cutouts.stock_statusbar_in_hide.desc".tr();
   final String cutoutsSysuiRoundedSizeTitle = "statusbar.cutouts.sysui_rounded_size.title".tr();
   final String iconsTitle = "statusbar.icons.title".tr();
   final String iconsShowFourgIconTitle = "statusbar.icons.show_fourg_icon.title".tr();
@@ -92,6 +53,52 @@ class _$StatusbarLocaleStrings {
   final String batteryStatusBarShowBatteryPercentV2 = "statusbar.battery.status_bar_show_battery_percent.v_2".tr();
   final String batteryQsHeaderShowBatteryPercentTitle = "statusbar.battery.qs_header_show_battery_percent.title".tr();
   final String batteryQsHeaderShowBatteryPercentDesc = "statusbar.battery.qs_header_show_battery_percent.desc".tr();
+}
+
+class _$QsLocaleStrings {
+  final String title = "qs.title".tr();
+  final String headerNoNotifications = "qs.header.no_notifications".tr();
+  final String tweaksTitle = "qs.tweaks.title".tr();
+  final String tweaksQsShowAutoBrightnessTitle = "qs.tweaks.qs_show_auto_brightness.title".tr();
+  final String tweaksQsShowAutoBrightnessDesc = "qs.tweaks.qs_show_auto_brightness.desc".tr();
+  final String tweaksQsShowBrightnessSliderTitle = "qs.tweaks.qs_show_brightness_slider.title".tr();
+  final String tweaksQsShowBrightnessSliderDesc = "qs.tweaks.qs_show_brightness_slider.desc".tr();
+  final String tweaksQsShowBrightnessSliderV0 = "qs.tweaks.qs_show_brightness_slider.v_0".tr();
+  final String tweaksQsShowBrightnessSliderV1 = "qs.tweaks.qs_show_brightness_slider.v_1".tr();
+  final String tweaksQsShowBrightnessSliderV2 = "qs.tweaks.qs_show_brightness_slider.v_2".tr();
+  final String tweaksQsTileTitleVisibilityTitle = "qs.tweaks.qs_tile_title_visibility.title".tr();
+  final String tweaksQsTileTitleVisibilityDesc = "qs.tweaks.qs_tile_title_visibility.desc".tr();
+  final String tweaksQsRowsPortraitTitle = "qs.tweaks.qs_rows_portrait.title".tr();
+  final String tweaksQsColumnsPortraitTitle = "qs.tweaks.qs_columns_portrait.title".tr();
+  final String tweaksQsRowsLandscapeTitle = "qs.tweaks.qs_rows_landscape.title".tr();
+  final String tweaksQsColumnsLandscapeTitle = "qs.tweaks.qs_columns_landscape.title".tr();
+}
+
+class _$ThemesLocaleStrings {
+  final String title = "themes.title".tr();
+  final String headerSearchSettings = "themes.header.search_settings".tr();
+  final String themesTitle = "themes.themes.title".tr();
+  final String themesSystemAccentTitle = "themes.themes.system_accent.title".tr();
+  final String themesSystemAccentDesc = "themes.themes.system_accent.desc".tr();
+  final String themesSystemAccentCancel = "themes.themes.system_accent.cancel".tr();
+  final String themesSystemAccentConfirm = "themes.themes.system_accent.confirm".tr();
+  final String themesSystemAccentLightColorTitle = "themes.themes.system_accent.light_color.title".tr();
+  final String themesSystemAccentLightColorLightWarning = "themes.themes.system_accent.light_color.light_warning".tr();
+  final String themesSystemAccentLightColorDarkWarning = "themes.themes.system_accent.light_color.dark_warning".tr();
+  final String themesSystemAccentDarkColorTitle = "themes.themes.system_accent.dark_color.title".tr();
+  final String themesSystemAccentDarkColorLightWarning = "themes.themes.system_accent.dark_color.light_warning".tr();
+  final String themesSystemAccentDarkColorDarkWarning = "themes.themes.system_accent.dark_color.dark_warning".tr();
+  final String themesSystemAccentCalculateShadesLabel = "themes.themes.system_accent.calculate_shades_label".tr();
+  final String themesSystemIconShapeTitle = "themes.themes.system_icon_shape.title".tr();
+  final String themesSystemIconPackTitle = "themes.themes.system_icon_pack.title".tr();
+  final String themesSystemuiPluginVolumeTitle = "themes.themes.systemui_plugin_volume.title".tr();
+  final String themesSystemuiPluginVolumeVAosp = "themes.themes.systemui_plugin_volume.v_aosp".tr();
+  final String themesSystemuiPluginVolumeVCompact = "themes.themes.systemui_plugin_volume.v_compact".tr();
+  final String themesSystemuiPluginVolumeVOreo = "themes.themes.systemui_plugin_volume.v_oreo".tr();
+  final String themesSystemuiPluginVolumeVTiled = "themes.themes.systemui_plugin_volume.v_tiled".tr();
+  final String themesVolumePanelOnLeftTitle = "themes.themes.volume_panel_on_left.title".tr();
+  final String themesVolumePanelOnLeftV0 = "themes.themes.volume_panel_on_left.v_0".tr();
+  final String themesVolumePanelOnLeftV1 = "themes.themes.volume_panel_on_left.v_1".tr();
 }
 
 class _$SystemLocaleStrings {
@@ -125,30 +132,25 @@ class _$SystemLocaleStrings {
   final String notificationsLessBoringHeadsUpDesc = "system.notifications.less_boring_heads_up.desc".tr();
 }
 
-class _$ThemesLocaleStrings {
-  final String title = "themes.title".tr();
-  final String headerSearchSettings = "themes.header.search_settings".tr();
-  final String themesTitle = "themes.themes.title".tr();
-  final String themesSystemAccentTitle = "themes.themes.system_accent.title".tr();
-  final String themesSystemAccentDesc = "themes.themes.system_accent.desc".tr();
-  final String themesSystemAccentCancel = "themes.themes.system_accent.cancel".tr();
-  final String themesSystemAccentConfirm = "themes.themes.system_accent.confirm".tr();
-  final String themesSystemAccentLightColorTitle = "themes.themes.system_accent.light_color.title".tr();
-  final String themesSystemAccentLightColorLightWarning = "themes.themes.system_accent.light_color.light_warning".tr();
-  final String themesSystemAccentLightColorDarkWarning = "themes.themes.system_accent.light_color.dark_warning".tr();
-  final String themesSystemAccentDarkColorTitle = "themes.themes.system_accent.dark_color.title".tr();
-  final String themesSystemAccentDarkColorLightWarning = "themes.themes.system_accent.dark_color.light_warning".tr();
-  final String themesSystemAccentDarkColorDarkWarning = "themes.themes.system_accent.dark_color.dark_warning".tr();
-  final String themesSystemAccentCalculateShadesLabel = "themes.themes.system_accent.calculate_shades_label".tr();
-  final String themesSystemIconShapeTitle = "themes.themes.system_icon_shape.title".tr();
-  final String themesSystemIconPackTitle = "themes.themes.system_icon_pack.title".tr();
-  final String themesSystemuiPluginVolumeTitle = "themes.themes.systemui_plugin_volume.title".tr();
-  final String themesSystemuiPluginVolumeVAosp = "themes.themes.systemui_plugin_volume.v_aosp".tr();
-  final String themesSystemuiPluginVolumeVCompact = "themes.themes.systemui_plugin_volume.v_compact".tr();
-  final String themesSystemuiPluginVolumeVOreo = "themes.themes.systemui_plugin_volume.v_oreo".tr();
-  final String themesSystemuiPluginVolumeVTiled = "themes.themes.systemui_plugin_volume.v_tiled".tr();
-  final String themesVolumePanelOnLeftTitle = "themes.themes.volume_panel_on_left.title".tr();
-  final String themesVolumePanelOnLeftV0 = "themes.themes.volume_panel_on_left.v_0".tr();
-  final String themesVolumePanelOnLeftV1 = "themes.themes.volume_panel_on_left.v_1".tr();
+class _$LockscreenLocaleStrings {
+  final String title = "lockscreen.title".tr();
+  final String clocksTitle = "lockscreen.clocks.title".tr();
+  final String clocksLockScreenClockTitle = "lockscreen.clocks.lock_screen_clock.title".tr();
+  final String clocksLockScreenClockVDefault = "lockscreen.clocks.lock_screen_clock.v_default".tr();
+  final String clocksLockScreenClockVBubble = "lockscreen.clocks.lock_screen_clock.v_bubble".tr();
+  final String clocksLockScreenClockVAnalog = "lockscreen.clocks.lock_screen_clock.v_analog".tr();
+  final String clocksLockScreenClockVType = "lockscreen.clocks.lock_screen_clock.v_type".tr();
+  final String clocksLockScreenClockVBold = "lockscreen.clocks.lock_screen_clock.v_bold".tr();
+  final String clocksLockScreenClockVSammy = "lockscreen.clocks.lock_screen_clock.v_sammy".tr();
+  final String clocksLockScreenClockVSammybold = "lockscreen.clocks.lock_screen_clock.v_sammybold".tr();
+  final String clocksLockScreenClockVSfuny = "lockscreen.clocks.lock_screen_clock.v_sfuny".tr();
+  final String albumartTitle = "lockscreen.albumart.title".tr();
+  final String albumartLockscreenMediaMetadataTitle = "lockscreen.albumart.lockscreen_media_metadata.title".tr();
+  final String albumartLockscreenMediaMetadataDesc = "lockscreen.albumart.lockscreen_media_metadata.desc".tr();
+  final String albumartLockscreenMediaBlurTitle = "lockscreen.albumart.lockscreen_media_blur.title".tr();
+  final String albumartLockscreenMediaBlurDesc = "lockscreen.albumart.lockscreen_media_blur.desc".tr();
+  final String tunerTitle = "lockscreen.tuner.title".tr();
+  final String tunerSystemuiTunerLockscreenTitle = "lockscreen.tuner.systemui_tuner_lockscreen.title".tr();
+  final String tunerSystemuiTunerLockscreenDesc = "lockscreen.tuner.systemui_tuner_lockscreen.desc".tr();
 }
 

@@ -25,7 +25,7 @@ final List<Preference> displayCutouts = [
       values: {
         '0': LocaleStrings.statusbar.cutoutsDisplayCutoutModeV0,
         '1': LocaleStrings.statusbar.cutoutsDisplayCutoutModeV1,
-        // '2': LocaleStrings.statusbar.cutoutsDisplayCutoutModeV2,
+        '2': LocaleStrings.statusbar.cutoutsDisplayCutoutModeV2,
       },
       defaultValue: '0',
     ),
@@ -37,24 +37,24 @@ final List<Preference> displayCutouts = [
     ],
     minVersion: '4.0.0',
   ),
-  // SettingPreference.withSwitch(
-  //   setting: 'sysui_rounded_size',
-  //   icon: SmartIconData.iconData(MdiIcons.arrowUpDown),
-  //   title: 'Stock Statusbar in Hide',
-  //   description: 'Use default (usually smaller) statusbar height in hide',
-  //   type: SettingType.SYSTEM,
-  //   options: SwitchOptions(
-  //     defaultValue: true,
-  //   ),
-  //   dependencies: [
-  //     SettingDependency.string(name: 'display_cutout_mode', type: SettingType.SYSTEM, value: '2',),
-  //     PropDependency(
-  //       name: 'ro.potato.has_cutout',
-  //       value: true,
-  //     ),
-  //   ],
-  //   minVersion: '4.0.0',
-  // ),
+  SettingPreference.withSwitch(
+    setting: 'stock_statusbar_in_hide',
+    icon: SmartIconData.iconData(MdiIcons.arrowUpDown),
+    title: LocaleStrings.statusbar.cutoutsStockStatusbarInHideTitle,
+    description: LocaleStrings.statusbar.cutoutsStockStatusbarInHideDesc,
+    type: SettingType.SYSTEM,
+    options: SwitchOptions(
+      defaultValue: false,
+    ),
+    dependencies: [
+      SettingDependency.string(name: 'display_cutout_mode', type: SettingType.SYSTEM, value: '2',),
+      PropDependency(
+        name: 'ro.potato.has_cutout',
+        value: 'true',
+      ),
+    ],
+    minVersion: '4.0.0',
+  ),
   SettingPreference.withSlider(
     setting: 'sysui_rounded_size',
     title: LocaleStrings.statusbar.cutoutsSysuiRoundedSizeTitle,
