@@ -105,6 +105,8 @@ class _$LocaleEnUS extends _$LocaleBase {
     "system.buttons.title": "Buttons",
     "system.buttons.volume_button_music_control.title": "Volume buttons to skip tracks",
     "system.buttons.volume_button_music_control.desc": "Long press volume buttons to forward/backward track",
+    "system.buttons.advanced_reboot.title": "Advanced Reboot",
+    "system.buttons.advanced_reboot.desc": "Show extra reboot options",
     "system.gestures.title": "Gestures",
     "system.gestures.double_tap_sleep_lockscreen.title": "Double tap to sleep on lockscreen",
     "system.gestures.double_tap_sleep_lockscreen.desc": "Turn off screen by double tapping empty space on lockscreen",

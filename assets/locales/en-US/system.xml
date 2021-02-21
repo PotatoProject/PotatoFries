@@ -3,6 +3,8 @@
     <string name="buttons.title">Buttons</string>
     <string name="buttons.volume_button_music_control.title">Volume buttons to skip tracks</string>
     <string name="buttons.volume_button_music_control.desc">Long press volume buttons to forward/backward track</string>
+    <string name="buttons.advanced_reboot.title">Advanced Reboot</string>
+    <string name="buttons.advanced_reboot.desc">Show extra reboot options</string>
     <string name="gestures.title">Gestures</string>
     <string name="gestures.double_tap_sleep_lockscreen.title">Double tap to sleep on lockscreen</string>
     <string name="gestures.double_tap_sleep_lockscreen.desc">Turn off screen by double tapping empty space on lockscreen</string>

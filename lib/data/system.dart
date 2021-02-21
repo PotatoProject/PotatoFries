@@ -29,6 +29,17 @@ final List<Preference> sysButton = [
     ),
     minVersion: '4.0.0',
   ),
+  SettingPreference.withSwitch(
+    setting: 'advanced_reboot',
+    title: LocaleStrings.system.buttonsAdvancedRebootTitle,
+    description: LocaleStrings.system.buttonsAdvancedRebootDesc,
+    icon: SmartIconData.iconData(MdiIcons.powerSettings),
+    type: SettingType.SYSTEM,
+    options: SwitchOptions(
+      defaultValue: true,
+    ),
+    minVersion: '4.0.3',
+  ),
 ];
 
 final List<Preference> systemGesture = [
