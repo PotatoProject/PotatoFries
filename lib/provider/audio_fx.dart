@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 class AudioFxProvider extends ChangeNotifier {
   EFFECT_TYPE audioFxType = EFFECT_TYPE.NONE;
   Effect currentEffect;
-  List<double> bands = List.empty()..length = 7;
+  List<double> bands = List.generate(7, (index) => 0);
   bool _enabled = false;
 
   bool get enabled => _enabled;

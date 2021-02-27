@@ -106,7 +106,7 @@ class AudioFx extends BasePage {
                     curve: Curves.easeInOut,
                     child: DropdownTile(
                       title: LocaleStrings.audiofx.audioPresetTitle,
-                      values: provider.profileMap,
+                      values: Map<String, String>.from(provider.profileMap),
                       value: provider.profile,
                       onValueChanged: (v) => provider.setProfile(v),
                       selectedColor: provider.profileColor ??
@@ -261,6 +261,9 @@ class CoolGraphCard extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Card(
+          color: Theme.of(context).brightness == Brightness.dark
+              ? Colors.white.withOpacity(0.1)
+              : null,
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(16.0))),
           child: ClipRRect(
