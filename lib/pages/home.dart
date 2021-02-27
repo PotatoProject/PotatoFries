@@ -26,7 +26,7 @@ class FriesHome extends StatefulWidget {
 class _FriesHomeState extends State<FriesHome> {
   @override
   void initState() {
-    context.read<PageProvider>().warmupPages();
+    context.read<PageProvider>().warmUpPages();
     super.initState();
   }
 

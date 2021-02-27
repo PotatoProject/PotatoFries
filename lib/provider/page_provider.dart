@@ -22,10 +22,9 @@ class PageProvider extends ChangeNotifier {
 
   dynamic getValue(BaseKey key) => _data[key];
 
-  void setValue(BaseKey key, dynamic value) async {
+  void setValue(BaseKey key, dynamic value, {bool warmUp = false}) async {
     final item = _data[key];
-
-    if (item != null) {
+    if (item != null && !warmUp) {
       if (key is SettingKey) {
         if (value != null) {
           switch (key.valueType) {
@@ -44,7 +43,7 @@ class PageProvider extends ChangeNotifier {
             case SettingValueType.STRING:
               await AndroidFlutterSettings.putString(
                 key,
-                value,
+                value.toString(),
               );
               break;
           }
@@ -60,11 +59,11 @@ class PageProvider extends ChangeNotifier {
     }
 
     _data[key] = value;
-    notifyListeners();
+    if (!warmUp) notifyListeners();
     dumpToFile(await settingsJsonPath);
   }
 
-  void warmupPages() async {
+  void warmUpPages() async {
     final fileLoaded = await loadFromFile(await settingsJsonPath);
 
     if (fileLoaded) notifyListeners();
@@ -74,7 +73,9 @@ class PageProvider extends ChangeNotifier {
         setValue(
           setting,
           await _getNative(setting) ?? defaultValue,
+          warmUp: true,
         );
+        notifyListeners();
       });
     }
 
