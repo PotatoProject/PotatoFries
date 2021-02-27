@@ -59,6 +59,8 @@ class _$QsLocaleStrings {
   final String title = "qs.title".tr();
   final String headerNoNotifications = "qs.header.no_notifications".tr();
   final String tweaksTitle = "qs.tweaks.title".tr();
+  final String tweaksQsTilesBgDiscoTitle = "qs.tweaks.qs_tiles_bg_disco.title".tr();
+  final String tweaksQsTilesBgDiscoDesc = "qs.tweaks.qs_tiles_bg_disco.desc".tr();
   final String tweaksQsShowAutoBrightnessTitle = "qs.tweaks.qs_show_auto_brightness.title".tr();
   final String tweaksQsShowAutoBrightnessDesc = "qs.tweaks.qs_show_auto_brightness.desc".tr();
   final String tweaksQsShowBrightnessSliderTitle = "qs.tweaks.qs_show_brightness_slider.title".tr();

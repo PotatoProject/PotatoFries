@@ -13,6 +13,17 @@ final PageData qs = PageData(
 
 final List<Preference> qsTweaks = [
   SettingPreference.withSwitch(
+    setting: 'qs_tiles_bg_disco',
+    title: LocaleStrings.qs.tweaksQsTilesBgDiscoTitle,
+    description: LocaleStrings.qs.tweaksQsTilesBgDiscoDesc,
+    icon: SmartIconData.iconData(Icons.brightness_6),
+    type: SettingType.SYSTEM,
+    options: SwitchOptions(
+      defaultValue: true,
+    ),
+    minVersion: '4.0.4',
+  ),
+  SettingPreference.withSwitch(
     setting: 'qs_show_auto_brightness',
     title: LocaleStrings.qs.tweaksQsShowAutoBrightnessTitle,
     description: LocaleStrings.qs.tweaksQsShowAutoBrightnessDesc,
