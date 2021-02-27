@@ -1,5 +1,6 @@
 import 'package:android_flutter_settings/android_flutter_settings.dart';
 import 'package:flutter/material.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:potato_fries/data/models.dart';
 import 'package:potato_fries/locales/locale_strings.g.dart';
 import 'package:potato_fries/ui/smart_icon.dart';
@@ -12,6 +13,17 @@ final PageData qs = PageData(
 );
 
 final List<Preference> qsTweaks = [
+  SettingPreference.withSwitch(
+    setting: 'qs_tiles_bg_disco',
+    title: LocaleStrings.qs.tweaksQsTilesBgDiscoTitle,
+    description: LocaleStrings.qs.tweaksQsTilesBgDiscoDesc,
+    icon: SmartIconData.iconData(MdiIcons.starPlus),
+    type: SettingType.SYSTEM,
+    options: SwitchOptions(
+      defaultValue: true,
+    ),
+    minVersion: '4.0.4',
+  ),
   SettingPreference.withSwitch(
     setting: 'qs_show_auto_brightness',
     title: LocaleStrings.qs.tweaksQsShowAutoBrightnessTitle,

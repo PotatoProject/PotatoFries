@@ -64,6 +64,8 @@ class _$LocaleEnUS extends _$LocaleBase {
     "qs.title": "Quick Settings",
     "qs.header.no_notifications": "No notifications",
     "qs.tweaks.title": "Quick settings tweaks",
+    "qs.tweaks.qs_tiles_bg_disco.title": "QS Tile Disco",
+    "qs.tweaks.qs_tiles_bg_disco.desc": "Make your QS Tiles colorful!",
     "qs.tweaks.qs_show_auto_brightness.title": "QS Auto brightness",
     "qs.tweaks.qs_show_auto_brightness.desc": "Show auto brightness icon on QS panel",
     "qs.tweaks.qs_show_brightness_slider.title": "Brightness slider",

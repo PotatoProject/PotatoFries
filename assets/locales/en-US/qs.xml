@@ -2,6 +2,8 @@
     <string name="title">Quick Settings</string>
     <string name="header.no_notifications">No notifications</string>
     <string name="tweaks.title">Quick settings tweaks</string>
+    <string name="tweaks.qs_tiles_bg_disco.title">QS Tile Disco</string>
+    <string name="tweaks.qs_tiles_bg_disco.desc">Make your QS Tiles colorful!</string>
     <string name="tweaks.qs_show_auto_brightness.title">QS Auto brightness</string>
     <string name="tweaks.qs_show_auto_brightness.desc">Show auto brightness icon on QS panel</string>
     <string name="tweaks.qs_show_brightness_slider.title">Brightness slider</string>
