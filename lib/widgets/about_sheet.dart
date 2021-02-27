@@ -4,6 +4,7 @@ import 'package:potato_fries/provider/app_info.dart';
 import 'package:potato_fries/ui/custom_icons.dart';
 import 'package:potato_fries/ui/shaped_icon.dart';
 import 'package:potato_fries/utils/utils.dart';
+import 'package:potato_fries/widgets/disco_spinner.dart';
 import 'package:provider/provider.dart';
 
 class AboutSheet extends StatelessWidget {
@@ -24,11 +25,17 @@ class AboutSheet extends StatelessWidget {
                   ShapedIcon.currentShape(
                     color: Color(0xFF8942CF),
                     iconSize: 96,
-                    child: InkWell(
-                      onTap: () => appInfo.debugFlagTap += 1,
-                      child: Padding(
-                        padding: EdgeInsets.all(12),
-                        child: Image.asset("assets/fries_foreground.png"),
+                    child: DiscoSpinner(
+                      isSpinning: appInfo.discoEasterActive,
+                      isEnabled: appInfo.discoEasterEnabled,
+                      size: 96,
+                      child: InkWell(
+                        onLongPress: () => appInfo.toggleDisco(),
+                        onTap: () => appInfo.debugFlagTap += 1,
+                        child: Padding(
+                          padding: EdgeInsets.all(12),
+                          child: Image.asset("assets/fries_foreground.png"),
+                        ),
                       ),
                     ),
                   ),

@@ -54,6 +54,45 @@ class AppInfoProvider extends ChangeNotifier {
     _prefs.setBool("ACCENT_AUTO", autoCalculateAccents);
   }
 
+  bool __discoEasterEnabled = false;
+
+  set _discoEasterEnabled(bool discoEasterEnabled) {
+    __discoEasterEnabled = discoEasterEnabled;
+    _prefs.setBool("DISCO_EASTER", __discoEasterEnabled);
+  }
+
+  bool get discoEasterEnabled => __discoEasterEnabled;
+
+  toggleDisco() {
+    // If disco was on, make sure to turn it off before disabling easter enable
+    if (__discoEasterEnabled && _discoEasterActive) discoEasterActive = false;
+    if (!VersionConstraint(min: BuildVersion(4, 0, 4))
+            .isConstrained(_hostVersion) &&
+        !_debug.versionCheckDisabled) {
+      discoEasterActive = false;
+      _discoEasterEnabled = false;
+      return;
+    }
+    _discoEasterEnabled = !__discoEasterEnabled;
+    notifyListeners();
+  }
+
+  bool _discoEasterActive = false;
+
+  bool get discoEasterActive => _discoEasterActive;
+
+  set discoEasterActive(bool discoEasterActive) {
+    _discoEasterActive = discoEasterActive;
+    AndroidFlutterSettings.putBool(
+        SettingKey<bool>(
+          'accent_disco',
+          SettingType.SECURE,
+        ),
+        discoEasterActive);
+    notifyListeners();
+  }
+
+
   PackageInfo get packageInfo => _packageInfo;
 
   Map<String, String> get shapes => _shapes;
@@ -76,7 +115,14 @@ class AppInfoProvider extends ChangeNotifier {
 
   bool get audioFxSupported => audioFxType != EFFECT_TYPE.NONE;
 
-  bool get debugEnabled => _debugFlagTap == 10;
+  bool get debugEnabled => _debugFlagTap == 10 || isBuildDebug();
+
+  bool isBuildDebug() {
+      // ignore: non_constant_identifier_names
+      var DEBUG = false;
+      assert(DEBUG = true);
+      return DEBUG;
+  }
 
   bool isCompatible(BuildVersion version, {BuildVersion max}) =>
       (_debug.versionCheckDisabled) ||
@@ -119,6 +165,12 @@ class AppInfoProvider extends ChangeNotifier {
   void loadData() async {
     _prefs = await SharedPreferences.getInstance();
     _autoCalculateAccents = _prefs.getBool("ACCENT_AUTO") ?? true;
+    __discoEasterEnabled = _prefs.getBool("DISCO_EASTER") ?? false;
+    _discoEasterActive = await AndroidFlutterSettings.getBool(SettingKey<bool>(
+          'accent_disco',
+          SettingType.SECURE,
+        )) ??
+        false;
     _shapes = await Resources.getShapes();
     _shapeLabels = await Resources.getShapeLabels();
     _iconPreviews = await Resources.getIconsWithPreviews();

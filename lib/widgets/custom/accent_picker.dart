@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:potato_fries/locales/locale_strings.g.dart';
+import 'package:potato_fries/provider/app_info.dart';
 import 'package:potato_fries/provider/page_provider.dart';
 import 'package:potato_fries/ui/shaped_icon.dart';
 import 'package:potato_fries/ui/sizeable_list_tile.dart';
 import 'package:potato_fries/utils/utils.dart';
+import 'package:potato_fries/widgets/animated_disable.dart';
 import 'package:potato_fries/widgets/multi_mode_color_picker.dart';
 import 'package:provider/provider.dart';
 
@@ -111,6 +113,7 @@ class __TileContentState extends State<_TileContent> {
 
   @override
   Widget build(BuildContext context) {
+    final appInfo = context.watch<AppInfoProvider>();
     return Padding(
       padding: EdgeInsets.only(
         bottom: MediaQuery.of(context).viewInsets.bottom,
@@ -168,24 +171,27 @@ class __TileContentState extends State<_TileContent> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    ToggleButtons(
-                      children: [
-                        Text('RGB'),
-                        Text('HSL'),
-                        Text('HSV'),
-                      ],
-                      fillColor: Theme.of(context).accentColor,
-                      selectedColor: Theme.of(context).cardColor,
-                      isSelected: [
-                        mode == PickerMode.RGB,
-                        mode == PickerMode.HSL,
-                        mode == PickerMode.HSV,
-                      ],
-                      borderRadius: BorderRadius.circular(6),
-                      onPressed: (index) {
-                        mode = PickerMode.values[index];
-                        setState(() {});
-                      },
+                    AnimatedDisable(
+                      disabled: appInfo.discoEasterActive,
+                      child: ToggleButtons(
+                        children: [
+                          Text('RGB'),
+                          Text('HSL'),
+                          Text('HSV'),
+                        ],
+                        fillColor: Theme.of(context).accentColor,
+                        selectedColor: Theme.of(context).cardColor,
+                        isSelected: [
+                          mode == PickerMode.RGB,
+                          mode == PickerMode.HSL,
+                          mode == PickerMode.HSV,
+                        ],
+                        borderRadius: BorderRadius.circular(6),
+                        onPressed: (index) {
+                          mode = PickerMode.values[index];
+                          setState(() {});
+                        },
+                      ),
                     ),
                     Spacer(),
                     TextButton(

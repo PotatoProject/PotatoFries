@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:potato_fries/locales/locale_strings.g.dart';
 import 'package:potato_fries/provider/app_info.dart';
+import 'package:potato_fries/widgets/animated_disable.dart';
+import 'package:potato_fries/widgets/disco_spinner.dart';
 import 'package:provider/provider.dart';
 
 class MultiModeColorPicker extends StatefulWidget {
@@ -189,103 +191,131 @@ class _MultiModeColorPickerState extends State<MultiModeColorPicker> {
       },
     );
 
+    final appInfo = context.watch<AppInfoProvider>();
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Container(
-          height: 100,
-          margin: EdgeInsets.only(left: 8, top: 8, right: 8),
-          child: Row(
-            children: [
-              Expanded(
-                child: _ColorDisplay(
-                  color: getLightColor(),
-                  controller: lightController,
-                  onChanged: (text) {
-                    if (text.length == 6) {
-                      Color newColor = Color(int.parse(text, radix: 16));
-                      _updateColor(newColor, darkColor);
-                      widget.onColorChanged
-                          ?.call(getLightColor(), getDarkColor());
-                      setState(() {});
-                    }
-                  },
-                  onPressed: () => setState(() => editDarkColor = false),
-                  selected: !editDarkColor,
-                  tolerance: widget.tolerance,
-                  isColorDark: false,
+        AnimatedDisable(
+          disabled: appInfo.discoEasterActive,
+          child: Container(
+            height: 100,
+            margin: EdgeInsets.only(left: 8, top: 8, right: 8),
+            child: Row(
+              children: [
+                Expanded(
+                  child: _ColorDisplay(
+                    color: getLightColor(),
+                    controller: lightController,
+                    onChanged: (text) {
+                      if (text.length == 6) {
+                        Color newColor = Color(int.parse(text, radix: 16));
+                        _updateColor(newColor, darkColor);
+                        widget.onColorChanged
+                            ?.call(getLightColor(), getDarkColor());
+                        setState(() {});
+                      }
+                    },
+                    onPressed: () => setState(() => editDarkColor = false),
+                    selected: !editDarkColor,
+                    tolerance: widget.tolerance,
+                    isColorDark: false,
+                  ),
                 ),
-              ),
-              SizedBox(width: 8),
-              Expanded(
-                child: _ColorDisplay(
-                  color: getDarkColor(),
-                  controller: darkController,
-                  onChanged: (text) {
-                    if (text.length == 6) {
-                      Color newColor = Color(int.parse(text, radix: 16));
-                      _updateColor(lightColor, newColor);
-                      widget.onColorChanged
-                          ?.call(getLightColor(), getDarkColor());
-                      setState(() {});
-                    }
-                  },
-                  onPressed: () => setState(() => editDarkColor = true),
-                  selected: editDarkColor,
-                  tolerance: widget.tolerance,
-                  isColorDark: true,
+                SizedBox(width: 8),
+                Expanded(
+                  child: _ColorDisplay(
+                    color: getDarkColor(),
+                    controller: darkController,
+                    onChanged: (text) {
+                      if (text.length == 6) {
+                        Color newColor = Color(int.parse(text, radix: 16));
+                        _updateColor(lightColor, newColor);
+                        widget.onColorChanged
+                            ?.call(getLightColor(), getDarkColor());
+                        setState(() {});
+                      }
+                    },
+                    onPressed: () => setState(() => editDarkColor = true),
+                    selected: editDarkColor,
+                    tolerance: widget.tolerance,
+                    isColorDark: true,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
-        Row(
-          children: [
-            Spacer(),
-            ActionChip(
-              label: Text(
-                LocaleStrings.themes.themesSystemAccentLightColorTitle,
+        AnimatedDisable(
+          disabled: appInfo.discoEasterActive,
+          child: Row(
+            children: [
+              Spacer(),
+              ActionChip(
+                label: Text(
+                  LocaleStrings.themes.themesSystemAccentLightColorTitle,
+                ),
+                backgroundColor: !editDarkColor
+                    ? Theme.of(context).chipTheme.backgroundColor
+                    : Theme.of(context).cardColor,
+                onPressed: () => setState(() => editDarkColor = false),
               ),
-              backgroundColor: !editDarkColor
-                  ? Theme.of(context).chipTheme.backgroundColor
-                  : Theme.of(context).cardColor,
-              onPressed: () => setState(() => editDarkColor = false),
-            ),
-            Spacer(flex: 2),
-            ActionChip(
-              label: Text(
-                LocaleStrings.themes.themesSystemAccentDarkColorTitle,
+              Spacer(flex: 2),
+              ActionChip(
+                label: Text(
+                  LocaleStrings.themes.themesSystemAccentDarkColorTitle,
+                ),
+                backgroundColor: editDarkColor
+                    ? Theme.of(context).chipTheme.backgroundColor
+                    : Theme.of(context).cardColor,
+                onPressed: () => setState(() => editDarkColor = true),
               ),
-              backgroundColor: editDarkColor
-                  ? Theme.of(context).chipTheme.backgroundColor
-                  : Theme.of(context).cardColor,
-              onPressed: () => setState(() => editDarkColor = true),
-            ),
-            Spacer(),
-          ],
+              Spacer(),
+            ],
+          ),
         ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(LocaleStrings.themes.themesSystemAccentCalculateShadesLabel),
-              Switch(
-                onChanged: (b) => setState(() =>
-                    context.read<AppInfoProvider>().autoCalculateAccents = b),
-                value: context.watch<AppInfoProvider>().autoCalculateAccents,
-                activeColor: Theme.of(context).accentColor,
+              AnimatedDisable(
+                disabled: appInfo.discoEasterActive,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(LocaleStrings
+                        .themes.themesSystemAccentCalculateShadesLabel),
+                    Switch(
+                      onChanged: (b) => setState(() => context
+                          .read<AppInfoProvider>()
+                          .autoCalculateAccents = b),
+                      value:
+                          context.watch<AppInfoProvider>().autoCalculateAccents,
+                      activeColor: Theme.of(context).accentColor,
+                    ),
+                  ],
+                ),
               ),
+              appInfo.discoEasterEnabled
+                  ? DiscoSpinner(
+                      isSpinning: appInfo.discoEasterActive,
+                      onTap: () => appInfo.discoEasterActive =
+                          !appInfo.discoEasterActive,
+                    )
+                  : Container(),
             ],
           ),
         ),
-        SizedBox(
-          height: 150,
-          child: Column(
-            children: [
-              Spacer(),
-              ...sliders,
-            ],
+        AnimatedDisable(
+          disabled: appInfo.discoEasterActive,
+          child: SizedBox(
+            height: 150,
+            child: Column(
+              children: [
+                Spacer(),
+                ...sliders,
+              ],
+            ),
           ),
         ),
       ],
