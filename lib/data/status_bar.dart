@@ -10,9 +10,9 @@ final PageData statusBar = PageData(
   key: 'status_bar',
   categories: [
     PageCategoryData(LocaleStrings.statusbar.cutoutsTitle, displayCutouts),
+    PageCategoryData(LocaleStrings.statusbar.batteryTitle, statusBarBattery),
     PageCategoryData(LocaleStrings.statusbar.iconsTitle, statusBarIcons),
     PageCategoryData(LocaleStrings.statusbar.nettrafficTitle, netTraffic),
-    PageCategoryData(LocaleStrings.statusbar.batteryTitle, statusBarBattery),
   ],
 );
 
@@ -63,6 +63,53 @@ final List<Preference> displayCutouts = [
     options: SliderOptions(
       defaultValue: -1,
       max: 50,
+    ),
+    minVersion: '4.0.0',
+  ),
+];
+
+final List<Preference> statusBarBattery = [
+  SettingPreference.withDropdown(
+    setting: 'status_bar_battery_style',
+    title: LocaleStrings.statusbar.batteryStatusBarBatteryStyleTitle,
+    icon: SmartIconData.iconData(Icons.battery_full),
+    type: SettingType.SYSTEM,
+    options: DropdownOptions(
+      values: {
+        '0': LocaleStrings.statusbar.batteryStatusBarBatteryStyleV0,
+        '1': LocaleStrings.statusbar.batteryStatusBarBatteryStyleV1,
+        '2': LocaleStrings.statusbar.batteryStatusBarBatteryStyleV2,
+        '3': LocaleStrings.statusbar.batteryStatusBarBatteryStyleV3,
+        '4': LocaleStrings.statusbar.batteryStatusBarBatteryStyleV4,
+        '5': LocaleStrings.statusbar.batteryStatusBarBatteryStyleV5,
+      },
+      defaultValue: '0',
+    ),
+    minVersion: '4.0.0',
+  ),
+  SettingPreference.withDropdown(
+    setting: 'status_bar_show_battery_percent',
+    title: LocaleStrings.statusbar.batteryStatusBarShowBatteryPercentTitle,
+    icon: SmartIconData.iconData(MdiIcons.percent),
+    type: SettingType.SYSTEM,
+    options: DropdownOptions(
+      values: {
+        '0': LocaleStrings.statusbar.batteryStatusBarShowBatteryPercentV0,
+        '1': LocaleStrings.statusbar.batteryStatusBarShowBatteryPercentV1,
+        '2': LocaleStrings.statusbar.batteryStatusBarShowBatteryPercentV2,
+      },
+      defaultValue: '0',
+    ),
+    minVersion: '4.0.0',
+  ),
+  SettingPreference.withSwitch(
+    setting: 'qs_header_show_battery_percent',
+    title: LocaleStrings.statusbar.batteryQsHeaderShowBatteryPercentTitle,
+    description: LocaleStrings.statusbar.batteryQsHeaderShowBatteryPercentDesc,
+    icon: SmartIconData.iconData(Icons.battery_std),
+    type: SettingType.SYSTEM,
+    options: SwitchOptions(
+      defaultValue: true,
     ),
     minVersion: '4.0.0',
   ),
@@ -149,51 +196,3 @@ final List<Preference> netTraffic = [
     minVersion: '4.0.6',
   ),
 ];
-
-final List<Preference> statusBarBattery = [
-  SettingPreference.withDropdown(
-    setting: 'status_bar_battery_style',
-    title: LocaleStrings.statusbar.batteryStatusBarBatteryStyleTitle,
-    icon: SmartIconData.iconData(Icons.battery_full),
-    type: SettingType.SYSTEM,
-    options: DropdownOptions(
-      values: {
-        '0': LocaleStrings.statusbar.batteryStatusBarBatteryStyleV0,
-        '1': LocaleStrings.statusbar.batteryStatusBarBatteryStyleV1,
-        '2': LocaleStrings.statusbar.batteryStatusBarBatteryStyleV2,
-        '3': LocaleStrings.statusbar.batteryStatusBarBatteryStyleV3,
-        '4': LocaleStrings.statusbar.batteryStatusBarBatteryStyleV4,
-        '5': LocaleStrings.statusbar.batteryStatusBarBatteryStyleV5,
-      },
-      defaultValue: '0',
-    ),
-    minVersion: '4.0.0',
-  ),
-  SettingPreference.withDropdown(
-    setting: 'status_bar_show_battery_percent',
-    title: LocaleStrings.statusbar.batteryStatusBarShowBatteryPercentTitle,
-    icon: SmartIconData.iconData(MdiIcons.percent),
-    type: SettingType.SYSTEM,
-    options: DropdownOptions(
-      values: {
-        '0': LocaleStrings.statusbar.batteryStatusBarShowBatteryPercentV0,
-        '1': LocaleStrings.statusbar.batteryStatusBarShowBatteryPercentV1,
-        '2': LocaleStrings.statusbar.batteryStatusBarShowBatteryPercentV2,
-      },
-      defaultValue: '0',
-    ),
-    minVersion: '4.0.0',
-  ),
-  SettingPreference.withSwitch(
-    setting: 'qs_header_show_battery_percent',
-    title: LocaleStrings.statusbar.batteryQsHeaderShowBatteryPercentTitle,
-    description: LocaleStrings.statusbar.batteryQsHeaderShowBatteryPercentDesc,
-    icon: SmartIconData.iconData(Icons.battery_std),
-    type: SettingType.SYSTEM,
-    options: SwitchOptions(
-      defaultValue: true,
-    ),
-    minVersion: '4.0.0',
-  ),
-];
-
