@@ -120,11 +120,11 @@ final List<Preference> navigation = [
     minVersion: '4.0.2',
   ),
   ActivityPreference(
-      title: LocaleStrings.system.navigationSystemuiTunerNavbarTitle,
-      description: LocaleStrings.system.navigationSystemuiTunerNavbarDesc,
-      cls: "com.android.systemui.tuner.NavBarActivity" ,
-      pkg: "com.android.systemui",
-      minVersion: '4.0.2',
+    title: LocaleStrings.system.navigationSystemuiTunerNavbarTitle,
+    description: LocaleStrings.system.navigationSystemuiTunerNavbarDesc,
+    cls: "com.android.systemui.tuner.NavBarActivity",
+    pkg: "com.android.systemui",
+    minVersion: '4.0.2',
   ),
 ];
 

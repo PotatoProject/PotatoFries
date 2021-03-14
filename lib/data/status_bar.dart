@@ -49,7 +49,11 @@ final List<Preference> displayCutouts = [
       defaultValue: false,
     ),
     dependencies: [
-      SettingDependency.string(name: 'display_cutout_mode', type: SettingType.SYSTEM, value: '2',),
+      SettingDependency.string(
+        name: 'display_cutout_mode',
+        type: SettingType.SYSTEM,
+        value: '2',
+      ),
       PropDependency(
         name: 'ro.potato.has_cutout',
         value: 'true',
@@ -174,34 +178,32 @@ final List<Preference> statusBarIcons = [
 
 final List<Preference> netTraffic = [
   SettingPreference.withDropdown(
-    setting:'network_traffic_location',
-    title: LocaleStrings.statusbar.nettrafficNetworkTrafficLocationTitle,
-    icon: SmartIconData.iconData(Icons.traffic),
-    type: SettingType.SYSTEM,
-    options: DropdownOptions(
-      values: {
-        '0' : LocaleStrings.statusbar.nettrafficNetworkTrafficLocationV0,
-        '1' : LocaleStrings.statusbar.nettrafficNetworkTrafficLocationV1,
-        '2' : LocaleStrings.statusbar.nettrafficNetworkTrafficLocationV2,
-      },
-      defaultValue: '0',
-    ),
-      minVersion : '4.0.6'
-  ),
+      setting: 'network_traffic_location',
+      title: LocaleStrings.statusbar.nettrafficNetworkTrafficLocationTitle,
+      icon: SmartIconData.iconData(Icons.traffic),
+      type: SettingType.SYSTEM,
+      options: DropdownOptions(
+        values: {
+          '0': LocaleStrings.statusbar.nettrafficNetworkTrafficLocationV0,
+          '1': LocaleStrings.statusbar.nettrafficNetworkTrafficLocationV1,
+          '2': LocaleStrings.statusbar.nettrafficNetworkTrafficLocationV2,
+        },
+        defaultValue: '0',
+      ),
+      minVersion: '4.0.6'),
   SettingPreference.withDropdown(
-      setting:'network_traffic_unit_type',
+      setting: 'network_traffic_unit_type',
       title: LocaleStrings.statusbar.nettrafficNetworkTrafficUnitTypeTitle,
       type: SettingType.SYSTEM,
       icon: SmartIconData.iconData(MdiIcons.weight),
       options: DropdownOptions(
         values: {
-          '0' : LocaleStrings.statusbar.nettrafficNetworkTrafficUnitTypeV0,
-          '1' : LocaleStrings.statusbar.nettrafficNetworkTrafficUnitTypeV1,
+          '0': LocaleStrings.statusbar.nettrafficNetworkTrafficUnitTypeV0,
+          '1': LocaleStrings.statusbar.nettrafficNetworkTrafficUnitTypeV1,
         },
         defaultValue: '0',
       ),
-      minVersion : '4.0.6'
-  ),
+      minVersion: '4.0.6'),
   SettingPreference.withSwitch(
     setting: 'network_traffic_autohide',
     title: LocaleStrings.statusbar.nettrafficNetworkTrafficAutohideTitle,

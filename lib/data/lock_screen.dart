@@ -52,7 +52,7 @@ final List<Preference> tunerTitle = [
   ActivityPreference(
     title: LocaleStrings.lockscreen.tunerSystemuiTunerLockscreenTitle,
     description: LocaleStrings.lockscreen.tunerSystemuiTunerLockscreenDesc,
-    cls: "com.android.systemui.tuner.LockscreenActivity" ,
+    cls: "com.android.systemui.tuner.LockscreenActivity",
     pkg: "com.android.systemui",
     minVersion: '4.0.2',
   ),

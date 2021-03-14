@@ -92,7 +92,6 @@ class AppInfoProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-
   PackageInfo get packageInfo => _packageInfo;
 
   Map<String, String> get shapes => _shapes;
@@ -118,10 +117,10 @@ class AppInfoProvider extends ChangeNotifier {
   bool get debugEnabled => _debugFlagTap == 10 || isBuildDebug();
 
   bool isBuildDebug() {
-      // ignore: non_constant_identifier_names
-      var DEBUG = false;
-      assert(DEBUG = true);
-      return DEBUG;
+    // ignore: non_constant_identifier_names
+    var DEBUG = false;
+    assert(DEBUG = true);
+    return DEBUG;
   }
 
   bool isCompatible(BuildVersion version, {BuildVersion max}) =>
