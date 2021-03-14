@@ -125,6 +125,19 @@ final List<Preference> netTraffic = [
     ),
       minVersion : '4.0.6'
   ),
+  SettingPreference.withDropdown(
+      setting:'network_traffic_unit_type',
+      title: LocaleStrings.statusbar.nettrafficNetworkTrafficUnitTypeTitle,
+      type: SettingType.SYSTEM,
+      options: DropdownOptions(
+        values: {
+          '0' : LocaleStrings.statusbar.nettrafficNetworkTrafficUnitTypeV0,
+          '1' : LocaleStrings.statusbar.nettrafficNetworkTrafficUnitTypeV1,
+        },
+        defaultValue: '0',
+      ),
+      minVersion : '4.0.6'
+  ),
   SettingPreference.withSwitch(
     setting: 'network_traffic_autohide',
     title: LocaleStrings.statusbar.nettrafficNetworkTrafficAutohideTitle,
@@ -134,7 +147,7 @@ final List<Preference> netTraffic = [
       defaultValue: false,
     ),
     minVersion: '4.0.6',
-  )
+  ),
 ];
 
 final List<Preference> statusBarBattery = [

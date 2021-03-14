@@ -3,43 +3,12 @@ import 'package:easy_localization/easy_localization.dart';
 class LocaleStrings {
   LocaleStrings._();
 
-  static _$AudiofxLocaleStrings get audiofx => _$AudiofxLocaleStrings();
-  static _$LockscreenLocaleStrings get lockscreen => _$LockscreenLocaleStrings();
   static _$QsLocaleStrings get qs => _$QsLocaleStrings();
   static _$StatusbarLocaleStrings get statusbar => _$StatusbarLocaleStrings();
   static _$SystemLocaleStrings get system => _$SystemLocaleStrings();
   static _$ThemesLocaleStrings get themes => _$ThemesLocaleStrings();
-}
-
-class _$AudiofxLocaleStrings {
-  final String title = "audiofx.title".tr();
-  final String statusOn = "audiofx.status.on".tr();
-  final String statusOff = "audiofx.status.off".tr();
-  final String audioPresetTitle = "audiofx.audio_preset.title".tr();
-  final String headsetProfileTitle = "audiofx.headset_profile.title".tr();
-  final String headsetProfileDefault = "audiofx.headset_profile.default".tr();
-}
-
-class _$LockscreenLocaleStrings {
-  final String title = "lockscreen.title".tr();
-  final String clocksTitle = "lockscreen.clocks.title".tr();
-  final String clocksLockScreenClockTitle = "lockscreen.clocks.lock_screen_clock.title".tr();
-  final String clocksLockScreenClockVDefault = "lockscreen.clocks.lock_screen_clock.v_default".tr();
-  final String clocksLockScreenClockVBubble = "lockscreen.clocks.lock_screen_clock.v_bubble".tr();
-  final String clocksLockScreenClockVAnalog = "lockscreen.clocks.lock_screen_clock.v_analog".tr();
-  final String clocksLockScreenClockVType = "lockscreen.clocks.lock_screen_clock.v_type".tr();
-  final String clocksLockScreenClockVBold = "lockscreen.clocks.lock_screen_clock.v_bold".tr();
-  final String clocksLockScreenClockVSammy = "lockscreen.clocks.lock_screen_clock.v_sammy".tr();
-  final String clocksLockScreenClockVSammybold = "lockscreen.clocks.lock_screen_clock.v_sammybold".tr();
-  final String clocksLockScreenClockVSfuny = "lockscreen.clocks.lock_screen_clock.v_sfuny".tr();
-  final String albumartTitle = "lockscreen.albumart.title".tr();
-  final String albumartLockscreenMediaMetadataTitle = "lockscreen.albumart.lockscreen_media_metadata.title".tr();
-  final String albumartLockscreenMediaMetadataDesc = "lockscreen.albumart.lockscreen_media_metadata.desc".tr();
-  final String albumartLockscreenMediaBlurTitle = "lockscreen.albumart.lockscreen_media_blur.title".tr();
-  final String albumartLockscreenMediaBlurDesc = "lockscreen.albumart.lockscreen_media_blur.desc".tr();
-  final String tunerTitle = "lockscreen.tuner.title".tr();
-  final String tunerSystemuiTunerLockscreenTitle = "lockscreen.tuner.systemui_tuner_lockscreen.title".tr();
-  final String tunerSystemuiTunerLockscreenDesc = "lockscreen.tuner.systemui_tuner_lockscreen.desc".tr();
+  static _$AudiofxLocaleStrings get audiofx => _$AudiofxLocaleStrings();
+  static _$LockscreenLocaleStrings get lockscreen => _$LockscreenLocaleStrings();
 }
 
 class _$QsLocaleStrings {
@@ -89,6 +58,9 @@ class _$StatusbarLocaleStrings {
   final String nettrafficNetworkTrafficLocationV2 = "statusbar.nettraffic.network_traffic_location.v_2".tr();
   final String nettrafficNetworkTrafficAutohideTitle = "statusbar.nettraffic.network_traffic_autohide.title".tr();
   final String nettrafficNetworkTrafficAutohideDesc = "statusbar.nettraffic.network_traffic_autohide.desc".tr();
+  final String nettrafficNetworkTrafficUnitTypeTitle = "statusbar.nettraffic.network_traffic_unit_type.title".tr();
+  final String nettrafficNetworkTrafficUnitTypeV0 = "statusbar.nettraffic.network_traffic_unit_type.v_0".tr();
+  final String nettrafficNetworkTrafficUnitTypeV1 = "statusbar.nettraffic.network_traffic_unit_type.v_1".tr();
   final String batteryTitle = "statusbar.battery.title".tr();
   final String batteryStatusBarBatteryStyleTitle = "statusbar.battery.status_bar_battery_style.title".tr();
   final String batteryStatusBarBatteryStyleV0 = "statusbar.battery.status_bar_battery_style.v_0".tr();
@@ -163,5 +135,36 @@ class _$ThemesLocaleStrings {
   final String themesVolumePanelOnLeftTitle = "themes.themes.volume_panel_on_left.title".tr();
   final String themesVolumePanelOnLeftV0 = "themes.themes.volume_panel_on_left.v_0".tr();
   final String themesVolumePanelOnLeftV1 = "themes.themes.volume_panel_on_left.v_1".tr();
+}
+
+class _$AudiofxLocaleStrings {
+  final String title = "audiofx.title".tr();
+  final String statusOn = "audiofx.status.on".tr();
+  final String statusOff = "audiofx.status.off".tr();
+  final String audioPresetTitle = "audiofx.audio_preset.title".tr();
+  final String headsetProfileTitle = "audiofx.headset_profile.title".tr();
+  final String headsetProfileDefault = "audiofx.headset_profile.default".tr();
+}
+
+class _$LockscreenLocaleStrings {
+  final String title = "lockscreen.title".tr();
+  final String clocksTitle = "lockscreen.clocks.title".tr();
+  final String clocksLockScreenClockTitle = "lockscreen.clocks.lock_screen_clock.title".tr();
+  final String clocksLockScreenClockVDefault = "lockscreen.clocks.lock_screen_clock.v_default".tr();
+  final String clocksLockScreenClockVBubble = "lockscreen.clocks.lock_screen_clock.v_bubble".tr();
+  final String clocksLockScreenClockVAnalog = "lockscreen.clocks.lock_screen_clock.v_analog".tr();
+  final String clocksLockScreenClockVType = "lockscreen.clocks.lock_screen_clock.v_type".tr();
+  final String clocksLockScreenClockVBold = "lockscreen.clocks.lock_screen_clock.v_bold".tr();
+  final String clocksLockScreenClockVSammy = "lockscreen.clocks.lock_screen_clock.v_sammy".tr();
+  final String clocksLockScreenClockVSammybold = "lockscreen.clocks.lock_screen_clock.v_sammybold".tr();
+  final String clocksLockScreenClockVSfuny = "lockscreen.clocks.lock_screen_clock.v_sfuny".tr();
+  final String albumartTitle = "lockscreen.albumart.title".tr();
+  final String albumartLockscreenMediaMetadataTitle = "lockscreen.albumart.lockscreen_media_metadata.title".tr();
+  final String albumartLockscreenMediaMetadataDesc = "lockscreen.albumart.lockscreen_media_metadata.desc".tr();
+  final String albumartLockscreenMediaBlurTitle = "lockscreen.albumart.lockscreen_media_blur.title".tr();
+  final String albumartLockscreenMediaBlurDesc = "lockscreen.albumart.lockscreen_media_blur.desc".tr();
+  final String tunerTitle = "lockscreen.tuner.title".tr();
+  final String tunerSystemuiTunerLockscreenTitle = "lockscreen.tuner.systemui_tuner_lockscreen.title".tr();
+  final String tunerSystemuiTunerLockscreenDesc = "lockscreen.tuner.systemui_tuner_lockscreen.desc".tr();
 }
 
