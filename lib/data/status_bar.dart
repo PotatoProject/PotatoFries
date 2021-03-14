@@ -11,6 +11,7 @@ final PageData statusBar = PageData(
   categories: [
     PageCategoryData(LocaleStrings.statusbar.cutoutsTitle, displayCutouts),
     PageCategoryData(LocaleStrings.statusbar.iconsTitle, statusBarIcons),
+    PageCategoryData(LocaleStrings.statusbar.nettrafficTitle, netTraffic),
     PageCategoryData(LocaleStrings.statusbar.batteryTitle, statusBarBattery),
   ],
 );
@@ -107,6 +108,33 @@ final List<Preference> statusBarIcons = [
     pkg: "com.android.systemui",
     minVersion: '4.0.2',
   ),
+];
+
+final List<Preference> netTraffic = [
+  SettingPreference.withDropdown(
+    setting:'network_traffic_location',
+    title: LocaleStrings.statusbar.nettrafficNetworkTrafficLocationTitle,
+    type: SettingType.SYSTEM,
+    options: DropdownOptions(
+      values: {
+        '0' : LocaleStrings.statusbar.nettrafficNetworkTrafficLocationV0,
+        '1' : LocaleStrings.statusbar.nettrafficNetworkTrafficLocationV1,
+        '2' : LocaleStrings.statusbar.nettrafficNetworkTrafficLocationV2,
+      },
+      defaultValue: '0',
+    ),
+      minVersion : '4.0.6'
+  ),
+  SettingPreference.withSwitch(
+    setting: 'network_traffic_autohide',
+    title: LocaleStrings.statusbar.nettrafficNetworkTrafficAutohideTitle,
+    description: LocaleStrings.statusbar.nettrafficNetworkTrafficAutohideDesc,
+    type: SettingType.SYSTEM,
+    options: SwitchOptions(
+      defaultValue: false,
+    ),
+    minVersion: '4.0.6',
+  )
 ];
 
 final List<Preference> statusBarBattery = [
