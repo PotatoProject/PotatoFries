@@ -23,7 +23,7 @@ class StatusBar extends BasePage {
     var _provider = context.watch<PageProvider>();
 
     final hasCutout = !_appInfo.isCompatCheckDisabled()
-        ? _provider.getValue(PropKey('display_cutout_mode')) ?? false
+        ? _provider.getValue(PropKey('ro.potato.has_cutout')) == "true"
         : true;
 
     if (hasCutout) {
