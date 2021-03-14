@@ -11,6 +11,7 @@ final PageData statusBar = PageData(
   categories: [
     PageCategoryData(LocaleStrings.statusbar.cutoutsTitle, displayCutouts),
     PageCategoryData(LocaleStrings.statusbar.batteryTitle, statusBarBattery),
+    PageCategoryData(LocaleStrings.statusbar.clockTitle, statusBarClock),
     PageCategoryData(LocaleStrings.statusbar.iconsTitle, statusBarIcons),
     PageCategoryData(LocaleStrings.statusbar.nettrafficTitle, netTraffic),
   ],
@@ -65,6 +66,20 @@ final List<Preference> displayCutouts = [
       max: 50,
     ),
     minVersion: '4.0.0',
+  ),
+];
+
+final List<Preference> statusBarClock = [
+  SettingPreference.withSwitch(
+    setting: 'smart_clock_enable',
+    icon: SmartIconData.iconData(MdiIcons.clockFast),
+    title: LocaleStrings.statusbar.clockSmartclockTitle,
+    description: LocaleStrings.statusbar.clockSmartclockDesc,
+    type: SettingType.SYSTEM,
+    options: SwitchOptions(
+      defaultValue: false,
+    ),
+    minVersion: '4.0.6',
   ),
 ];
 

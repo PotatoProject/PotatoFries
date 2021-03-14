@@ -42,6 +42,9 @@ class _$StatusbarLocaleStrings {
   final String cutoutsStockStatusbarInHideTitle = "statusbar.cutouts.stock_statusbar_in_hide.title".tr();
   final String cutoutsStockStatusbarInHideDesc = "statusbar.cutouts.stock_statusbar_in_hide.desc".tr();
   final String cutoutsSysuiRoundedSizeTitle = "statusbar.cutouts.sysui_rounded_size.title".tr();
+  final String clockTitle = "statusbar.clock.title".tr();
+  final String clockSmartclockTitle = "statusbar.clock.smartclock.title".tr();
+  final String clockSmartclockDesc = "statusbar.clock.smartclock.desc".tr();
   final String iconsTitle = "statusbar.icons.title".tr();
   final String iconsShowFourgIconTitle = "statusbar.icons.show_fourg_icon.title".tr();
   final String iconsShowFourgIconDesc = "statusbar.icons.show_fourg_icon.desc".tr();

@@ -8,6 +8,9 @@
     <string name="cutouts.stock_statusbar_in_hide.title">Stock Statusbar in Hide</string>
     <string name="cutouts.stock_statusbar_in_hide.desc">Use default (usually smaller) statusbar height in hide</string>
     <string name="cutouts.sysui_rounded_size.title">Rounded corner radius</string>
+    <string name="clock.title">Clock</string>
+    <string name="clock.smartclock.title">Smart Clock</string>
+    <string name="clock.smartclock.desc">Show the clock periodically for a brief period</string>
     <string name="icons.title">StatusBar Icons</string>
     <string name="icons.show_fourg_icon.title">4G icon</string>
     <string name="icons.show_fourg_icon.desc">Display 4G icon in status bar instead LTE</string>
