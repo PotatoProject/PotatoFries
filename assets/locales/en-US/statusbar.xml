@@ -17,6 +17,13 @@
     <string name="icons.roaming_indicator_icon.desc">Display roaming icon in status bar</string>
     <string name="icons.systemui_tuner_statusbar.title">System statusbar icons</string>
     <string name="icons.systemui_tuner_statusbar.desc">Disable/Enable system icons from statusbar</string>
+    <string name="nettraffic.title">Network traffic monitor</string>
+    <string name="nettraffic.network_traffic_location.title">Display mode</string>
+    <string name="nettraffic.network_traffic_location.v_0">Disabled</string>
+    <string name="nettraffic.network_traffic_location.v_1">Status bar</string>
+    <string name="nettraffic.network_traffic_location.v_2">Quick settings</string>
+    <string name="nettraffic.network_traffic_autohide.title">Auto hide</string>
+    <string name="nettraffic.network_traffic_autohide.desc">Hide the traffic monitor when there is no activity</string>
     <string name="battery.title">Battery</string>
     <string name="battery.status_bar_battery_style.title">Battery Style</string>
     <string name="battery.status_bar_battery_style.v_0">Portrait</string>
