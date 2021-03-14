@@ -27,7 +27,7 @@
     <string name="nettraffic.network_traffic_location.v_2">Quick settings</string>
     <string name="nettraffic.network_traffic_autohide.title">Auto hide</string>
     <string name="nettraffic.network_traffic_autohide.desc">Hide the traffic monitor when there is no activity</string>
-    <string name="nettraffic.network_traffic_unit_type.title">Choose network traffic units</string>
+    <string name="nettraffic.network_traffic_unit_type.title">Traffic units</string>
     <string name="nettraffic.network_traffic_unit_type.v_0">Bytes</string>
     <string name="nettraffic.network_traffic_unit_type.v_1">Bits</string>
     <string name="battery.title">Battery</string>

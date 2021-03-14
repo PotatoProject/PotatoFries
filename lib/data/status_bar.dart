@@ -176,6 +176,7 @@ final List<Preference> netTraffic = [
   SettingPreference.withDropdown(
     setting:'network_traffic_location',
     title: LocaleStrings.statusbar.nettrafficNetworkTrafficLocationTitle,
+    icon: SmartIconData.iconData(Icons.traffic),
     type: SettingType.SYSTEM,
     options: DropdownOptions(
       values: {
@@ -191,6 +192,7 @@ final List<Preference> netTraffic = [
       setting:'network_traffic_unit_type',
       title: LocaleStrings.statusbar.nettrafficNetworkTrafficUnitTypeTitle,
       type: SettingType.SYSTEM,
+      icon: SmartIconData.iconData(MdiIcons.weight),
       options: DropdownOptions(
         values: {
           '0' : LocaleStrings.statusbar.nettrafficNetworkTrafficUnitTypeV0,

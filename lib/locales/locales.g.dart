@@ -69,7 +69,7 @@ class _$LocaleEnUS extends _$LocaleBase {
     "statusbar.nettraffic.network_traffic_location.v_2": "Quick settings",
     "statusbar.nettraffic.network_traffic_autohide.title": "Auto hide",
     "statusbar.nettraffic.network_traffic_autohide.desc": "Hide the traffic monitor when there is no activity",
-    "statusbar.nettraffic.network_traffic_unit_type.title": "Choose network traffic units",
+    "statusbar.nettraffic.network_traffic_unit_type.title": "Traffic units",
     "statusbar.nettraffic.network_traffic_unit_type.v_0": "Bytes",
     "statusbar.nettraffic.network_traffic_unit_type.v_1": "Bits",
     "statusbar.battery.title": "Battery",
