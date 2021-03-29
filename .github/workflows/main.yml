@@ -17,7 +17,7 @@ jobs:
           java-version: '12.x'
       - uses: subosito/flutter-action@v1
         with:
-          channel: 'beta'
+          channel: 'stable'
       - run: 'echo "$KEY_JKS_BASE64" | openssl base64 -d -out android/app/key.jks'
         shell: bash
         env:
