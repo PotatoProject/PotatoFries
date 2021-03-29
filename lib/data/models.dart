@@ -368,15 +368,18 @@ class VersionConstraint {
         assert(max != null);
 
   bool isConstrained(BuildVersion target) {
-    bool minSupported = false;
+    bool minSupported = true;
     bool maxSupported = false;
 
     if (min != BuildVersion.empty) {
-      if (target.major >= min.major) {
-        if (target.minor >= min.minor) {
-          if (target.patch >= min.patch) minSupported = true;
+      if (target.major <= min.major) {
+        if (target.minor <= min.minor) {
+          if (target.patch <= min.patch) {
+            minSupported = false;
+          }
         }
       }
+      if (target == min) minSupported = true;
     } else {
       minSupported = true;
     }
