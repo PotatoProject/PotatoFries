@@ -3,15 +3,76 @@ import 'package:easy_localization/easy_localization.dart';
 class LocaleStrings {
   LocaleStrings._();
 
-  static _$QsLocaleStrings get qs => _$QsLocaleStrings();
-  static _$StatusbarLocaleStrings get statusbar => _$StatusbarLocaleStrings();
-  static _$SystemLocaleStrings get system => _$SystemLocaleStrings();
-  static _$ThemesLocaleStrings get themes => _$ThemesLocaleStrings();
   static _$AudiofxLocaleStrings get audiofx => _$AudiofxLocaleStrings();
   static _$LockscreenLocaleStrings get lockscreen =>
       _$LockscreenLocaleStrings();
   static _$PreferencesLocaleStrings get preferences =>
       _$PreferencesLocaleStrings();
+  static _$QsLocaleStrings get qs => _$QsLocaleStrings();
+  static _$StatusbarLocaleStrings get statusbar => _$StatusbarLocaleStrings();
+  static _$SystemLocaleStrings get system => _$SystemLocaleStrings();
+  static _$ThemesLocaleStrings get themes => _$ThemesLocaleStrings();
+}
+
+class _$AudiofxLocaleStrings {
+  final String title = "audiofx.title".tr();
+  final String statusOn = "audiofx.status.on".tr();
+  final String statusOff = "audiofx.status.off".tr();
+  final String audioPresetTitle = "audiofx.audio_preset.title".tr();
+  final String headsetProfileTitle = "audiofx.headset_profile.title".tr();
+  final String headsetProfileDefault = "audiofx.headset_profile.default".tr();
+}
+
+class _$LockscreenLocaleStrings {
+  final String title = "lockscreen.title".tr();
+  final String clocksTitle = "lockscreen.clocks.title".tr();
+  final String clocksLockScreenClockTitle =
+      "lockscreen.clocks.lock_screen_clock.title".tr();
+  final String clocksLockScreenClockVDefault =
+      "lockscreen.clocks.lock_screen_clock.v_default".tr();
+  final String clocksLockScreenClockVBubble =
+      "lockscreen.clocks.lock_screen_clock.v_bubble".tr();
+  final String clocksLockScreenClockVAnalog =
+      "lockscreen.clocks.lock_screen_clock.v_analog".tr();
+  final String clocksLockScreenClockVType =
+      "lockscreen.clocks.lock_screen_clock.v_type".tr();
+  final String clocksLockScreenClockVBold =
+      "lockscreen.clocks.lock_screen_clock.v_bold".tr();
+  final String clocksLockScreenClockVSammy =
+      "lockscreen.clocks.lock_screen_clock.v_sammy".tr();
+  final String clocksLockScreenClockVSammybold =
+      "lockscreen.clocks.lock_screen_clock.v_sammybold".tr();
+  final String clocksLockScreenClockVSfuny =
+      "lockscreen.clocks.lock_screen_clock.v_sfuny".tr();
+  final String albumartTitle = "lockscreen.albumart.title".tr();
+  final String albumartLockscreenMediaMetadataTitle =
+      "lockscreen.albumart.lockscreen_media_metadata.title".tr();
+  final String albumartLockscreenMediaMetadataDesc =
+      "lockscreen.albumart.lockscreen_media_metadata.desc".tr();
+  final String albumartLockscreenMediaBlurTitle =
+      "lockscreen.albumart.lockscreen_media_blur.title".tr();
+  final String albumartLockscreenMediaBlurDesc =
+      "lockscreen.albumart.lockscreen_media_blur.desc".tr();
+  final String pocketTitle = "lockscreen.pocket.title".tr();
+  final String pocketPocketJudgeTitle =
+      "lockscreen.pocket.pocket_judge.title".tr();
+  final String pocketPocketJudgeDesc =
+      "lockscreen.pocket.pocket_judge.desc".tr();
+  final String tunerTitle = "lockscreen.tuner.title".tr();
+  final String tunerSystemuiTunerLockscreenTitle =
+      "lockscreen.tuner.systemui_tuner_lockscreen.title".tr();
+  final String tunerSystemuiTunerLockscreenDesc =
+      "lockscreen.tuner.systemui_tuner_lockscreen.desc".tr();
+}
+
+class _$PreferencesLocaleStrings {
+  final String colorpickerLightError =
+      "preferences.colorpicker.light_error".tr();
+  final String colorpickerDarkError = "preferences.colorpicker.dark_error".tr();
+  final String colorpickerLightWarning =
+      "preferences.colorpicker.light_warning".tr();
+  final String colorpickerDarkWarning =
+      "preferences.colorpicker.dark_warning".tr();
 }
 
 class _$QsLocaleStrings {
@@ -251,60 +312,4 @@ class _$ThemesLocaleStrings {
       "themes.themes.sysui_colors_active.title".tr();
   final String themesSysuiColorsActiveDesc =
       "themes.themes.sysui_colors_active.desc".tr();
-}
-
-class _$AudiofxLocaleStrings {
-  final String title = "audiofx.title".tr();
-  final String statusOn = "audiofx.status.on".tr();
-  final String statusOff = "audiofx.status.off".tr();
-  final String audioPresetTitle = "audiofx.audio_preset.title".tr();
-  final String headsetProfileTitle = "audiofx.headset_profile.title".tr();
-  final String headsetProfileDefault = "audiofx.headset_profile.default".tr();
-}
-
-class _$LockscreenLocaleStrings {
-  final String title = "lockscreen.title".tr();
-  final String clocksTitle = "lockscreen.clocks.title".tr();
-  final String clocksLockScreenClockTitle =
-      "lockscreen.clocks.lock_screen_clock.title".tr();
-  final String clocksLockScreenClockVDefault =
-      "lockscreen.clocks.lock_screen_clock.v_default".tr();
-  final String clocksLockScreenClockVBubble =
-      "lockscreen.clocks.lock_screen_clock.v_bubble".tr();
-  final String clocksLockScreenClockVAnalog =
-      "lockscreen.clocks.lock_screen_clock.v_analog".tr();
-  final String clocksLockScreenClockVType =
-      "lockscreen.clocks.lock_screen_clock.v_type".tr();
-  final String clocksLockScreenClockVBold =
-      "lockscreen.clocks.lock_screen_clock.v_bold".tr();
-  final String clocksLockScreenClockVSammy =
-      "lockscreen.clocks.lock_screen_clock.v_sammy".tr();
-  final String clocksLockScreenClockVSammybold =
-      "lockscreen.clocks.lock_screen_clock.v_sammybold".tr();
-  final String clocksLockScreenClockVSfuny =
-      "lockscreen.clocks.lock_screen_clock.v_sfuny".tr();
-  final String albumartTitle = "lockscreen.albumart.title".tr();
-  final String albumartLockscreenMediaMetadataTitle =
-      "lockscreen.albumart.lockscreen_media_metadata.title".tr();
-  final String albumartLockscreenMediaMetadataDesc =
-      "lockscreen.albumart.lockscreen_media_metadata.desc".tr();
-  final String albumartLockscreenMediaBlurTitle =
-      "lockscreen.albumart.lockscreen_media_blur.title".tr();
-  final String albumartLockscreenMediaBlurDesc =
-      "lockscreen.albumart.lockscreen_media_blur.desc".tr();
-  final String tunerTitle = "lockscreen.tuner.title".tr();
-  final String tunerSystemuiTunerLockscreenTitle =
-      "lockscreen.tuner.systemui_tuner_lockscreen.title".tr();
-  final String tunerSystemuiTunerLockscreenDesc =
-      "lockscreen.tuner.systemui_tuner_lockscreen.desc".tr();
-}
-
-class _$PreferencesLocaleStrings {
-  final String colorpickerLightError =
-      "preferences.colorpicker.light_error".tr();
-  final String colorpickerDarkError = "preferences.colorpicker.dark_error".tr();
-  final String colorpickerLightWarning =
-      "preferences.colorpicker.light_warning".tr();
-  final String colorpickerDarkWarning =
-      "preferences.colorpicker.dark_warning".tr();
 }

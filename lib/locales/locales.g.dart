@@ -23,6 +23,46 @@ class _$LocaleEnUS extends _$LocaleBase {
 
   @override
   Map<String, String> get data => {
+        "audiofx.title": "AudioFX",
+        "audiofx.status.on": "On",
+        "audiofx.status.off": "Off",
+        "audiofx.audio_preset.title": "Audio preset",
+        "audiofx.headset_profile.title": "Headset profile",
+        "audiofx.headset_profile.default": "Default mode",
+        "lockscreen.title": "Lockscreen",
+        "lockscreen.clocks.title": "Clocks",
+        "lockscreen.clocks.lock_screen_clock.title": "Lock Screen Clock",
+        "lockscreen.clocks.lock_screen_clock.v_default": "Default",
+        "lockscreen.clocks.lock_screen_clock.v_bubble": "Bubble",
+        "lockscreen.clocks.lock_screen_clock.v_analog": "Analog",
+        "lockscreen.clocks.lock_screen_clock.v_type": "Type",
+        "lockscreen.clocks.lock_screen_clock.v_bold": "Bold",
+        "lockscreen.clocks.lock_screen_clock.v_sammy": "Sammy",
+        "lockscreen.clocks.lock_screen_clock.v_sammybold": "Sammy bold",
+        "lockscreen.clocks.lock_screen_clock.v_sfuny": "SFUNY",
+        "lockscreen.albumart.title": "Album art",
+        "lockscreen.albumart.lockscreen_media_metadata.title":
+            "Lockscreen media art",
+        "lockscreen.albumart.lockscreen_media_metadata.desc":
+            "Show album art on lockscreen",
+        "lockscreen.albumart.lockscreen_media_blur.title":
+            "Lockscreen blur level",
+        "lockscreen.albumart.lockscreen_media_blur.desc":
+            "Configure blur intensity of lockscreen media art",
+        "lockscreen.pocket.title": "Pocket mode",
+        "lockscreen.pocket.pocket_judge.title": "Pocket detection",
+        "lockscreen.pocket.pocket_judge.desc":
+            "Block screen and button inputs when device is in pocket",
+        "lockscreen.tuner.title": "Lockscreen shortcuts",
+        "lockscreen.tuner.systemui_tuner_lockscreen.title": "Lockscreen tuner",
+        "lockscreen.tuner.systemui_tuner_lockscreen.desc":
+            "Manage lockscreen shortcuts",
+        "preferences.colorpicker.light_error": "Color is too light",
+        "preferences.colorpicker.dark_error": "Color is too dark",
+        "preferences.colorpicker.light_warning":
+            "Color is too light, it may be normalized!",
+        "preferences.colorpicker.dark_warning":
+            "Color is too dark, it may be normalized!",
         "qs.title": "Quick Settings",
         "qs.header.no_notifications": "No notifications",
         "qs.tweaks.title": "Quick settings tweaks",
@@ -189,41 +229,5 @@ class _$LocaleEnUS extends _$LocaleBase {
         "themes.themes.sysui_colors_active.title": "Colored SystemUI",
         "themes.themes.sysui_colors_active.desc":
             "Wallpaper colored scrims and QS",
-        "audiofx.title": "AudioFX",
-        "audiofx.status.on": "On",
-        "audiofx.status.off": "Off",
-        "audiofx.audio_preset.title": "Audio preset",
-        "audiofx.headset_profile.title": "Headset profile",
-        "audiofx.headset_profile.default": "Default mode",
-        "lockscreen.title": "Lockscreen",
-        "lockscreen.clocks.title": "Clocks",
-        "lockscreen.clocks.lock_screen_clock.title": "Lock Screen Clock",
-        "lockscreen.clocks.lock_screen_clock.v_default": "Default",
-        "lockscreen.clocks.lock_screen_clock.v_bubble": "Bubble",
-        "lockscreen.clocks.lock_screen_clock.v_analog": "Analog",
-        "lockscreen.clocks.lock_screen_clock.v_type": "Type",
-        "lockscreen.clocks.lock_screen_clock.v_bold": "Bold",
-        "lockscreen.clocks.lock_screen_clock.v_sammy": "Sammy",
-        "lockscreen.clocks.lock_screen_clock.v_sammybold": "Sammy bold",
-        "lockscreen.clocks.lock_screen_clock.v_sfuny": "SFUNY",
-        "lockscreen.albumart.title": "Album art",
-        "lockscreen.albumart.lockscreen_media_metadata.title":
-            "Lockscreen media art",
-        "lockscreen.albumart.lockscreen_media_metadata.desc":
-            "Show album art on lockscreen",
-        "lockscreen.albumart.lockscreen_media_blur.title":
-            "Lockscreen blur level",
-        "lockscreen.albumart.lockscreen_media_blur.desc":
-            "Configure blur intensity of lockscreen media art",
-        "lockscreen.tuner.title": "Lockscreen shortcuts",
-        "lockscreen.tuner.systemui_tuner_lockscreen.title": "Lockscreen tuner",
-        "lockscreen.tuner.systemui_tuner_lockscreen.desc":
-            "Manage lockscreen shortcuts",
-        "preferences.colorpicker.light_error": "Color is too light",
-        "preferences.colorpicker.dark_error": "Color is too dark",
-        "preferences.colorpicker.light_warning":
-            "Color is too light, it may be normalized!",
-        "preferences.colorpicker.dark_warning":
-            "Color is too dark, it may be normalized!",
       };
 }
