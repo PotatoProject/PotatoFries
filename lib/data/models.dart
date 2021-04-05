@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:potato_fries/ui/smart_icon.dart';
 import 'package:potato_fries/utils/custom_widget_registry.dart';
 import 'package:potato_fries/widgets/activity_tile.dart';
+import 'package:potato_fries/widgets/settings_color.dart';
 import 'package:potato_fries/widgets/settings_dropdown.dart';
 import 'package:potato_fries/widgets/settings_slider.dart';
 import 'package:potato_fries/widgets/settings_switch.dart';
@@ -100,12 +101,39 @@ class SettingPreference extends Preference {
           dependencies,
         );
 
+  SettingPreference.withColor({
+    @required this.title,
+    this.description,
+    @required String setting,
+    SettingType type = SettingType.SYSTEM,
+    ColorOptions options,
+    String minVersion,
+    String maxVersion,
+    List<Dependency> dependencies = const [],
+  })  : this.options = options ?? ColorOptions(),
+        this.icon = null,
+        this.setting = SettingKey<int>(setting, type),
+        super._(
+          VersionConstraint(
+            min: minVersion != null
+                ? BuildVersion.parse(minVersion)
+                : BuildVersion.empty,
+            max: maxVersion != null
+                ? BuildVersion.parse(maxVersion)
+                : BuildVersion.empty,
+          ),
+          dependencies,
+        );
+
   @override
   Widget toWidget(BuildContext context) {
     switch (setting.valueType) {
       case SettingValueType.BOOLEAN:
         return SettingsSwitchTile(pref: this);
       case SettingValueType.INT:
+        if (this.options.runtimeType == ColorOptions) {
+          return SettingsColorTile(pref: this);
+        }
         return SettingsSliderTile(pref: this);
       case SettingValueType.STRING:
       default:
@@ -185,8 +213,10 @@ class CustomPreference extends Preference {
 @immutable
 abstract class Options<T> {
   final T defaultValue;
+  final bool noDefault;
 
-  Options._(this.defaultValue) : assert(defaultValue != null);
+  Options._({this.defaultValue, this.noDefault = false})
+      : assert(defaultValue != null || noDefault);
 
   Map<String, dynamic> toJsonInternal() {
     return {
@@ -198,7 +228,8 @@ abstract class Options<T> {
 }
 
 class SwitchOptions extends Options<bool> {
-  SwitchOptions({bool defaultValue = false}) : super._(defaultValue);
+  SwitchOptions({bool defaultValue = false})
+      : super._(defaultValue: defaultValue);
 }
 
 @immutable
@@ -212,7 +243,7 @@ class SliderOptions extends Options<int> {
     @required this.max,
     this.percentage = false,
     int defaultValue = 0,
-  }) : super._(defaultValue);
+  }) : super._(defaultValue: defaultValue);
 
   @override
   Map<String, dynamic> toJson() {
@@ -225,13 +256,34 @@ class SliderOptions extends Options<int> {
 }
 
 @immutable
+class ColorOptions extends Options {
+  final double minLightness;
+  final double maxLightness;
+  final bool supportsNormalization;
+
+  ColorOptions({
+    this.minLightness = 0.0,
+    this.maxLightness = 1.0,
+    this.supportsNormalization = false,
+  }) : super._(noDefault: true);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      'minLightness': minLightness,
+      'maxLightness': maxLightness,
+    };
+  }
+}
+
+@immutable
 class DropdownOptions extends Options<String> {
   final Map<String, String> values;
 
   DropdownOptions({
     @required this.values,
     String defaultValue,
-  }) : super._(defaultValue ?? values.keys.first);
+  }) : super._(defaultValue: defaultValue ?? values.keys.first);
 
   @override
   Map<String, dynamic> toJson() {
