@@ -6,7 +6,7 @@ import 'package:potato_fries/ui/shaped_icon.dart';
 import 'package:potato_fries/ui/sizeable_list_tile.dart';
 import 'package:potato_fries/utils/utils.dart';
 import 'package:potato_fries/widgets/animated_disable.dart';
-import 'package:potato_fries/widgets/multi_mode_color_picker.dart';
+import 'package:potato_fries/widgets/multi_mode_color_picker_dual.dart';
 import 'package:provider/provider.dart';
 
 class AccentPicker extends StatelessWidget {
@@ -127,7 +127,7 @@ class __TileContentState extends State<_TileContent> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   SizedBox(
-                    child: MultiModeColorPicker(
+                    child: MultiModeColorPickerDual(
                       tolerance: widget.tolerance,
                       lightColor: widget.light,
                       darkColor: widget.dark,

@@ -10,6 +10,8 @@ class LocaleStrings {
   static _$AudiofxLocaleStrings get audiofx => _$AudiofxLocaleStrings();
   static _$LockscreenLocaleStrings get lockscreen =>
       _$LockscreenLocaleStrings();
+  static _$PreferencesLocaleStrings get preferences =>
+      _$PreferencesLocaleStrings();
 }
 
 class _$QsLocaleStrings {
@@ -280,4 +282,14 @@ class _$LockscreenLocaleStrings {
       "lockscreen.tuner.systemui_tuner_lockscreen.title".tr();
   final String tunerSystemuiTunerLockscreenDesc =
       "lockscreen.tuner.systemui_tuner_lockscreen.desc".tr();
+}
+
+class _$PreferencesLocaleStrings {
+  final String colorpickerLightError =
+      "preferences.colorpicker.light_error".tr();
+  final String colorpickerDarkError = "preferences.colorpicker.dark_error".tr();
+  final String colorpickerLightWarning =
+      "preferences.colorpicker.light_warning".tr();
+  final String colorpickerDarkWarning =
+      "preferences.colorpicker.dark_warning".tr();
 }

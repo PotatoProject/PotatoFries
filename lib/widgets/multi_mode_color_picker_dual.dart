@@ -1,90 +1,168 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:potato_fries/data/models.dart';
+import 'package:potato_fries/locales/locale_strings.g.dart';
 import 'package:potato_fries/provider/app_info.dart';
 import 'package:potato_fries/widgets/animated_disable.dart';
+import 'package:potato_fries/widgets/disco_spinner.dart';
 import 'package:provider/provider.dart';
 
-class MultiModeColorPicker extends StatefulWidget {
-  final Color color;
+class MultiModeColorPickerDual extends StatefulWidget {
+  final Color lightColor;
+  final Color darkColor;
   final PickerMode mode;
-  final ColorOptions options;
-  final void Function(Color color) onColorChanged;
+  final double tolerance;
+  final void Function(Color light, Color dark) onColorChanged;
 
-  MultiModeColorPicker({
-    @required this.color,
+  MultiModeColorPickerDual({
+    @required this.lightColor,
+    @required this.darkColor,
     this.mode = PickerMode.RGB,
     this.onColorChanged,
-    @required this.options,
+    @required this.tolerance,
   });
 
   @override
-  _MultiModeColorPickerState createState() => _MultiModeColorPickerState();
+  _MultiModeColorPickerDualState createState() =>
+      _MultiModeColorPickerDualState();
 }
 
-class _MultiModeColorPickerState extends State<MultiModeColorPicker> {
-  final controller = TextEditingController();
-  dynamic color;
+class _MultiModeColorPickerDualState extends State<MultiModeColorPickerDual> {
+  final lightController = TextEditingController();
+  final darkController = TextEditingController();
+  dynamic lightColor;
+  dynamic darkColor;
 
-  bool editColor = false;
+  bool editDarkColor = false;
+
+  dynamic get color => editDarkColor ? darkColor : lightColor;
 
   @override
   void initState() {
-    _updateColor(widget.color);
+    _updateColor(widget.lightColor, widget.darkColor, autoCalc: false);
     super.initState();
   }
 
   @override
-  void didUpdateWidget(MultiModeColorPicker old) {
-    final newColor = widget.color != old.color ? widget.color : color;
-    _updateColor(newColor);
+  void didUpdateWidget(MultiModeColorPickerDual old) {
+    final newLightColor =
+        widget.lightColor != old.lightColor ? widget.lightColor : lightColor;
+    final newDarkColor =
+        widget.darkColor != old.darkColor ? widget.darkColor : darkColor;
+
+    _updateColor(newLightColor, newDarkColor);
+
     super.didUpdateWidget(old);
   }
 
-  void _updateColor(dynamic newColor) {
+  void _updateColor(dynamic newLightColor, dynamic newDarkColor,
+      {bool autoCalc = true}) {
     switch (widget.mode) {
       case PickerMode.RGB:
-        if (newColor is Color) {
-          color = newColor;
+        if (newLightColor is Color) {
+          lightColor = newLightColor;
         } else {
-          color = newColor.toColor();
+          lightColor = newLightColor.toColor();
         }
-        break;
 
+        if (newDarkColor is Color) {
+          darkColor = newDarkColor;
+        } else {
+          darkColor = newDarkColor.toColor();
+        }
+
+        break;
       case PickerMode.HSL:
-        if (newColor is Color) {
-          color = HSLColor.fromColor(newColor);
-        } else if (newColor is HSVColor) {
-          color = HSLColor.fromColor(newColor.toColor());
+        if (newLightColor is Color) {
+          lightColor = HSLColor.fromColor(newLightColor);
+        } else if (newLightColor is HSVColor) {
+          lightColor = HSLColor.fromColor(newLightColor.toColor());
         } else {
-          color = newColor;
+          lightColor = newLightColor;
         }
-        break;
 
-      case PickerMode.HSV:
-        if (newColor is Color) {
-          color = HSVColor.fromColor(newColor);
-        } else if (newColor is HSLColor) {
-          color = HSVColor.fromColor(newColor.toColor());
+        if (newDarkColor is Color) {
+          darkColor = HSLColor.fromColor(newDarkColor);
+        } else if (newDarkColor is HSVColor) {
+          darkColor = HSLColor.fromColor(newDarkColor.toColor());
         } else {
-          color = newColor;
+          darkColor = newDarkColor;
+        }
+
+        break;
+      case PickerMode.HSV:
+        if (newLightColor is Color) {
+          lightColor = HSVColor.fromColor(newLightColor);
+        } else if (newLightColor is HSLColor) {
+          lightColor = HSVColor.fromColor(newLightColor.toColor());
+        } else {
+          lightColor = newLightColor;
+        }
+
+        if (newDarkColor is Color) {
+          darkColor = HSVColor.fromColor(newDarkColor);
+        } else if (newDarkColor is HSLColor) {
+          darkColor = HSVColor.fromColor(newDarkColor.toColor());
+        } else {
+          darkColor = newDarkColor;
         }
         break;
+    }
+
+    if (autoCalc && context.read<AppInfoProvider>().autoCalculateAccents) {
+      var cHSL;
+      var workingColor = editDarkColor ? darkColor : lightColor;
+      switch (workingColor.runtimeType) {
+        case HSVColor:
+          cHSL = HSLColor.fromColor(workingColor.toColor());
+          break;
+        case HSLColor:
+          cHSL = workingColor;
+          break;
+        default:
+          cHSL = HSLColor.fromColor(workingColor);
+          break;
+      }
+      workingColor = cHSL.withLightness(1 - cHSL.lightness);
+      switch (widget.mode) {
+        case PickerMode.RGB:
+          workingColor = workingColor.toColor();
+          break;
+        case PickerMode.HSV:
+          workingColor = HSVColor.fromColor(workingColor.toColor());
+          break;
+        case PickerMode.HSL:
+        default:
+          break;
+      }
+      if (!editDarkColor) {
+        darkColor = workingColor;
+      } else {
+        lightColor = workingColor;
+      }
     }
 
     _updateControllerText();
   }
 
   void _updateControllerText() {
-    controller.text =
-        getColor().value.toRadixString(16).substring(2, 8).toUpperCase();
+    lightController.text =
+        getLightColor().value.toRadixString(16).substring(2, 8).toUpperCase();
+    darkController.text =
+        getDarkColor().value.toRadixString(16).substring(2, 8).toUpperCase();
   }
 
-  Color getColor() {
-    if (color is Color)
-      return color.withAlpha(0xff);
+  Color getLightColor() {
+    if (lightColor is Color)
+      return lightColor.withAlpha(0xff);
     else
-      return color.toColor().withAlpha(0xff);
+      return lightColor.toColor().withAlpha(0xff);
+  }
+
+  Color getDarkColor() {
+    if (darkColor is Color)
+      return darkColor.withAlpha(0xff);
+    else
+      return darkColor.toColor().withAlpha(0xff);
   }
 
   @override
@@ -127,25 +205,73 @@ class _MultiModeColorPickerState extends State<MultiModeColorPicker> {
               children: [
                 Expanded(
                   child: _ColorDisplay(
-                    color: getColor(),
-                    controller: controller,
+                    color: getLightColor(),
+                    controller: lightController,
                     onChanged: (text) {
                       if (text.length == 6) {
                         Color newColor = Color(int.parse(text, radix: 16));
-                        _updateColor(newColor);
-                        widget.onColorChanged?.call(getColor());
+                        _updateColor(newColor, darkColor);
+                        widget.onColorChanged
+                            ?.call(getLightColor(), getDarkColor());
                         setState(() {});
                       }
                     },
-                    onPressed: () => setState(() => editColor = false),
-                    selected: !editColor,
-                    options: widget.options,
+                    onPressed: () => setState(() => editDarkColor = false),
+                    selected: !editDarkColor,
+                    tolerance: widget.tolerance,
                     isColorDark: false,
                   ),
                 ),
                 SizedBox(width: 8),
+                Expanded(
+                  child: _ColorDisplay(
+                    color: getDarkColor(),
+                    controller: darkController,
+                    onChanged: (text) {
+                      if (text.length == 6) {
+                        Color newColor = Color(int.parse(text, radix: 16));
+                        _updateColor(lightColor, newColor);
+                        widget.onColorChanged
+                            ?.call(getLightColor(), getDarkColor());
+                        setState(() {});
+                      }
+                    },
+                    onPressed: () => setState(() => editDarkColor = true),
+                    selected: editDarkColor,
+                    tolerance: widget.tolerance,
+                    isColorDark: true,
+                  ),
+                ),
               ],
             ),
+          ),
+        ),
+        AnimatedDisable(
+          disabled: appInfo.discoEasterActive,
+          child: Row(
+            children: [
+              Spacer(),
+              ActionChip(
+                label: Text(
+                  LocaleStrings.themes.themesSystemAccentLightColorTitle,
+                ),
+                backgroundColor: !editDarkColor
+                    ? Theme.of(context).chipTheme.backgroundColor
+                    : Theme.of(context).cardColor,
+                onPressed: () => setState(() => editDarkColor = false),
+              ),
+              Spacer(flex: 2),
+              ActionChip(
+                label: Text(
+                  LocaleStrings.themes.themesSystemAccentDarkColorTitle,
+                ),
+                backgroundColor: editDarkColor
+                    ? Theme.of(context).chipTheme.backgroundColor
+                    : Theme.of(context).cardColor,
+                onPressed: () => setState(() => editDarkColor = true),
+              ),
+              Spacer(),
+            ],
           ),
         ),
         Padding(
@@ -153,7 +279,31 @@ class _MultiModeColorPickerState extends State<MultiModeColorPicker> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Container(),
+              AnimatedDisable(
+                disabled: appInfo.discoEasterActive,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(LocaleStrings
+                        .themes.themesSystemAccentCalculateShadesLabel),
+                    Switch(
+                      onChanged: (b) => setState(() => context
+                          .read<AppInfoProvider>()
+                          .autoCalculateAccents = b),
+                      value:
+                          context.watch<AppInfoProvider>().autoCalculateAccents,
+                      activeColor: Theme.of(context).accentColor,
+                    ),
+                  ],
+                ),
+              ),
+              appInfo.discoEasterEnabled
+                  ? DiscoSpinner(
+                      isSpinning: appInfo.discoEasterActive,
+                      onTap: () => appInfo.discoEasterActive =
+                          !appInfo.discoEasterActive,
+                    )
+                  : Container(),
             ],
           ),
         ),
@@ -178,8 +328,11 @@ class _MultiModeColorPickerState extends State<MultiModeColorPicker> {
           color: color,
           onValueChanged: (value) {
             final newColor = color.withRed(value.toInt());
-            _updateColor(editColor ? getColor() : newColor);
-            widget.onColorChanged?.call(getColor());
+            _updateColor(
+              editDarkColor ? getLightColor() : newColor,
+              editDarkColor ? newColor : getDarkColor(),
+            );
+            widget.onColorChanged?.call(getLightColor(), getDarkColor());
             setState(() {});
           },
           value: color.red.toDouble(),
@@ -190,8 +343,11 @@ class _MultiModeColorPickerState extends State<MultiModeColorPicker> {
           color: color,
           onValueChanged: (value) {
             final newColor = color.withGreen(value.toInt());
-            _updateColor(editColor ? getColor() : newColor);
-            widget.onColorChanged?.call(getColor());
+            _updateColor(
+              editDarkColor ? getLightColor() : newColor,
+              editDarkColor ? newColor : getDarkColor(),
+            );
+            widget.onColorChanged?.call(getLightColor(), getDarkColor());
             setState(() {});
           },
           value: color.green.toDouble(),
@@ -202,8 +358,11 @@ class _MultiModeColorPickerState extends State<MultiModeColorPicker> {
           color: color,
           onValueChanged: (value) {
             final newColor = color.withBlue(value.toInt());
-            _updateColor(editColor ? getColor() : newColor);
-            widget.onColorChanged?.call(getColor());
+            _updateColor(
+              editDarkColor ? getLightColor() : newColor,
+              editDarkColor ? newColor : getDarkColor(),
+            );
+            widget.onColorChanged?.call(getLightColor(), getDarkColor());
             setState(() {});
           },
           value: color.blue.toDouble(),
@@ -217,8 +376,11 @@ class _MultiModeColorPickerState extends State<MultiModeColorPicker> {
           color: color,
           onValueChanged: (value) {
             final newColor = color.withHue(value);
-            _updateColor(editColor ? getColor() : newColor);
-            widget.onColorChanged?.call(getColor());
+            _updateColor(
+              editDarkColor ? getLightColor() : newColor,
+              editDarkColor ? newColor : getDarkColor(),
+            );
+            widget.onColorChanged?.call(getLightColor(), getDarkColor());
             setState(() {});
           },
           value: color.hue,
@@ -229,8 +391,11 @@ class _MultiModeColorPickerState extends State<MultiModeColorPicker> {
           color: color,
           onValueChanged: (value) {
             final newColor = color.withSaturation(value);
-            _updateColor(editColor ? getColor() : newColor);
-            widget.onColorChanged?.call(getColor());
+            _updateColor(
+              editDarkColor ? getLightColor() : newColor,
+              editDarkColor ? newColor : getDarkColor(),
+            );
+            widget.onColorChanged?.call(getLightColor(), getDarkColor());
             setState(() {});
           },
           value: color.saturation,
@@ -240,8 +405,11 @@ class _MultiModeColorPickerState extends State<MultiModeColorPicker> {
           color: color,
           onValueChanged: (value) {
             final newColor = color.withLightness(value);
-            _updateColor(editColor ? getColor() : newColor);
-            widget.onColorChanged?.call(getColor());
+            _updateColor(
+              editDarkColor ? getLightColor() : newColor,
+              editDarkColor ? newColor : getDarkColor(),
+            );
+            widget.onColorChanged?.call(getLightColor(), getDarkColor());
             setState(() {});
           },
           value: color.lightness,
@@ -254,8 +422,11 @@ class _MultiModeColorPickerState extends State<MultiModeColorPicker> {
           color: color,
           onValueChanged: (value) {
             final newColor = color.withHue(value);
-            _updateColor(editColor ? getColor() : newColor);
-            widget.onColorChanged?.call(getColor());
+            _updateColor(
+              editDarkColor ? getLightColor() : newColor,
+              editDarkColor ? newColor : getDarkColor(),
+            );
+            widget.onColorChanged?.call(getLightColor(), getDarkColor());
             setState(() {});
           },
           value: color.hue,
@@ -266,8 +437,11 @@ class _MultiModeColorPickerState extends State<MultiModeColorPicker> {
           color: color,
           onValueChanged: (value) {
             final newColor = color.withSaturation(value);
-            _updateColor(editColor ? getColor() : newColor);
-            widget.onColorChanged?.call(getColor());
+            _updateColor(
+              editDarkColor ? getLightColor() : newColor,
+              editDarkColor ? newColor : getDarkColor(),
+            );
+            widget.onColorChanged?.call(getLightColor(), getDarkColor());
             setState(() {});
           },
           value: color.saturation,
@@ -277,8 +451,11 @@ class _MultiModeColorPickerState extends State<MultiModeColorPicker> {
           color: color,
           onValueChanged: (value) {
             final newColor = color.withValue(value);
-            _updateColor(editColor ? getColor() : newColor);
-            widget.onColorChanged?.call(getColor());
+            _updateColor(
+              editDarkColor ? getLightColor() : newColor,
+              editDarkColor ? newColor : getDarkColor(),
+            );
+            widget.onColorChanged?.call(getLightColor(), getDarkColor());
             setState(() {});
           },
           value: color.value,
@@ -293,7 +470,7 @@ class _ColorDisplay extends StatelessWidget {
   final ValueChanged<String> onChanged;
   final VoidCallback onPressed;
   final bool selected;
-  final ColorOptions options;
+  final double tolerance;
   final bool isColorDark;
   final selectorDelta = 0.2;
 
@@ -302,19 +479,37 @@ class _ColorDisplay extends StatelessWidget {
     @required this.controller,
     @required this.onChanged,
     @required this.onPressed,
-    @required this.options,
+    @required this.tolerance,
     this.selected = false,
     this.isColorDark = false,
   });
 
   @override
   Widget build(BuildContext context) {
+    // var hslColor = HSLColor.fromColor(color);
     return Stack(
       children: [
         Container(
           decoration: BoxDecoration(
             border: Border.all(
-              color: Colors.transparent,
+              color:
+                  /*selected
+                      ? hslColor
+                          .withLightness(hslColor.lightness < selectorDelta
+                              ? hslColor.lightness - (hslColor.lightness) / 2
+                              : hslColor.lightness - selectorDelta)
+                          .toColor()
+                      : */
+                  Colors.transparent,
+              // color: selected
+              //     ? HSLColor.fromColor(color).lightness > 1 - tolerance
+              //         ? !isColorDark
+              //             ? Colors.red
+              //             : Colors.black
+              //         : isColorDark
+              //             ? Colors.red
+              //             : Colors.white
+              //     : Colors.transparent,
               width: 4,
             ),
             borderRadius: BorderRadius.circular(12),
@@ -386,23 +581,26 @@ class _ColorDisplay extends StatelessWidget {
           right: 0,
           child: Visibility(
             visible: isColorDark
-                ? HSLColor.fromColor(color).lightness < options.minLightness
+                ? HSLColor.fromColor(color).lightness < tolerance
                     ? true
                     : false
-                : HSLColor.fromColor(color).lightness > options.maxLightness
+                : HSLColor.fromColor(color).lightness > 1 - tolerance
                     ? true
                     : false,
+            // HSLColor.fromColor(color).lightness > 1 - tolerance
+            //     ? !isColorDark
+            //         ? true
+            //         : false
+            //     : isColorDark
+            //         ? true
+            //         : false,
             child: Card(
               color: Colors.white,
               margin: EdgeInsets.all(0.0),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(16.0)),
               ),
-              child: Icon(
-                Icons.error,
-                color:
-                    options.supportsNormalization ? Colors.amber : Colors.red,
-              ),
+              child: Icon(Icons.error, color: Colors.red),
             ),
           ),
         ),

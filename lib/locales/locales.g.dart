@@ -209,5 +209,11 @@ class _$LocaleEnUS extends _$LocaleBase {
         "lockscreen.tuner.systemui_tuner_lockscreen.title": "Lockscreen tuner",
         "lockscreen.tuner.systemui_tuner_lockscreen.desc":
             "Manage lockscreen shortcuts",
+        "preferences.colorpicker.light_error": "Color is too light",
+        "preferences.colorpicker.dark_error": "Color is too dark",
+        "preferences.colorpicker.light_warning":
+            "Color is too light, it may be normalized!",
+        "preferences.colorpicker.dark_warning":
+            "Color is too dark, it may be normalized!",
       };
 }
