@@ -18,10 +18,6 @@ class _$QsLocaleStrings {
   final String title = "qs.title".tr();
   final String headerNoNotifications = "qs.header.no_notifications".tr();
   final String tweaksTitle = "qs.tweaks.title".tr();
-  final String tweaksQsTilesBgDiscoTitle =
-      "qs.tweaks.qs_tiles_bg_disco.title".tr();
-  final String tweaksQsTilesBgDiscoDesc =
-      "qs.tweaks.qs_tiles_bg_disco.desc".tr();
   final String tweaksQsShowAutoBrightnessTitle =
       "qs.tweaks.qs_show_auto_brightness.title".tr();
   final String tweaksQsShowAutoBrightnessDesc =
@@ -48,6 +44,21 @@ class _$QsLocaleStrings {
       "qs.tweaks.qs_rows_landscape.title".tr();
   final String tweaksQsColumnsLandscapeTitle =
       "qs.tweaks.qs_columns_landscape.title".tr();
+  final String colorsTitle = "qs.colors.title".tr();
+  final String colorsQsPanelBgUseFwTitle =
+      "qs.colors.qs_panel_bg_use_fw.title".tr();
+  final String colorsQsPanelBgUseFwDesc =
+      "qs.colors.qs_panel_bg_use_fw.desc".tr();
+  final String colorsQsPanelBgColorTitle =
+      "qs.colors.qs_panel_bg_color.title".tr();
+  final String colorsQsPanelBgColorDesc =
+      "qs.colors.qs_panel_bg_color.desc".tr();
+  final String colorsQsPanelBgAlphaTitle =
+      "qs.colors.qs_panel_bg_alpha.title".tr();
+  final String colorsQsPanelBgDiscoTitle =
+      "qs.colors.qs_panel_bg_disco.title".tr();
+  final String colorsQsPanelBgDiscoDesc =
+      "qs.colors.qs_panel_bg_disco.desc".tr();
 }
 
 class _$StatusbarLocaleStrings {
@@ -236,6 +247,10 @@ class _$ThemesLocaleStrings {
       "themes.themes.volume_panel_on_left.v_0".tr();
   final String themesVolumePanelOnLeftV1 =
       "themes.themes.volume_panel_on_left.v_1".tr();
+  final String themesSysuiColorsActiveTitle =
+      "themes.themes.sysui_colors_active.title".tr();
+  final String themesSysuiColorsActiveDesc =
+      "themes.themes.sysui_colors_active.desc".tr();
 }
 
 class _$AudiofxLocaleStrings {

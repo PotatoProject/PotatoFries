@@ -23,4 +23,6 @@
     <string name="themes.volume_panel_on_left.title">Volume panel direction</string>
     <string name="themes.volume_panel_on_left.v_0">Right</string>
     <string name="themes.volume_panel_on_left.v_1">Left</string>
+    <string name="themes.sysui_colors_active.title">Colored SystemUI</string>
+    <string name="themes.sysui_colors_active.desc">Wallpaper colored scrims and QS</string>
 </resources>

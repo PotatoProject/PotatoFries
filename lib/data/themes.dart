@@ -14,6 +14,24 @@ final PageData themes = PageData(
 
 final List<Preference> theme = [
   CustomPreference(id: 'AccentPicker'),
+  SettingPreference.withSwitch(
+    setting: 'sysui_colors_active',
+    title: LocaleStrings.themes.themesSysuiColorsActiveTitle,
+    description: LocaleStrings.themes.themesSysuiColorsActiveDesc,
+    icon: SmartIconData.iconData(MdiIcons.selectColor),
+    type: SettingType.SYSTEM,
+    options: SwitchOptions(
+      defaultValue: true,
+    ),
+    minVersion: '4.1.2',
+    dependencies: [
+      SettingDependency.boolean(
+        name: 'qs_tiles_bg_disco',
+        type: SettingType.SYSTEM,
+        value: false,
+      ),
+    ],
+  ),
   CustomPreference(id: 'IconShapePicker'),
   CustomPreference(id: 'IconPackPicker'),
   SettingPreference.withDropdown(
