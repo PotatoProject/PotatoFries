@@ -8,22 +8,93 @@ import 'package:potato_fries/ui/smart_icon.dart';
 final PageData qs = PageData(
   key: 'qs',
   categories: [
+    PageCategoryData(LocaleStrings.qs.colorsTitle, qsColors),
     PageCategoryData(LocaleStrings.qs.tweaksTitle, qsTweaks),
   ],
 );
 
-final List<Preference> qsTweaks = [
+final List<Preference> qsColors = [
   SettingPreference.withSwitch(
-    setting: 'qs_tiles_bg_disco',
-    title: LocaleStrings.qs.tweaksQsTilesBgDiscoTitle,
-    description: LocaleStrings.qs.tweaksQsTilesBgDiscoDesc,
-    icon: SmartIconData.iconData(MdiIcons.starPlus),
+    setting: 'qs_panel_bg_use_fw',
+    title: LocaleStrings.qs.colorsQsPanelBgUseFwTitle,
+    description: LocaleStrings.qs.colorsQsPanelBgUseFwDesc,
+    icon: SmartIconData.iconData(MdiIcons.android),
     type: SettingType.SYSTEM,
     options: SwitchOptions(
       defaultValue: true,
     ),
-    minVersion: '4.0.4',
+    minVersion: '4.1.2',
+    dependencies: [
+      SettingDependency.boolean(
+        name: 'qs_tiles_bg_disco',
+        type: SettingType.SYSTEM,
+        value: false,
+      ),
+    ],
   ),
+  SettingPreference.withSwitch(
+    setting: 'qs_tiles_bg_disco',
+    title: LocaleStrings.qs.colorsQsPanelBgDiscoTitle,
+    description: LocaleStrings.qs.colorsQsPanelBgDiscoDesc,
+    icon: SmartIconData.iconData(MdiIcons.starPlus),
+    type: SettingType.SYSTEM,
+    options: SwitchOptions(
+      defaultValue: false,
+    ),
+    minVersion: '4.0.4',
+    dependencies: [
+      SettingDependency.boolean(
+        name: 'qs_panel_bg_use_fw',
+        type: SettingType.SYSTEM,
+        value: true,
+      ),
+    ],
+  ),
+  SettingPreference.withColor(
+    setting: 'qs_panel_bg_color',
+    title: LocaleStrings.qs.colorsQsPanelBgColorTitle,
+    description: LocaleStrings.qs.colorsQsPanelBgColorDesc,
+    type: SettingType.SYSTEM,
+    options: ColorOptions(
+      minLightness: 0.0,
+      maxLightness: 0.6,
+      supportsNormalization: true,
+    ),
+    minVersion: '4.1.2',
+    dependencies: [
+      SettingDependency.boolean(
+        name: 'qs_panel_bg_use_fw',
+        type: SettingType.SYSTEM,
+        value: false,
+      ),
+      SettingDependency.boolean(
+        name: 'sysui_colors_active',
+        type: SettingType.SYSTEM,
+        value: false,
+      ),
+    ],
+  ),
+  SettingPreference.withSlider(
+    setting: 'qs_panel_bg_alpha',
+    title: LocaleStrings.qs.colorsQsPanelBgAlphaTitle,
+    type: SettingType.SYSTEM,
+    options: SliderOptions(
+      min: 100,
+      max: 255,
+      defaultValue: 255,
+    ),
+    minVersion: '4.1.2',
+    dependencies: [
+      SettingDependency.boolean(
+        name: 'qs_panel_bg_use_fw',
+        type: SettingType.SYSTEM,
+        value: false,
+      ),
+    ],
+  ),
+];
+
+final List<Preference> qsTweaks = [
   SettingPreference.withSwitch(
     setting: 'qs_show_auto_brightness',
     title: LocaleStrings.qs.tweaksQsShowAutoBrightnessTitle,
