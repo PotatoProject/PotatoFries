@@ -9,6 +9,7 @@ final PageData lockScreen = PageData(
   categories: [
     PageCategoryData(LocaleStrings.lockscreen.clocksTitle, clocks),
     PageCategoryData(LocaleStrings.lockscreen.albumartTitle, albumArt),
+    PageCategoryData(LocaleStrings.lockscreen.pocketTitle, pocketMode),
     PageCategoryData(LocaleStrings.lockscreen.tunerTitle, tunerTitle),
   ],
 );
@@ -45,6 +46,19 @@ final List<Preference> albumArt = [
       ),
     ],
     minVersion: '4.0.0',
+  ),
+];
+
+final List<Preference> pocketMode = [
+  SettingPreference.withSwitch(
+    title: LocaleStrings.lockscreen.pocketPocketJudgeTitle,
+    description: LocaleStrings.lockscreen.pocketPocketJudgeDesc,
+    setting: 'pocket_judge',
+    type: SettingType.SYSTEM,
+    options: SwitchOptions(
+      defaultValue: false,
+    ),
+    minVersion: '4.1.2',
   ),
 ];
 
