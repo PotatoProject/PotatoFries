@@ -23,8 +23,7 @@ class PageProvider extends ChangeNotifier {
   dynamic getValue(BaseKey key) => _data[key];
 
   void setValue(BaseKey key, dynamic value, {bool warmUp = false}) async {
-    final item = _data[key];
-    if (item != null && !warmUp) {
+    if (!warmUp) {
       if (key is SettingKey) {
         if (value != null) {
           switch (key.valueType) {
@@ -48,7 +47,7 @@ class PageProvider extends ChangeNotifier {
               break;
           }
         }
-      } else if (item is PropKey) {
+      } else if (key is PropKey) {
         if (value != null) {
           await AndroidFlutterSettings.setProp(
             key,
@@ -59,12 +58,13 @@ class PageProvider extends ChangeNotifier {
     }
 
     _data[key] = value;
+
     if (!warmUp) notifyListeners();
     dumpToFile(await settingsJsonPath);
   }
 
   void warmUpPages() async {
-    final fileLoaded = await loadFromFile(await settingsJsonPath);
+    final fileLoaded = await loadFromFile(await settingsJsonPath, warmUp: true);
 
     if (fileLoaded) notifyListeners();
 
@@ -90,11 +90,13 @@ class PageProvider extends ChangeNotifier {
               setValue(
                 depObj.key,
                 await AndroidFlutterSettings.getProp(depObj.key),
+                warmUp: true,
               );
             } else if (depObj is SettingDependency) {
               setValue(
                 depObj.key,
                 await _getNative(depObj.key),
+                warmUp: true,
               );
             }
           }
@@ -103,6 +105,7 @@ class PageProvider extends ChangeNotifier {
             setValue(
               pref.setting,
               await _getNative(pref.setting) ?? pref.options.defaultValue,
+              warmUp: true,
             );
           }
         }
@@ -260,7 +263,7 @@ class PageProvider extends ChangeNotifier {
     );
   }
 
-  Future<bool> loadFromFile(String path) async {
+  Future<bool> loadFromFile(String path, {bool warmUp = false}) async {
     final file = File(path);
     if (await file.exists()) {
       final fileContent = await file.readAsString();
@@ -268,7 +271,7 @@ class PageProvider extends ChangeNotifier {
 
       jsonMap.forEach((key, value) {
         final settingKey = Utils.stringToSettingKey(key);
-        setValue(settingKey, value);
+        setValue(settingKey, value, warmUp: warmUp);
       });
 
       return true;
