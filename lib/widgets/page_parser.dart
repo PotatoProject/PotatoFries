@@ -52,9 +52,11 @@ class PageParser extends StatelessWidget {
           for (Dependency d in _pref.dependencies) {
             if (d is SettingDependency) {
               var sVal = provider.getValue(d.key);
-              if (sVal != null) {
-                enabled = enabled && (sVal == d.value);
+              if (sVal == null) {
+                provider.setValue(d.key, d.value, warmUp: true);
+                sVal = d.value;
               }
+              enabled = enabled && (sVal == d.value);
             } else if (d is PropDependency) {
               if (!appInfoProvider.isCompatCheckDisabled()) {
                 var pVal = provider.getValue(d.key);
