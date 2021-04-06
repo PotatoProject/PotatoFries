@@ -1,0 +1,22 @@
+<resources>
+    <string name="title">Tela de bloqueio</string>
+    <string name="clocks.title">Relógios</string>
+    <string name="clocks.lock_screen_clock.title">Relógio da tela de bloqueio</string>
+    <string name="clocks.lock_screen_clock.v_default">Padrão</string>
+    <string name="clocks.lock_screen_clock.v_bubble">Bolha</string>
+    <string name="clocks.lock_screen_clock.v_analog">Analógico</string>
+    <string name="clocks.lock_screen_clock.v_type">Por extenso</string>
+    <string name="clocks.lock_screen_clock.v_bold">Negrito</string>
+    <string name="clocks.lock_screen_clock.v_sammy">Samsumg</string>
+    <string name="clocks.lock_screen_clock.v_sammybold">Samsung em negrito</string>
+    <string name="clocks.lock_screen_clock.v_sfuny">SFUNY</string>
+    <string name="albumart.title">Capa do álbum</string>
+    <string name="albumart.lockscreen_media_metadata.title">Tela de bloqueio com capa </string>
+    <string name="albumart.lockscreen_media_metadata.desc">Mostrar a capa do álbum na tela de bloqueio</string>
+    <string name="albumart.lockscreen_media_blur.title">Nível de desfoque na tela de bloqueio</string>
+    <string name="albumart.lockscreen_media_blur.desc">Configurar a intensidade do desfoque da capa do álbum na tela de bloqueio</string>
+    <string name="tuner.title">Atalhos da tela de bloqueio</string>
+    <string name="tuner.systemui_tuner_lockscreen.title">Ações e apps na tela de bloqueio</string>
+    <string name="tuner.systemui_tuner_lockscreen.desc">Gerenciar os atalhos na tela de bloqueio</string>
+
+</resources>

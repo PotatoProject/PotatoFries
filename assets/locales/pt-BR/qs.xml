@@ -1,0 +1,26 @@
+<resources>
+    <string name="title">Configurações Rápidas</string>
+    <string name="header.no_notifications">Sem notificações</string>
+    <string name="tweaks.title">Truques das configurações rápidas</string>
+    <string name="tweaks.qs_show_auto_brightness.title">Botão de brilho adaptável</string>
+    <string name="tweaks.qs_show_auto_brightness.desc">Mostrar o ícone de brilho adaptável nas configurações rápidas</string>
+    <string name="tweaks.qs_show_brightness_slider.title">Barra de brilho</string>
+    <string name="tweaks.qs_show_brightness_slider.desc">Mostrar a barra de brilho deslizante nas configurações rápidas</string>
+    <string name="tweaks.qs_show_brightness_slider.v_0">Não mostrar</string>
+    <string name="tweaks.qs_show_brightness_slider.v_1">Mostrar apenas quando expandido</string>
+    <string name="tweaks.qs_show_brightness_slider.v_2">Mostrar sempre</string>
+    <string name="tweaks.qs_tile_title_visibility.title">Mostrar título nos ícones</string>
+    <string name="tweaks.qs_tile_title_visibility.desc">Ocultar/Mostrar o título dos ícones</string>
+    <string name="tweaks.qs_rows_portrait.title">Linhas da grade no modo retrato</string>
+    <string name="tweaks.qs_columns_portrait.title">Colunas da grade no modo retrato</string>
+    <string name="tweaks.qs_rows_landscape.title">Linhas da grade no modo paisagem</string>
+    <string name="tweaks.qs_columns_landscape.title">Colunas da grade no modo paisagem</string>
+    <string name="colors.title">Cor das configurações rápidas</string>
+    <string name="colors.qs_panel_bg_use_fw.title">Padrão do Framework</string>
+    <string name="colors.qs_panel_bg_use_fw.desc">Desativar QS e personalizações de cores Scrim</string>
+    <string name="colors.qs_panel_bg_color.title">Cor de fundo</string>
+    <string name="colors.qs_panel_bg_color.desc">Mudar a cor do fundo das configurações rápidas</string>
+    <string name="colors.qs_panel_bg_alpha.title">Fundo alpha</string>
+    <string name="colors.qs_panel_bg_disco.title">Discoteca dos Ícones</string>
+    <string name="colors.qs_panel_bg_disco.desc">Deixar os ícones das configurações rápidas coloridos como uma balada!</string>
+</resources>
