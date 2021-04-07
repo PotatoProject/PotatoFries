@@ -392,8 +392,7 @@ class BuildVersion {
     if (other is BuildVersion && other != null) {
       return this.major == other.major &&
           this.minor == other.minor &&
-          this.patch == other.patch &&
-          this.build == other.build;
+          this.patch == other.patch;
     } else
       return false;
   }
