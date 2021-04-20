@@ -1,0 +1,26 @@
+<resources>
+    <string name="title">Быстрые настройки</string>
+    <string name="header.no_notifications">Нет уведомлений</string>
+    <string name="tweaks.title">Быстрые настройки</string>
+    <string name="tweaks.qs_show_auto_brightness.title">Автояркость в быстрых настройках</string>
+    <string name="tweaks.qs_show_auto_brightness.desc">Показать значок автоматической яркости на панели быстрых настроек</string>
+    <string name="tweaks.qs_show_brightness_slider.title">Слайдер яркости</string>
+    <string name="tweaks.qs_show_brightness_slider.desc">Показать ползунок яркости на панели быстрых настроек</string>
+    <string name="tweaks.qs_show_brightness_slider.v_0">Никогда не показывать</string>
+    <string name="tweaks.qs_show_brightness_slider.v_1">Показать при раскрытии</string>
+    <string name="tweaks.qs_show_brightness_slider.v_2">Показывать всегда</string>
+    <string name="tweaks.qs_tile_title_visibility.title">Показать заголовок плиток быстрых настроек</string>
+    <string name="tweaks.qs_tile_title_visibility.desc">Скрыть или показать заголовок плиток быстрых настроек</string>
+    <string name="tweaks.qs_rows_portrait.title">Строки в портретной ориентации</string>
+    <string name="tweaks.qs_columns_portrait.title">Столбцы в портретной ориентации</string>
+    <string name="tweaks.qs_rows_landscape.title">Строки в альбомной ориентации</string>
+    <string name="tweaks.qs_columns_landscape.title">Столбцы в альбомной ориентации</string>
+    <string name="colors.title">Цвет быстрые настроек</string>
+    <string name="colors.qs_panel_bg_use_fw.title">Значения по умолчанию</string>
+    <string name="colors.qs_panel_bg_use_fw.desc">Отключить быстрые настройки и настройки цвета сетки</string>
+    <string name="colors.qs_panel_bg_color.title">Цвет фона</string>
+    <string name="colors.qs_panel_bg_color.desc">Изменить цвет панели быстрых настроек</string>
+    <string name="colors.qs_panel_bg_alpha.title">Фон альфа</string>
+    <string name="colors.qs_panel_bg_disco.title">Быстрые настройки в стиле диско</string>
+    <string name="colors.qs_panel_bg_disco.desc">Сделайте ваши плитки быстрых настроек красочными!</string>
+</resources>
