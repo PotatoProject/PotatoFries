@@ -1,0 +1,6 @@
+<resources>
+	<string name="colorpicker.light_error">Цвет слишком светлый</string>
+	<string name="colorpicker.dark_error">Цвет слишком темный</string>
+	<string name="colorpicker.light_warning">Цвет слишком светлый, он может быть нормализован!</string>
+	<string name="colorpicker.dark_warning">Цвет слишком темный, он может быть нормализован!</string>
+</resources>
