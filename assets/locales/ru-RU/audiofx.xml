@@ -1,0 +1,8 @@
+<resources>
+    <string name="title">AudioFX</string>
+    <string name="status.on">Вкл</string>
+    <string name="status.off">Выкл</string>
+    <string name="audio_preset.title">Аудио предустановка</string>
+    <string name="headset_profile.title">Профиль гарнитуры</string>
+    <string name="headset_profile.default">Режим по умолчанию</string>
+</resources>
