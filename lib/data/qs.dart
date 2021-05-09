@@ -68,7 +68,7 @@ final List<Preference> qsColors = [
     options: SwitchOptions(
       defaultValue: false,
     ),
-    minVersion: '4.1.3',
+    minVersion: '4.1.5',
     dependencies: [
       SettingDependency.boolean(
         name: 'qs_panel_bg_use_fw',
