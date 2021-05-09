@@ -1,0 +1,32 @@
+<resources>
+    <string name="title">Система и жесты</string>
+    <string name="buttons.title">Кнопки</string>
+    <string name="buttons.volume_button_music_control.title">Кнопки регулировки громкости для пропуска треков</string>
+    <string name="buttons.volume_button_music_control.desc">Длительное нажатие кнопок громкости для перемотки вперед/назад</string>
+    <string name="buttons.advanced_reboot.title">Расширенная перезагрузка</string>
+    <string name="buttons.advanced_reboot.desc">Показать дополнительные параметры перезагрузки</string>
+    <string name="gestures.title">Жесты</string>
+    <string name="gestures.double_tap_sleep_lockscreen.title">Дважды нажмите на экране блокировки, чтобы перейти в спящий режим</string>
+    <string name="gestures.double_tap_sleep_lockscreen.desc">Выключите экран на экране блокировки, дважды нажав пустое место</string>
+    <string name="gestures.three_finger_gesture.title">Скриншот тремя пальцами</string>
+    <string name="gestures.three_finger_gesture.desc">Проведите тремя пальцами вниз, чтобы сделать снимок экрана</string>
+    <string name="gestures.pulse_on_new_tracks.title">Треки музыки на AOD</string>
+    <string name="gestures.pulse_on_new_tracks.desc">Показывать AOD при воспроизведении новой музыкальной дорожки</string>
+    <string name="navigation.title">Навигация</string>
+    <string name="navigation.sysui_nav_bar_hint.title">Показать полоску жестов</string>
+    <string name="navigation.sysui_nav_bar_hint.desc">Показать полоску жестов</string>
+    <string name="navigation.navigation_handle_width.title">Длина полоски жестов</string>
+    <string name="navigation.sysui_nav_bar_inverse.title">Поменять местами навигационные кнопки</string>
+    <string name="navigation.sysui_nav_bar_inverse.desc">Поменять местами навигационные кнопки при использовании 3-кнопочного макета</string>
+    <string name="navigation.systemui_tuner_navbar.title">Тюнер навигационной панели</string>
+    <string name="navigation.systemui_tuner_navbar.desc">Сменить макет панели навигации</string>
+    <string name="network.title">Сеть</string>
+    <string name="network.tethering_allow_vpn_upstreams.title">Разрешить клиентам использовать VPN</string>
+    <string name="network.tethering_allow_vpn_upstreams.desc">Разрешить клиентам точки доступа / модема использовать VPN-соединение этого устройства</string>
+    <string name="packagemanager.title">Диспетчер пакетов</string>
+    <string name="packagemanager.allow_signature_fake.title">Подмена подписи пакета</string>
+    <string name="packagemanager.allow_signature_fake.desc">Разрешить поддельные подписи (полезно для microG)</string>
+    <string name="notifications.title">Уведомления</string>
+    <string name="notifications.less_boring_heads_up.title">Меньше надоедливых всплывающих уведомлений</string>
+    <string name="notifications.less_boring_heads_up.desc">Получать уведомления только от приложений для звонков и обмена сообщениями</string>
+</resources>
