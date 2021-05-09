@@ -23,4 +23,6 @@
     <string name="colors.qs_panel_bg_alpha.title">Background alpha</string>
     <string name="colors.qs_panel_bg_disco.title">QS Tile Disco</string>
     <string name="colors.qs_panel_bg_disco.desc">Make your QS Tiles colorful!</string>
+    <string name="colors.qs_tile_tint.title">QS Tile Tint</string>
+    <string name="colors.qs_tile_tint.desc">Tint QS tile with accent color</string>
 </resources>

@@ -120,6 +120,8 @@ class _$QsLocaleStrings {
       "qs.colors.qs_panel_bg_disco.title".tr();
   final String colorsQsPanelBgDiscoDesc =
       "qs.colors.qs_panel_bg_disco.desc".tr();
+  final String colorsQsTileTintTitle = "qs.colors.qs_tile_tint.title".tr();
+  final String colorsQsTileTintDesc = "qs.colors.qs_tile_tint.desc".tr();
 }
 
 class _$StatusbarLocaleStrings {

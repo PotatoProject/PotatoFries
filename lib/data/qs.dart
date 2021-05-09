@@ -30,6 +30,11 @@ final List<Preference> qsColors = [
         type: SettingType.SYSTEM,
         value: false,
       ),
+      SettingDependency.boolean(
+        name: 'qs_tiles_tint',
+        type: SettingType.SYSTEM,
+        value: false,
+      ),
     ],
   ),
   SettingPreference.withSwitch(
@@ -47,6 +52,33 @@ final List<Preference> qsColors = [
         name: 'qs_panel_bg_use_fw',
         type: SettingType.SYSTEM,
         value: true,
+      ),
+      SettingDependency.boolean(
+        name: 'qs_tiles_tint',
+        type: SettingType.SYSTEM,
+        value: false,
+      ),
+    ],
+  ),
+  SettingPreference.withSwitch(
+    setting: 'qs_tiles_tint',
+    title: LocaleStrings.qs.colorsQsTileTintTitle,
+    description: LocaleStrings.qs.colorsQsTileTintDesc,
+    type: SettingType.SYSTEM,
+    options: SwitchOptions(
+      defaultValue: false,
+    ),
+    minVersion: '4.1.3',
+    dependencies: [
+      SettingDependency.boolean(
+        name: 'qs_panel_bg_use_fw',
+        type: SettingType.SYSTEM,
+        value: true,
+      ),
+      SettingDependency.boolean(
+        name: 'qs_tiles_bg_disco',
+        type: SettingType.SYSTEM,
+        value: false,
       ),
     ],
   ),

@@ -93,6 +93,8 @@ class _$LocaleEnUS extends _$LocaleBase {
         "qs.colors.qs_panel_bg_alpha.title": "Background alpha",
         "qs.colors.qs_panel_bg_disco.title": "QS Tile Disco",
         "qs.colors.qs_panel_bg_disco.desc": "Make your QS Tiles colorful!",
+        "qs.colors.qs_tile_tint.title": "QS Tile Tint",
+        "qs.colors.qs_tile_tint.desc": "Tint QS tile with accent color",
         "statusbar.title": "Statusbar",
         "statusbar.cutouts.title": "Display Cutouts",
         "statusbar.cutouts.display_cutout_mode.title": "Cutout mode",
@@ -240,6 +242,44 @@ class _$LocalePtBR extends _$LocaleBase {
 
   @override
   Map<String, String> get data => {
+        "audiofx.title": "AudioFX",
+        "audiofx.status.on": "\\Ligado",
+        "audiofx.status.off": "Desligado",
+        "audiofx.audio_preset.title": "Audio preset",
+        "audiofx.headset_profile.title": "Perfil do headphone",
+        "audiofx.headset_profile.default": "Modo padrão",
+        "lockscreen.title": "Tela de bloqueio",
+        "lockscreen.clocks.title": "Relógios",
+        "lockscreen.clocks.lock_screen_clock.title":
+            "Relógio da tela de bloqueio",
+        "lockscreen.clocks.lock_screen_clock.v_default": "Padrão",
+        "lockscreen.clocks.lock_screen_clock.v_bubble": "Bolha",
+        "lockscreen.clocks.lock_screen_clock.v_analog": "Analógico",
+        "lockscreen.clocks.lock_screen_clock.v_type": "Por extenso",
+        "lockscreen.clocks.lock_screen_clock.v_bold": "Negrito",
+        "lockscreen.clocks.lock_screen_clock.v_sammy": "Samsumg",
+        "lockscreen.clocks.lock_screen_clock.v_sammybold": "Samsung em negrito",
+        "lockscreen.clocks.lock_screen_clock.v_sfuny": "SFUNY",
+        "lockscreen.albumart.title": "Capa do álbum",
+        "lockscreen.albumart.lockscreen_media_metadata.title":
+            "Tela de bloqueio com capa ",
+        "lockscreen.albumart.lockscreen_media_metadata.desc":
+            "Mostrar a capa do álbum na tela de bloqueio",
+        "lockscreen.albumart.lockscreen_media_blur.title":
+            "Nível de desfoque na tela de bloqueio",
+        "lockscreen.albumart.lockscreen_media_blur.desc":
+            "Configurar a intensidade do desfoque da capa do álbum na tela de bloqueio",
+        "lockscreen.tuner.title": "Atalhos da tela de bloqueio",
+        "lockscreen.tuner.systemui_tuner_lockscreen.title":
+            "Ações e apps na tela de bloqueio",
+        "lockscreen.tuner.systemui_tuner_lockscreen.desc":
+            "Gerenciar os atalhos na tela de bloqueio",
+        "preferences.colorpicker.light_error": "A cor é muito clara",
+        "preferences.colorpicker.dark_error": "A cor é muito escura",
+        "preferences.colorpicker.light_warning":
+            "A cor é muito clara, mas pode ser normalizada!",
+        "preferences.colorpicker.dark_warning":
+            "A cor é muito escura, mas pode ser normalizada!",
         "qs.title": "Configurações Rápidas",
         "qs.header.no_notifications": "Sem notificações",
         "qs.tweaks.title": "Truques das configurações rápidas",
@@ -421,43 +461,5 @@ class _$LocalePtBR extends _$LocaleBase {
         "themes.themes.sysui_colors_active.title": "IU do sistema colorido",
         "themes.themes.sysui_colors_active.desc":
             "Telas coloridas e QS do papel de parede",
-        "audiofx.title": "AudioFX",
-        "audiofx.status.on": "\\Ligado",
-        "audiofx.status.off": "Desligado",
-        "audiofx.audio_preset.title": "Audio preset",
-        "audiofx.headset_profile.title": "Perfil do headphone",
-        "audiofx.headset_profile.default": "Modo padrão",
-        "lockscreen.title": "Tela de bloqueio",
-        "lockscreen.clocks.title": "Relógios",
-        "lockscreen.clocks.lock_screen_clock.title":
-            "Relógio da tela de bloqueio",
-        "lockscreen.clocks.lock_screen_clock.v_default": "Padrão",
-        "lockscreen.clocks.lock_screen_clock.v_bubble": "Bolha",
-        "lockscreen.clocks.lock_screen_clock.v_analog": "Analógico",
-        "lockscreen.clocks.lock_screen_clock.v_type": "Por extenso",
-        "lockscreen.clocks.lock_screen_clock.v_bold": "Negrito",
-        "lockscreen.clocks.lock_screen_clock.v_sammy": "Samsumg",
-        "lockscreen.clocks.lock_screen_clock.v_sammybold": "Samsung em negrito",
-        "lockscreen.clocks.lock_screen_clock.v_sfuny": "SFUNY",
-        "lockscreen.albumart.title": "Capa do álbum",
-        "lockscreen.albumart.lockscreen_media_metadata.title":
-            "Tela de bloqueio com capa ",
-        "lockscreen.albumart.lockscreen_media_metadata.desc":
-            "Mostrar a capa do álbum na tela de bloqueio",
-        "lockscreen.albumart.lockscreen_media_blur.title":
-            "Nível de desfoque na tela de bloqueio",
-        "lockscreen.albumart.lockscreen_media_blur.desc":
-            "Configurar a intensidade do desfoque da capa do álbum na tela de bloqueio",
-        "lockscreen.tuner.title": "Atalhos da tela de bloqueio",
-        "lockscreen.tuner.systemui_tuner_lockscreen.title":
-            "Ações e apps na tela de bloqueio",
-        "lockscreen.tuner.systemui_tuner_lockscreen.desc":
-            "Gerenciar os atalhos na tela de bloqueio",
-        "preferences.colorpicker.light_error": "A cor é muito clara",
-        "preferences.colorpicker.dark_error": "A cor é muito escura",
-        "preferences.colorpicker.light_warning":
-            "A cor é muito clara, mas pode ser normalizada!",
-        "preferences.colorpicker.dark_warning":
-            "A cor é muito escura, mas pode ser normalizada!",
       };
 }
