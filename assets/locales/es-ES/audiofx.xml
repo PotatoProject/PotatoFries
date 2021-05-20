@@ -1,0 +1,9 @@
+<resources>
+    <string name="title">AudioFX</string>
+    <string name="status.on">Activado</string>
+    <string name="status.off">Desactivado</string>
+    <string name="audio_preset.title">Preajuste de audio</string>
+    <string name="headset_profile.title">Perfil de auriculares</string>
+    <string name="headset_profile.default">Modo por defecto</string>
+</resources>
+

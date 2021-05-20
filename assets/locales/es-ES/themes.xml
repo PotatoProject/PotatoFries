@@ -1,0 +1,28 @@
+<resources>
+    <string name="title">Temas</string>
+    <string name="header.search_settings">Buscar ajustes</string>
+    <string name="themes.title">Temas</string>
+    <string name="themes.system_accent.title">Color de acento</string>
+    <string name="themes.system_accent.desc">Toma tu color favorito!</string>
+    <string name="themes.system_accent.cancel">Cancelar</string>
+    <string name="themes.system_accent.confirm">Confirmar</string>
+    <string name="themes.system_accent.light_color.title">Claro</string>
+    <string name="themes.system_accent.light_color.light_warning">El color claro es demasiado claro</string>
+    <string name="themes.system_accent.light_color.dark_warning">El color de la luz es demasiado oscuro</string>
+    <string name="themes.system_accent.dark_color.title">Oscuro</string>
+    <string name="themes.system_accent.dark_color.light_warning">El color oscuro es demasiado claro</string>
+    <string name="themes.system_accent.dark_color.dark_warning">El color oscuro es demasiado oscuro</string>
+    <string name="themes.system_accent.calculate_shades_label">Calcula automáticamente los tonos alternativos</string>
+    <string name="themes.system_icon_shape.title">Forma de icono</string>
+    <string name="themes.system_icon_pack.title">Paquete de iconos del sistema</string>
+    <string name="themes.systemui_plugin_volume.title">Panel del volumen</string>
+    <string name="themes.systemui_plugin_volume.v_aosp">AOSP</string>
+    <string name="themes.systemui_plugin_volume.v_compact">Compacto</string>
+    <string name="themes.systemui_plugin_volume.v_oreo">Oreo</string>
+    <string name="themes.systemui_plugin_volume.v_tiled">Tiled</string>
+    <string name="themes.volume_panel_on_left.title">Dirección del panel de volumen</string>
+    <string name="themes.volume_panel_on_left.v_0">Derecho</string>
+    <string name="themes.volume_panel_on_left.v_1">Izquierdo</string>
+    <string name="themes.sysui_colors_active.title">SystemUI colorido</string>
+    <string name="themes.sysui_colors_active.desc">Fonto de pantalla colorido y QS</string>
+</resources>
