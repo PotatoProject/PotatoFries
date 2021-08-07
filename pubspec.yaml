@@ -1,6 +1,6 @@
 name: potato_fries
 description: Fries, with a bit of salt
-version: 2.1.5+31
+version: 2.1.6+32
 publish_to: none
 
 environment:
