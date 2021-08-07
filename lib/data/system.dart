@@ -115,7 +115,7 @@ final List<Preference> navigation = [
     icon: SmartIconData.iconData(MdiIcons.swapHorizontal),
     type: SettingType.SECURE,
     options: SwitchOptions(
-      defaultValue: true,
+      defaultValue: false,
     ),
     minVersion: '4.0.2',
   ),
