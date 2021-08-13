@@ -1,0 +1,24 @@
+<resources>
+    <string name="title">Экран блокировки</string>
+    <string name="clocks.title">Часы</string>
+    <string name="clocks.lock_screen_clock.title">Часы на экране блокировки</string>
+    <string name="clocks.lock_screen_clock.v_default">По умолчанию</string>
+    <string name="clocks.lock_screen_clock.v_bubble">Пузырь</string>
+    <string name="clocks.lock_screen_clock.v_analog">Аналоговые</string>
+    <string name="clocks.lock_screen_clock.v_type">Тип</string>
+    <string name="clocks.lock_screen_clock.v_bold">Жирные</string>
+    <string name="clocks.lock_screen_clock.v_sammy">Сэмми</string>
+    <string name="clocks.lock_screen_clock.v_sammybold">Сэмми жирные</string>
+    <string name="clocks.lock_screen_clock.v_sfuny">SFUNY</string>
+    <string name="albumart.title">Обложка альбома</string>
+    <string name="albumart.lockscreen_media_metadata.title">Обложка медиа на заблокированном экране</string>
+    <string name="albumart.lockscreen_media_metadata.desc">Показать обложку альбома на экране блокировки</string>
+    <string name="albumart.lockscreen_media_blur.title">Уровень размытия экрана блокировки</string>
+    <string name="albumart.lockscreen_media_blur.desc">Настроить интенсивность размытия обложки медиа на заблокированном экране</string>
+    <string name="pocket.title">Режим "В кармане"</string>
+    <string name="pocket.pocket_judge.title">Обнаружение карманов</string>
+    <string name="pocket.pocket_judge.desc">Блокировать экран и ввод кнопок, когда устройство находится в кармане</string>
+    <string name="tuner.title">Ярлыки блокировки экрана</string>
+    <string name="tuner.systemui_tuner_lockscreen.title">Тюнер экрана блокировки</string>
+    <string name="tuner.systemui_tuner_lockscreen.desc">Управление ярлыками блокировки экрана</string>
+</resources>
