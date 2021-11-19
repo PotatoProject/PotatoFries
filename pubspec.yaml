@@ -9,9 +9,9 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  flutter_svg: ^0.20.0-nullsafety.3
+  flutter_svg: ^0.23.0+1
   shared_preferences: any
-  url_launcher: 6.0.0-nullsafety.1
+  url_launcher: ^6.0.13
   android_flutter_settings:
     git:
       url: https://github.com/AgentFabulous/android_flutter_settings
@@ -19,13 +19,13 @@ dependencies:
     git:
       url: https://github.com/AgentFabulous/android_flutter_equalizer
   material_design_icons_flutter: any
-  provider: ^5.0.0-nullsafety.2
+  provider: ^6.0.1
   animations: any
   video_player: ^2.0.0-nullsafety.4
   package_info: any
   flutter_xlider: any
   path_drawing: ^0.5.0-nullsafety.0
-  easy_localization: ^2.3.4-nullsafety.0
+  easy_localization: ^3.0.0
   recase: ^4.0.0-nullsafety.0
   path_provider: any
   path: ^1.8.0-nullsafety.3

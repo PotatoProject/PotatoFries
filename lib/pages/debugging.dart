@@ -12,7 +12,7 @@ import 'package:provider/provider.dart';
 
 class DebuggingPage extends BasePage {
   @override
-  IconData get icon => MdiIcons.androidDebugBridge;
+  IconData get icon => MdiIcons.android;
 
   @override
   String get providerKey => null;
