@@ -1,7 +1,0 @@
-<resources>
-    <string name="colorpicker.light_error">El color es demasiado claro</string>
-    <string name="colorpicker.dark_error">El color es demasiado oscuro</string>
-    <string name="colorpicker.light_warning">El color es demasiado claro, ¡puede estar normalizado!</string>
-    <string name="colorpicker.dark_warning">El color es demasiado oscuro, ¡puede estar normalizado!</string>
-</resources>
-

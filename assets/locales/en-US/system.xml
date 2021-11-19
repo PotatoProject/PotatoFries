@@ -1,32 +1,3 @@
 <resources>
     <string name="title">System & Gestures</string>
-    <string name="buttons.title">Buttons</string>
-    <string name="buttons.volume_button_music_control.title">Volume buttons to skip tracks</string>
-    <string name="buttons.volume_button_music_control.desc">Long press volume buttons to forward/backward track</string>
-    <string name="buttons.advanced_reboot.title">Advanced Reboot</string>
-    <string name="buttons.advanced_reboot.desc">Show extra reboot options</string>
-    <string name="gestures.title">Gestures</string>
-    <string name="gestures.double_tap_sleep_lockscreen.title">Double tap to sleep on lockscreen</string>
-    <string name="gestures.double_tap_sleep_lockscreen.desc">Turn off screen by double tapping empty space on lockscreen</string>
-    <string name="gestures.three_finger_gesture.title">Three finger screenshot</string>
-    <string name="gestures.three_finger_gesture.desc">Swipe down with three fingers to screenshot</string>
-    <string name="gestures.pulse_on_new_tracks.title">Ambient music tracks</string>
-    <string name="gestures.pulse_on_new_tracks.desc">Show Ambient Display when a new music track is played</string>
-    <string name="navigation.title">Navigation</string>
-    <string name="navigation.sysui_nav_bar_hint.title">Show gestural pill</string>
-    <string name="navigation.sysui_nav_bar_hint.desc">Toggle the navigation handle/pill</string>
-    <string name="navigation.navigation_handle_width.title">Navigation handle length</string>
-    <string name="navigation.sysui_nav_bar_inverse.title">Swap navigation buttons</string>
-    <string name="navigation.sysui_nav_bar_inverse.desc">Swap navigation buttons when using 3 button layout</string>
-    <string name="navigation.systemui_tuner_navbar.title">Navigation bar tuner</string>
-    <string name="navigation.systemui_tuner_navbar.desc">Swap navigation bar layout</string>
-    <string name="network.title">Network</string>
-    <string name="network.tethering_allow_vpn_upstreams.title">Allow clients to use VPNs</string>
-    <string name="network.tethering_allow_vpn_upstreams.desc">Permit hotspot/tethering clients to use this device's VPN connection</string>
-    <string name="packagemanager.title">Package manager</string>
-    <string name="packagemanager.allow_signature_fake.title">Package signature spoofing</string>
-    <string name="packagemanager.allow_signature_fake.desc">Allow fake signatures (useful for microG)</string>
-    <string name="notifications.title">Notifications</string>
-    <string name="notifications.less_boring_heads_up.title">Less boring heads up</string>
-    <string name="notifications.less_boring_heads_up.desc">Only receive heads up from calling and messaging apps</string>
 </resources>
