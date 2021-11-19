@@ -15,7 +15,9 @@ import 'package:potato_fries/widgets/custom/icon_shape_picker.dart';
 import 'package:potato_fries/widgets/custom/lock_screen_clock_picker.dart';
 import 'package:provider/provider.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await EasyLocalization.ensureInitialized();
   CustomWidgetRegistry.register(CustomWidget(
     AccentPicker(),
     {
