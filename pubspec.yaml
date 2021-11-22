@@ -4,35 +4,20 @@ version: 2.1.6+32
 publish_to: none
 
 environment:
-  sdk: ">=2.10.0 <3.0.0"
+  sdk: ">=2.14.0 <3.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
-  flutter_svg: ^0.20.0-nullsafety.3
-  shared_preferences: any
-  url_launcher: 6.0.0-nullsafety.1
-  android_flutter_settings:
-    git:
-      url: https://github.com/AgentFabulous/android_flutter_settings
-  effectsplugin:
-    git:
-      url: https://github.com/AgentFabulous/android_flutter_equalizer
-  material_design_icons_flutter: any
-  provider: ^5.0.0-nullsafety.2
-  animations: any
-  video_player: ^2.0.0-nullsafety.4
-  package_info: any
-  flutter_xlider: any
-  path_drawing: ^0.5.0-nullsafety.0
-  easy_localization: ^2.3.4-nullsafety.0
-  recase: ^4.0.0-nullsafety.0
-  path_provider: any
-  path: ^1.8.0-nullsafety.3
+
+  monet: ^0.1.0
+  provider: ^6.0.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+    
+  flutter_lints: ^1.0.0
 
 flutter:
   uses-material-design: true

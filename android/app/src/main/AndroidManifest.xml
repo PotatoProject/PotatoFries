@@ -18,7 +18,7 @@
          additional functionality it is fine to subclass or reimplement
          FlutterApplication and put your custom class here. -->
     <application
-        android:name="io.flutter.app.FlutterApplication"
+        android:name="${applicationName}"
         android:label="Fries"
         android:icon="@mipmap/ic_launcher">
         <activity
@@ -28,7 +28,8 @@
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
             android:hardwareAccelerated="true"
             android:windowSoftInputMode="adjustResize"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:exported="true">
             <meta-data
               android:name="io.flutter.embedding.android.NormalTheme"
               android:resource="@style/AppTheme"
@@ -55,16 +56,9 @@
             <meta-data android:name="com.android.settings.bg.argb" android:value="@color/fries_icon_bg_color"/>
             <meta-data android:name="com.android.settings.order" android:value="-95"/>
         </activity-alias>
+
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
-        <receiver android:name="com.potatoproject.fries.BootCompleteReceiver">
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-            </intent-filter>
-        </receiver>
-        <service android:enabled="true"
-            android:name="co.potatoproject.effectsplugin.EffectsPluginService">
-        </service>
     </application>
 </manifest>
