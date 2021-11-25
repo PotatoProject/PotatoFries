@@ -240,6 +240,7 @@ class DropdownPreferenceTile<T> extends StatelessWidget {
           onValueChanged?.call(newOption);
         }
       },
+      onLongPress: onLongPress,
       enabled: enabled,
     );
   }

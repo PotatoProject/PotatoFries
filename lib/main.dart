@@ -1,8 +1,11 @@
 import 'package:flutter/services.dart';
 import 'package:monet/monet.dart';
 import 'package:flutter/material.dart';
+import 'package:potato_fries/backend/data.dart';
+import 'package:potato_fries/backend/models/dependency.dart';
+import 'package:potato_fries/backend/settings.dart';
 import 'package:potato_fries/ui/components/app.dart';
-import 'package:potato_fries/ui/components/preferences.dart';
+import 'package:potato_fries/ui/components/preferences/settings.dart';
 import 'package:potato_fries/ui/theme.dart';
 import 'package:provider/provider.dart';
 
@@ -10,10 +13,19 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final MonetProvider monet = await MonetProvider.newInstance();
 
+  final SettingSink sink = SettingSink.newInstance();
+  await Settings.airplane_mode_on.subscribeTo(sink);
+  await Settings.screen_brightness.subscribeTo(sink);
+  await Settings.logger_buffer_size.subscribeTo(sink);
+  /* for (final Setting setting in settings) {
+    await setting.subscribeTo(sink);
+  } */
+
   runApp(
     MultiProvider(
       providers: [
         ChangeNotifierProvider.value(value: monet),
+        Provider.value(value: sink),
       ],
       child: const FriesRoot(),
     ),
@@ -93,28 +105,26 @@ class _FriesHomeState extends State<FriesHome> {
         ],
       ),
       body: Column(
-        children: [
-          SwitchPreferenceTile(
-            icon: const Icon(Icons.invert_colors),
-            title: "Verify apps over USB",
-            subtitle: "Check apps installed via ADB/ADT for harmful behaviour",
-            value: toggled,
-            onValueChanged: (value) => setState(() => toggled = value),
+        children: const [
+          SwitchSettingPreference(
+            setting: Settings.airplane_mode_on,
+            icon: Icons.airplanemode_active,
+            title: "Airplane mode",
           ),
-          SliderPreferenceTile<double>(
-            icon: const Icon(Icons.power_settings_new),
-            title: "Enable GPU debug layers",
-            value: sliderValue,
+          SliderSettingPreference<int>(
+            setting: Settings.screen_brightness,
+            icon: Icons.brightness_medium,
+            title: "Brightness",
             min: 0,
-            max: 1,
-            onValueChanged: (value) => setState(() => sliderValue = value),
-            enabled: toggled,
+            max: 255,
+            dependencies: [
+              SettingDependency(Settings.airplane_mode_on, true),
+            ],
           ),
-          DropdownPreferenceTile<int>(
+          DropdownSettingPreference<int>(
+            setting: Settings.logger_buffer_size,
             title: "Logger buffer sizes",
             options: _options,
-            selectedOption: selectedOption,
-            onValueChanged: (value) => setState(() => selectedOption = value),
           ),
         ],
       ),
