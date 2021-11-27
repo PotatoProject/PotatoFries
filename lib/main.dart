@@ -2,7 +2,9 @@ import 'package:flutter/services.dart';
 import 'package:monet/monet.dart';
 import 'package:flutter/material.dart';
 import 'package:potato_fries/backend/data.dart';
+import 'package:potato_fries/backend/extensions.dart';
 import 'package:potato_fries/backend/models/dependency.dart';
+import 'package:potato_fries/backend/properties.dart';
 import 'package:potato_fries/backend/settings.dart';
 import 'package:potato_fries/ui/components/app.dart';
 import 'package:potato_fries/ui/components/preferences/settings.dart';
@@ -17,15 +19,16 @@ Future<void> main() async {
   await Settings.airplane_mode_on.subscribeTo(sink);
   await Settings.screen_brightness.subscribeTo(sink);
   await Settings.logger_buffer_size.subscribeTo(sink);
-  /* for (final Setting setting in settings) {
-    await setting.subscribeTo(sink);
-  } */
+
+  final PropertyRegister register = PropertyRegister();
+  await Properties.ro_potato_has_cutout.registerTo(register);
 
   runApp(
     MultiProvider(
       providers: [
         ChangeNotifierProvider.value(value: monet),
         Provider.value(value: sink),
+        Provider.value(value: register),
       ],
       child: const FriesRoot(),
     ),
@@ -119,6 +122,7 @@ class _FriesHomeState extends State<FriesHome> {
             max: 255,
             dependencies: [
               SettingDependency(Settings.airplane_mode_on, true),
+              PropertyDependency(Properties.ro_potato_has_cutout, null),
             ],
           ),
           DropdownSettingPreference<int>(

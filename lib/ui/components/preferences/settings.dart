@@ -2,6 +2,7 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:potato_fries/backend/models/dependency.dart';
 import 'package:potato_fries/backend/models/settings.dart';
+import 'package:potato_fries/backend/properties.dart';
 import 'package:potato_fries/backend/settings.dart';
 import 'package:potato_fries/ui/components/preferences/base.dart';
 
@@ -207,9 +208,12 @@ class DependencyHandler extends StatefulWidget {
 
 class _DependencyHandlerState extends State<DependencyHandler> {
   late final SettingSink sink = SettingSink.of(context, listen: false);
+  late final PropertyRegister register =
+      PropertyRegister.of(context, listen: false);
   List<SettingDependency> get settingDependencies =>
       widget.dependencies.whereType<SettingDependency>().toList();
   final Map<SettingKey, SettingSubscription> subscriptions = {};
+  static const ListEquality _eq = ListEquality();
 
   @override
   void initState() {
@@ -219,8 +223,7 @@ class _DependencyHandlerState extends State<DependencyHandler> {
 
   @override
   void didUpdateWidget(covariant DependencyHandler old) {
-    const ListEquality eq = ListEquality(ListEquality());
-    if (!eq.equals(widget.dependencies, old.dependencies)) {
+    if (!_eq.equals(widget.dependencies, old.dependencies)) {
       _unregisterListeners();
       _registerListeners();
     }
@@ -254,6 +257,8 @@ class _DependencyHandlerState extends State<DependencyHandler> {
     for (final Dependency dep in widget.dependencies) {
       if (dep is SettingDependency) {
         result = result && dep.value == subscriptions[dep.key]!.value;
+      } else if (dep is PropertyDependency) {
+        result = result && dep.value == register.get(dep.key);
       }
     }
 

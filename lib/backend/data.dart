@@ -1,5 +1,6 @@
 // ignore_for_file: constant_identifier_names
 
+import 'package:potato_fries/backend/models/properties.dart';
 import 'package:potato_fries/backend/models/settings.dart';
 
 class Settings {
@@ -17,4 +18,9 @@ class Settings {
     screen_brightness,
     logger_buffer_size,
   ];
+}
+
+class Properties {
+  static const PropertyKey ro_potato_has_cutout =
+      PropertyKey("ro.potato.has_cutout");
 }

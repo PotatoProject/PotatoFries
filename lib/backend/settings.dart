@@ -138,9 +138,3 @@ extension on SettingType {
     }
   }
 }
-
-extension SettingSubscriber<T> on Setting<T> {
-  Future<SettingSubscription<T>> subscribeTo(SettingSink sink) async {
-    return sink.subscribe<T>(this);
-  }
-}

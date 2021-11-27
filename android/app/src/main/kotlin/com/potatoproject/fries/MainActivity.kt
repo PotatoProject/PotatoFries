@@ -6,6 +6,7 @@ import android.database.ContentObserver
 import android.net.Uri
 import android.os.Handler
 import android.os.Looper
+import android.os.SystemProperties
 import android.provider.Settings
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
@@ -64,6 +65,31 @@ class MainActivity : FlutterActivity() {
                         "secure" -> Settings.Secure.putString(contentResolver, name, actualValue)
                         else -> throw Exception("Value not supported for table")
                     }
+                    
+                    result.success(true)
+                }
+                else -> result.notImplemented()
+            }
+        }
+
+        MethodChannel(flutterEngine.dartExecutor, "fries/properties/controls").setMethodCallHandler { call, result ->
+            when(call.method) {
+                "read" -> {
+                    assert(call.hasArgument("name"))
+
+                    val name: String = call.argument("name")!!
+                    val value: String = SystemProperties.get(name)
+
+                    result.success(value)
+                }
+                "write" -> {
+                    assert(call.hasArgument("name"))
+                    assert(call.hasArgument("value"))
+
+                    val name: String = call.argument("name")!!
+                    val value: String = call.argument("value")!!
+
+                    SystemProperties.set(name, value)
                     
                     result.success(true)
                 }
