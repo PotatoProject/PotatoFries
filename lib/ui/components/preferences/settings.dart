@@ -6,15 +6,15 @@ import 'package:potato_fries/backend/properties.dart';
 import 'package:potato_fries/backend/settings.dart';
 import 'package:potato_fries/ui/components/preferences/base.dart';
 
-class SwitchSettingPreference extends StatelessWidget {
+class SwitchSettingPreferenceTile extends StatelessWidget {
   final SettingKey<bool> setting;
   final String title;
   final String? subtitle;
   final IconData? icon;
   final bool enabled;
-  final List<Dependency> dependencies;
+  final List<SettingDependency> dependencies;
 
-  const SwitchSettingPreference({
+  const SwitchSettingPreferenceTile({
     required this.setting,
     required this.title,
     this.subtitle,
@@ -32,6 +32,7 @@ class SwitchSettingPreference extends StatelessWidget {
       builder: (context, value, dependencyEnable) => SwitchPreferenceTile(
         icon: Icon(icon),
         title: title,
+        subtitle: subtitle,
         value: value,
         onValueChanged: (value) => setting.write(value),
         enabled: enabled && dependencyEnable,
@@ -41,16 +42,16 @@ class SwitchSettingPreference extends StatelessWidget {
   }
 }
 
-class SliderSettingPreference<T extends num> extends StatelessWidget {
+class SliderSettingPreferenceTile<T extends num> extends StatelessWidget {
   final SettingKey<T> setting;
   final String title;
   final T? min;
   final T max;
   final IconData? icon;
   final bool enabled;
-  final List<Dependency> dependencies;
+  final List<SettingDependency> dependencies;
 
-  const SliderSettingPreference({
+  const SliderSettingPreferenceTile({
     required this.setting,
     required this.title,
     this.min,
@@ -80,15 +81,15 @@ class SliderSettingPreference<T extends num> extends StatelessWidget {
   }
 }
 
-class DropdownSettingPreference<K> extends StatelessWidget {
+class DropdownSettingPreferenceTile<K> extends StatelessWidget {
   final SettingKey<K> setting;
   final Map<K, String> options;
   final String title;
   final IconData? icon;
   final bool enabled;
-  final List<Dependency> dependencies;
+  final List<SettingDependency> dependencies;
 
-  const DropdownSettingPreference({
+  const DropdownSettingPreferenceTile({
     required this.setting,
     required this.title,
     required this.options,
@@ -124,7 +125,7 @@ typedef _SettingTileBuilder<T> = Widget Function(
 
 class _SettingTileBase<T> extends StatefulWidget {
   final SettingKey<T> setting;
-  final List<Dependency> dependencies;
+  final List<SettingDependency> dependencies;
   final _SettingTileBuilder builder;
 
   const _SettingTileBase({
@@ -147,7 +148,7 @@ class _SettingTileBaseState<T> extends State<_SettingTileBase<T>> {
   Widget build(BuildContext context) {
     return SettingListener<T>(
       subscription: subscription,
-      builder: (context, value) => DependencyHandler(
+      builder: (context, value) => SettingDependencyHandler(
         dependencies: widget.dependencies,
         builder: (context, enable) => widget.builder(context, value, enable),
       ),
@@ -191,27 +192,26 @@ class _SettingListenerState<T> extends State<SettingListener<T>> {
       widget.builder(context, widget.subscription.value);
 }
 
-class DependencyHandler extends StatefulWidget {
-  final List<Dependency> dependencies;
+class SettingDependencyHandler extends StatefulWidget {
+  final List<SettingDependency> dependencies;
   final Widget Function(BuildContext context, bool dependenciesSatisfied)
       builder;
 
-  const DependencyHandler({
+  const SettingDependencyHandler({
     required this.dependencies,
     required this.builder,
     Key? key,
   }) : super(key: key);
 
   @override
-  _DependencyHandlerState createState() => _DependencyHandlerState();
+  _SettingDependencyHandlerState createState() =>
+      _SettingDependencyHandlerState();
 }
 
-class _DependencyHandlerState extends State<DependencyHandler> {
+class _SettingDependencyHandlerState extends State<SettingDependencyHandler> {
   late final SettingSink sink = SettingSink.of(context, listen: false);
   late final PropertyRegister register =
       PropertyRegister.of(context, listen: false);
-  List<SettingDependency> get settingDependencies =>
-      widget.dependencies.whereType<SettingDependency>().toList();
   final Map<SettingKey, SettingSubscription> subscriptions = {};
   static const ListEquality _eq = ListEquality();
 
@@ -222,7 +222,7 @@ class _DependencyHandlerState extends State<DependencyHandler> {
   }
 
   @override
-  void didUpdateWidget(covariant DependencyHandler old) {
+  void didUpdateWidget(covariant SettingDependencyHandler old) {
     if (!_eq.equals(widget.dependencies, old.dependencies)) {
       _unregisterListeners();
       _registerListeners();
@@ -233,7 +233,7 @@ class _DependencyHandlerState extends State<DependencyHandler> {
 
   void _registerListeners() {
     subscriptions.clear();
-    for (final SettingDependency dependency in settingDependencies) {
+    for (final SettingDependency dependency in widget.dependencies) {
       final SettingSubscription subscription =
           sink.getSubscription(dependency.key)!;
       subscription.addListener(_update);
@@ -254,12 +254,8 @@ class _DependencyHandlerState extends State<DependencyHandler> {
   bool _checkForDependencies() {
     bool result = true;
 
-    for (final Dependency dep in widget.dependencies) {
-      if (dep is SettingDependency) {
-        result = result && dep.value == subscriptions[dep.key]!.value;
-      } else if (dep is PropertyDependency) {
-        result = result && dep.value == register.get(dep.key);
-      }
+    for (final SettingDependency dep in widget.dependencies) {
+      result = result && dep.value == subscriptions[dep.key]!.value;
     }
 
     return result;

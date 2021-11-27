@@ -3,11 +3,9 @@ import 'package:monet/monet.dart';
 import 'package:flutter/material.dart';
 import 'package:potato_fries/backend/data.dart';
 import 'package:potato_fries/backend/extensions.dart';
-import 'package:potato_fries/backend/models/dependency.dart';
 import 'package:potato_fries/backend/properties.dart';
 import 'package:potato_fries/backend/settings.dart';
 import 'package:potato_fries/ui/components/app.dart';
-import 'package:potato_fries/ui/components/preferences/settings.dart';
 import 'package:potato_fries/ui/theme.dart';
 import 'package:provider/provider.dart';
 
@@ -81,18 +79,7 @@ class FriesHome extends StatefulWidget {
 }
 
 class _FriesHomeState extends State<FriesHome> {
-  static const Map<int, String> _options = {
-    0: "Off",
-    1: "64K",
-    2: "256K",
-    3: "1M",
-    4: "4M",
-    5: "8M",
-  };
   int pageIndex = 0;
-  double sliderValue = 0;
-  bool toggled = true;
-  int selectedOption = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -107,61 +94,11 @@ class _FriesHomeState extends State<FriesHome> {
           const SizedBox(width: 8),
         ],
       ),
-      body: Column(
-        children: const [
-          SwitchSettingPreference(
-            setting: Settings.airplane_mode_on,
-            icon: Icons.airplanemode_active,
-            title: "Airplane mode",
-          ),
-          SliderSettingPreference<int>(
-            setting: Settings.screen_brightness,
-            icon: Icons.brightness_medium,
-            title: "Brightness",
-            min: 0,
-            max: 255,
-            dependencies: [
-              SettingDependency(Settings.airplane_mode_on, true),
-              PropertyDependency(Properties.ro_potato_has_cutout, null),
-            ],
-          ),
-          DropdownSettingPreference<int>(
-            setting: Settings.logger_buffer_size,
-            title: "Logger buffer sizes",
-            options: _options,
-          ),
-        ],
-      ),
+      body: Pages.list[pageIndex].build(context),
       bottomNavigationBar: NavigationBar(
         selectedIndex: pageIndex,
         onDestinationSelected: (index) => setState(() => pageIndex = index),
-        destinations: const [
-          NavigationDestination(
-            icon: Icon(Icons.brightness_6_outlined),
-            selectedIcon: Icon(Icons.brightness_6),
-            label: "QS",
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.settings_outlined),
-            selectedIcon: Icon(Icons.settings),
-            label: "System",
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.color_lens_outlined),
-            selectedIcon: Icon(Icons.color_lens),
-            label: "Themes",
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.signal_cellular_0_bar),
-            selectedIcon: Icon(Icons.signal_cellular_4_bar),
-            label: "Statusbar",
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.lock_outlined),
-            selectedIcon: Icon(Icons.lock),
-            label: "Keyguard",
-          ),
-        ],
+        destinations: Pages.list.map((e) => e.destination).toList(),
       ),
     );
   }
