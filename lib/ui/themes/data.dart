@@ -396,6 +396,17 @@ class FriesThemeData {
           ),
         ),
       ),
+      cardColor: colorScheme.surfaceVariant,
+      cardTheme: const CardTheme(
+        clipBehavior: Clip.antiAlias,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(
+            Radius.circular(8),
+          ),
+        ),
+        elevation: 0,
+        shadowColor: Colors.transparent,
+      ),
     );
   }
 }

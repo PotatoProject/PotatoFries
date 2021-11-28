@@ -4,6 +4,7 @@ import 'package:potato_fries/backend/models/dependency.dart';
 import 'package:potato_fries/backend/models/settings.dart';
 import 'package:potato_fries/backend/properties.dart';
 import 'package:potato_fries/ui/components/preferences/settings.dart';
+import 'package:potato_fries/ui/components/separated_flex.dart';
 import 'package:potato_fries/ui/theme.dart';
 import 'package:pub_semver/pub_semver.dart';
 
@@ -12,7 +13,7 @@ class FriesPage {
   final List<PageSection> sections;
   final IconData icon;
   final IconData selectedIcon;
-  final WidgetBuilder? header;
+  final Widget? header;
 
   const FriesPage({
     required this.title,
@@ -23,10 +24,26 @@ class FriesPage {
   });
 
   Widget build(BuildContext context) {
-    return ListView.separated(
-      itemBuilder: (context, index) => sections[index].build(context),
-      separatorBuilder: (context, index) => const SizedBox(height: 16),
-      itemCount: sections.length,
+    return SeparatedFlex(
+      separator: const SizedBox(height: 16),
+      children: [
+        if (header != null)
+          AspectRatio(
+            aspectRatio: 20 / 9, // 20 : 9
+            child: Card(
+              margin: const EdgeInsets.symmetric(horizontal: 16),
+              child: SizedBox.expand(child: header),
+            ),
+          ),
+        Expanded(
+          child: ListView.separated(
+            itemBuilder: (context, index) => sections[index].build(context),
+            separatorBuilder: (context, index) => const SizedBox(height: 16),
+            itemCount: sections.length,
+            padding: EdgeInsets.only(top: header != null ? 16 : 0),
+          ),
+        ),
+      ],
     );
   }
 

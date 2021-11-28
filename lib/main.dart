@@ -4,6 +4,7 @@ import 'package:monet/monet.dart';
 import 'package:flutter/material.dart';
 import 'package:potato_fries/backend/data.dart';
 import 'package:potato_fries/backend/extensions.dart';
+import 'package:potato_fries/backend/models/pages.dart';
 import 'package:potato_fries/backend/properties.dart';
 import 'package:potato_fries/backend/settings.dart';
 import 'package:potato_fries/ui/components/app.dart';
@@ -80,6 +81,7 @@ class FriesHome extends StatefulWidget {
 
 class _FriesHomeState extends State<FriesHome> {
   int pageIndex = 0;
+  FriesPage get currentPage => Pages.list[pageIndex];
 
   @override
   Widget build(BuildContext context) {
