@@ -81,6 +81,44 @@ class Pages {
               5: "8M",
             },
           ),
+          SubpagePreference(
+            subpage: FriesSubpage(
+              title: "Amoghis",
+              preferences: [
+                SwitchSettingPreference(
+                  setting: Settings.airplane_mode_on,
+                  icon: Icons.airplanemode_active,
+                  title: "Airplane mode",
+                ),
+                SliderSettingPreference<int>(
+                  setting: Settings.screen_brightness,
+                  icon: Icons.brightness_medium,
+                  title: "Brightness",
+                  min: 0,
+                  max: 255,
+                  dependencies: [
+                    SettingDependency(Settings.airplane_mode_on, true),
+                    PropertyDependency(Properties.ro_potato_has_cutout, null),
+                  ],
+                ),
+                DropdownSettingPreference<int>(
+                  setting: Settings.logger_buffer_size,
+                  title: "Logger buffer sizes",
+                  options: {
+                    0: "Off",
+                    1: "64K",
+                    2: "256K",
+                    3: "1M",
+                    4: "4M",
+                    5: "8M",
+                  },
+                ),
+              ],
+            ),
+            title: "Subpage test",
+            description: "dfds",
+            icon: Icons.brightness_medium,
+          ),
         ],
       ),
     ],
@@ -126,13 +164,13 @@ class Pages {
     SettingSink sink,
     PropertyRegister register,
   ) async {
-    final List<Preference> preferences = list
-        .expand(
-          (page) => page.sections.expand(
-            (section) => section.preferences,
-          ),
-        )
+    final List<Preference> preferences =
+        list.expand((page) => page.preferences).toList();
+    final List<Preference> subPreferences = preferences
+        .whereType<SubpagePreference>()
+        .expand((e) => e.subpage.preferences)
         .toList();
+    preferences.addAll(subPreferences);
 
     final Set<Setting> settings = {};
     final Set<PropertyKey> properties = {};

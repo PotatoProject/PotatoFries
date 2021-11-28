@@ -3,6 +3,7 @@ import 'package:potato_fries/backend/extensions.dart';
 import 'package:potato_fries/backend/models/dependency.dart';
 import 'package:potato_fries/backend/models/settings.dart';
 import 'package:potato_fries/backend/properties.dart';
+import 'package:potato_fries/ui/components/preferences/base.dart';
 import 'package:potato_fries/ui/components/preferences/settings.dart';
 import 'package:potato_fries/ui/components/separated_flex.dart';
 import 'package:potato_fries/ui/theme.dart';
@@ -52,6 +53,9 @@ class FriesPage {
         selectedIcon: Icon(selectedIcon),
         label: title,
       );
+
+  List<Preference> get preferences =>
+      sections.expand((s) => s.preferences).toList();
 }
 
 class PageSection {
@@ -254,6 +258,74 @@ class DropdownSettingPreference<K> extends SettingPreference<K> {
       options: options,
       icon: icon,
       dependencies: dependencies.whereType<SettingDependency>().toList(),
+    );
+  }
+}
+
+class FriesSubpage {
+  final String title;
+  final List<Preference> preferences;
+
+  const FriesSubpage({
+    required this.title,
+    required this.preferences,
+  });
+
+  Widget build(BuildContext context) {
+    assert(preferences.every((element) => element is! SubpagePreference));
+
+    return Scaffold(
+      appBar: AppBar(
+        leading: BackButton(
+          onPressed: () => Navigator.pop(context),
+        ),
+        title: Text(title),
+      ),
+      body: ListView.builder(
+        itemBuilder: (context, index) => preferences[index].build(context),
+        itemCount: preferences.length,
+      ),
+    );
+  }
+}
+
+class SubpagePreference extends Preference {
+  final FriesSubpage subpage;
+  final String title;
+  final String? description;
+  final IconData? icon;
+
+  const SubpagePreference({
+    required this.subpage,
+    required this.title,
+    this.description,
+    this.icon,
+    List<Dependency> dependencies = const [],
+    String? minVersion,
+    String? maxVersion,
+  }) : super(
+          dependencies: dependencies,
+          minVersion: minVersion,
+          maxVersion: maxVersion,
+        );
+
+  @override
+  Widget build(BuildContext context) {
+    return SettingDependencyHandler(
+      dependencies: dependencies.whereType<SettingDependency>().toList(),
+      builder: (context, dependencyEnable) => PreferenceTile(
+        leading: Icon(icon),
+        title: Text(title),
+        subtitle: description != null ? Text(description!) : null,
+        onTap: () => Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => subpage.build(context),
+          ),
+        ),
+        trailing: const ShortChip(child: Icon(Icons.chevron_right)),
+        enabled: dependencyEnable,
+      ),
     );
   }
 }

@@ -239,7 +239,7 @@ class _SettingDependencyHandlerState extends State<SettingDependencyHandler> {
   }
 
   void _update() {
-    setState(() {});
+    if (mounted) setState(() {});
   }
 
   bool _checkForDependencies() {

@@ -1,3 +1,4 @@
+import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:monet/monet.dart';
@@ -407,6 +408,11 @@ class FriesThemeData {
         elevation: 0,
         shadowColor: Colors.transparent,
       ),
+      pageTransitionsTheme: const PageTransitionsTheme(builders: {
+        TargetPlatform.android: SharedAxisPageTransitionsBuilder(
+          transitionType: SharedAxisTransitionType.scaled,
+        ),
+      }),
     );
   }
 }
