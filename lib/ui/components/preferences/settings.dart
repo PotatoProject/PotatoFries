@@ -1,17 +1,17 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:potato_fries/backend/extensions.dart';
 import 'package:potato_fries/backend/models/dependency.dart';
 import 'package:potato_fries/backend/models/settings.dart';
-import 'package:potato_fries/backend/properties.dart';
 import 'package:potato_fries/backend/settings.dart';
 import 'package:potato_fries/ui/components/preferences/base.dart';
+import 'package:potato_fries/ui/components/sheet.dart';
 
 class SwitchSettingPreferenceTile extends StatelessWidget {
   final SettingKey<bool> setting;
   final String title;
   final String? subtitle;
   final IconData? icon;
-  final bool enabled;
   final List<SettingDependency> dependencies;
 
   const SwitchSettingPreferenceTile({
@@ -19,7 +19,6 @@ class SwitchSettingPreferenceTile extends StatelessWidget {
     required this.title,
     this.subtitle,
     this.icon,
-    this.enabled = true,
     this.dependencies = const [],
     Key? key,
   }) : super(key: key);
@@ -35,7 +34,7 @@ class SwitchSettingPreferenceTile extends StatelessWidget {
         subtitle: subtitle,
         value: value,
         onValueChanged: (value) => setting.write(value),
-        enabled: enabled && dependencyEnable,
+        enabled: dependencyEnable,
         onLongPress: () => _resetSetting(context, setting),
       ),
     );
@@ -48,7 +47,6 @@ class SliderSettingPreferenceTile<T extends num> extends StatelessWidget {
   final T? min;
   final T max;
   final IconData? icon;
-  final bool enabled;
   final List<SettingDependency> dependencies;
 
   const SliderSettingPreferenceTile({
@@ -57,7 +55,6 @@ class SliderSettingPreferenceTile<T extends num> extends StatelessWidget {
     this.min,
     required this.max,
     this.icon,
-    this.enabled = true,
     this.dependencies = const [],
     Key? key,
   }) : super(key: key);
@@ -74,7 +71,7 @@ class SliderSettingPreferenceTile<T extends num> extends StatelessWidget {
         max: max,
         value: value,
         onValueChanged: (value) => setting.write(value),
-        enabled: enabled && dependencyEnable,
+        enabled: dependencyEnable,
         onLongPress: () => _resetSetting(context, setting),
       ),
     );
@@ -86,7 +83,6 @@ class DropdownSettingPreferenceTile<K> extends StatelessWidget {
   final Map<K, String> options;
   final String title;
   final IconData? icon;
-  final bool enabled;
   final List<SettingDependency> dependencies;
 
   const DropdownSettingPreferenceTile({
@@ -94,7 +90,6 @@ class DropdownSettingPreferenceTile<K> extends StatelessWidget {
     required this.title,
     required this.options,
     this.icon,
-    this.enabled = true,
     this.dependencies = const [],
     Key? key,
   }) : super(key: key);
@@ -110,7 +105,7 @@ class DropdownSettingPreferenceTile<K> extends StatelessWidget {
         options: options,
         selectedOption: value,
         onValueChanged: (value) => setting.write(value),
-        enabled: enabled && dependencyEnable,
+        enabled: dependencyEnable,
         onLongPress: () => _resetSetting(context, setting),
       ),
     );
@@ -140,9 +135,8 @@ class _SettingTileBase<T> extends StatefulWidget {
 }
 
 class _SettingTileBaseState<T> extends State<_SettingTileBase<T>> {
-  late final SettingSink sink = SettingSink.of(context, listen: false);
   late final SettingSubscription<T> subscription =
-      sink.getSubscription<T>(widget.setting)!;
+      context.sink.getSubscription<T>(widget.setting)!;
 
   @override
   Widget build(BuildContext context) {
@@ -209,9 +203,6 @@ class SettingDependencyHandler extends StatefulWidget {
 }
 
 class _SettingDependencyHandlerState extends State<SettingDependencyHandler> {
-  late final SettingSink sink = SettingSink.of(context, listen: false);
-  late final PropertyRegister register =
-      PropertyRegister.of(context, listen: false);
   final Map<SettingKey, SettingSubscription> subscriptions = {};
   static const ListEquality _eq = ListEquality();
 
@@ -235,7 +226,7 @@ class _SettingDependencyHandlerState extends State<SettingDependencyHandler> {
     subscriptions.clear();
     for (final SettingDependency dependency in widget.dependencies) {
       final SettingSubscription subscription =
-          sink.getSubscription(dependency.key)!;
+          context.sink.getSubscription(dependency.key)!;
       subscription.addListener(_update);
       subscriptions[dependency.key] = subscription;
     }
@@ -270,17 +261,17 @@ Future<void> _resetSetting<T>(
   BuildContext context,
   SettingKey<T> setting,
 ) async {
-  final bool? settingResetConfirmation = await showDialog(
+  final bool? settingResetConfirmation = await showModalBottomSheet<bool>(
     context: context,
-    builder: (context) => AlertDialog(
+    builder: (context) => DialogSheet(
       title: const Text("Reset the setting to the defaults?"),
       content: const Text("The operation can't be undone. Continue?"),
       actions: [
-        TextButton(
+        OutlinedButton(
           onPressed: () => Navigator.pop(context, false),
           child: const Text("Cancel"),
         ),
-        TextButton(
+        ElevatedButton(
           onPressed: () => Navigator.pop(context, true),
           child: const Text("Continue"),
         ),

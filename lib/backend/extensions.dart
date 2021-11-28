@@ -9,6 +9,8 @@ extension ContextX on BuildContext {
   ThemeData get theme => Theme.of(this);
   FriesThemeData get friesTheme => FriesTheme.of(this);
   MediaQueryData get mediaQuery => MediaQuery.of(this);
+  SettingSink get sink => SettingSink.of(this);
+  PropertyRegister get register => PropertyRegister.of(this);
 }
 
 extension BrightnessX on Brightness {

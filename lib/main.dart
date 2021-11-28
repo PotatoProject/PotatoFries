@@ -1,3 +1,4 @@
+import 'package:animations/animations.dart';
 import 'package:flutter/services.dart';
 import 'package:monet/monet.dart';
 import 'package:flutter/material.dart';
@@ -66,6 +67,13 @@ class _FriesRootState extends State<FriesRoot> {
       theme: FriesThemeData.light(colors: _colors),
       darkTheme: FriesThemeData.dark(colors: _colors),
       debugShowCheckedModeBanner: false,
+      builder: (context, child) {
+        SystemChrome.setSystemUIOverlayStyle(
+          context.theme.appBarTheme.systemOverlayStyle!,
+        );
+
+        return child!;
+      },
       home: const FriesHome(),
     );
   }
@@ -94,7 +102,23 @@ class _FriesHomeState extends State<FriesHome> {
           const SizedBox(width: 8),
         ],
       ),
-      body: Pages.list[pageIndex].build(context),
+      body: PageTransitionSwitcher(
+        transitionBuilder: (child, animation, secondaryAnimation) {
+          return FadeThroughTransition(
+            animation: animation,
+            secondaryAnimation: secondaryAnimation,
+            child: Material(
+              type: MaterialType.transparency,
+              child: child,
+            ),
+          );
+        },
+        child: IndexedStack(
+          key: ValueKey(pageIndex),
+          index: pageIndex,
+          children: Pages.list.map((e) => e.build(context)).toList(),
+        ),
+      ),
       bottomNavigationBar: NavigationBar(
         selectedIndex: pageIndex,
         onDestinationSelected: (index) => setState(() => pageIndex = index),

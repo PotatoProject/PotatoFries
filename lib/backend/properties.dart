@@ -3,8 +3,8 @@ import 'package:potato_fries/backend/models/properties.dart';
 import 'package:provider/provider.dart';
 
 class PropertyRegister {
-  static PropertyRegister of(BuildContext context, {bool listen = true}) {
-    return Provider.of<PropertyRegister>(context, listen: listen);
+  static PropertyRegister of(BuildContext context) {
+    return Provider.of<PropertyRegister>(context, listen: false);
   }
 
   final Map<PropertyKey, String?> _register = {};

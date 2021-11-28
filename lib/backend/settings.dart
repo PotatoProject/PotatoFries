@@ -14,8 +14,8 @@ class SettingSink {
     _events.listen(_onEvent);
   }
 
-  static SettingSink of(BuildContext context, {bool listen = true}) {
-    return Provider.of<SettingSink>(context, listen: listen);
+  static SettingSink of(BuildContext context) {
+    return Provider.of<SettingSink>(context, listen: false);
   }
 
   void _onEvent(String event) {

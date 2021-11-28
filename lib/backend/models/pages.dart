@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:potato_fries/backend/extensions.dart';
 import 'package:potato_fries/backend/models/dependency.dart';
 import 'package:potato_fries/backend/models/settings.dart';
 import 'package:potato_fries/backend/properties.dart';
@@ -46,13 +47,11 @@ class PageSection {
 
   Widget build(BuildContext context) {
     final FriesThemeData theme = FriesTheme.of(context);
-    final PropertyRegister register =
-        PropertyRegister.of(context, listen: false);
 
     final List<Preference> validPreferences = [];
     for (final Preference preference in preferences) {
       if (_validatePropDependencies(
-        register,
+        context.register,
         preference.dependencies.whereType<PropertyDependency>().toList(),
       )) {
         validPreferences.add(preference);
