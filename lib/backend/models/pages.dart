@@ -5,6 +5,7 @@ import 'package:potato_fries/backend/models/settings.dart';
 import 'package:potato_fries/backend/properties.dart';
 import 'package:potato_fries/ui/components/preferences/settings.dart';
 import 'package:potato_fries/ui/theme.dart';
+import 'package:pub_semver/pub_semver.dart';
 
 class FriesPage {
   final String title;
@@ -50,10 +51,15 @@ class PageSection {
 
     final List<Preference> validPreferences = [];
     for (final Preference preference in preferences) {
-      if (_validatePropDependencies(
+      final bool propDepsSatisfied = _validatePropDependencies(
         context.register,
         preference.dependencies.whereType<PropertyDependency>().toList(),
-      )) {
+      );
+      final bool versionConstrained = preference.versionRange.allows(
+        Version.parse(context.register.vernum),
+      );
+
+      if (propDepsSatisfied && versionConstrained) {
         validPreferences.add(preference);
       }
     }
@@ -93,42 +99,63 @@ class PageSection {
 
 abstract class Preference {
   final List<Dependency> dependencies;
+  final String? minVersion;
+  final String? maxVersion;
 
   const Preference({
     required this.dependencies,
+    required this.minVersion,
+    required this.maxVersion,
   });
 
   Widget build(BuildContext context);
+
+  VersionRange get versionRange => VersionRange(
+        min: minVersion != null ? Version.parse(minVersion!) : null,
+        max: maxVersion != null ? Version.parse(maxVersion!) : null,
+        includeMin: true,
+        includeMax: true,
+      );
 }
 
-abstract class _SettingPreference<T> extends Preference {
-  final SettingKey<T> setting;
+abstract class SettingPreference<T> extends Preference {
+  final Setting<T> setting;
   final String title;
   final String? description;
   final IconData? icon;
 
-  const _SettingPreference({
+  const SettingPreference({
     required this.setting,
     required this.title,
     this.description,
     this.icon,
     List<Dependency> dependencies = const [],
-  }) : super(dependencies: dependencies);
+    String? minVersion,
+    String? maxVersion,
+  }) : super(
+          dependencies: dependencies,
+          minVersion: minVersion,
+          maxVersion: maxVersion,
+        );
 }
 
-class SwitchSettingPreference extends _SettingPreference<bool> {
+class SwitchSettingPreference extends SettingPreference<bool> {
   const SwitchSettingPreference({
-    required SettingKey<bool> setting,
+    required Setting<bool> setting,
     required String title,
     String? description,
     IconData? icon,
     List<Dependency> dependencies = const [],
+    String? minVersion,
+    String? maxVersion,
   }) : super(
           setting: setting,
           title: title,
           description: description,
           icon: icon,
           dependencies: dependencies,
+          minVersion: minVersion,
+          maxVersion: maxVersion,
         );
 
   @override
@@ -143,24 +170,28 @@ class SwitchSettingPreference extends _SettingPreference<bool> {
   }
 }
 
-class SliderSettingPreference<T extends num> extends _SettingPreference<T> {
+class SliderSettingPreference<T extends num> extends SettingPreference<T> {
   final T? min;
   final T max;
 
   const SliderSettingPreference({
-    required SettingKey<T> setting,
+    required Setting<T> setting,
     required String title,
     String? description,
     this.min,
     required this.max,
     IconData? icon,
     List<Dependency> dependencies = const [],
+    String? minVersion,
+    String? maxVersion,
   }) : super(
           setting: setting,
           title: title,
           description: description,
           icon: icon,
           dependencies: dependencies,
+          minVersion: minVersion,
+          maxVersion: maxVersion,
         );
 
   @override
@@ -176,22 +207,26 @@ class SliderSettingPreference<T extends num> extends _SettingPreference<T> {
   }
 }
 
-class DropdownSettingPreference<K> extends _SettingPreference<K> {
+class DropdownSettingPreference<K> extends SettingPreference<K> {
   final Map<K, String> options;
 
   const DropdownSettingPreference({
-    required SettingKey<K> setting,
+    required Setting<K> setting,
     required String title,
     String? description,
     required this.options,
     IconData? icon,
     List<Dependency> dependencies = const [],
+    String? minVersion,
+    String? maxVersion,
   }) : super(
           setting: setting,
           title: title,
           description: description,
           icon: icon,
           dependencies: dependencies,
+          minVersion: minVersion,
+          maxVersion: maxVersion,
         );
 
   @override

@@ -13,14 +13,9 @@ import 'package:provider/provider.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final MonetProvider monet = await MonetProvider.newInstance();
-
   final SettingSink sink = SettingSink.newInstance();
-  await Settings.airplane_mode_on.subscribeTo(sink);
-  await Settings.screen_brightness.subscribeTo(sink);
-  await Settings.logger_buffer_size.subscribeTo(sink);
-
   final PropertyRegister register = PropertyRegister();
-  await Properties.ro_potato_has_cutout.registerTo(register);
+  await Pages.registerAndSubscribe(sink, register);
 
   runApp(
     MultiProvider(
@@ -42,16 +37,13 @@ class FriesRoot extends StatefulWidget {
 }
 
 class _FriesRootState extends State<FriesRoot> {
-  late final MonetProvider _monetProvider =
-      Provider.of<MonetProvider>(context, listen: false);
-  late MonetColors _colors;
+  late MonetColors _colors = context.monet.getColors(Colors.blue);
 
   @override
   void initState() {
     super.initState();
-    _colors = _monetProvider.getColors(Colors.blue);
-    _monetProvider.addListener(() {
-      _colors = _monetProvider.getColors(Colors.blue);
+    context.monet.addListener(() {
+      _colors = context.monet.getColors(Colors.blue);
       setState(() {});
     });
   }

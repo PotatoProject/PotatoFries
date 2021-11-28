@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 class SettingSink {
   static const _eventChannel = EventChannel("fries/settings/sink");
   final Stream<String> _events;
-  final List<SettingSubscription> _subscriptions = [];
+  final Set<SettingSubscription> _subscriptions = {};
 
   SettingSink.newInstance()
       : _events = _eventChannel.receiveBroadcastStream().cast<String>() {

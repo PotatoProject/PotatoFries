@@ -5,6 +5,8 @@ import 'package:potato_fries/backend/models/dependency.dart';
 import 'package:potato_fries/backend/models/pages.dart';
 import 'package:potato_fries/backend/models/properties.dart';
 import 'package:potato_fries/backend/models/settings.dart';
+import 'package:potato_fries/backend/properties.dart';
+import 'package:potato_fries/backend/settings.dart';
 
 class Settings {
   const Settings._();
@@ -17,12 +19,6 @@ class Settings {
 
   static const Setting<int> logger_buffer_size =
       Setting<int>("logger_buffer_size", SettingTable.secure, 0);
-
-  static const List<Setting> all = [
-    airplane_mode_on,
-    screen_brightness,
-    logger_buffer_size,
-  ];
 }
 
 class Properties {
@@ -30,6 +26,20 @@ class Properties {
 
   static const PropertyKey ro_potato_has_cutout =
       PropertyKey("ro.potato.has_cutout");
+
+  static const PropertyKey ro_potato_vernum = PropertyKey("ro.potato.vernum");
+  static const PropertyKey ro_potato_device = PropertyKey("ro.potato.device");
+  static const PropertyKey ro_product_model = PropertyKey("ro.product.model");
+  static const PropertyKey ro_potato_version = PropertyKey("ro.potato.version");
+  static const PropertyKey ro_potato_dish = PropertyKey("ro.potato.dish");
+
+  static const List<PropertyKey> internallyUsedProperties = [
+    ro_potato_vernum,
+    ro_potato_device,
+    ro_product_model,
+    ro_potato_version,
+    ro_potato_dish,
+  ];
 }
 
 class Pages {
@@ -47,7 +57,6 @@ class Pages {
             setting: Settings.airplane_mode_on,
             icon: Icons.airplanemode_active,
             title: "Airplane mode",
-            description: "amogus",
           ),
           SliderSettingPreference<int>(
             setting: Settings.screen_brightness,
@@ -112,4 +121,70 @@ class Pages {
     statusbar,
     keyguard,
   ];
+
+  static Future<void> registerAndSubscribe(
+    SettingSink sink,
+    PropertyRegister register,
+  ) async {
+    final List<Preference> preferences = list
+        .expand(
+          (page) => page.sections.expand(
+            (section) => section.preferences,
+          ),
+        )
+        .toList();
+
+    final Set<Setting> settings = {};
+    final Set<PropertyKey> properties = {};
+
+    for (final Preference pref in preferences) {
+      if (pref is SettingPreference) {
+        settings.add(pref.setting);
+      }
+
+      final Iterable<Setting> depSettings =
+          pref.dependencies.whereType<Dependency<Setting>>().map((e) => e.key);
+      final Iterable<PropertyKey> depProperties = pref.dependencies
+          .whereType<Dependency<PropertyKey>>()
+          .map((e) => e.key);
+
+      settings.addAll(depSettings);
+      properties.addAll(depProperties);
+    }
+
+    // Those properties don't get used anywhere inside pages but are used
+    // in the app itself, so we need to add those manually
+    properties.addAll(Properties.internallyUsedProperties);
+
+    await _subscribeSettings(sink, settings.toList());
+    await _registerProperties(register, properties.toList());
+  }
+
+  static Future<void> _subscribeSettings(
+    SettingSink sink,
+    List<Setting> settings,
+  ) async {
+    Future<void> _subscribeType<T>() async {
+      final Iterable<Setting<T>> _typeSettings =
+          settings.whereType<Setting<T>>();
+
+      for (final Setting<T> setting in _typeSettings) {
+        await sink.subscribe<T>(setting);
+      }
+    }
+
+    await _subscribeType<int>();
+    await _subscribeType<String>();
+    await _subscribeType<bool>();
+    await _subscribeType<double>();
+  }
+
+  static Future<void> _registerProperties(
+    PropertyRegister register,
+    List<PropertyKey> properties,
+  ) async {
+    for (final PropertyKey prop in properties) {
+      await register.register(prop);
+    }
+  }
 }

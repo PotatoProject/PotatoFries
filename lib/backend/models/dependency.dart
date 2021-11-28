@@ -8,8 +8,8 @@ abstract class Dependency<T> {
   const Dependency(this.key, this.value);
 }
 
-class SettingDependency<T> extends Dependency<SettingKey<T>> {
-  const SettingDependency(SettingKey<T> key, T value) : super(key, value);
+class SettingDependency<T> extends Dependency<Setting<T>> {
+  const SettingDependency(Setting<T> key, T value) : super(key, value);
 }
 
 class PropertyDependency extends Dependency<PropertyKey> {
