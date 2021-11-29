@@ -4,10 +4,14 @@ import android.app.Activity
 import android.content.Context
 import android.database.ContentObserver
 import android.net.Uri
+import android.os.Build
+import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.os.SystemProperties
 import android.provider.Settings
+import androidx.annotation.RequiresApi
+import androidx.core.view.WindowCompat
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.EventChannel
@@ -18,14 +22,17 @@ class MainActivity : FlutterActivity() {
     private var _activity: Activity? = null
     private val _streamHandler: SettingsStreamHandler = SettingsStreamHandler()
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+      WindowCompat.setDecorFitsSystemWindows(window, false)
+  
+      super.onCreate(savedInstanceState)
+    }
+
     override fun provideFlutterEngine(context: Context): FlutterEngine? {
         return EngineCache.getEngine(context)
     }
 
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
-        if(_activity == null)
-            GeneratedPluginRegistrant.registerWith(flutterEngine)
-
         registerFlutterCallbacks(flutterEngine)
     }
 
