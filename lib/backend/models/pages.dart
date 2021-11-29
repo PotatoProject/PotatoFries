@@ -1,6 +1,8 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:potato_fries/backend/extensions.dart';
 import 'package:potato_fries/backend/models/dependency.dart';
+import 'package:potato_fries/backend/models/properties.dart';
 import 'package:potato_fries/backend/models/settings.dart';
 import 'package:potato_fries/backend/properties.dart';
 import 'package:potato_fries/ui/components/preferences/base.dart';
@@ -56,6 +58,15 @@ class FriesPage {
 
   List<Preference> get preferences =>
       sections.expand((s) => s.preferences).toList();
+
+  ScrapeInfo scrape() {
+    final Iterable<ScrapeInfo> scrapeInfo = sections.map((e) => e.scrape());
+
+    return ScrapeInfo(
+      scrapeInfo.expand((e) => e.settings).toList(),
+      scrapeInfo.expand((e) => e.properties).toList(),
+    );
+  }
 }
 
 class PageSection {
@@ -116,6 +127,15 @@ class PageSection {
 
     return result;
   }
+
+  ScrapeInfo scrape() {
+    final Iterable<ScrapeInfo> scrapeInfo = preferences.map((e) => e.scrape());
+
+    return ScrapeInfo(
+      scrapeInfo.expand((e) => e.settings).toList(),
+      scrapeInfo.expand((e) => e.properties).toList(),
+    );
+  }
 }
 
 abstract class Preference {
@@ -143,6 +163,18 @@ abstract class Preference {
         includeMin: true,
         includeMax: true,
       );
+
+  ScrapeInfo scrape() {
+    final Iterable<SettingDependency> settingDeps =
+        dependencies.whereType<SettingDependency>();
+    final Iterable<PropertyDependency> propertyDeps =
+        dependencies.whereType<PropertyDependency>();
+
+    return ScrapeInfo(
+      settingDeps.map<Setting>((e) => e.key).toList(),
+      propertyDeps.map<PropertyKey>((e) => e.key).toList(),
+    );
+  }
 }
 
 abstract class SettingPreference<T> extends Preference {
@@ -164,6 +196,16 @@ abstract class SettingPreference<T> extends Preference {
           minVersion: minVersion,
           maxVersion: maxVersion,
         );
+
+  @override
+  ScrapeInfo scrape() {
+    final ScrapeInfo superInfo = super.scrape();
+
+    return ScrapeInfo(
+      [...superInfo.settings, setting],
+      superInfo.properties,
+    );
+  }
 }
 
 class SwitchSettingPreference extends SettingPreference<bool> {
@@ -293,6 +335,15 @@ class FriesSubpage {
       ),
     );
   }
+
+  ScrapeInfo scrape() {
+    final Iterable<ScrapeInfo> scrapeInfo = preferences.map((e) => e.scrape());
+
+    return ScrapeInfo(
+      scrapeInfo.expand((e) => e.settings).toList(),
+      scrapeInfo.expand((e) => e.properties).toList(),
+    );
+  }
 }
 
 class SubpagePreference extends Preference {
@@ -333,5 +384,37 @@ class SubpagePreference extends Preference {
         enabled: dependencyEnable,
       ),
     );
+  }
+
+  @override
+  ScrapeInfo scrape() {
+    final ScrapeInfo superInfo = super.scrape();
+    final ScrapeInfo subpageInfo = subpage.scrape();
+
+    return ScrapeInfo(
+      [...superInfo.settings, ...subpageInfo.settings],
+      [...superInfo.properties, ...subpageInfo.properties],
+    );
+  }
+}
+
+class ScrapeInfo {
+  final List<Setting> settings;
+  final List<PropertyKey> properties;
+
+  const ScrapeInfo(this.settings, this.properties);
+
+  @override
+  int get hashCode => Object.hash(settings, properties);
+
+  @override
+  bool operator ==(Object other) {
+    if (other is ScrapeInfo) {
+      const ListEquality eq = ListEquality();
+      return eq.equals(settings, other.settings) &&
+          eq.equals(properties, other.properties);
+    }
+
+    return false;
   }
 }

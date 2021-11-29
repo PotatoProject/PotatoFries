@@ -172,23 +172,15 @@ class Pages {
         .toList();
     preferences.addAll(subPreferences);
 
-    final Set<Setting> settings = {};
-    final Set<PropertyKey> properties = {};
+    final List<ScrapeInfo> scrapeInfoList =
+        list.map((e) => e.scrape()).toList();
+    final ScrapeInfo scrapeInfo = ScrapeInfo(
+      scrapeInfoList.expand((e) => e.settings).toList(),
+      scrapeInfoList.expand((e) => e.properties).toList(),
+    );
 
-    for (final Preference pref in preferences) {
-      if (pref is SettingPreference) {
-        settings.add(pref.setting);
-      }
-
-      final Iterable<Setting> depSettings =
-          pref.dependencies.whereType<Dependency<Setting>>().map((e) => e.key);
-      final Iterable<PropertyKey> depProperties = pref.dependencies
-          .whereType<Dependency<PropertyKey>>()
-          .map((e) => e.key);
-
-      settings.addAll(depSettings);
-      properties.addAll(depProperties);
-    }
+    final Set<Setting> settings = scrapeInfo.settings.toSet();
+    final Set<PropertyKey> properties = scrapeInfo.properties.toSet();
 
     // Those properties don't get used anywhere inside pages but are used
     // in the app itself, so we need to add those manually
