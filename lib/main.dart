@@ -1,12 +1,12 @@
-import 'package:animations/animations.dart';
 import 'package:flutter/services.dart';
 import 'package:monet/monet.dart';
 import 'package:flutter/material.dart';
 import 'package:potato_fries/backend/data.dart';
 import 'package:potato_fries/backend/extensions.dart';
-import 'package:potato_fries/backend/models/pages.dart';
 import 'package:potato_fries/backend/properties.dart';
 import 'package:potato_fries/backend/settings.dart';
+import 'package:potato_fries/pages/home.dart';
+import 'package:potato_fries/pages/search.dart';
 import 'package:potato_fries/ui/components/app.dart';
 import 'package:potato_fries/ui/theme.dart';
 import 'package:provider/provider.dart';
@@ -60,6 +60,10 @@ class _FriesRootState extends State<FriesRoot> {
       theme: FriesThemeData.light(colors: _colors),
       darkTheme: FriesThemeData.dark(colors: _colors),
       debugShowCheckedModeBanner: false,
+      routes: {
+        '/': (context) => const HomePage(),
+        '/search': (context) => const SearchPage(),
+      },
       builder: (context, child) {
         SystemChrome.setSystemUIOverlayStyle(
           context.theme.appBarTheme.systemOverlayStyle!,
@@ -67,57 +71,6 @@ class _FriesRootState extends State<FriesRoot> {
 
         return child!;
       },
-      home: const FriesHome(),
-    );
-  }
-}
-
-class FriesHome extends StatefulWidget {
-  const FriesHome({Key? key}) : super(key: key);
-
-  @override
-  _FriesHomeState createState() => _FriesHomeState();
-}
-
-class _FriesHomeState extends State<FriesHome> {
-  int pageIndex = 0;
-  FriesPage get currentPage => Pages.list[pageIndex];
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Fries"),
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.more_vert),
-          ),
-          const SizedBox(width: 8),
-        ],
-      ),
-      body: PageTransitionSwitcher(
-        transitionBuilder: (child, animation, secondaryAnimation) {
-          return FadeThroughTransition(
-            animation: animation,
-            secondaryAnimation: secondaryAnimation,
-            child: Material(
-              type: MaterialType.transparency,
-              child: child,
-            ),
-          );
-        },
-        child: IndexedStack(
-          key: ValueKey(pageIndex),
-          index: pageIndex,
-          children: Pages.list.map((e) => e.build(context)).toList(),
-        ),
-      ),
-      bottomNavigationBar: NavigationBar(
-        selectedIndex: pageIndex,
-        onDestinationSelected: (index) => setState(() => pageIndex = index),
-        destinations: Pages.list.map((e) => e.destination).toList(),
-      ),
     );
   }
 }

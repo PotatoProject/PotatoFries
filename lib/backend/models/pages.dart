@@ -119,11 +119,17 @@ class PageSection {
 }
 
 abstract class Preference {
+  final String title;
+  final String? description;
+  final IconData? icon;
   final List<Dependency> dependencies;
   final String? minVersion;
   final String? maxVersion;
 
   const Preference({
+    required this.title,
+    required this.description,
+    required this.icon,
     required this.dependencies,
     required this.minVersion,
     required this.maxVersion,
@@ -141,19 +147,19 @@ abstract class Preference {
 
 abstract class SettingPreference<T> extends Preference {
   final Setting<T> setting;
-  final String title;
-  final String? description;
-  final IconData? icon;
 
   const SettingPreference({
     required this.setting,
-    required this.title,
-    this.description,
-    this.icon,
+    required String title,
+    String? description,
+    IconData? icon,
     List<Dependency> dependencies = const [],
     String? minVersion,
     String? maxVersion,
   }) : super(
+          title: title,
+          description: description,
+          icon: icon,
           dependencies: dependencies,
           minVersion: minVersion,
           maxVersion: maxVersion,
@@ -291,19 +297,19 @@ class FriesSubpage {
 
 class SubpagePreference extends Preference {
   final FriesSubpage subpage;
-  final String title;
-  final String? description;
-  final IconData? icon;
 
   const SubpagePreference({
     required this.subpage,
-    required this.title,
-    this.description,
-    this.icon,
+    required String title,
+    String? description,
+    IconData? icon,
     List<Dependency> dependencies = const [],
     String? minVersion,
     String? maxVersion,
   }) : super(
+          title: title,
+          description: description,
+          icon: icon,
           dependencies: dependencies,
           minVersion: minVersion,
           maxVersion: maxVersion,
