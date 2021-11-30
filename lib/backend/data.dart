@@ -11,14 +11,29 @@ import 'package:potato_fries/backend/settings.dart';
 class Settings {
   const Settings._();
 
-  static const Setting<bool> airplane_mode_on =
-      Setting<bool>("airplane_mode_on", SettingTable.global, false);
+  static const Setting<bool> airplane_mode_on = Setting<bool>(
+    "airplane_mode_on",
+    SettingTable.global,
+    false,
+  );
 
-  static const Setting<int> screen_brightness =
-      Setting<int>("screen_brightness", SettingTable.system, 0);
+  static const Setting<int> screen_brightness = Setting<int>(
+    "screen_brightness",
+    SettingTable.system,
+    0,
+  );
 
-  static const Setting<int> logger_buffer_size =
-      Setting<int>("logger_buffer_size", SettingTable.secure, 0);
+  static const Setting<int> logger_buffer_size = Setting<int>(
+    "logger_buffer_size",
+    SettingTable.secure,
+    0,
+  );
+
+  static const Setting<String> monet_engine_color_override = Setting<String>(
+    "monet_engine_color_override",
+    SettingTable.secure,
+    "#2196f3",
+  );
 }
 
 class Properties {
@@ -135,7 +150,19 @@ class Pages {
     title: "Themes",
     icon: Icons.color_lens_outlined,
     selectedIcon: Icons.color_lens,
-    sections: [],
+    sections: [
+      PageSection(
+        title: "Colors",
+        preferences: [
+          ColorSettingPreference(
+            setting: Settings.monet_engine_color_override,
+            title: "Monet color override",
+            description: "Use a custom color for the monet engine",
+            icon: Icons.colorize,
+          ),
+        ],
+      ),
+    ],
   );
 
   static const FriesPage statusbar = FriesPage(

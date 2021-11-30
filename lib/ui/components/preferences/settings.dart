@@ -5,6 +5,7 @@ import 'package:potato_fries/backend/models/dependency.dart';
 import 'package:potato_fries/backend/models/settings.dart';
 import 'package:potato_fries/backend/settings.dart';
 import 'package:potato_fries/ui/components/preferences/base.dart';
+import 'package:potato_fries/ui/components/preferences/color.dart';
 import 'package:potato_fries/ui/components/sheet.dart';
 
 class SwitchSettingPreferenceTile extends StatelessWidget {
@@ -25,7 +26,7 @@ class SwitchSettingPreferenceTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _SettingTileBase<bool>(
+    return SettingTileBase<bool>(
       setting: setting,
       dependencies: dependencies,
       builder: (context, value, dependencyEnable) => SwitchPreferenceTile(
@@ -61,7 +62,7 @@ class SliderSettingPreferenceTile<T extends num> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _SettingTileBase<T>(
+    return SettingTileBase<T>(
       setting: setting,
       dependencies: dependencies,
       builder: (context, value, dependencyEnable) => SliderPreferenceTile<T>(
@@ -96,7 +97,7 @@ class DropdownSettingPreferenceTile<K> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _SettingTileBase<K>(
+    return SettingTileBase<K>(
       setting: setting,
       dependencies: dependencies,
       builder: (context, value, dependencyEnable) => DropdownPreferenceTile<K>(
@@ -112,18 +113,58 @@ class DropdownSettingPreferenceTile<K> extends StatelessWidget {
   }
 }
 
+class ColorSettingPreferenceTile extends StatelessWidget {
+  final SettingKey<String> setting;
+  final String title;
+  final String? subtitle;
+  final IconData? icon;
+  final List<SettingDependency> dependencies;
+
+  const ColorSettingPreferenceTile({
+    required this.setting,
+    required this.title,
+    this.subtitle,
+    this.icon,
+    this.dependencies = const [],
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SettingTileBase<String>(
+      setting: setting,
+      dependencies: dependencies,
+      builder: (context, value, dependencyEnable) => ColorPickerPreferenceTile(
+        icon: Icon(icon),
+        title: title,
+        color: HSLColor.fromColor(
+          Color(int.parse(
+            value.replaceFirst("#", ""),
+            radix: 16,
+          )).withOpacity(1),
+        ),
+        onColorChanged: (value) => setting.write(
+          "#${value.toColor().value.toRadixString(16).substring(2)}",
+        ),
+        enabled: dependencyEnable,
+        onLongPress: () => _resetSetting(context, setting),
+      ),
+    );
+  }
+}
+
 typedef _SettingTileBuilder<T> = Widget Function(
   BuildContext context,
   T value,
   bool dependencyEnable,
 );
 
-class _SettingTileBase<T> extends StatefulWidget {
+class SettingTileBase<T> extends StatefulWidget {
   final SettingKey<T> setting;
   final List<SettingDependency> dependencies;
-  final _SettingTileBuilder builder;
+  final _SettingTileBuilder<T> builder;
 
-  const _SettingTileBase({
+  const SettingTileBase({
     required this.setting,
     required this.dependencies,
     required this.builder,
@@ -134,7 +175,7 @@ class _SettingTileBase<T> extends StatefulWidget {
   _SettingTileBaseState<T> createState() => _SettingTileBaseState<T>();
 }
 
-class _SettingTileBaseState<T> extends State<_SettingTileBase<T>> {
+class _SettingTileBaseState<T> extends State<SettingTileBase<T>> {
   late final SettingSubscription<T> subscription =
       context.sink.getSubscription<T>(widget.setting)!;
 

@@ -310,6 +310,37 @@ class DropdownSettingPreference<K> extends SettingPreference<K> {
   }
 }
 
+class ColorSettingPreference extends SettingPreference<String> {
+  const ColorSettingPreference({
+    required Setting<String> setting,
+    required String title,
+    String? description,
+    IconData? icon,
+    List<Dependency> dependencies = const [],
+    String? minVersion,
+    String? maxVersion,
+  }) : super(
+          setting: setting,
+          title: title,
+          description: description,
+          icon: icon,
+          dependencies: dependencies,
+          minVersion: minVersion,
+          maxVersion: maxVersion,
+        );
+
+  @override
+  Widget build(BuildContext context) {
+    return ColorSettingPreferenceTile(
+      setting: setting,
+      title: title,
+      subtitle: description,
+      icon: icon,
+      dependencies: dependencies.whereType<SettingDependency>().toList(),
+    );
+  }
+}
+
 class FriesSubpage {
   final String title;
   final List<Preference> preferences;

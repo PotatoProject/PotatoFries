@@ -14,6 +14,7 @@ extension ContextX on BuildContext {
   SettingSink get sink => SettingSink.of(this);
   PropertyRegister get register => PropertyRegister.of(this);
   MonetProvider get monet => Provider.of<MonetProvider>(this, listen: false);
+  FocusScopeNode get focusScope => FocusScope.of(this);
 }
 
 extension BrightnessX on Brightness {

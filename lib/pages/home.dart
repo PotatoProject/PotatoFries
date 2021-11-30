@@ -13,6 +13,7 @@ class HomePage extends StatefulWidget {
 class _FriesHomeState extends State<HomePage> {
   int pageIndex = 0;
   FriesPage get currentPage => Pages.list[pageIndex];
+  HSLColor color = HSLColor.fromColor(Colors.lightGreen);
 
   @override
   Widget build(BuildContext context) {
