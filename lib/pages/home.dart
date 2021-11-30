@@ -25,8 +25,20 @@ class _FriesHomeState extends State<HomePage> {
             onPressed: () => Navigator.pushNamed(context, '/search'),
             icon: const Icon(Icons.search),
           ),
-          IconButton(
-            onPressed: () {},
+          PopupMenuButton(
+            itemBuilder: (context) => [
+              const PopupMenuItem(
+                child: Text("Licenses"),
+                value: 'licenses',
+              )
+            ],
+            onSelected: (value) {
+              switch (value) {
+                case 'licenses':
+                  Navigator.pushNamed(context, '/licenses');
+                  break;
+              }
+            },
             icon: const Icon(Icons.more_vert),
           ),
           const SizedBox(width: 8),

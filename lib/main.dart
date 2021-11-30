@@ -6,6 +6,7 @@ import 'package:potato_fries/backend/extensions.dart';
 import 'package:potato_fries/backend/properties.dart';
 import 'package:potato_fries/backend/settings.dart';
 import 'package:potato_fries/pages/home.dart';
+import 'package:potato_fries/pages/licenses.dart';
 import 'package:potato_fries/pages/search.dart';
 import 'package:potato_fries/ui/components/app.dart';
 import 'package:potato_fries/ui/theme.dart';
@@ -63,6 +64,7 @@ class _FriesRootState extends State<FriesRoot> {
       routes: {
         '/': (context) => const HomePage(),
         '/search': (context) => const SearchPage(),
+        '/licenses': (context) => const LicensesPage(),
       },
       builder: (context, child) {
         SystemChrome.setSystemUIOverlayStyle(

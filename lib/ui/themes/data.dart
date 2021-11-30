@@ -413,6 +413,13 @@ class FriesThemeData {
           transitionType: SharedAxisTransitionType.scaled,
         ),
       }),
+      popupMenuTheme: PopupMenuThemeData(
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(16)),
+        ),
+        color: colorScheme.secondaryContainer,
+        elevation: 0,
+      ),
     );
   }
 }
