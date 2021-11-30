@@ -27,6 +27,13 @@ class FriesPage {
   });
 
   Widget build(BuildContext context) {
+    final List<PageSection> _nonEmptySections = sections.where((e) {
+      final List<Preference> validPreferences =
+          e.getValidPreferences(context.register);
+
+      return validPreferences.isNotEmpty;
+    }).toList();
+
     return SeparatedFlex(
       separator: const SizedBox(height: 16),
       children: [
@@ -40,9 +47,10 @@ class FriesPage {
           ),
         Expanded(
           child: ListView.separated(
-            itemBuilder: (context, index) => sections[index].build(context),
+            itemBuilder: (context, index) =>
+                _nonEmptySections[index].build(context),
             separatorBuilder: (context, index) => const SizedBox(height: 16),
-            itemCount: sections.length,
+            itemCount: _nonEmptySections.length,
             padding: EdgeInsets.only(top: header != null ? 16 : 0),
           ),
         ),
@@ -81,20 +89,8 @@ class PageSection {
   Widget build(BuildContext context) {
     final FriesThemeData theme = FriesTheme.of(context);
 
-    final List<Preference> validPreferences = [];
-    for (final Preference preference in preferences) {
-      final bool propDepsSatisfied = _validatePropDependencies(
-        context.register,
-        preference.dependencies.whereType<PropertyDependency>().toList(),
-      );
-      final bool versionConstrained = preference.versionRange.allows(
-        Version.parse(context.register.vernum),
-      );
-
-      if (propDepsSatisfied && versionConstrained) {
-        validPreferences.add(preference);
-      }
-    }
+    final List<Preference> validPreferences =
+        getValidPreferences(context.register);
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
@@ -113,6 +109,24 @@ class PageSection {
         ...validPreferences.map((e) => e.build(context)),
       ],
     );
+  }
+
+  List<Preference> getValidPreferences(PropertyRegister register) {
+    final List<Preference> validPreferences = [];
+    for (final Preference preference in preferences) {
+      final bool propDepsSatisfied = _validatePropDependencies(
+        register,
+        preference.dependencies.whereType<PropertyDependency>().toList(),
+      );
+      final bool versionConstrained =
+          preference.versionRange.allows(Version.parse(register.vernum));
+
+      if (propDepsSatisfied && versionConstrained) {
+        validPreferences.add(preference);
+      }
+    }
+
+    return preferences;
   }
 
   bool _validatePropDependencies(

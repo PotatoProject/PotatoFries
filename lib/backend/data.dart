@@ -1,7 +1,6 @@
 // ignore_for_file: constant_identifier_names
 
 import 'package:flutter/material.dart';
-import 'package:potato_fries/backend/models/dependency.dart';
 import 'package:potato_fries/backend/models/pages.dart';
 import 'package:potato_fries/backend/models/properties.dart';
 import 'package:potato_fries/backend/models/settings.dart';
@@ -10,24 +9,6 @@ import 'package:potato_fries/backend/settings.dart';
 
 class Settings {
   const Settings._();
-
-  static const Setting<bool> airplane_mode_on = Setting<bool>(
-    "airplane_mode_on",
-    SettingTable.global,
-    false,
-  );
-
-  static const Setting<int> screen_brightness = Setting<int>(
-    "screen_brightness",
-    SettingTable.system,
-    0,
-  );
-
-  static const Setting<int> logger_buffer_size = Setting<int>(
-    "logger_buffer_size",
-    SettingTable.secure,
-    0,
-  );
 
   static const Setting<String> monet_engine_color_override = Setting<String>(
     "monet_engine_color_override",
@@ -38,9 +19,6 @@ class Settings {
 
 class Properties {
   const Properties._();
-
-  static const PropertyKey ro_potato_has_cutout =
-      PropertyKey("ro.potato.has_cutout");
 
   static const PropertyKey ro_potato_vernum = PropertyKey("ro.potato.vernum");
   static const PropertyKey ro_potato_device = PropertyKey("ro.potato.device");
@@ -67,74 +45,7 @@ class Pages {
     sections: [
       PageSection(
         title: 'First',
-        preferences: [
-          SwitchSettingPreference(
-            setting: Settings.airplane_mode_on,
-            icon: Icons.airplanemode_active,
-            title: "Airplane mode",
-          ),
-          SliderSettingPreference<int>(
-            setting: Settings.screen_brightness,
-            icon: Icons.brightness_medium,
-            title: "Brightness",
-            min: 0,
-            max: 255,
-            dependencies: [
-              SettingDependency(Settings.airplane_mode_on, true),
-              PropertyDependency(Properties.ro_potato_has_cutout, null),
-            ],
-          ),
-          DropdownSettingPreference<int>(
-            setting: Settings.logger_buffer_size,
-            title: "Logger buffer sizes",
-            options: {
-              0: "Off",
-              1: "64K",
-              2: "256K",
-              3: "1M",
-              4: "4M",
-              5: "8M",
-            },
-          ),
-          SubpagePreference(
-            subpage: FriesSubpage(
-              title: "Amoghis",
-              preferences: [
-                SwitchSettingPreference(
-                  setting: Settings.airplane_mode_on,
-                  icon: Icons.airplanemode_active,
-                  title: "Airplane mode",
-                ),
-                SliderSettingPreference<int>(
-                  setting: Settings.screen_brightness,
-                  icon: Icons.brightness_medium,
-                  title: "Brightness",
-                  min: 0,
-                  max: 255,
-                  dependencies: [
-                    SettingDependency(Settings.airplane_mode_on, true),
-                    PropertyDependency(Properties.ro_potato_has_cutout, null),
-                  ],
-                ),
-                DropdownSettingPreference<int>(
-                  setting: Settings.logger_buffer_size,
-                  title: "Logger buffer sizes",
-                  options: {
-                    0: "Off",
-                    1: "64K",
-                    2: "256K",
-                    3: "1M",
-                    4: "4M",
-                    5: "8M",
-                  },
-                ),
-              ],
-            ),
-            title: "Subpage test",
-            description: "dfds",
-            icon: Icons.brightness_medium,
-          ),
-        ],
+        preferences: [],
       ),
     ],
   );
