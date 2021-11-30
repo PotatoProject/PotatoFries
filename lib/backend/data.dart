@@ -1,6 +1,7 @@
 // ignore_for_file: constant_identifier_names
 
 import 'package:flutter/material.dart';
+import 'package:potato_fries/backend/models/dependency.dart';
 import 'package:potato_fries/backend/models/pages.dart';
 import 'package:potato_fries/backend/models/properties.dart';
 import 'package:potato_fries/backend/models/settings.dart';
@@ -9,6 +10,30 @@ import 'package:potato_fries/backend/settings.dart';
 
 class Settings {
   const Settings._();
+
+  static const Setting<double> monet_engine_chroma_factor = Setting<double>(
+    "monet_engine_chroma_factor",
+    SettingTable.secure,
+    1.0,
+  );
+
+  static const Setting<bool> monet_engine_linear_lightness = Setting<bool>(
+    "monet_engine_linear_lightness",
+    SettingTable.secure,
+    false,
+  );
+
+  static const Setting<int> monet_engine_white_luminance_user = Setting<int>(
+    "monet_engine_white_luminance_user",
+    SettingTable.secure,
+    425,
+  );
+
+  static const Setting<bool> monet_engine_accurate_shades = Setting<bool>(
+    "monet_engine_accurate_shades",
+    SettingTable.secure,
+    true,
+  );
 
   static const Setting<String> monet_engine_color_override = Setting<String>(
     "monet_engine_color_override",
@@ -65,9 +90,39 @@ class Pages {
       PageSection(
         title: "Colors",
         preferences: [
+          SliderSettingPreference<double>(
+            setting: Settings.monet_engine_chroma_factor,
+            title: "Colorfulness",
+            description: "Define how colorful the generated colors should be",
+            icon: Icons.palette,
+            min: 0.5,
+            max: 2.0,
+          ),
+          SwitchSettingPreference(
+            setting: Settings.monet_engine_linear_lightness,
+            title: "Use custom lightness scale",
+            description:
+                "If enables it allows using the custom lightness scale",
+          ),
+          SliderSettingPreference<int>(
+            setting: Settings.monet_engine_white_luminance_user,
+            title: "Lightness",
+            description: "Decides how bright the colors should be",
+            icon: Icons.brightness_5,
+            min: 0,
+            max: 1000,
+            dependencies: [
+              SettingDependency(Settings.monet_engine_linear_lightness, true),
+            ],
+          ),
+          SwitchSettingPreference(
+            setting: Settings.monet_engine_accurate_shades,
+            title: "Generate accurate shades",
+            icon: Icons.format_paint,
+          ),
           ColorSettingPreference(
             setting: Settings.monet_engine_color_override,
-            title: "Monet color override",
+            title: "Color override",
             description: "Use a custom color for the monet engine",
             icon: Icons.colorize,
           ),
