@@ -17,12 +17,7 @@ class DialogSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(
-        top: 16,
-        left: 16,
-        right: 16,
-        bottom: context.mediaQuery.viewPadding.bottom + 8,
-      ),
+      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
       child: SeparatedFlex(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,

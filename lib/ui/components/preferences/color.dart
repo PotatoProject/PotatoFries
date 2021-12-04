@@ -40,17 +40,10 @@ class ColorPickerPreferenceTile extends StatelessWidget {
       ),
       enabled: enabled,
       onTap: () async {
-        final HSLColor? newColor = await showModalBottomSheet(
-          context: context,
+        final HSLColor? newColor = await context.showBottomSheet(
           enableDrag: false,
-          isScrollControlled: true,
           builder: (context) => Container(
-            padding: EdgeInsets.only(
-              top: 8 + 16,
-              left: 16,
-              right: 16,
-              bottom: context.mediaQuery.viewPadding.bottom + 16,
-            ),
+            padding: const EdgeInsets.all(16),
             constraints: BoxConstraints(
               minHeight: context.mediaQuery.size.height * 0.6,
             ),

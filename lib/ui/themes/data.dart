@@ -337,8 +337,8 @@ class FriesThemeData {
         modalElevation: 0,
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(8),
-            topRight: Radius.circular(8),
+            topLeft: Radius.circular(16),
+            topRight: Radius.circular(16),
           ),
         ),
       ),
@@ -402,7 +402,7 @@ class FriesThemeData {
         clipBehavior: Clip.antiAlias,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(
-            Radius.circular(8),
+            Radius.circular(16),
           ),
         ),
         elevation: 0,

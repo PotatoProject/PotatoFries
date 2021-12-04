@@ -15,6 +15,24 @@ extension ContextX on BuildContext {
   PropertyRegister get register => PropertyRegister.of(this);
   MonetProvider get monet => Provider.of<MonetProvider>(this, listen: false);
   FocusScopeNode get focusScope => FocusScope.of(this);
+
+  Future<T?> showBottomSheet<T>({
+    required WidgetBuilder builder,
+    bool enableDrag = true,
+  }) {
+    return showModalBottomSheet<T>(
+      context: this,
+      builder: (context) => Padding(
+        padding: EdgeInsets.only(
+          top: 16, // Sheet theme border radius
+          bottom: context.mediaQuery.viewPadding.bottom,
+        ),
+        child: Builder(builder: builder),
+      ),
+      isScrollControlled: true,
+      enableDrag: enableDrag,
+    );
+  }
 }
 
 extension BrightnessX on Brightness {

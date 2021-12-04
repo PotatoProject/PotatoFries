@@ -202,37 +202,27 @@ class DropdownPreferenceTile<T> extends StatelessWidget {
       subtitle: Text(options[selectedOption]!),
       trailing: const ShortChip(child: Icon(Icons.expand_more)),
       onTap: () async {
-        final T? newOption = await showModalBottomSheet<T>(
-          context: context,
-          isScrollControlled: true,
-          builder: (context) => Padding(
-            padding: EdgeInsets.only(
-              top: 8,
-              bottom: context.mediaQuery.viewPadding.bottom,
-            ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: options.entries.map((e) {
-                final bool selected = selectedOption == e.key;
+        final T? newOption = await context.showBottomSheet<T>(
+          builder: (context) => Column(
+            mainAxisSize: MainAxisSize.min,
+            children: options.entries.map((e) {
+              final bool selected = selectedOption == e.key;
 
-                return ListTile(
-                  title: Text(
-                    e.value,
-                    style: context.friesTheme.textTheme.bodyLarge!.copyWith(
-                      color: selected
-                          ? context.friesTheme.colorScheme.primary
-                          : context.friesTheme.colorScheme.onSurface,
-                      fontWeight:
-                          selected ? FontWeight.w500 : FontWeight.normal,
-                    ),
+              return ListTile(
+                title: Text(
+                  e.value,
+                  style: context.friesTheme.textTheme.bodyLarge!.copyWith(
+                    color: selected
+                        ? context.theme.colorScheme.primary
+                        : context.theme.colorScheme.onSurface,
+                    fontWeight: selected ? FontWeight.w500 : FontWeight.normal,
                   ),
-                  onTap: () => Navigator.pop(context, e.key),
-                  trailing: selected
-                      ? const ShortChip(child: Icon(Icons.check))
-                      : null,
-                );
-              }).toList(),
-            ),
+                ),
+                onTap: () => Navigator.pop(context, e.key),
+                trailing:
+                    selected ? const ShortChip(child: Icon(Icons.check)) : null,
+              );
+            }).toList(),
           ),
         );
 

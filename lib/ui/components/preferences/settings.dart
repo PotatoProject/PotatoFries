@@ -302,8 +302,7 @@ Future<void> _resetSetting<T>(
   BuildContext context,
   SettingKey<T> setting,
 ) async {
-  final bool? settingResetConfirmation = await showModalBottomSheet<bool>(
-    context: context,
+  final bool? settingResetConfirmation = await context.showBottomSheet<bool>(
     builder: (context) => DialogSheet(
       title: const Text("Reset the setting to the defaults?"),
       content: const Text("The operation can't be undone. Continue?"),
