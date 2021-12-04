@@ -47,7 +47,7 @@ class PreferenceTile extends StatelessWidget {
               children: [
                 IconTheme.merge(
                   data: IconThemeData(
-                    color: context.friesTheme.colorScheme.onSurfaceVariant,
+                    color: context.theme.colorScheme.onSurfaceVariant,
                     size: 24,
                     opacity: 1,
                   ),
@@ -61,7 +61,7 @@ class PreferenceTile extends StatelessWidget {
                     children: [
                       DefaultTextStyle(
                         style: context.friesTheme.textTheme.bodyLarge!.copyWith(
-                          color: context.friesTheme.colorScheme.onSurface,
+                          color: context.theme.colorScheme.onSurface,
                         ),
                         child: title,
                       ),
@@ -69,8 +69,7 @@ class PreferenceTile extends StatelessWidget {
                         DefaultTextStyle(
                           style:
                               context.friesTheme.textTheme.bodySmall!.copyWith(
-                            color:
-                                context.friesTheme.colorScheme.onSurfaceVariant,
+                            color: context.theme.colorScheme.onSurfaceVariant,
                           ),
                           child: subtitle!,
                         ),
@@ -251,17 +250,17 @@ class ShortChip extends StatelessWidget {
       height: 24,
       decoration: ShapeDecoration(
         shape: const StadiumBorder(),
-        color: context.friesTheme.colorScheme.secondaryContainer,
+        color: context.theme.colorScheme.secondaryContainer,
       ),
       alignment: Alignment.center,
       child: IconTheme.merge(
         data: IconThemeData(
-          color: context.friesTheme.colorScheme.onSecondaryContainer,
+          color: context.theme.colorScheme.onSecondaryContainer,
           size: 20,
         ),
         child: DefaultTextStyle(
           style: context.friesTheme.textTheme.labelMedium!.copyWith(
-            color: context.friesTheme.colorScheme.onSecondaryContainer,
+            color: context.theme.colorScheme.onSecondaryContainer,
           ),
           child: child,
         ),

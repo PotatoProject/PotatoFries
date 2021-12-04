@@ -8,7 +8,6 @@ import 'package:potato_fries/backend/properties.dart';
 import 'package:potato_fries/ui/components/preferences/base.dart';
 import 'package:potato_fries/ui/components/preferences/settings.dart';
 import 'package:potato_fries/ui/components/separated_flex.dart';
-import 'package:potato_fries/ui/theme.dart';
 import 'package:pub_semver/pub_semver.dart';
 
 class FriesPage {
@@ -87,8 +86,6 @@ class PageSection {
   });
 
   Widget build(BuildContext context) {
-    final FriesThemeData theme = FriesTheme.of(context);
-
     final List<Preference> validPreferences =
         getValidPreferences(context.register);
 
@@ -101,8 +98,8 @@ class PageSection {
           padding: const EdgeInsetsDirectional.only(start: 16),
           child: Text(
             title,
-            style: theme.textTheme.titleSmall!.copyWith(
-              color: theme.colorScheme.primary,
+            style: context.friesTheme.textTheme.titleSmall!.copyWith(
+              color: context.theme.colorScheme.primary,
             ),
           ),
         ),
