@@ -7,6 +7,7 @@ import 'package:potato_fries/backend/models/properties.dart';
 import 'package:potato_fries/backend/models/settings.dart';
 import 'package:potato_fries/backend/properties.dart';
 import 'package:potato_fries/backend/settings.dart';
+import 'package:potato_fries/ui/components/headers/theme.dart';
 
 class Settings {
   const Settings._();
@@ -86,6 +87,7 @@ class Pages {
     title: "Themes",
     icon: Icons.color_lens_outlined,
     selectedIcon: Icons.color_lens,
+    header: ThemeHeader(),
     sections: [
       PageSection(
         title: "Colors",

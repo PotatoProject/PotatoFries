@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:potato_fries/backend/extensions.dart';
-import 'package:potato_fries/ui/theme.dart';
 
 class FriesSwitch extends StatefulWidget {
   final bool value;
@@ -43,11 +42,10 @@ class _FriesSwitchState extends State<FriesSwitch>
 
   @override
   Widget build(BuildContext context) {
-    final FriesThemeData theme = context.friesTheme;
     final Color trackColor =
-        theme.materialTheme.switchTheme.trackColor!.resolve(_states)!;
+        context.theme.switchTheme.trackColor!.resolve(_states)!;
     final Color thumbColor =
-        theme.materialTheme.switchTheme.thumbColor!.resolve(_states)!;
+        context.theme.switchTheme.thumbColor!.resolve(_states)!;
 
     return GestureDetector(
       onTap: () {

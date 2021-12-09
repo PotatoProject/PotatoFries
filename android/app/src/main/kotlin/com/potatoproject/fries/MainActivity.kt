@@ -1,22 +1,32 @@
 package com.potatoproject.fries
 
+import android.Manifest
+import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.WallpaperManager
 import android.content.Context
+import android.content.pm.PackageManager
 import android.database.ContentObserver
+import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Drawable
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.os.SystemProperties
 import android.provider.Settings
-import androidx.annotation.RequiresApi
+import androidx.core.app.ActivityCompat
 import androidx.core.view.WindowCompat
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.EventChannel
 import io.flutter.plugin.common.MethodChannel
-import io.flutter.plugins.GeneratedPluginRegistrant
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
+import java.io.ByteArrayOutputStream
+import java.io.OutputStream
+import java.nio.ByteBuffer
 
 class MainActivity : FlutterActivity() {
     private var _activity: Activity? = null
@@ -36,6 +46,7 @@ class MainActivity : FlutterActivity() {
         registerFlutterCallbacks(flutterEngine)
     }
 
+    @SuppressLint("MissingPermission")
     private fun registerFlutterCallbacks(flutterEngine: FlutterEngine) {
         if(_activity == null) _activity = this
 
@@ -103,6 +114,30 @@ class MainActivity : FlutterActivity() {
                 else -> result.notImplemented()
             }
         }
+
+        MethodChannel(flutterEngine.dartExecutor, "fries/utils").setMethodCallHandler { call, result ->
+            when(call.method) {
+                "getWallpaper" -> {
+                    val drawable: Drawable = WallpaperManager.getInstance(this).drawable
+                    val bitmap = (drawable as BitmapDrawable).bitmap
+                    val outputStream = ByteArrayOutputStream()
+
+
+                    runBlocking {
+                        launch {
+                            bitmap.compress(Bitmap.CompressFormat.WEBP_LOSSY, 40, outputStream)
+
+                            result.success(outputStream.toByteArray())
+                        }
+                    }
+
+                /*val buffer1: ByteBuffer =
+                           ByteBuffer.allocate(bitmap.height * bitmap.rowBytes)
+                       bitmap.copyPixelsToBuffer(buffer1)*/
+                }
+                else -> result.notImplemented()
+            }
+        }
     }
 
     private inner class SettingsStreamHandler : EventChannel.StreamHandler {
@@ -130,7 +165,8 @@ class MainActivity : FlutterActivity() {
                 uri,
                 defaultValue,
                 this,
-                Handler(Looper.getMainLooper(),
+                Handler(
+                    Looper.getMainLooper(),
                 ),
             )
             observers.add(observer)

@@ -60,15 +60,14 @@ class PreferenceTile extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       DefaultTextStyle(
-                        style: context.friesTheme.textTheme.bodyLarge!.copyWith(
+                        style: context.theme.textTheme.bodyLarge!.copyWith(
                           color: context.theme.colorScheme.onSurface,
                         ),
                         child: title,
                       ),
                       if (subtitle != null)
                         DefaultTextStyle(
-                          style:
-                              context.friesTheme.textTheme.bodySmall!.copyWith(
+                          style: context.theme.textTheme.bodySmall!.copyWith(
                             color: context.theme.colorScheme.onSurfaceVariant,
                           ),
                           child: subtitle!,
@@ -210,7 +209,7 @@ class DropdownPreferenceTile<T> extends StatelessWidget {
               return ListTile(
                 title: Text(
                   e.value,
-                  style: context.friesTheme.textTheme.bodyLarge!.copyWith(
+                  style: context.theme.textTheme.bodyLarge!.copyWith(
                     color: selected
                         ? context.theme.colorScheme.primary
                         : context.theme.colorScheme.onSurface,
@@ -259,7 +258,7 @@ class ShortChip extends StatelessWidget {
           size: 20,
         ),
         child: DefaultTextStyle(
-          style: context.friesTheme.textTheme.labelMedium!.copyWith(
+          style: context.theme.textTheme.labelMedium!.copyWith(
             color: context.theme.colorScheme.onSecondaryContainer,
           ),
           child: child,

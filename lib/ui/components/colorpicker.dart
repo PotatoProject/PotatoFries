@@ -43,7 +43,7 @@ class ColorDisplay extends StatelessWidget {
               controller: controller,
               textAlignVertical: TextAlignVertical.center,
               textAlign: TextAlign.center,
-              style: context.friesTheme.textTheme.titleMedium!.copyWith(
+              style: context.theme.textTheme.titleMedium!.copyWith(
                 color: foregroundColor,
               ),
               cursorColor: foregroundColor,

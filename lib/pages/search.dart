@@ -91,7 +91,7 @@ class _SearchPageState extends State<SearchPage> {
           ),
           Text(
             text,
-            style: context.friesTheme.textTheme.titleLarge,
+            style: context.theme.textTheme.titleLarge,
           ),
         ],
       ),
@@ -123,7 +123,7 @@ class _SearchBar extends StatelessWidget {
             child: TextField(
               controller: controller,
               autofocus: true,
-              style: context.friesTheme.textTheme.titleMedium!,
+              style: context.theme.textTheme.titleMedium!,
               decoration: const InputDecoration(
                 hintText: "Search preferences...",
                 border: InputBorder.none,

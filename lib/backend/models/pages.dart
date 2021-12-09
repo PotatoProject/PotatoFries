@@ -98,7 +98,7 @@ class PageSection {
           padding: const EdgeInsetsDirectional.only(start: 16),
           child: Text(
             title,
-            style: context.friesTheme.textTheme.titleSmall!.copyWith(
+            style: context.theme.textTheme.titleSmall!.copyWith(
               color: context.theme.colorScheme.primary,
             ),
           ),

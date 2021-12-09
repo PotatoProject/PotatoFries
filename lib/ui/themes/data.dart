@@ -4,10 +4,9 @@ import 'package:flutter/services.dart';
 import 'package:monet/monet.dart';
 import 'package:potato_fries/backend/extensions.dart';
 import 'package:potato_fries/ui/themes/slider.dart';
-import 'package:potato_fries/ui/themes/text.dart';
 
-class FriesThemeData {
-  static const M3TextTheme _baseTextTheme = M3TextTheme(
+class FriesTheme {
+  static const TextTheme _baseTextTheme = TextTheme(
     displayLarge: TextStyle(
       fontSize: 57,
       height: 64 / 57, // 64
@@ -100,30 +99,24 @@ class FriesThemeData {
     ),
   );
 
-  static final M3TextTheme _whiteTextTheme =
+  static final TextTheme _whiteTextTheme =
       _baseTextTheme.apply(displayColor: Colors.white);
-  static final M3TextTheme _blackTextTheme =
+  static final TextTheme _blackTextTheme =
       _baseTextTheme.apply(displayColor: Colors.black);
 
-  final ColorScheme colorScheme;
-  final M3TextTheme textTheme;
+  static ThemeData light({required MonetColors colors}) {
+    return _buildMaterialTheme(
+      _colorsFromMonet(colors, Brightness.light),
+      _blackTextTheme,
+    );
+  }
 
-  const FriesThemeData({
-    required this.colorScheme,
-    required this.textTheme,
-  });
-
-  FriesThemeData.light({required MonetColors colors})
-      : this(
-          colorScheme: _colorsFromMonet(colors, Brightness.light),
-          textTheme: _blackTextTheme,
-        );
-
-  FriesThemeData.dark({required MonetColors colors})
-      : this(
-          colorScheme: _colorsFromMonet(colors, Brightness.dark),
-          textTheme: _whiteTextTheme,
-        );
+  static ThemeData dark({required MonetColors colors}) {
+    return _buildMaterialTheme(
+      _colorsFromMonet(colors, Brightness.dark),
+      _whiteTextTheme,
+    );
+  }
 
   static ColorScheme _colorsFromMonet(
     MonetColors colors,
@@ -221,17 +214,6 @@ class FriesThemeData {
     return result;
   }
 
-  factory FriesThemeData.lerp(
-    FriesThemeData a,
-    FriesThemeData b,
-    double t,
-  ) {
-    return FriesThemeData(
-      textTheme: M3TextTheme.lerp(a.textTheme, b.textTheme, t),
-      colorScheme: ColorScheme.lerp(a.colorScheme, b.colorScheme, t),
-    );
-  }
-
   static Color applyElevation(
     Color background,
     Color foreground,
@@ -263,14 +245,15 @@ class FriesThemeData {
     return Color.alphaBlend(foreground.withOpacity(opacity), background);
   }
 
-  ThemeData get materialTheme {
+  static ThemeData _buildMaterialTheme(
+      ColorScheme colorScheme, TextTheme textTheme) {
     return ThemeData(
       colorScheme: colorScheme,
       textTheme: textTheme,
       scaffoldBackgroundColor: colorScheme.background,
       canvasColor: colorScheme.background,
       navigationBarTheme: NavigationBarThemeData(
-        backgroundColor: FriesThemeData.applyElevation(
+        backgroundColor: FriesTheme.applyElevation(
           colorScheme.surface,
           colorScheme.primary,
           2,
@@ -422,12 +405,4 @@ class FriesThemeData {
       ),
     );
   }
-}
-
-class FriesThemeDataTween extends Tween<FriesThemeData> {
-  FriesThemeDataTween({FriesThemeData? begin, FriesThemeData? end})
-      : super(begin: begin, end: end);
-
-  @override
-  FriesThemeData lerp(double t) => FriesThemeData.lerp(begin!, end!, t);
 }

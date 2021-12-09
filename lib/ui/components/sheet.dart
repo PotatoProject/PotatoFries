@@ -26,14 +26,14 @@ class DialogSheet extends StatelessWidget {
             children: [
               if (title != null)
                 DefaultTextStyle(
-                  style: context.friesTheme.textTheme.titleMedium!.copyWith(
+                  style: context.theme.textTheme.titleMedium!.copyWith(
                     color: context.theme.colorScheme.onSurface,
                   ),
                   child: title!,
                 ),
               if (content != null)
                 DefaultTextStyle(
-                  style: context.friesTheme.textTheme.bodySmall!.copyWith(
+                  style: context.theme.textTheme.bodySmall!.copyWith(
                     color: context.theme.colorScheme.onSurface,
                   ),
                   child: content!,
