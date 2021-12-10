@@ -87,7 +87,14 @@ class _SliderSettingPreferenceTileState<T extends num>
             this.value = value;
           },
           enabled: dependencyEnable,
-          onLongPress: () => _resetSetting(context, widget.setting),
+          onLongPress: () async {
+            final bool confirmed = await _resetSetting(context, widget.setting);
+
+            if (confirmed) {
+              final T value = context.sink.defaultValueFor<T>(widget.setting)!;
+              setState(() => this.value = value);
+            }
+          },
         );
       },
     );
@@ -347,7 +354,7 @@ class _SettingDependencyHandlerState extends State<SettingDependencyHandler> {
       widget.builder(context, _checkForDependencies());
 }
 
-Future<void> _resetSetting<T>(
+Future<bool> _resetSetting<T>(
   BuildContext context,
   SettingKey<T> setting,
 ) async {
@@ -369,6 +376,8 @@ Future<void> _resetSetting<T>(
   );
 
   if (settingResetConfirmation == true) {
-    setting.write(null);
+    await setting.write(null);
   }
+
+  return settingResetConfirmation == true;
 }

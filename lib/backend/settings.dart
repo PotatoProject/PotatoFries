@@ -71,6 +71,13 @@ class SettingSink {
     return subscription?.value;
   }
 
+  T? defaultValueFor<T>(SettingKey<T> key) {
+    final SettingSubscription<T>? subscription = _subscriptions
+        .firstWhereOrNull((s) => s.uri == key.uri) as SettingSubscription<T>?;
+
+    return subscription?.key.defaultValue;
+  }
+
   Future<SettingSubscription<T>> getSubscriptionOrSubscribe<T>(
     Setting<T> setting,
   ) async {
@@ -99,7 +106,7 @@ class SettingSink {
 }
 
 class SettingSubscription<T> extends ChangeNotifier {
-  final SettingKey<T> key;
+  final Setting<T> key;
   final SettingType type;
   late T value;
 
