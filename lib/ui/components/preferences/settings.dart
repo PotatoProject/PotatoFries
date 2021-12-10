@@ -129,15 +129,17 @@ class DropdownSettingPreferenceTile<K> extends StatelessWidget {
 }
 
 class ColorSettingPreferenceTile extends StatelessWidget {
-  final SettingKey<String> setting;
+  final SettingKey<dynamic> setting;
   final String title;
   final String? subtitle;
   final IconData? icon;
   final List<SettingDependency> dependencies;
+  final ColorPreferenceType type;
 
   const ColorSettingPreferenceTile({
     required this.setting,
     required this.title,
+    required this.type,
     this.subtitle,
     this.icon,
     this.dependencies = const [],
@@ -146,26 +148,58 @@ class ColorSettingPreferenceTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SettingTileBase<String>(
+    return SettingTileBase<dynamic>(
       setting: setting,
       dependencies: dependencies,
-      builder: (context, value, dependencyEnable) => ColorPickerPreferenceTile(
-        icon: Icon(icon),
-        title: title,
-        color: HSLColor.fromColor(
-          Color(int.parse(
-            value.replaceFirst("#", ""),
-            radix: 16,
-          )).withOpacity(1),
-        ),
-        onColorChanged: (value) => setting.write(
-          "#${value.toColor().value.toRadixString(16).substring(2)}",
-        ),
-        enabled: dependencyEnable,
-        onLongPress: () => _resetSetting(context, setting),
-      ),
+      builder: (context, value, dependencyEnable) {
+        final int color;
+
+        switch (type) {
+          case ColorPreferenceType.rgb:
+            color = value;
+            break;
+          case ColorPreferenceType.hex:
+            color = int.parse(
+              value.replaceFirst("#", ""),
+              radix: 16,
+            );
+            break;
+        }
+
+        return ColorPickerPreferenceTile(
+          icon: Icon(icon),
+          title: title,
+          color: HSLColor.fromColor(Color(color).withOpacity(1)),
+          onColorChanged: (value) async {
+            final Object settingValue;
+
+            switch (type) {
+              case ColorPreferenceType.rgb:
+                final Color color = value.toColor();
+
+                settingValue =
+                    (color.red << 16 | color.green << 8 | color.blue << 0) &
+                        0xFFFFFFFF;
+                break;
+              case ColorPreferenceType.hex:
+                settingValue =
+                    "#${value.toColor().value.toRadixString(16).substring(2)}";
+                break;
+            }
+
+            await setting.write(settingValue);
+          },
+          enabled: dependencyEnable,
+          onLongPress: () => _resetSetting(context, setting),
+        );
+      },
     );
   }
+}
+
+enum ColorPreferenceType {
+  hex,
+  rgb,
 }
 
 typedef _SettingTileBuilder<T> = Widget Function(

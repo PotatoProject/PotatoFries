@@ -321,8 +321,29 @@ class DropdownSettingPreference<K> extends SettingPreference<K> {
   }
 }
 
-class ColorSettingPreference extends SettingPreference<String> {
-  const ColorSettingPreference({
+class ColorSettingPreference extends SettingPreference<dynamic> {
+  final ColorPreferenceType type;
+
+  const ColorSettingPreference.asRgb({
+    required Setting<int> setting,
+    required String title,
+    String? description,
+    IconData? icon,
+    List<Dependency> dependencies = const [],
+    String? minVersion,
+    String? maxVersion,
+  })  : type = ColorPreferenceType.rgb,
+        super(
+          setting: setting,
+          title: title,
+          description: description,
+          icon: icon,
+          dependencies: dependencies,
+          minVersion: minVersion,
+          maxVersion: maxVersion,
+        );
+
+  const ColorSettingPreference.asHex({
     required Setting<String> setting,
     required String title,
     String? description,
@@ -330,7 +351,8 @@ class ColorSettingPreference extends SettingPreference<String> {
     List<Dependency> dependencies = const [],
     String? minVersion,
     String? maxVersion,
-  }) : super(
+  })  : type = ColorPreferenceType.hex,
+        super(
           setting: setting,
           title: title,
           description: description,
@@ -345,6 +367,7 @@ class ColorSettingPreference extends SettingPreference<String> {
     return ColorSettingPreferenceTile(
       setting: setting,
       title: title,
+      type: type,
       subtitle: description,
       icon: icon,
       dependencies: dependencies.whereType<SettingDependency>().toList(),

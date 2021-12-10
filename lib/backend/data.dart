@@ -36,10 +36,16 @@ class Settings {
     true,
   );
 
-  static const Setting<String> monet_engine_color_override = Setting<String>(
+  static const Setting<bool> monet_engine_custom_color = Setting<bool>(
+    "monet_engine_custom_color",
+    SettingTable.secure,
+    false,
+  );
+
+  static const Setting<int> monet_engine_color_override = Setting<int>(
     "monet_engine_color_override",
     SettingTable.secure,
-    "#2196f3",
+    2201331, // #2196f3, default material blue
   );
 }
 
@@ -122,11 +128,19 @@ class Pages {
             title: "Generate accurate shades",
             icon: Icons.format_paint,
           ),
-          ColorSettingPreference(
+          SwitchSettingPreference(
+            setting: Settings.monet_engine_custom_color,
+            title: "Use custom color",
+            description: "Use a custom color for the monet engine",
+          ),
+          ColorSettingPreference.asRgb(
             setting: Settings.monet_engine_color_override,
             title: "Color override",
-            description: "Use a custom color for the monet engine",
+            description: "The custom color to use for the engine",
             icon: Icons.colorize,
+            dependencies: [
+              SettingDependency(Settings.monet_engine_custom_color, true),
+            ],
           ),
         ],
       ),
