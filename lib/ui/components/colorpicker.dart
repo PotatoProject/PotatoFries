@@ -5,14 +5,10 @@ import 'package:potato_fries/backend/extensions.dart';
 class ColorDisplay extends StatelessWidget {
   final HSLColor color;
   final ValueChanged<HSLColor>? onColorChanged;
-  final FocusNode focusNode;
-  final TextEditingController controller;
 
   const ColorDisplay({
     required this.color,
     this.onColorChanged,
-    required this.focusNode,
-    required this.controller,
     Key? key,
   }) : super(key: key);
 
@@ -22,6 +18,8 @@ class ColorDisplay extends StatelessWidget {
         ThemeData.estimateBrightnessForColor(color.toColor());
     final Color foregroundColor =
         colorBrightness == Brightness.light ? Colors.black : Colors.white;
+    final String label =
+        color.toColor().value.toRadixString(16).substring(2).toUpperCase();
 
     return Material(
       color: color.toColor(),
@@ -29,51 +27,100 @@ class ColorDisplay extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
         side: BorderSide(color: context.theme.colorScheme.outline),
       ),
-      child: Stack(
-        children: [
-          Positioned.fill(
-            child: GestureDetector(
-              onTap: () {
-                context.focusScope.requestFocus(focusNode);
-              },
+      clipBehavior: Clip.antiAlias,
+      child: InkWell(
+        onTap: () async {
+          final Color? newColor = await showDialog<Color>(
+            context: context,
+            builder: (context) => _ColorPickerDialog(
+              initialValue: label,
+              onCancel: () => Navigator.pop(context),
+              onConfirm: (color) => Navigator.pop(context, color),
+            ),
+          );
+
+          if (newColor != null) {
+            onColorChanged?.call(HSLColor.fromColor(newColor));
+          }
+        },
+        child: Center(
+          child: Text(
+            "#$label",
+            style: context.theme.textTheme.titleMedium!.copyWith(
+              color: foregroundColor,
             ),
           ),
-          Center(
-            child: TextField(
-              controller: controller,
-              textAlignVertical: TextAlignVertical.center,
-              textAlign: TextAlign.center,
-              style: context.theme.textTheme.titleMedium!.copyWith(
-                color: foregroundColor,
-              ),
-              cursorColor: foregroundColor,
-              focusNode: focusNode,
-              decoration: const InputDecoration(
-                isDense: true,
-                border: InputBorder.none,
-              ),
-              onSubmitted: (text) {
-                if (text.length == 6) {
-                  onColorChanged?.call(HSLColor.fromColor(
-                    Color(int.parse("FF$text", radix: 16)),
-                  ));
-                } else {
-                  onColorChanged?.call(color);
-                }
-              },
-              textCapitalization: TextCapitalization.characters,
-              inputFormatters: [
-                FilteringTextInputFormatter.allow(
-                  RegExp("[0-9|A-F|a-f]"),
-                ),
-                LengthLimitingTextInputFormatter(6),
-              ],
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }
+}
+
+class _ColorPickerDialog extends StatefulWidget {
+  final String initialValue;
+  final VoidCallback onCancel;
+  final ValueChanged<Color> onConfirm;
+
+  const _ColorPickerDialog({
+    required this.initialValue,
+    required this.onCancel,
+    required this.onConfirm,
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  _ColorPickerDialogState createState() => _ColorPickerDialogState();
+}
+
+class _ColorPickerDialogState extends State<_ColorPickerDialog> {
+  late final TextEditingController _controller =
+      TextEditingController(text: widget.initialValue);
+  late Color? newColor = _colorFromText(_controller.text);
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: const Text("Input value manually"),
+      content: TextField(
+        controller: _controller,
+        textCapitalization: TextCapitalization.characters,
+        onChanged: (text) {
+          if (text.length == 6) {
+            newColor = _colorFromText(text);
+          } else {
+            newColor = null;
+          }
+          setState(() {});
+        },
+        inputFormatters: [
+          FilteringTextInputFormatter.allow(
+            RegExp("[0-9|A-F|a-f]"),
+          ),
+          LengthLimitingTextInputFormatter(6),
+        ],
+        decoration: InputDecoration(
+          suffix: Icon(
+            Icons.circle,
+            color: newColor ?? Colors.transparent,
+          ),
+        ),
+      ),
+      contentPadding: const EdgeInsets.fromLTRB(24, 16, 24, 24),
+      actions: [
+        TextButton(
+          onPressed: widget.onCancel,
+          child: const Text("Cancel"),
+        ),
+        TextButton(
+          onPressed:
+              newColor != null ? () => widget.onConfirm(newColor!) : null,
+          child: const Text("Confirm"),
+        ),
+      ],
+    );
+  }
+
+  Color _colorFromText(String text) => Color(int.parse("FF$text", radix: 16));
 }
 
 class ColorPicker extends StatefulWidget {

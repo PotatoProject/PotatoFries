@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:potato_fries/backend/extensions.dart';
 import 'package:potato_fries/ui/components/colorpicker.dart';
@@ -45,7 +43,7 @@ class ColorPickerPreferenceTile extends StatelessWidget {
           builder: (context) => Container(
             padding: const EdgeInsets.all(16),
             constraints: BoxConstraints(
-              minHeight: context.mediaQuery.size.height * 0.6,
+              maxHeight: context.mediaQuery.size.height * 0.6,
             ),
             child: _ColorPickerSheet(
               initialColor: color,
@@ -81,15 +79,7 @@ class _ColorPickerSheet extends StatefulWidget {
 }
 
 class _ColorPickerSheetState extends State<_ColorPickerSheet> {
-  final TextEditingController controller = TextEditingController();
-  final FocusNode focusNode = FocusNode();
-  late HSLColor _color;
-  HSLColor get color => _color;
-  set color(HSLColor value) {
-    _color = value;
-    controller.text =
-        _color.toColor().value.toRadixString(16).substring(2).toUpperCase();
-  }
+  late HSLColor color;
 
   @override
   void initState() {
@@ -99,82 +89,51 @@ class _ColorPickerSheetState extends State<_ColorPickerSheet> {
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        return Stack(
-          children: [
-            Positioned(
-              bottom: 0,
-              height: constraints.minHeight,
-              left: 0,
-              right: 0,
-              child: SeparatedFlex(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  const Spacer(),
-                  Expanded(
-                    flex: 4,
-                    child: ColorPicker(
-                      color: color,
-                      onValueChanged: (newColor) => setState(
-                        () => color = newColor,
-                      ),
-                    ),
-                  ),
-                  SeparatedFlex(
-                    axis: Axis.horizontal,
-                    children: [
-                      OutlinedButton(
-                        onPressed: color != widget.initialColor
-                            ? () => setState(() => color = widget.initialColor)
-                            : null,
-                        child: const Text("Reset"),
-                      ),
-                      const Spacer(),
-                      OutlinedButton(
-                        onPressed: widget.onCancel,
-                        child: const Text("Cancel"),
-                      ),
-                      ElevatedButton(
-                        onPressed: () => widget.onConfirm(color),
-                        child: const Text("Confirm"),
-                      ),
-                    ],
-                    separator: const SizedBox(width: 16),
-                  ),
-                ],
-                separator: const SizedBox(height: 16),
-              ),
+    return SeparatedFlex(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        SizedBox(
+          height: 80,
+          width: double.infinity,
+          child: ColorDisplay(
+            color: color,
+            onColorChanged: (newColor) => setState(
+              () => color = newColor,
             ),
-            SeparatedFlex(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                SizedBox(
-                  height: 80,
-                  width: double.infinity,
-                  child: ColorDisplay(
-                    color: color,
-                    onColorChanged: (newColor) => setState(
-                      () => color = newColor,
-                    ),
-                    focusNode: focusNode,
-                    controller: controller,
-                  ),
-                ),
-                SizedBox(
-                  height: max(
-                    constraints.minHeight - 16 - 80,
-                    context.mediaQuery.viewInsets.bottom -
-                        context.mediaQuery.viewPadding.bottom -
-                        16,
-                  ),
-                ),
-              ],
-              separator: const SizedBox(height: 16),
+          ),
+        ),
+        Expanded(
+          flex: 4,
+          child: ColorPicker(
+            color: color,
+            onValueChanged: (newColor) => setState(
+              () => color = newColor,
+            ),
+          ),
+        ),
+        SeparatedFlex(
+          axis: Axis.horizontal,
+          children: [
+            OutlinedButton(
+              onPressed: color != widget.initialColor
+                  ? () => setState(() => color = widget.initialColor)
+                  : null,
+              child: const Text("Reset"),
+            ),
+            const Spacer(),
+            OutlinedButton(
+              onPressed: widget.onCancel,
+              child: const Text("Cancel"),
+            ),
+            ElevatedButton(
+              onPressed: () => widget.onConfirm(color),
+              child: const Text("Confirm"),
             ),
           ],
-        );
-      },
+          separator: const SizedBox(width: 16),
+        ),
+      ],
+      separator: const SizedBox(height: 16),
     );
   }
 }

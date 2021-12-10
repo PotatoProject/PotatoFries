@@ -320,8 +320,8 @@ class FriesTheme {
         modalElevation: 0,
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(16),
-            topRight: Radius.circular(16),
+            topLeft: Radius.circular(28),
+            topRight: Radius.circular(28),
           ),
         ),
       ),
@@ -380,6 +380,26 @@ class FriesTheme {
           ),
         ),
       ),
+      textButtonTheme: TextButtonThemeData(
+        style: ButtonStyle(
+          minimumSize: MaterialStateProperty.all(const Size(0, 40)),
+          padding: MaterialStateProperty.all(
+            const EdgeInsets.symmetric(horizontal: 12),
+          ),
+          shape: MaterialStateProperty.all(const StadiumBorder()),
+          textStyle: MaterialStateProperty.all(textTheme.labelLarge),
+          overlayColor: MaterialStateProperty.all(
+            colorScheme.primary.withOpacity(0.1),
+          ),
+          elevation: MaterialStateProperty.all(0),
+          backgroundColor: MaterialStateProperty.all(Colors.transparent),
+          foregroundColor: MaterialStateProperty.resolveWith(
+            (states) => states.contains(MaterialState.disabled)
+                ? colorScheme.onSurface.withOpacity(0.38)
+                : colorScheme.primary,
+          ),
+        ),
+      ),
       cardColor: colorScheme.surfaceVariant,
       cardTheme: const CardTheme(
         clipBehavior: Clip.antiAlias,
@@ -401,6 +421,23 @@ class FriesTheme {
           borderRadius: BorderRadius.all(Radius.circular(16)),
         ),
         color: colorScheme.secondaryContainer,
+        elevation: 0,
+      ),
+      dialogTheme: DialogTheme(
+        backgroundColor: FriesTheme.applyElevation(
+          colorScheme.surface,
+          colorScheme.primary,
+          3,
+        ),
+        titleTextStyle: textTheme.headlineSmall!.copyWith(
+          color: colorScheme.onSurface,
+        ),
+        contentTextStyle: textTheme.bodyMedium!.copyWith(
+          color: colorScheme.onSurfaceVariant,
+        ),
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(28)),
+        ),
         elevation: 0,
       ),
     );

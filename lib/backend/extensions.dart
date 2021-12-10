@@ -21,7 +21,7 @@ extension ContextX on BuildContext {
       context: this,
       builder: (context) => Padding(
         padding: EdgeInsets.only(
-          top: 16, // Sheet theme border radius
+          top: 8,
           bottom: context.mediaQuery.viewPadding.bottom,
         ),
         child: Builder(builder: builder),
