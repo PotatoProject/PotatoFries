@@ -59,7 +59,7 @@ class _SearchPageState extends State<SearchPage> {
           final Iterable<ExtractedResult<Preference>> totalResults = [
             ...titleResults,
             ...descriptionResults
-          ].where((e) => e.score >= 75);
+          ].where((e) => e.score >= 60);
           queryPrefs.addAll(totalResults.map((e) => e.choice));
 
           if (queryPrefs.isEmpty) {
