@@ -130,6 +130,7 @@ class SliderPreferenceTile<T extends num> extends StatelessWidget {
   final T min;
   final T max;
   final ValueChanged<T>? onValueChanged;
+  final ValueChanged<T>? onValueChangeEnd;
   final VoidCallback? onLongPress;
   final bool enabled;
 
@@ -140,7 +141,8 @@ class SliderPreferenceTile<T extends num> extends StatelessWidget {
     required this.value,
     required this.min,
     required this.max,
-    this.onValueChanged,
+    required this.onValueChanged,
+    this.onValueChangeEnd,
     this.onLongPress,
     this.enabled = true,
   }) : super(key: key);
@@ -159,6 +161,11 @@ class SliderPreferenceTile<T extends num> extends StatelessWidget {
         divisions: isInt ? (max - min).toInt() : null,
         onChanged: onValueChanged != null
             ? (value) => onValueChanged?.call(
+                  isInt ? value.toInt() as T : value.toDouble() as T,
+                )
+            : null,
+        onChangeEnd: onValueChangeEnd != null
+            ? (value) => onValueChangeEnd?.call(
                   isInt ? value.toInt() as T : value.toDouble() as T,
                 )
             : null,

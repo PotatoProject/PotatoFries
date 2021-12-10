@@ -42,7 +42,7 @@ class SwitchSettingPreferenceTile extends StatelessWidget {
   }
 }
 
-class SliderSettingPreferenceTile<T extends num> extends StatelessWidget {
+class SliderSettingPreferenceTile<T extends num> extends StatefulWidget {
   final SettingKey<T> setting;
   final String title;
   final T? min;
@@ -61,20 +61,35 @@ class SliderSettingPreferenceTile<T extends num> extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  _SliderSettingPreferenceTileState<T> createState() =>
+      _SliderSettingPreferenceTileState<T>();
+}
+
+class _SliderSettingPreferenceTileState<T extends num>
+    extends State<SliderSettingPreferenceTile<T>> {
+  late T value = context.sink.read<T>(widget.setting)!;
+
+  @override
   Widget build(BuildContext context) {
     return SettingTileBase<T>(
-      setting: setting,
-      dependencies: dependencies,
-      builder: (context, value, dependencyEnable) => SliderPreferenceTile<T>(
-        icon: Icon(icon),
-        title: title,
-        min: min ?? 0 as T,
-        max: max,
-        value: value,
-        onValueChanged: (value) => setting.write(value),
-        enabled: dependencyEnable,
-        onLongPress: () => _resetSetting(context, setting),
-      ),
+      setting: widget.setting,
+      dependencies: widget.dependencies,
+      builder: (context, value, dependencyEnable) {
+        return SliderPreferenceTile<T>(
+          icon: Icon(widget.icon),
+          title: widget.title,
+          min: widget.min ?? 0 as T,
+          max: widget.max,
+          value: this.value,
+          onValueChanged: (value) => setState(() => this.value = value),
+          onValueChangeEnd: (value) async {
+            await widget.setting.write(value);
+            this.value = value;
+          },
+          enabled: dependencyEnable,
+          onLongPress: () => _resetSetting(context, widget.setting),
+        );
+      },
     );
   }
 }

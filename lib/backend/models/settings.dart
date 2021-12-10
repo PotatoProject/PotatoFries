@@ -32,7 +32,7 @@ class SettingKey<T> {
 
   const SettingKey(this.name, this.table);
 
-  Future<void> write(T? value) async {
+  Future<void> write(T? value) {
     final String valueStr;
 
     if (value is bool) {
@@ -41,7 +41,7 @@ class SettingKey<T> {
       valueStr = value.toString();
     }
 
-    await SettingKey.controlsChannel.invokeMethod("write", {
+    return SettingKey.controlsChannel.invokeMethod("write", {
       "uri": uri.toString(),
       "value": valueStr,
     });

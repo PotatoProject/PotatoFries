@@ -64,6 +64,13 @@ class SettingSink {
     ) as SettingSubscription<T>?;
   }
 
+  T? read<T>(SettingKey<T> key) {
+    final SettingSubscription<T>? subscription = _subscriptions
+        .firstWhereOrNull((s) => s.uri == key.uri) as SettingSubscription<T>?;
+
+    return subscription?.value;
+  }
+
   Future<SettingSubscription<T>> getSubscriptionOrSubscribe<T>(
     Setting<T> setting,
   ) async {
