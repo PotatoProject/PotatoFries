@@ -12,7 +12,6 @@ dependencies:
 
   animations: ^2.0.2
   fuzzywuzzy: ^0.1.6
-  monet: ^0.1.0
   provider: ^6.0.1
   pub_semver: ^2.1.0
 

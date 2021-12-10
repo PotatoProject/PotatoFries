@@ -1,7 +1,7 @@
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:monet/monet.dart';
+import 'package:potato_fries/backend/appinfo.dart';
 import 'package:potato_fries/backend/extensions.dart';
 import 'package:potato_fries/ui/themes/slider.dart';
 

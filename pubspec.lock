@@ -109,13 +109,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.7.0"
-  monet:
-    dependency: "direct main"
-    description:
-      name: monet
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.1.0"
   nested:
     dependency: transitive
     description:
@@ -207,4 +200,4 @@ packages:
     version: "2.1.1"
 sdks:
   dart: ">=2.14.0 <3.0.0"
-  flutter: ">=1.20.0"
+  flutter: ">=1.16.0"

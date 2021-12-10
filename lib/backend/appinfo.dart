@@ -2,20 +2,21 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:monet/monet.dart';
 import 'package:provider/provider.dart';
+
+part 'monet.dart';
+
+const MethodChannel _utilsChannel = MethodChannel("fries/utils");
 
 class AppInfo extends ChangeNotifier {
   AppInfo._();
 
-  static const MethodChannel _utilsChannel = MethodChannel("fries/utils");
   static AppInfo of(BuildContext context, {bool listen = true}) {
     return Provider.of<AppInfo>(context, listen: listen);
   }
 
   Uint8List? _wallpaper;
   late MonetColors _colors;
-  late final MonetProvider monet;
 
   Uint8List? get wallpaper => _wallpaper;
   MonetColors get colors => _colors;
@@ -27,17 +28,32 @@ class AppInfo extends ChangeNotifier {
   }
 
   Future<void> _loadData() async {
-    monet = await MonetProvider.newInstance();
-    await _updateWallAndColors();
+    await _updateColors();
+    await _updateWall();
 
-    monet.addListener(() async {
-      await _updateWallAndColors();
-      notifyListeners();
+    _utilsChannel.setMethodCallHandler((call) async {
+      if (call.method == "onColorsChanged") {
+        final String reason = call.arguments as String;
+
+        switch (reason) {
+          case "wallpaper":
+            await _updateWall();
+            continue config;
+          config:
+          case "config":
+            await _updateColors();
+            notifyListeners();
+            break;
+        }
+      }
     });
   }
 
-  Future<void> _updateWallAndColors() async {
-    _colors = monet.getColors(Colors.blue);
+  Future<void> _updateColors() async {
+    _colors = await MonetUtils.getMonetColors();
+  }
+
+  Future<void> _updateWall() async {
     _wallpaper = await _utilsChannel.invokeMethod<Uint8List>("getWallpaper");
   }
 }
