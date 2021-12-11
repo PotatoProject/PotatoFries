@@ -12,6 +12,12 @@ import 'package:potato_fries/ui/components/headers/theme.dart';
 class Settings {
   const Settings._();
 
+  static const Setting<int> navigation_handle_width = Setting<int>(
+    "navigation_handle_width",
+    SettingTable.system,
+    10,
+  );
+
   static const Setting<double> monet_engine_chroma_factor = Setting<double>(
     "monet_engine_chroma_factor",
     SettingTable.secure,
@@ -86,7 +92,18 @@ class Pages {
     title: "System",
     icon: Icons.settings_outlined,
     selectedIcon: Icons.settings,
-    sections: [],
+    sections: [
+      PageSection(
+          title: "Navigation",
+          preferences: [
+            SliderSettingPreference<int>(
+                setting: Settings.navigation_handle_width,
+                title: "Navigation handle length",
+                min: 10,
+                max: 20
+            ),
+      ])
+    ]
   );
 
   static const FriesPage themes = FriesPage(
