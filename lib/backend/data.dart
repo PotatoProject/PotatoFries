@@ -13,6 +13,12 @@ import 'package:potato_fries/ui/components/headers/theme.dart';
 class Settings {
   const Settings._();
 
+  static const Setting<bool> advanced_reboot = Setting<bool>(
+    "advanced_reboot",
+    SettingTable.secure,
+    false,
+  );
+
   static const Setting<bool> double_tap_sleep_lockscreen = Setting<bool>(
     "double_tap_sleep_lockscreen",
     SettingTable.secure,
@@ -112,6 +118,17 @@ class Pages {
     icon: Icons.settings_outlined,
     selectedIcon: Icons.settings,
     sections: [
+      PageSection(
+        title: "Button",
+        preferences: [
+          SwitchSettingPreference(
+            setting: Settings.advanced_reboot,
+            title: "Advanced Reboot",
+            description: "Show extra reboot options",
+            icon: MdiIcons.powerSettings,
+          ),
+        ],
+      ),
       PageSection(
         title: "Gestures",
         preferences: [
