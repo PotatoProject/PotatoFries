@@ -1,6 +1,7 @@
 // ignore_for_file: constant_identifier_names
 
 import 'package:flutter/material.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:potato_fries/backend/models/dependency.dart';
 import 'package:potato_fries/backend/models/pages.dart';
 import 'package:potato_fries/backend/models/properties.dart';
