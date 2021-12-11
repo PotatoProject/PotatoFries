@@ -13,6 +13,12 @@ import 'package:potato_fries/ui/components/headers/theme.dart';
 class Settings {
   const Settings._();
 
+  static const Setting<bool> double_tap_sleep_lockscreen = Setting <bool>(
+    "double_tap_sleep_lockscreen",
+    SettingTable.secure,
+    false,
+  );
+
   static const Setting<bool> three_finger_gesture = Setting<bool>(
     "three_finger_gesture",
     SettingTable.system,
@@ -103,6 +109,11 @@ class Pages {
       PageSection(
         title: "Gestures",
         preferences: [
+          SwitchSettingPreference(
+            setting: Settings.double_tap_sleep_lockscreen,
+            title: "Double tap to sleep on lockscreen",
+            description: "Turn off screen by double tapping empty space on lockscreen",
+          ),
           SwitchSettingPreference(
             setting: Settings.three_finger_gesture,
             title: "Three finger screenshot",
