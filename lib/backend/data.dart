@@ -13,6 +13,12 @@ import 'package:potato_fries/ui/components/headers/theme.dart';
 class Settings {
   const Settings._();
 
+  static const Setting<bool> three_finger_gesture = Setting<bool>(
+    "three_finger_gesture",
+    SettingTable.system,
+    false,
+  );
+
   static const Setting<int> navigation_handle_width = Setting<int>(
     "navigation_handle_width",
     SettingTable.system,
@@ -95,14 +101,24 @@ class Pages {
     selectedIcon: Icons.settings,
     sections: [
       PageSection(
+        title: "Gestures",
+        preferences: [
+          SwitchSettingPreference(
+            setting: Settings.three_finger_gesture,
+            title: "Three finger screenshot",
+            description: "Swipe down with three fingers to screenshot",
+            icon: Icons.camera,
+          ),
+        ],
+      ),
+      PageSection(
         title: "Navigation",
         preferences: [
           SliderSettingPreference<int>(
               setting: Settings.navigation_handle_width,
               title: "Navigation handle length",
               min: 10,
-              max: 20
-          ),
+              max: 20),
         ],
       ),
     ],
