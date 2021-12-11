@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "58b62e57_62da1741",
+        "filename": "lib/backend/data.dart",
+        "patchSetId": 1
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1000039
+      },
+      "writtenOn": "2021-12-11T08:29:37Z",
+      "side": 1,
+      "message": "commas after each bracket to format the code correctly",
+      "revId": "5197d97a0c30b89c00d06edfe1803b9cf7fe6ca3",
+      "serverId": "8720d348-3d66-43e6-b480-1d69039ac554"
+    }
+  ]
+}
