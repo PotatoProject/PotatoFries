@@ -54,6 +54,9 @@ class AppInfo extends ChangeNotifier {
   }
 
   Future<void> _updateWall() async {
-    _wallpaper = await _utilsChannel.invokeMethod<Uint8List>("getWallpaper");
+    // Temp disabled until we figure out how to automatically grant the perm for priv-app
+    _wallpaper = null;
+
+    //await _utilsChannel.invokeMethod<Uint8List>("getWallpaper");
   }
 }

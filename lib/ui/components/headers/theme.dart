@@ -9,18 +9,18 @@ class ThemeHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     final AppInfo appInfo = AppInfo.of(context);
 
-    return appInfo.wallpaper != null
-        ? DecoratedBox(
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: MemoryImage(appInfo.wallpaper!),
-                fit: BoxFit.cover,
-              ),
-            ),
-            child: ColoredBox(
-              color: context.theme.colorScheme.secondary.withOpacity(0.2),
-            ),
-          )
-        : const SizedBox();
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          image: appInfo.wallpaper != null
+              ? MemoryImage(appInfo.wallpaper!)
+              : const AssetImage("assets/wallpaper.png") as ImageProvider,
+          fit: BoxFit.cover,
+        ),
+      ),
+      child: ColoredBox(
+        color: context.theme.colorScheme.secondary.withOpacity(0.2),
+      ),
+    );
   }
 }
