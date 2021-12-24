@@ -1,6 +1,7 @@
 // ignore_for_file: constant_identifier_names
 
 import 'package:flutter/material.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:potato_fries/backend/models/dependency.dart';
 import 'package:potato_fries/backend/models/pages.dart';
 import 'package:potato_fries/backend/models/properties.dart';
@@ -11,6 +12,24 @@ import 'package:potato_fries/ui/components/headers/theme.dart';
 
 class Settings {
   const Settings._();
+
+  static const Setting<bool> double_tap_sleep_lockscreen = Setting <bool>(
+    "double_tap_sleep_lockscreen",
+    SettingTable.secure,
+    false,
+  );
+
+  static const Setting<bool> three_finger_gesture = Setting<bool>(
+    "three_finger_gesture",
+    SettingTable.system,
+    false,
+  );
+
+  static const Setting<int> navigation_handle_width = Setting<int>(
+    "navigation_handle_width",
+    SettingTable.system,
+    10,
+  );
 
   static const Setting<double> monet_engine_chroma_factor = Setting<double>(
     "monet_engine_chroma_factor",
@@ -86,7 +105,35 @@ class Pages {
     title: "System",
     icon: Icons.settings_outlined,
     selectedIcon: Icons.settings,
-    sections: [],
+    sections: [
+      PageSection(
+        title: "Gestures",
+        preferences: [
+          SwitchSettingPreference(
+            setting: Settings.double_tap_sleep_lockscreen,
+            title: "Double tap to sleep on lockscreen",
+            description: "Turn off screen by double tapping empty space on lockscreen",
+            icon: Icons.touch_app_outlined,
+          ),
+          SwitchSettingPreference(
+            setting: Settings.three_finger_gesture,
+            title: "Three finger screenshot",
+            description: "Swipe down with three fingers to screenshot",
+            icon: Icons.camera,
+          ),
+        ],
+      ),
+      PageSection(
+        title: "Navigation",
+        preferences: [
+          SliderSettingPreference<int>(
+              setting: Settings.navigation_handle_width,
+              title: "Navigation handle length",
+              min: 10,
+              max: 20),
+        ],
+      ),
+    ],
   );
 
   static const FriesPage themes = FriesPage(
