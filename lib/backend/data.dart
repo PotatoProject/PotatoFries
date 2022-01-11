@@ -19,6 +19,12 @@ class Settings {
     false,
   );
 
+  static const Setting<bool> torch_power_button_gesture = Setting<bool>(
+    "torch_power_button_gesture",
+    SettingTable.secure,
+    false,
+  );
+
   static const Setting<bool> double_tap_sleep_lockscreen = Setting<bool>(
     "double_tap_sleep_lockscreen",
     SettingTable.secure,
@@ -133,6 +139,12 @@ class Pages {
             description: "Show extra reboot options",
             icon: MdiIcons.powerSettings,
           ),
+          SwitchSettingPreference(
+              setting: Settings.torch_power_button_gesture,
+              title: "Long press power button",
+              description: "Turns on torch by long pressing power button",
+              icon: MdiIcons.lamp,
+          ),
         ],
       ),
       PageSection(
@@ -160,7 +172,8 @@ class Pages {
               setting: Settings.navigation_handle_width,
               title: "Navigation handle length",
               min: 10,
-              max: 20),
+              max: 20,
+          ),
         ],
       ),
       PageSection(
@@ -170,13 +183,13 @@ class Pages {
               setting: Settings.notification_sound_vib_screen_on,
               title: "Annoying Notifications",
               description:
-                  "Play sound and vibration for notifications when screen is on"
+                  "Play sound and vibration for notifications when screen is on",
           ),
           SwitchSettingPreference(
               setting: Settings.less_boring_heads_up,
               title: "Less boring heads-up",
               description: "Quickly disable heads up for all apps but keep them enabled for dialer and messaging apps",
-              icon: MdiIcons.viewQuilt
+              icon: MdiIcons.viewQuilt,
           ),
         ],
       ),
