@@ -13,7 +13,7 @@ import 'package:potato_fries/ui/components/headers/theme.dart';
 class Settings {
   const Settings._();
 
-  static const Setting<bool> double_tap_sleep_lockscreen = Setting <bool>(
+  static const Setting<bool> double_tap_sleep_lockscreen = Setting<bool>(
     "double_tap_sleep_lockscreen",
     SettingTable.secure,
     false,
@@ -29,6 +29,12 @@ class Settings {
     "navigation_handle_width",
     SettingTable.system,
     10,
+  );
+
+  static const Setting<bool> notification_sound_vib_screen_on = Setting<bool>(
+    "notification_sound_vib_screen_on",
+    SettingTable.system,
+    false,
   );
 
   static const Setting<double> monet_engine_chroma_factor = Setting<double>(
@@ -112,7 +118,8 @@ class Pages {
           SwitchSettingPreference(
             setting: Settings.double_tap_sleep_lockscreen,
             title: "Double tap to sleep on lockscreen",
-            description: "Turn off screen by double tapping empty space on lockscreen",
+            description:
+                "Turn off screen by double tapping empty space on lockscreen",
             icon: Icons.touch_app_outlined,
           ),
           SwitchSettingPreference(
@@ -131,6 +138,17 @@ class Pages {
               title: "Navigation handle length",
               min: 10,
               max: 20),
+        ],
+      ),
+      PageSection(
+        title: "Notification",
+        preferences: [
+          SwitchSettingPreference(
+              setting: Settings.notification_sound_vib_screen_on,
+              title: "Annoying Notifications",
+              description:
+                  "Play sound and vibration for notifications when screen is on"
+          ),
         ],
       ),
     ],
