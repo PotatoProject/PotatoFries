@@ -43,6 +43,12 @@ class Settings {
     false,
   );
 
+  static const Setting<bool> less_boring_heads_up = Setting<bool>(
+    "less_boring_heads_up",
+    SettingTable.system,
+    false,
+  );
+
   static const Setting<double> monet_engine_chroma_factor = Setting<double>(
     "monet_engine_chroma_factor",
     SettingTable.secure,
@@ -165,6 +171,12 @@ class Pages {
               title: "Annoying Notifications",
               description:
                   "Play sound and vibration for notifications when screen is on"
+          ),
+          SwitchSettingPreference(
+              setting: Settings.less_boring_heads_up,
+              title: "Less boring heads-up",
+              description: "Quickly disable heads up for all apps but keep them enabled for dialer and messaging apps",
+              icon: MdiIcons.viewQuilt
           ),
         ],
       ),
