@@ -61,6 +61,18 @@ class Settings {
     false,
   );
 
+  static const Setting<int> status_bar_battery_style = Setting<int>(
+    "status_bar_battery_style",
+    SettingTable.system,
+    0,
+  );
+
+  static const Setting<int> status_bar_show_battery_percent = Setting<int>(
+    "status_bar_show_battery_percent",
+    SettingTable.system,
+    0,
+  );
+
   static const Setting<double> monet_engine_chroma_factor = Setting<double>(
     "monet_engine_chroma_factor",
     SettingTable.secure,
@@ -274,7 +286,29 @@ class Pages {
     title: "Statusbar",
     icon: Icons.signal_cellular_0_bar,
     selectedIcon: Icons.signal_cellular_4_bar,
-    sections: [],
+    sections: [
+      PageSection(title: "Battery", preferences: [
+        DropdownSettingPreference<int>(
+          setting: Settings.status_bar_battery_style,
+          title: "Battery Style",
+          options: {
+            0: "Portrait",
+            1: "Circle",
+            2: "Dotted Circle",
+            3: "Solid Circle",
+            4: "Text",
+            5: "Hidden"
+          },
+          icon: Icons.battery_full,
+        ),
+        DropdownSettingPreference<int>(
+          setting: Settings.status_bar_show_battery_percent,
+          title: "Battery Percentage",
+          options: {0: "Hidden", 1: "Inside the icon", 2: "Next to the icon"},
+          icon: Icons.battery_std,
+        ),
+      ]),
+    ],
   );
 
   static const FriesPage keyguard = FriesPage(
