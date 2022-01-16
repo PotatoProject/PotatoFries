@@ -19,6 +19,12 @@ class Settings {
     false,
   );
 
+  static const Setting<bool> volume_button_music_control = Setting<bool>(
+    "volume_button_music_control",
+    SettingTable.system,
+    false,
+  );
+
   static const Setting<bool> double_tap_sleep_lockscreen = Setting<bool>(
     "double_tap_sleep_lockscreen",
     SettingTable.secure,
@@ -139,6 +145,12 @@ class Pages {
             description: "Show extra reboot options",
             icon: MdiIcons.powerSettings,
           ),
+          SwitchSettingPreference(
+              setting: Settings.volume_button_music_control,
+              title: "Volume buttons to skip tracks",
+              description: "Long press volume buttons to forward/backward track",
+              icon: MdiIcons.music,
+          )
         ],
       ),
       PageSection(
