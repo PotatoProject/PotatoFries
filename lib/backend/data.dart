@@ -13,6 +13,12 @@ import 'package:potato_fries/ui/components/headers/theme.dart';
 class Settings {
   const Settings._();
 
+  static const Setting<bool> use_tiles_on_secure_keyguard = Setting<bool>(
+    "use_tiles_on_secure_keyguard",
+    SettingTable.system,
+    false,
+  );
+
   static const Setting<bool> advanced_reboot = Setting<bool>(
     "advanced_reboot",
     SettingTable.secure,
@@ -125,8 +131,14 @@ class Pages {
     selectedIcon: Icons.brightness_6,
     sections: [
       PageSection(
-        title: 'First',
-        preferences: [],
+        title: "Quick Settings",
+        preferences: [
+              SwitchSettingPreference(
+                setting: Settings.use_tiles_on_secure_keyguard,
+                title: "Require unlocking to use sensitive tiles",
+                description: "Ask to unlock lockscreen when using sensitive tiles",
+              ),
+        ],
       ),
     ],
   );
