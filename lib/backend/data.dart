@@ -84,6 +84,12 @@ class Settings {
     SettingTable.secure,
     2201331, // #2196f3, default material blue
   );
+
+  static const Setting<int> torch_power_button_gesture = Setting<int>(
+    "torch_power_button_gesture",
+    SettingTable.system,
+    0,
+  );
 }
 
 class Properties {
@@ -170,14 +176,13 @@ class Pages {
               setting: Settings.notification_sound_vib_screen_on,
               title: "Annoying Notifications",
               description:
-                  "Play sound and vibration for notifications when screen is on"
-          ),
+                  "Play sound and vibration for notifications when screen is on"),
           SwitchSettingPreference(
               setting: Settings.less_boring_heads_up,
               title: "Less boring heads-up",
-              description: "Quickly disable heads up for all apps but keep them enabled for dialer and messaging apps",
-              icon: MdiIcons.viewQuilt
-          ),
+              description:
+                  "Quickly disable heads up for all apps but keep them enabled for dialer and messaging apps",
+              icon: MdiIcons.viewQuilt),
         ],
       ),
     ],
@@ -252,7 +257,23 @@ class Pages {
     title: "Keyguard",
     icon: Icons.lock_outlined,
     selectedIcon: Icons.lock,
-    sections: [],
+    sections: [
+      PageSection(
+        title: "Keyguard gestures",
+        preferences: [
+          DropdownSettingPreference<int>(
+            setting: Settings.torch_power_button_gesture,
+            title: "Toggle torch when screen off",
+            options: {
+              0: "Disabled",
+              1: "Double press power button",
+              2: "Long press power button"
+            },
+            icon: MdiIcons.lamp,
+          ),
+        ],
+      ),
+    ],
   );
 
   static const List<FriesPage> list = [
