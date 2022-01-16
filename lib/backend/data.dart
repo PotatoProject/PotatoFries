@@ -114,6 +114,12 @@ class Settings {
     SettingTable.system,
     0,
   );
+
+  static const Setting<int> screen_off_animation = Setting<int>(
+    "screen_off_animation",
+    SettingTable.system,
+    0,
+  );
 }
 
 class Properties {
@@ -317,7 +323,7 @@ class Pages {
     selectedIcon: Icons.lock,
     sections: [
       PageSection(
-        title: "Keyguard gestures",
+        title: "Keyguard",
         preferences: [
           DropdownSettingPreference<int>(
             setting: Settings.torch_power_button_gesture,
@@ -328,6 +334,16 @@ class Pages {
               2: "Long press power button"
             },
             icon: MdiIcons.lamp,
+          ),
+          DropdownSettingPreference<int>(
+            setting: Settings.screen_off_animation,
+            title: "Screen off animation",
+            options: {
+              0: "Default",
+              1: "CRT",
+              2: "Scale"
+            },
+            icon: Icons.phone,
           ),
         ],
       ),
