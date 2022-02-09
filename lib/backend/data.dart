@@ -31,6 +31,12 @@ class Settings {
     false,
   );
 
+  static const Setting<bool> double_tap_sleep_gesture = Setting<bool>(
+    "double_tap_sleep_gesture",
+    SettingTable.system,
+    false,
+  );
+
   static const Setting<bool> double_tap_sleep_lockscreen = Setting<bool>(
     "double_tap_sleep_lockscreen",
     SettingTable.system,
@@ -186,6 +192,13 @@ class Pages {
       PageSection(
         title: "Gestures",
         preferences: [
+          SwitchSettingPreference(
+            setting: Settings.double_tap_sleep_gesture,
+            title: "Double tap to sleep on statusbar",
+            description:
+                "Turn off screen by double tapping on statusbar",
+            icon: Icons.touch_app_outlined,
+          ),
           SwitchSettingPreference(
             setting: Settings.double_tap_sleep_lockscreen,
             title: "Double tap to sleep on lockscreen",
