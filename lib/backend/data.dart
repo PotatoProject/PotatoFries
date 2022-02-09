@@ -33,7 +33,7 @@ class Settings {
 
   static const Setting<bool> double_tap_sleep_lockscreen = Setting<bool>(
     "double_tap_sleep_lockscreen",
-    SettingTable.secure,
+    SettingTable.system,
     false,
   );
 
