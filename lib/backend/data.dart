@@ -264,7 +264,7 @@ class Pages {
             setting: Settings.monet_engine_linear_lightness,
             title: "Use custom lightness scale",
             description:
-                "If enables it allows using the custom lightness scale",
+                "If enabled, it allows using the custom lightness scale",
           ),
           SliderSettingPreference<int>(
             setting: Settings.monet_engine_white_luminance_user,
