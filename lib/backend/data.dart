@@ -13,6 +13,12 @@ import 'package:potato_fries/ui/components/headers/theme.dart';
 class Settings {
   const Settings._();
 
+  static const Setting<bool> volume_panel_on_left = Setting<bool>(
+    "volume_panel_on_left",
+    SettingTable.secure,
+    false,
+  );
+
   static const Setting<bool> double_tap_sleep_lockscreen = Setting<bool>(
     "double_tap_sleep_lockscreen",
     SettingTable.secure,
@@ -120,7 +126,18 @@ class Pages {
     icon: Icons.settings_outlined,
     selectedIcon: Icons.settings,
     sections: [
-      PageSection(
+  PageSection(
+      title: "Button",
+      preferences: [
+        SwitchSettingPreference(
+          setting: Settings.volume_panel_on_left,
+          title: "Show volume panel on left",
+          description: "Display volume panel on the left side of the screen",
+          icon: MdiIcons.volumeSource,
+        ),
+      ]
+  ),
+  PageSection(
         title: "Gestures",
         preferences: [
           SwitchSettingPreference(
