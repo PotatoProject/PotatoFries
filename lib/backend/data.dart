@@ -13,33 +13,9 @@ import 'package:potato_fries/ui/components/headers/theme.dart';
 class Settings {
   const Settings._();
 
-  static const Setting<bool> use_tiles_on_secure_keyguard = Setting<bool>(
-    "use_tiles_on_secure_keyguard",
-    SettingTable.system,
-    true,
-  );
-
-  static const Setting<bool> advanced_reboot = Setting<bool>(
-    "advanced_reboot",
-    SettingTable.secure,
-    false,
-  );
-
-  static const Setting<bool> volume_button_music_control = Setting<bool>(
-    "volume_button_music_control",
-    SettingTable.system,
-    false,
-  );
-
-  static const Setting<bool> double_tap_sleep_gesture = Setting<bool>(
-    "double_tap_sleep_gesture",
-    SettingTable.system,
-    false,
-  );
-
   static const Setting<bool> double_tap_sleep_lockscreen = Setting<bool>(
     "double_tap_sleep_lockscreen",
-    SettingTable.system,
+    SettingTable.secure,
     false,
   );
 
@@ -53,18 +29,6 @@ class Settings {
     "navigation_handle_width",
     SettingTable.system,
     10,
-  );
-
-  static const Setting<bool> notification_sound_vib_screen_on = Setting<bool>(
-    "notification_sound_vib_screen_on",
-    SettingTable.system,
-    false,
-  );
-
-  static const Setting<bool> less_boring_heads_up = Setting<bool>(
-    "less_boring_heads_up",
-    SettingTable.system,
-    false,
   );
 
   static const Setting<int> status_bar_battery_style = Setting<int>(
@@ -115,17 +79,12 @@ class Settings {
     2201331, // #2196f3, default material blue
   );
 
-  static const Setting<int> torch_power_button_gesture = Setting<int>(
+  static const Setting<bool> torch_power_button_gesture = Setting<bool>(
     "torch_power_button_gesture",
     SettingTable.system,
-    0,
+    false,
   );
 
-  static const Setting<int> screen_off_animation = Setting<int>(
-    "screen_off_animation",
-    SettingTable.system,
-    0,
-  );
 }
 
 class Properties {
@@ -153,18 +112,7 @@ class Pages {
     title: "QS",
     icon: Icons.brightness_6_outlined,
     selectedIcon: Icons.brightness_6,
-    sections: [
-      PageSection(
-        title: "Quick Settings",
-        preferences: [
-          SwitchSettingPreference(
-            setting: Settings.use_tiles_on_secure_keyguard,
-            title: "Require unlocking to use sensitive tiles",
-            description: "Ask to unlock lockscreen when using sensitive tiles",
-          ),
-        ],
-      ),
-    ],
+    sections: []
   );
 
   static const FriesPage system = FriesPage(
@@ -173,32 +121,8 @@ class Pages {
     selectedIcon: Icons.settings,
     sections: [
       PageSection(
-        title: "Button",
-        preferences: [
-          SwitchSettingPreference(
-            setting: Settings.advanced_reboot,
-            title: "Advanced Reboot",
-            description: "Show extra reboot options",
-            icon: MdiIcons.powerSettings,
-          ),
-          SwitchSettingPreference(
-            setting: Settings.volume_button_music_control,
-            title: "Volume buttons to skip tracks",
-            description: "Long press volume buttons to forward/backward track",
-            icon: MdiIcons.music,
-          )
-        ],
-      ),
-      PageSection(
         title: "Gestures",
         preferences: [
-          SwitchSettingPreference(
-            setting: Settings.double_tap_sleep_gesture,
-            title: "Double tap to sleep on statusbar",
-            description:
-                "Turn off screen by double tapping on statusbar",
-            icon: Icons.touch_app_outlined,
-          ),
           SwitchSettingPreference(
             setting: Settings.double_tap_sleep_lockscreen,
             title: "Double tap to sleep on lockscreen",
@@ -222,22 +146,6 @@ class Pages {
               title: "Navigation handle length",
               min: 10,
               max: 20),
-        ],
-      ),
-      PageSection(
-        title: "Notification",
-        preferences: [
-          SwitchSettingPreference(
-              setting: Settings.notification_sound_vib_screen_on,
-              title: "Annoying Notifications",
-              description:
-                  "Play sound and vibration for notifications when screen is on"),
-          SwitchSettingPreference(
-              setting: Settings.less_boring_heads_up,
-              title: "Less boring heads-up",
-              description:
-                  "Quickly disable heads up for all apps but keep them enabled for dialer and messaging apps",
-              icon: MdiIcons.viewQuilt),
         ],
       ),
     ],
@@ -318,13 +226,13 @@ class Pages {
             4: "Text",
             5: "Hidden"
           },
-          icon: Icons.battery_full,
+          icon: MdiIcons.battery,
         ),
         DropdownSettingPreference<int>(
           setting: Settings.status_bar_show_battery_percent,
           title: "Battery Percentage",
           options: {0: "Hidden", 1: "Inside the icon", 2: "Next to the icon"},
-          icon: Icons.battery_std,
+          icon: MdiIcons.battery30,
         ),
       ]),
     ],
@@ -338,25 +246,12 @@ class Pages {
       PageSection(
         title: "Keyguard",
         preferences: [
-          DropdownSettingPreference<int>(
+          SwitchSettingPreference(
             setting: Settings.torch_power_button_gesture,
-            title: "Toggle torch when screen off",
-            options: {
-              0: "Disabled",
-              1: "Double press power button",
-              2: "Long press power button"
-            },
-            icon: MdiIcons.lamp,
-          ),
-          DropdownSettingPreference<int>(
-            setting: Settings.screen_off_animation,
-            title: "Screen off animation",
-            options: {
-              0: "Default",
-              1: "CRT",
-              2: "Scale"
-            },
-            icon: Icons.phone,
+            title: "Quick torch",
+            description:
+            "When the screen is off, long-pressing power button will enable torch",
+            icon: MdiIcons.torch,
           ),
         ],
       ),
@@ -364,7 +259,6 @@ class Pages {
   );
 
   static const List<FriesPage> list = [
-    qs,
     system,
     themes,
     statusbar,
