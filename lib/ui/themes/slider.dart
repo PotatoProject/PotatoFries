@@ -86,6 +86,7 @@ class FriesSliderTrackShape extends SliderTrackShape {
     required SliderThemeData sliderTheme,
     required Animation<double> enableAnimation,
     required Offset thumbCenter,
+    Offset? secondaryOffset,
     bool isEnabled = false,
     bool isDiscrete = false,
     required TextDirection textDirection,
