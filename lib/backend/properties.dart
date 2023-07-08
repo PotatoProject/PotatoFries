@@ -23,7 +23,7 @@ class PropertyRegister {
   }
 
   // Some getters for internal properties
-  String get vernum => get(Properties.ro_potato_vernum) ?? "1.0.0";
+  String get vernum => get(Properties.ro_potato_vernum)!;
   String get device => get(Properties.ro_potato_device)!;
   String get model => get(Properties.ro_product_model)!;
   String get version => get(Properties.ro_potato_version)!;
