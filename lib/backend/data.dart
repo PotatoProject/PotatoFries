@@ -90,7 +90,6 @@ class Settings {
     SettingTable.system,
     false,
   );
-
 }
 
 class Properties {
@@ -115,29 +114,28 @@ class Pages {
   const Pages._();
 
   static const FriesPage qs = FriesPage(
-    title: "QS",
-    icon: Icons.brightness_6_outlined,
-    selectedIcon: Icons.brightness_6,
-    sections: []
-  );
+      title: "QS",
+      icon: Icons.brightness_6_outlined,
+      selectedIcon: Icons.brightness_6,
+      sections: []);
 
   static const FriesPage system = FriesPage(
     title: "System",
     icon: Icons.settings_outlined,
     selectedIcon: Icons.settings,
     sections: [
-  PageSection(
-      title: "Button",
-      preferences: [
-        SwitchSettingPreference(
-          setting: Settings.volume_panel_on_left,
-          title: "Show volume panel on left",
-          description: "Display volume panel on the left side of the screen",
-          icon: MdiIcons.volumeSource,
-        ),
-      ]
-  ),
-  PageSection(
+      PageSection(
+        title: "Button",
+        preferences: [
+          SwitchSettingPreference(
+            setting: Settings.volume_panel_on_left,
+            title: "Show volume panel on left",
+            description: "Display volume panel on the left side of the screen",
+            icon: MdiIcons.volumeSource,
+          ),
+        ],
+      ),
+      PageSection(
         title: "Gestures",
         preferences: [
           SwitchSettingPreference(
@@ -267,7 +265,7 @@ class Pages {
             setting: Settings.torch_power_button_gesture,
             title: "Quick torch",
             description:
-            "When the screen is off, long-pressing power button will enable torch",
+                "When the screen is off, long-pressing power button will enable torch",
             icon: MdiIcons.torch,
           ),
         ],

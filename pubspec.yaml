@@ -4,23 +4,23 @@ version: 3.1.0+38
 publish_to: none
 
 environment:
-  sdk: ">=2.14.0 <3.0.0"
+  sdk: ">=3.0.0 <4.0.0"
 
 dependencies:
-  flutter:
-    sdk: flutter
 
   animations: ^2.0.2
-  material_design_icons_flutter: ^5.0.6595
-  fuzzywuzzy: ^0.2.0
-  provider: ^6.0.1
-  pub_semver: ^2.1.0
+  flutter:
+    sdk: flutter
+  fuzzywuzzy: ^1.1.6
+  material_design_icons_flutter: ^6.0.7296
+  provider: ^6.0.5
+  pub_semver: ^2.1.4
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  flutter_lints: ^2.0.0
+  lint: ^2.1.2
 
 flutter:
   uses-material-design: true

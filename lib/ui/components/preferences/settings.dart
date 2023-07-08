@@ -21,8 +21,8 @@ class SwitchSettingPreferenceTile extends StatelessWidget {
     this.subtitle,
     this.icon,
     this.dependencies = const [],
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -159,19 +159,13 @@ class ColorSettingPreferenceTile extends StatelessWidget {
       setting: setting,
       dependencies: dependencies,
       builder: (context, value, dependencyEnable) {
-        final int color;
-
-        switch (type) {
-          case ColorPreferenceType.rgb:
-            color = value;
-            break;
-          case ColorPreferenceType.hex:
-            color = int.parse(
-              value.replaceFirst("#", ""),
+        final int color = switch (type) {
+          ColorPreferenceType.rgb => value as int,
+          ColorPreferenceType.hex => int.parse(
+              (value as String).replaceFirst("#", ""),
               radix: 16,
-            );
-            break;
-        }
+            ),
+        };
 
         return ColorPickerPreferenceTile(
           icon: Icon(icon),
@@ -187,11 +181,9 @@ class ColorSettingPreferenceTile extends StatelessWidget {
                 settingValue =
                     (color.red << 16 | color.green << 8 | color.blue << 0) &
                         0xFFFFFFFF;
-                break;
               case ColorPreferenceType.hex:
                 settingValue =
                     "#${value.toColor().value.toRadixString(16).substring(2)}";
-                break;
             }
 
             await setting.write(settingValue);

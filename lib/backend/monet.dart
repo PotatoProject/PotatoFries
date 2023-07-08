@@ -28,25 +28,25 @@ class MonetUtils {
   }
 
   static MonetPalette _getPalette(List<int> colors, int offset) {
-    offset *= 13;
-    final List<int> subColors = colors.sublist(offset, offset + 13);
+    final scaledOffset = offset * 13;
+    final List<int> subColors = colors.sublist(scaledOffset, scaledOffset + 13);
 
-    Color _colorAt(int index) => Color(subColors[index]).withOpacity(1);
+    Color colorAt(int index) => Color(subColors[index]).withOpacity(1);
 
     return MonetPalette({
-      0: _colorAt(0),
-      10: _colorAt(1),
-      50: _colorAt(2),
-      100: _colorAt(3),
-      200: _colorAt(4),
-      300: _colorAt(5),
-      400: _colorAt(6),
-      500: _colorAt(7),
-      600: _colorAt(8),
-      700: _colorAt(9),
-      800: _colorAt(10),
-      900: _colorAt(11),
-      1000: _colorAt(12),
+      0: colorAt(0),
+      10: colorAt(1),
+      50: colorAt(2),
+      100: colorAt(3),
+      200: colorAt(4),
+      300: colorAt(5),
+      400: colorAt(6),
+      500: colorAt(7),
+      600: colorAt(8),
+      700: colorAt(9),
+      800: colorAt(10),
+      900: colorAt(11),
+      1000: colorAt(12),
     });
   }
 }

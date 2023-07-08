@@ -29,7 +29,7 @@ class AppInfo extends ChangeNotifier {
 
   Future<void> _loadData() async {
     await _updateColors();
-    await _updateWall();
+    //await _updateWall();
 
     _utilsChannel.setMethodCallHandler((call) async {
       if (call.method == "onColorsChanged") {

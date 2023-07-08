@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 
 class LicensesPage extends StatefulWidget {
-  const LicensesPage({Key? key}) : super(key: key);
+  const LicensesPage({super.key});
 
   @override
-  _LicensesPageState createState() => _LicensesPageState();
+  State<LicensesPage> createState() => _LicensesPageState();
 }
 
 class _LicensesPageState extends State<LicensesPage> {
