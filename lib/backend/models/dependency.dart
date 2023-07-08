@@ -1,17 +1,17 @@
 import 'package:potato_fries/backend/models/properties.dart';
 import 'package:potato_fries/backend/models/settings.dart';
 
-abstract class Dependency<T> {
-  final T key;
-  final dynamic value;
+sealed class Dependency<K, V> {
+  final K key;
+  final V value;
 
   const Dependency(this.key, this.value);
 }
 
-class SettingDependency<T> extends Dependency<Setting<T>> {
-  const SettingDependency(Setting<T> key, T value) : super(key, value);
+class SettingDependency<T> extends Dependency<Setting<T>, T> {
+  const SettingDependency(super.key, super.value);
 }
 
-class PropertyDependency extends Dependency<PropertyKey> {
-  const PropertyDependency(PropertyKey key, String? value) : super(key, value);
+class PropertyDependency extends Dependency<PropertyKey, String?> {
+  const PropertyDependency(super.key, super.value);
 }

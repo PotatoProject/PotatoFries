@@ -57,11 +57,11 @@ class SliderSettingPreferenceTile<T extends num> extends StatefulWidget {
     required this.max,
     this.icon,
     this.dependencies = const [],
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
-  _SliderSettingPreferenceTileState<T> createState() =>
+  State<SliderSettingPreferenceTile<T>> createState() =>
       _SliderSettingPreferenceTileState<T>();
 }
 
@@ -88,10 +88,11 @@ class _SliderSettingPreferenceTileState<T extends num>
           },
           enabled: dependencyEnable,
           onLongPress: () async {
+            final SettingSink sink = context.sink;
             final bool confirmed = await _resetSetting(context, widget.setting);
 
             if (confirmed) {
-              final T value = context.sink.defaultValueFor<T>(widget.setting)!;
+              final T value = sink.defaultValueFor<T>(widget.setting)!;
               setState(() => this.value = value);
             }
           },
@@ -114,8 +115,8 @@ class DropdownSettingPreferenceTile<K> extends StatelessWidget {
     required this.options,
     this.icon,
     this.dependencies = const [],
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -150,8 +151,8 @@ class ColorSettingPreferenceTile extends StatelessWidget {
     this.subtitle,
     this.icon,
     this.dependencies = const [],
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -216,11 +217,11 @@ class SettingTileBase<T> extends StatefulWidget {
     required this.setting,
     required this.dependencies,
     required this.builder,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
-  _SettingTileBaseState<T> createState() => _SettingTileBaseState<T>();
+  State<SettingTileBase<T>> createState() => _SettingTileBaseState<T>();
 }
 
 class _SettingTileBaseState<T> extends State<SettingTileBase<T>> {
@@ -246,11 +247,11 @@ class SettingListener<T> extends StatefulWidget {
   const SettingListener({
     required this.subscription,
     required this.builder,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
-  _SettingListenerState<T> createState() => _SettingListenerState<T>();
+  State<SettingListener<T>> createState() => _SettingListenerState<T>();
 }
 
 class _SettingListenerState<T> extends State<SettingListener<T>> {
@@ -283,11 +284,11 @@ class SettingDependencyHandler extends StatefulWidget {
   const SettingDependencyHandler({
     required this.dependencies,
     required this.builder,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
-  _SettingDependencyHandlerState createState() =>
+  State<SettingDependencyHandler> createState() =>
       _SettingDependencyHandlerState();
 }
 

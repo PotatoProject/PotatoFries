@@ -114,10 +114,11 @@ class Pages {
   const Pages._();
 
   static const FriesPage qs = FriesPage(
-      title: "QS",
-      icon: Icons.brightness_6_outlined,
-      selectedIcon: Icons.brightness_6,
-      sections: []);
+    title: "QS",
+    icon: Icons.brightness_6_outlined,
+    selectedIcon: Icons.brightness_6,
+    sections: [],
+  );
 
   static const FriesPage system = FriesPage(
     title: "System",
@@ -157,10 +158,11 @@ class Pages {
         title: "Navigation",
         preferences: [
           SliderSettingPreference<int>(
-              setting: Settings.navigation_handle_width,
-              title: "Navigation handle length",
-              min: 10,
-              max: 20),
+            setting: Settings.navigation_handle_width,
+            title: "Navigation handle length",
+            min: 10,
+            max: 20,
+          ),
         ],
       ),
     ],
@@ -229,27 +231,30 @@ class Pages {
     icon: Icons.signal_cellular_0_bar,
     selectedIcon: Icons.signal_cellular_4_bar,
     sections: [
-      PageSection(title: "Battery", preferences: [
-        DropdownSettingPreference<int>(
-          setting: Settings.status_bar_battery_style,
-          title: "Battery Style",
-          options: {
-            0: "Portrait",
-            1: "Circle",
-            2: "Dotted Circle",
-            3: "Solid Circle",
-            4: "Text",
-            5: "Hidden"
-          },
-          icon: MdiIcons.battery,
-        ),
-        DropdownSettingPreference<int>(
-          setting: Settings.status_bar_show_battery_percent,
-          title: "Battery Percentage",
-          options: {0: "Hidden", 1: "Inside the icon", 2: "Next to the icon"},
-          icon: MdiIcons.battery30,
-        ),
-      ]),
+      PageSection(
+        title: "Battery",
+        preferences: [
+          DropdownSettingPreference<int>(
+            setting: Settings.status_bar_battery_style,
+            title: "Battery Style",
+            options: {
+              0: "Portrait",
+              1: "Circle",
+              2: "Dotted Circle",
+              3: "Solid Circle",
+              4: "Text",
+              5: "Hidden",
+            },
+            icon: MdiIcons.battery,
+          ),
+          DropdownSettingPreference<int>(
+            setting: Settings.status_bar_show_battery_percent,
+            title: "Battery Percentage",
+            options: {0: "Hidden", 1: "Inside the icon", 2: "Next to the icon"},
+            icon: MdiIcons.battery30,
+          ),
+        ],
+      ),
     ],
   );
 
@@ -314,19 +319,19 @@ class Pages {
     SettingSink sink,
     List<Setting> settings,
   ) async {
-    Future<void> _subscribeType<T>() async {
-      final Iterable<Setting<T>> _typeSettings =
+    Future<void> subscribeType<T>() async {
+      final Iterable<Setting<T>> typeSettings =
           settings.whereType<Setting<T>>();
 
-      for (final Setting<T> setting in _typeSettings) {
+      for (final Setting<T> setting in typeSettings) {
         await sink.subscribe<T>(setting);
       }
     }
 
-    await _subscribeType<int>();
-    await _subscribeType<String>();
-    await _subscribeType<bool>();
-    await _subscribeType<double>();
+    await subscribeType<int>();
+    await subscribeType<String>();
+    await subscribeType<bool>();
+    await subscribeType<double>();
   }
 
   static Future<void> _registerProperties(

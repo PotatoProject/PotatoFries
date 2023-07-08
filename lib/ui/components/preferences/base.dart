@@ -20,8 +20,8 @@ class PreferenceTile extends StatelessWidget {
     this.onTap,
     this.onLongPress,
     this.enabled = true,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -44,6 +44,7 @@ class PreferenceTile extends StatelessWidget {
             child: SeparatedFlex(
               axis: Axis.horizontal,
               crossAxisAlignment: CrossAxisAlignment.center,
+              separator: const SizedBox(width: 20),
               children: [
                 IconTheme.merge(
                   data: IconThemeData(
@@ -77,7 +78,6 @@ class PreferenceTile extends StatelessWidget {
                 ),
                 if (trailing != null) trailing!,
               ],
-              separator: const SizedBox(width: 20),
             ),
           ),
         ),
@@ -96,7 +96,7 @@ class SwitchPreferenceTile extends StatelessWidget {
   final bool enabled;
 
   const SwitchPreferenceTile({
-    Key? key,
+    super.key,
     this.icon,
     required this.title,
     this.subtitle,
@@ -104,7 +104,7 @@ class SwitchPreferenceTile extends StatelessWidget {
     this.onValueChanged,
     this.onLongPress,
     this.enabled = true,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -135,7 +135,7 @@ class SliderPreferenceTile<T extends num> extends StatelessWidget {
   final bool enabled;
 
   const SliderPreferenceTile({
-    Key? key,
+    super.key,
     this.icon,
     required this.title,
     required this.value,
@@ -145,7 +145,7 @@ class SliderPreferenceTile<T extends num> extends StatelessWidget {
     this.onValueChangeEnd,
     this.onLongPress,
     this.enabled = true,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -161,12 +161,12 @@ class SliderPreferenceTile<T extends num> extends StatelessWidget {
         divisions: isInt ? (max - min).toInt() : null,
         onChanged: onValueChanged != null
             ? (value) => onValueChanged?.call(
-                  isInt ? value.toInt() as T : value.toDouble() as T,
+                  isInt ? value.toInt() as T : value as T,
                 )
             : null,
         onChangeEnd: onValueChangeEnd != null
             ? (value) => onValueChangeEnd?.call(
-                  isInt ? value.toInt() as T : value.toDouble() as T,
+                  isInt ? value.toInt() as T : value as T,
                 )
             : null,
       ),
@@ -189,7 +189,7 @@ class DropdownPreferenceTile<T> extends StatelessWidget {
   final bool enabled;
 
   const DropdownPreferenceTile({
-    Key? key,
+    super.key,
     this.icon,
     required this.title,
     required this.options,
@@ -197,7 +197,7 @@ class DropdownPreferenceTile<T> extends StatelessWidget {
     this.onValueChanged,
     this.onLongPress,
     this.enabled = true,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -246,8 +246,8 @@ class ShortChip extends StatelessWidget {
 
   const ShortChip({
     required this.child,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {

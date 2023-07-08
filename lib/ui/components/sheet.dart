@@ -11,8 +11,8 @@ class DialogSheet extends StatelessWidget {
     this.title,
     this.content,
     this.actions = const [],
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -20,9 +20,10 @@ class DialogSheet extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
       child: SeparatedFlex(
         mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
+        separator: const SizedBox(height: 16),
         children: [
           SeparatedFlex(
+            separator: const SizedBox(height: 4),
             children: [
               if (title != null)
                 DefaultTextStyle(
@@ -39,19 +40,16 @@ class DialogSheet extends StatelessWidget {
                   child: content!,
                 ),
             ],
-            separator: const SizedBox(height: 4),
           ),
           if (actions.isNotEmpty)
             SeparatedFlex(
               axis: Axis.horizontal,
-              children: actions,
               separator: const Spacer(),
               mainAxisAlignment: MainAxisAlignment.end,
               crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisSize: MainAxisSize.max,
+              children: actions,
             ),
         ],
-        separator: const SizedBox(height: 16),
       ),
     );
   }

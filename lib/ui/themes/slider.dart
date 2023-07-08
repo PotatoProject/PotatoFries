@@ -121,11 +121,9 @@ class FriesSliderTrackShape extends SliderTrackShape {
       case TextDirection.ltr:
         leftTrackPaint = activePaint;
         rightTrackPaint = inactivePaint;
-        break;
       case TextDirection.rtl:
         leftTrackPaint = inactivePaint;
         rightTrackPaint = activePaint;
-        break;
     }
     final Size thumbSize =
         sliderTheme.thumbShape!.getPreferredSize(isEnabled, isDiscrete);

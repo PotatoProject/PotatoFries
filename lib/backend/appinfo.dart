@@ -1,5 +1,3 @@
-import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -43,7 +41,6 @@ class AppInfo extends ChangeNotifier {
           case "config":
             await _updateColors();
             notifyListeners();
-            break;
         }
       }
     });

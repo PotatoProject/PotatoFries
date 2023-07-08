@@ -1,5 +1,5 @@
-import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:potato_fries/backend/appinfo.dart';
 import 'package:potato_fries/backend/data.dart';
 import 'package:potato_fries/backend/extensions.dart';
@@ -31,7 +31,7 @@ Future<void> main() async {
 }
 
 class FriesRoot extends StatelessWidget {
-  const FriesRoot({Key? key}) : super(key: key);
+  const FriesRoot({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -39,9 +39,6 @@ class FriesRoot extends StatelessWidget {
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
 
     return MaterialApp(
-      scrollBehavior: const MaterialScrollBehavior(
-        androidOverscrollIndicator: AndroidOverscrollIndicator.stretch,
-      ),
       theme: FriesTheme.light(colors: appInfo.colors),
       darkTheme: FriesTheme.dark(colors: appInfo.colors),
       debugShowCheckedModeBanner: false,

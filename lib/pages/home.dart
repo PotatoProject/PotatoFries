@@ -4,10 +4,10 @@ import 'package:potato_fries/backend/data.dart';
 import 'package:potato_fries/backend/models/pages.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+  const HomePage({super.key});
 
   @override
-  _FriesHomeState createState() => _FriesHomeState();
+  State<HomePage> createState() => _FriesHomeState();
 }
 
 class _FriesHomeState extends State<HomePage> {
@@ -28,15 +28,14 @@ class _FriesHomeState extends State<HomePage> {
           PopupMenuButton(
             itemBuilder: (context) => [
               const PopupMenuItem(
-                child: Text("Licenses"),
                 value: 'licenses',
-              )
+                child: Text("Licenses"),
+              ),
             ],
             onSelected: (value) {
               switch (value) {
                 case 'licenses':
                   Navigator.pushNamed(context, '/licenses');
-                  break;
               }
             },
             icon: const Icon(Icons.more_vert),

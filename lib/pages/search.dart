@@ -7,10 +7,10 @@ import 'package:potato_fries/backend/models/pages.dart';
 import 'package:potato_fries/ui/components/separated_flex.dart';
 
 class SearchPage extends StatefulWidget {
-  const SearchPage({Key? key}) : super(key: key);
+  const SearchPage({super.key});
 
   @override
-  _SearchPageState createState() => _SearchPageState();
+  State<SearchPage> createState() => _SearchPageState();
 }
 
 class _SearchPageState extends State<SearchPage> {
@@ -20,6 +20,7 @@ class _SearchPageState extends State<SearchPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
+        preferredSize: Size.fromHeight(56 + context.mediaQuery.padding.top),
         child: Card(
           margin: EdgeInsets.only(
             left: 16,
@@ -28,10 +29,9 @@ class _SearchPageState extends State<SearchPage> {
             bottom: 16,
           ),
           shape: const StadiumBorder(),
-          child: _SearchBar(controller: _controller),
           color: context.theme.colorScheme.secondaryContainer,
+          child: _SearchBar(controller: _controller),
         ),
-        preferredSize: Size.fromHeight(56 + context.mediaQuery.padding.top),
       ),
       body: AnimatedBuilder(
         animation: _controller,
@@ -58,7 +58,7 @@ class _SearchPageState extends State<SearchPage> {
           );
           final Iterable<ExtractedResult<Preference>> totalResults = [
             ...titleResults,
-            ...descriptionResults
+            ...descriptionResults,
           ].where((e) => e.score >= 60);
           queryPrefs.addAll(totalResults.map((e) => e.choice));
 
@@ -81,7 +81,6 @@ class _SearchPageState extends State<SearchPage> {
       child: SeparatedFlex(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisSize: MainAxisSize.max,
         separator: const SizedBox(height: 16),
         children: [
           Icon(
@@ -102,10 +101,7 @@ class _SearchPageState extends State<SearchPage> {
 class _SearchBar extends StatelessWidget {
   final TextEditingController controller;
 
-  const _SearchBar({
-    required this.controller,
-    Key? key,
-  }) : super(key: key);
+  const _SearchBar({required this.controller});
 
   @override
   Widget build(BuildContext context) {
@@ -123,7 +119,7 @@ class _SearchBar extends StatelessWidget {
             child: TextField(
               controller: controller,
               autofocus: true,
-              style: context.theme.textTheme.titleMedium!,
+              style: context.theme.textTheme.titleMedium,
               decoration: const InputDecoration(
                 hintText: "Search preferences...",
                 border: InputBorder.none,

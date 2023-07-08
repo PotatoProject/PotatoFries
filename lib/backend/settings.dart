@@ -81,27 +81,19 @@ class SettingSink {
   Future<SettingSubscription<T>> getSubscriptionOrSubscribe<T>(
     Setting<T> setting,
   ) async {
-    SettingSubscription<T>? subscription = getSubscription<T>(setting);
-    subscription ??= await subscribe(setting);
-
-    return subscription;
+    return getSubscription<T>(setting) ?? await subscribe<T>(setting);
   }
 
   SettingType _deriveTypeFromTValue<T>(T value) {
-    switch (value.runtimeType) {
-      case String:
-        return SettingType.string;
-      case int:
-        return SettingType.integer;
-      case double:
-        return SettingType.float;
-      case bool:
-        return SettingType.boolean;
-      default:
-        throw ArgumentError(
+    return switch (value) {
+      String() => SettingType.string,
+      int() => SettingType.integer,
+      double() => SettingType.float,
+      bool() => SettingType.boolean,
+      _ => throw ArgumentError(
           "Type ${value.runtimeType} is not supported for settings",
-        );
-    }
+        ),
+    };
   }
 }
 

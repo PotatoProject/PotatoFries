@@ -8,11 +8,11 @@ class FriesSwitch extends StatefulWidget {
   const FriesSwitch({
     required this.value,
     required this.onChanged,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
-  _FriesSwitchState createState() => _FriesSwitchState();
+  State<FriesSwitch> createState() => _FriesSwitchState();
 }
 
 class _FriesSwitchState extends State<FriesSwitch>

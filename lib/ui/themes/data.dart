@@ -5,116 +5,18 @@ import 'package:potato_fries/backend/appinfo.dart';
 import 'package:potato_fries/backend/extensions.dart';
 import 'package:potato_fries/ui/themes/slider.dart';
 
-class FriesTheme {
-  static const TextTheme _baseTextTheme = TextTheme(
-    displayLarge: TextStyle(
-      fontSize: 57,
-      height: 64 / 57, // 64
-      fontWeight: FontWeight.w400,
-      letterSpacing: 0,
-    ),
-    displayMedium: TextStyle(
-      fontSize: 45,
-      height: 52 / 45, // 52
-      fontWeight: FontWeight.w400,
-      letterSpacing: 0,
-    ),
-    displaySmall: TextStyle(
-      fontSize: 36,
-      height: 44 / 36, // 44
-      fontWeight: FontWeight.w400,
-      letterSpacing: 0,
-    ),
-    headlineLarge: TextStyle(
-      fontSize: 32,
-      height: 40 / 32, // 40
-      fontWeight: FontWeight.w400,
-      letterSpacing: 0,
-    ),
-    headlineMedium: TextStyle(
-      fontSize: 28,
-      height: 36 / 28, // 36
-      fontWeight: FontWeight.w400,
-      letterSpacing: 0,
-    ),
-    headlineSmall: TextStyle(
-      fontSize: 24,
-      height: 32 / 24, // 32
-      fontWeight: FontWeight.w400,
-      letterSpacing: 0,
-    ),
-    titleLarge: TextStyle(
-      fontSize: 22,
-      height: 28 / 22, // 28
-      fontWeight: FontWeight.w500,
-      letterSpacing: 0,
-    ),
-    titleMedium: TextStyle(
-      fontSize: 16,
-      height: 24 / 16, // 24
-      fontWeight: FontWeight.w500,
-      letterSpacing: 0.15,
-    ),
-    titleSmall: TextStyle(
-      fontSize: 14,
-      height: 20 / 14, // 20
-      fontWeight: FontWeight.w500,
-      letterSpacing: 0.1,
-    ),
-    bodyLarge: TextStyle(
-      fontSize: 16,
-      height: 24 / 16, // 24
-      fontWeight: FontWeight.w400,
-      letterSpacing: 0.15,
-    ),
-    bodyMedium: TextStyle(
-      fontSize: 14,
-      height: 20 / 14, // 20
-      fontWeight: FontWeight.w400,
-      letterSpacing: 0.25,
-    ),
-    bodySmall: TextStyle(
-      fontSize: 12,
-      height: 16 / 12, // 16
-      fontWeight: FontWeight.w400,
-      letterSpacing: 0.4,
-    ),
-    labelLarge: TextStyle(
-      fontSize: 14,
-      height: 20 / 14, // 20
-      fontWeight: FontWeight.w500,
-      letterSpacing: 0.1,
-    ),
-    labelMedium: TextStyle(
-      fontSize: 12,
-      height: 16 / 12, // 16
-      fontWeight: FontWeight.w500,
-      letterSpacing: 0.5,
-    ),
-    labelSmall: TextStyle(
-      fontSize: 11,
-      height: 16 / 11, // 16
-      fontWeight: FontWeight.w500,
-      letterSpacing: 0.5,
-    ),
-  );
-
-  static final TextTheme _whiteTextTheme =
-      _baseTextTheme.apply(displayColor: Colors.white);
-  static final TextTheme _blackTextTheme =
-      _baseTextTheme.apply(displayColor: Colors.black);
+final class FriesTheme {
+  const FriesTheme._();
 
   static ThemeData light({required MonetColors colors}) {
     return _buildMaterialTheme(
       _colorsFromMonet(colors, Brightness.light),
-      _blackTextTheme,
     );
   }
 
   static ThemeData dark({required MonetColors colors}) {
     return _buildMaterialTheme(
       _colorsFromMonet(colors, Brightness.dark),
-      _whiteTextTheme,
     );
   }
 
@@ -214,75 +116,13 @@ class FriesTheme {
     return result;
   }
 
-  static Color applyElevation(
-    Color background,
-    Color foreground,
-    int elevation,
-  ) {
-    assert(elevation > 0 && elevation <= 5);
-    final double opacity;
-
-    switch (elevation) {
-      case 1:
-        opacity = 0.05;
-        break;
-      case 2:
-        opacity = 0.08;
-        break;
-      case 3:
-        opacity = 0.11;
-        break;
-      case 4:
-        opacity = 0.12;
-        break;
-      case 5:
-        opacity = 0.14;
-        break;
-      default:
-        throw Exception("Invalid elevation");
-    }
-
-    return Color.alphaBlend(foreground.withOpacity(opacity), background);
-  }
-
-  static ThemeData _buildMaterialTheme(
-      ColorScheme colorScheme, TextTheme textTheme) {
+  static ThemeData _buildMaterialTheme(ColorScheme colorScheme) {
     return ThemeData(
+      useMaterial3: true,
       colorScheme: colorScheme,
-      textTheme: textTheme,
       scaffoldBackgroundColor: colorScheme.background,
       canvasColor: colorScheme.background,
-      navigationBarTheme: NavigationBarThemeData(
-        backgroundColor: FriesTheme.applyElevation(
-          colorScheme.surface,
-          colorScheme.primary,
-          2,
-        ),
-        indicatorColor: colorScheme.secondaryContainer,
-        iconTheme: MaterialStateProperty.resolveWith(
-          (states) => IconThemeData(
-            color: states.contains(MaterialState.selected)
-                ? colorScheme.onSecondaryContainer
-                : colorScheme.onSurfaceVariant,
-            size: 24,
-          ),
-        ),
-        labelTextStyle: MaterialStateProperty.resolveWith(
-          (states) => textTheme.labelMedium!.copyWith(
-            color: states.contains(MaterialState.selected)
-                ? colorScheme.onSurface
-                : colorScheme.onSurfaceVariant,
-          ),
-        ),
-      ),
       appBarTheme: AppBarTheme(
-        toolbarHeight: 64,
-        backgroundColor: colorScheme.surface,
-        elevation: 0,
-        foregroundColor: colorScheme.onSurfaceVariant,
-        titleTextStyle: textTheme.titleLarge!.copyWith(
-          color: colorScheme.onBackground,
-        ),
         systemOverlayStyle: SystemUiOverlayStyle(
           statusBarColor: Colors.transparent,
           statusBarBrightness: colorScheme.brightness.inverted,
@@ -295,7 +135,7 @@ class FriesTheme {
       ),
       sliderTheme: SliderThemeData(
         trackHeight: 16,
-        thumbShape: const FriesSliderThumbShape(thumbRadius: 6),
+        thumbShape: const FriesSliderThumbShape(),
         trackShape: const FriesSliderTrackShape(),
         overlayShape: const FriesSliderOverlayShape(),
         thumbColor: colorScheme.onPrimary,
@@ -318,12 +158,6 @@ class FriesTheme {
         backgroundColor: colorScheme.surface,
         elevation: 0,
         modalElevation: 0,
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(28),
-            topRight: Radius.circular(28),
-          ),
-        ),
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ButtonStyle(
@@ -331,8 +165,6 @@ class FriesTheme {
           padding: MaterialStateProperty.all(
             const EdgeInsets.symmetric(horizontal: 24),
           ),
-          shape: MaterialStateProperty.all(const StadiumBorder()),
-          textStyle: MaterialStateProperty.all(textTheme.labelLarge),
           overlayColor: MaterialStateProperty.all(
             colorScheme.onPrimary.withOpacity(0.1),
           ),
@@ -357,8 +189,6 @@ class FriesTheme {
           padding: MaterialStateProperty.all(
             const EdgeInsets.symmetric(horizontal: 24),
           ),
-          shape: MaterialStateProperty.all(const StadiumBorder()),
-          textStyle: MaterialStateProperty.all(textTheme.labelLarge),
           overlayColor: MaterialStateProperty.all(
             colorScheme.primary.withOpacity(0.1),
           ),
@@ -386,8 +216,6 @@ class FriesTheme {
           padding: MaterialStateProperty.all(
             const EdgeInsets.symmetric(horizontal: 12),
           ),
-          shape: MaterialStateProperty.all(const StadiumBorder()),
-          textStyle: MaterialStateProperty.all(textTheme.labelLarge),
           overlayColor: MaterialStateProperty.all(
             colorScheme.primary.withOpacity(0.1),
           ),
@@ -411,34 +239,12 @@ class FriesTheme {
         elevation: 0,
         shadowColor: Colors.transparent,
       ),
-      pageTransitionsTheme: const PageTransitionsTheme(builders: {
-        TargetPlatform.android: SharedAxisPageTransitionsBuilder(
-          transitionType: SharedAxisTransitionType.scaled,
-        ),
-      }),
-      popupMenuTheme: PopupMenuThemeData(
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(16)),
-        ),
-        color: colorScheme.secondaryContainer,
-        elevation: 0,
-      ),
-      dialogTheme: DialogTheme(
-        backgroundColor: FriesTheme.applyElevation(
-          colorScheme.surface,
-          colorScheme.primary,
-          3,
-        ),
-        titleTextStyle: textTheme.headlineSmall!.copyWith(
-          color: colorScheme.onSurface,
-        ),
-        contentTextStyle: textTheme.bodyMedium!.copyWith(
-          color: colorScheme.onSurfaceVariant,
-        ),
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(28)),
-        ),
-        elevation: 0,
+      pageTransitionsTheme: const PageTransitionsTheme(
+        builders: {
+          TargetPlatform.android: SharedAxisPageTransitionsBuilder(
+            transitionType: SharedAxisTransitionType.scaled,
+          ),
+        },
       ),
     );
   }

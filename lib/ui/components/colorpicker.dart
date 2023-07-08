@@ -9,8 +9,8 @@ class ColorDisplay extends StatelessWidget {
   const ColorDisplay({
     required this.color,
     this.onColorChanged,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -65,11 +65,10 @@ class _ColorPickerDialog extends StatefulWidget {
     required this.initialValue,
     required this.onCancel,
     required this.onConfirm,
-    Key? key,
-  }) : super(key: key);
+  });
 
   @override
-  _ColorPickerDialogState createState() => _ColorPickerDialogState();
+  State<_ColorPickerDialog> createState() => _ColorPickerDialogState();
 }
 
 class _ColorPickerDialogState extends State<_ColorPickerDialog> {
@@ -130,11 +129,11 @@ class ColorPicker extends StatefulWidget {
   const ColorPicker({
     required this.color,
     this.onValueChanged,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
-  _ColorPickerState createState() => _ColorPickerState();
+  State<ColorPicker> createState() => _ColorPickerState();
 }
 
 class _ColorPickerState extends State<ColorPicker> {
@@ -146,7 +145,6 @@ class _ColorPickerState extends State<ColorPicker> {
   @override
   Widget build(BuildContext context) {
     return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Expanded(
           child: _HueSaturationSquare(
@@ -158,7 +156,7 @@ class _ColorPickerState extends State<ColorPicker> {
         _LightnessSlider(
           color: widget.color,
           onValueChanged: widget.onValueChanged,
-        )
+        ),
       ],
     );
   }
@@ -171,8 +169,7 @@ class _HueSaturationSquare extends StatelessWidget {
   const _HueSaturationSquare({
     required this.color,
     required this.onValueChanged,
-    Key? key,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -205,8 +202,6 @@ class _HueSaturationSquare extends StatelessWidget {
                         const HSVColor.fromAHSV(1.0, 300.0, 1.0, 1.0).toColor(),
                         const HSVColor.fromAHSV(1.0, 360.0, 1.0, 1.0).toColor(),
                       ],
-                      begin: Alignment.centerLeft,
-                      end: Alignment.centerRight,
                     ),
                   ),
                 ),
@@ -259,12 +254,14 @@ class _HueSaturationSquare extends StatelessWidget {
   }
 
   void _updateHueSat(Offset position, Size size) {
-    onValueChanged?.call(HSLColor.fromAHSL(
-      1,
-      (position.dx / size.width * 360).clamp(0.0, 360.0),
-      1 - (position.dy / size.height).clamp(0.0, 1.0),
-      color.lightness,
-    ));
+    onValueChanged?.call(
+      HSLColor.fromAHSL(
+        1,
+        (position.dx / size.width * 360).clamp(0.0, 360.0),
+        1 - (position.dy / size.height).clamp(0.0, 1.0),
+        color.lightness,
+      ),
+    );
   }
 }
 
@@ -275,74 +272,75 @@ class _LightnessSlider extends StatelessWidget {
   const _LightnessSlider({
     required this.color,
     required this.onValueChanged,
-    Key? key,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(builder: (context, constraints) {
-      return GestureDetector(
-        onHorizontalDragUpdate: (details) => _updateLightness(
-          details.localPosition.dy,
-          constraints.maxHeight,
-        ),
-        onTapDown: (details) => _updateLightness(
-          details.localPosition.dy,
-          constraints.maxHeight,
-        ),
-        child: Container(
-          width: 32,
-          height: double.infinity,
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [
-                Colors.white,
-                HSLColor.fromAHSL(1.0, color.hue, 1.0, 0.5).toColor(),
-                Colors.black,
-              ],
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-            ),
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return GestureDetector(
+          onHorizontalDragUpdate: (details) => _updateLightness(
+            details.localPosition.dy,
+            constraints.maxHeight,
           ),
-          child: Stack(
-            clipBehavior: Clip.none,
-            children: [
-              Positioned.fromRect(
-                rect: Rect.fromCenter(
-                  center: Offset(
-                    16,
-                    (1 - color.lightness) * constraints.maxHeight,
+          onTapDown: (details) => _updateLightness(
+            details.localPosition.dy,
+            constraints.maxHeight,
+          ),
+          child: Container(
+            width: 32,
+            height: double.infinity,
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  Colors.white,
+                  HSLColor.fromAHSL(1.0, color.hue, 1.0, 0.5).toColor(),
+                  Colors.black,
+                ],
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+              ),
+            ),
+            child: Stack(
+              clipBehavior: Clip.none,
+              children: [
+                Positioned.fromRect(
+                  rect: Rect.fromCenter(
+                    center: Offset(
+                      16,
+                      (1 - color.lightness) * constraints.maxHeight,
+                    ),
+                    width: 56,
+                    height: 16,
                   ),
-                  width: 56,
-                  height: 16,
-                ),
-                child: Container(
-                  decoration: const ShapeDecoration(
-                    color: Colors.white,
-                    shape: StadiumBorder(),
-                    shadows: [
-                      BoxShadow(blurRadius: 1.6),
-                    ],
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(4),
-                    child: Material(
-                      color: HSLColor.fromAHSL(
-                        1.0,
-                        color.hue,
-                        1.0,
-                        color.lightness,
-                      ).toColor(),
-                      shape: const StadiumBorder(),
+                  child: Container(
+                    decoration: const ShapeDecoration(
+                      color: Colors.white,
+                      shape: StadiumBorder(),
+                      shadows: [
+                        BoxShadow(blurRadius: 1.6),
+                      ],
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(4),
+                      child: Material(
+                        color: HSLColor.fromAHSL(
+                          1.0,
+                          color.hue,
+                          1.0,
+                          color.lightness,
+                        ).toColor(),
+                        shape: const StadiumBorder(),
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
-      );
-    });
+        );
+      },
+    );
   }
 
   void _updateLightness(double y, double height) {

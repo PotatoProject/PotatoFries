@@ -3,8 +3,7 @@ import 'package:flutter/services.dart';
 class Setting<T> extends SettingKey<T> {
   final T defaultValue;
 
-  const Setting(String name, SettingTable table, this.defaultValue)
-      : super(name, table);
+  const Setting(super.name, super.table, this.defaultValue);
 
   Setting.fromKey(SettingKey<T> key, this.defaultValue)
       : super(key.name, key.table);
@@ -33,13 +32,10 @@ class SettingKey<T> {
   const SettingKey(this.name, this.table);
 
   Future<void> write(T? value) {
-    final String valueStr;
-
-    if (value is bool) {
-      valueStr = value ? "1" : "0";
-    } else {
-      valueStr = value.toString();
-    }
+    final String valueStr = switch (value) {
+      final bool boolValue => boolValue ? "1" : "0",
+      _ => value.toString(),
+    };
 
     return SettingKey.controlsChannel.invokeMethod("write", {
       "uri": uri.toString(),
@@ -65,24 +61,10 @@ class SettingKey<T> {
   String toString() => uri.toString();
 
   static Uri composeUri(String name, SettingTable table) {
-    final String uriTable;
-
-    switch (table) {
-      case SettingTable.global:
-        uriTable = "global";
-        break;
-      case SettingTable.system:
-        uriTable = "system";
-        break;
-      case SettingTable.secure:
-        uriTable = "secure";
-        break;
-    }
-
     return Uri(
       scheme: "content",
       host: "settings",
-      pathSegments: [uriTable, name],
+      pathSegments: [table.name, name],
     );
   }
 }

@@ -26,7 +26,7 @@ class FriesPage {
   });
 
   Widget build(BuildContext context) {
-    final List<PageSection> _nonEmptySections = sections.where((e) {
+    final List<PageSection> nonEmptySections = sections.where((e) {
       final List<Preference> validPreferences =
           e.getValidPreferences(context.register);
 
@@ -47,9 +47,9 @@ class FriesPage {
         Expanded(
           child: ListView.separated(
             itemBuilder: (context, index) =>
-                _nonEmptySections[index].build(context),
+                nonEmptySections[index].build(context),
             separatorBuilder: (context, index) => const SizedBox(height: 16),
-            itemCount: _nonEmptySections.length,
+            itemCount: nonEmptySections.length,
             padding: EdgeInsets.only(top: header != null ? 16 : 0),
           ),
         ),
@@ -90,7 +90,6 @@ class PageSection {
         getValidPreferences(context.register);
 
     return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -188,25 +187,18 @@ abstract class Preference {
   }
 }
 
-abstract class SettingPreference<T> extends Preference {
+sealed class SettingPreference<T> extends Preference {
   final Setting<T> setting;
 
   const SettingPreference({
     required this.setting,
-    required String title,
-    String? description,
-    IconData? icon,
-    List<Dependency> dependencies = const [],
-    String? minVersion,
-    String? maxVersion,
-  }) : super(
-          title: title,
-          description: description,
-          icon: icon,
-          dependencies: dependencies,
-          minVersion: minVersion,
-          maxVersion: maxVersion,
-        );
+    required super.title,
+    super.description,
+    super.icon,
+    super.dependencies = const [],
+    super.minVersion,
+    super.maxVersion,
+  });
 
   @override
   ScrapeInfo scrape() {
@@ -221,22 +213,14 @@ abstract class SettingPreference<T> extends Preference {
 
 class SwitchSettingPreference extends SettingPreference<bool> {
   const SwitchSettingPreference({
-    required Setting<bool> setting,
-    required String title,
-    String? description,
-    IconData? icon,
-    List<Dependency> dependencies = const [],
-    String? minVersion,
-    String? maxVersion,
-  }) : super(
-          setting: setting,
-          title: title,
-          description: description,
-          icon: icon,
-          dependencies: dependencies,
-          minVersion: minVersion,
-          maxVersion: maxVersion,
-        );
+    required super.setting,
+    required super.title,
+    super.description,
+    super.icon,
+    super.dependencies,
+    super.minVersion,
+    super.maxVersion,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -255,24 +239,16 @@ class SliderSettingPreference<T extends num> extends SettingPreference<T> {
   final T max;
 
   const SliderSettingPreference({
-    required Setting<T> setting,
-    required String title,
-    String? description,
+    required super.setting,
+    required super.title,
+    super.description,
     this.min,
     required this.max,
-    IconData? icon,
-    List<Dependency> dependencies = const [],
-    String? minVersion,
-    String? maxVersion,
-  }) : super(
-          setting: setting,
-          title: title,
-          description: description,
-          icon: icon,
-          dependencies: dependencies,
-          minVersion: minVersion,
-          maxVersion: maxVersion,
-        );
+    super.icon,
+    super.dependencies,
+    super.minVersion,
+    super.maxVersion,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -291,23 +267,15 @@ class DropdownSettingPreference<K> extends SettingPreference<K> {
   final Map<K, String> options;
 
   const DropdownSettingPreference({
-    required Setting<K> setting,
-    required String title,
-    String? description,
+    required super.setting,
+    required super.title,
+    super.description,
     required this.options,
-    IconData? icon,
-    List<Dependency> dependencies = const [],
-    String? minVersion,
-    String? maxVersion,
-  }) : super(
-          setting: setting,
-          title: title,
-          description: description,
-          icon: icon,
-          dependencies: dependencies,
-          minVersion: minVersion,
-          maxVersion: maxVersion,
-        );
+    super.icon,
+    super.dependencies,
+    super.minVersion,
+    super.maxVersion,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -325,42 +293,24 @@ class ColorSettingPreference extends SettingPreference<dynamic> {
   final ColorPreferenceType type;
 
   const ColorSettingPreference.asRgb({
-    required Setting<int> setting,
-    required String title,
-    String? description,
-    IconData? icon,
-    List<Dependency> dependencies = const [],
-    String? minVersion,
-    String? maxVersion,
-  })  : type = ColorPreferenceType.rgb,
-        super(
-          setting: setting,
-          title: title,
-          description: description,
-          icon: icon,
-          dependencies: dependencies,
-          minVersion: minVersion,
-          maxVersion: maxVersion,
-        );
+    required Setting<int> super.setting,
+    required super.title,
+    super.description,
+    super.icon,
+    super.dependencies,
+    super.minVersion,
+    super.maxVersion,
+  }) : type = ColorPreferenceType.rgb;
 
   const ColorSettingPreference.asHex({
-    required Setting<String> setting,
-    required String title,
-    String? description,
-    IconData? icon,
-    List<Dependency> dependencies = const [],
-    String? minVersion,
-    String? maxVersion,
-  })  : type = ColorPreferenceType.hex,
-        super(
-          setting: setting,
-          title: title,
-          description: description,
-          icon: icon,
-          dependencies: dependencies,
-          minVersion: minVersion,
-          maxVersion: maxVersion,
-        );
+    required Setting<String> super.setting,
+    required super.title,
+    super.description,
+    super.icon,
+    super.dependencies,
+    super.minVersion,
+    super.maxVersion,
+  }) : type = ColorPreferenceType.hex;
 
   @override
   Widget build(BuildContext context) {
@@ -416,20 +366,13 @@ class SubpagePreference extends Preference {
 
   const SubpagePreference({
     required this.subpage,
-    required String title,
-    String? description,
-    IconData? icon,
-    List<Dependency> dependencies = const [],
-    String? minVersion,
-    String? maxVersion,
-  }) : super(
-          title: title,
-          description: description,
-          icon: icon,
-          dependencies: dependencies,
-          minVersion: minVersion,
-          maxVersion: maxVersion,
-        );
+    required super.title,
+    super.description,
+    super.icon,
+    super.dependencies = const [],
+    super.minVersion,
+    super.maxVersion,
+  });
 
   @override
   Widget build(BuildContext context) {

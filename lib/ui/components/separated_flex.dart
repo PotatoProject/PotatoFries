@@ -15,12 +15,12 @@ class SeparatedFlex extends StatelessWidget {
     this.mainAxisAlignment = MainAxisAlignment.start,
     this.crossAxisAlignment = CrossAxisAlignment.start,
     this.mainAxisSize = MainAxisSize.max,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
-    final List<Widget> _children =
+    final List<Widget> mappedChildren =
         List.generate(children.length * 2 - 1, (index) {
       if (index.isEven) {
         return children[index ~/ 2];
@@ -35,7 +35,7 @@ class SeparatedFlex extends StatelessWidget {
           mainAxisAlignment: mainAxisAlignment,
           crossAxisAlignment: crossAxisAlignment,
           mainAxisSize: mainAxisSize,
-          children: _children,
+          children: mappedChildren,
         );
       case Axis.vertical:
       default:
@@ -43,7 +43,7 @@ class SeparatedFlex extends StatelessWidget {
           mainAxisAlignment: mainAxisAlignment,
           crossAxisAlignment: crossAxisAlignment,
           mainAxisSize: mainAxisSize,
-          children: _children,
+          children: mappedChildren,
         );
     }
   }

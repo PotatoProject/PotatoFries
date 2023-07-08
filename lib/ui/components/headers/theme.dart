@@ -3,7 +3,7 @@ import 'package:potato_fries/backend/appinfo.dart';
 import 'package:potato_fries/backend/extensions.dart';
 
 class ThemeHeader extends StatelessWidget {
-  const ThemeHeader({Key? key}) : super(key: key);
+  const ThemeHeader({super.key});
 
   @override
   Widget build(BuildContext context) {

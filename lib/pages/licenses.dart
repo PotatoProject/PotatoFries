@@ -118,7 +118,7 @@ class _PackageLicensesPage extends StatefulWidget {
   });
 
   @override
-  _PackageLicensesPageState createState() => _PackageLicensesPageState();
+  State<_PackageLicensesPage> createState() => _PackageLicensesPageState();
 }
 
 class _PackageLicensesPageState extends State<_PackageLicensesPage> {
@@ -131,13 +131,13 @@ class _PackageLicensesPageState extends State<_PackageLicensesPage> {
     _initLicenses();
   }
 
-  void _initLicenses() async {
+  Future<void> _initLicenses() async {
     for (final LicenseEntry license in widget.licenseEntries) {
       if (!mounted) {
         return;
       }
       final List<LicenseParagraph> paragraphs =
-          await SchedulerBinding.instance!.scheduleTask<List<LicenseParagraph>>(
+          await SchedulerBinding.instance.scheduleTask<List<LicenseParagraph>>(
         license.paragraphs.toList,
         Priority.animation,
         debugLabel: 'License',

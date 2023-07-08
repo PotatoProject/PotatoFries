@@ -21,8 +21,8 @@ class ColorPickerPreferenceTile extends StatelessWidget {
     this.icon,
     this.enabled = true,
     this.onLongPress,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -71,11 +71,10 @@ class _ColorPickerSheet extends StatefulWidget {
     required this.initialColor,
     required this.onConfirm,
     required this.onCancel,
-    Key? key,
-  }) : super(key: key);
+  });
 
   @override
-  _ColorPickerSheetState createState() => _ColorPickerSheetState();
+  State<_ColorPickerSheet> createState() => _ColorPickerSheetState();
 }
 
 class _ColorPickerSheetState extends State<_ColorPickerSheet> {
@@ -91,6 +90,7 @@ class _ColorPickerSheetState extends State<_ColorPickerSheet> {
   Widget build(BuildContext context) {
     return SeparatedFlex(
       mainAxisAlignment: MainAxisAlignment.end,
+      separator: const SizedBox(height: 16),
       children: [
         SizedBox(
           height: 80,
@@ -113,6 +113,7 @@ class _ColorPickerSheetState extends State<_ColorPickerSheet> {
         ),
         SeparatedFlex(
           axis: Axis.horizontal,
+          separator: const SizedBox(width: 16),
           children: [
             OutlinedButton(
               onPressed: color != widget.initialColor
@@ -130,10 +131,8 @@ class _ColorPickerSheetState extends State<_ColorPickerSheet> {
               child: const Text("Confirm"),
             ),
           ],
-          separator: const SizedBox(width: 16),
         ),
       ],
-      separator: const SizedBox(height: 16),
     );
   }
 }

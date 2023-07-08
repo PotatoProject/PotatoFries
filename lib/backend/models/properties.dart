@@ -34,5 +34,5 @@ class PropertyKey {
   }
 
   @override
-  String toString() => name.toString();
+  String toString() => name;
 }
